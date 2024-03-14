@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=GNOME Gallery
+Comment=A Linux Mobile friendly photo gallery app for GNU/Linux systems.
+Keywords=gallery;photos;
+Type=Application
+Exec=gnome-gallery
+# Do not translate this; xgettext marks this automatically.
+Icon=com.maxrdz.GnomeGallery
+Categories=GTK;GNOME;Audio;Video;Player;
+Terminal=false
+# Keys below are recognized by the Phosh shell.
+StartupNotify=true
+X-Purism-FormFactor=Workstation;Mobile;

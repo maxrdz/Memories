@@ -1,0 +1,22 @@
+[package]
+name = "gnome-gallery"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0"
+authors = [
+    "Max Rodriguez <me@maxrdz.com>",
+]
+repository = "https://github.com/maxrdz/gnome-gallery" 
+homepage = "https://github.com/maxrdz/gnome-gallery"
+
+[profile.release]
+codegen-units = 1 # Best LLVM optimization
+panic = "abort" # Remove unwinding on release
+opt-level = 3
+lto = true
+strip = true
+
+[dependencies]
+log = { version = "0.4" }
+gettext-rs = { version = "0.7", features = ["gettext-system"] }
+libadwaita = { version = "0.5", features = ["v1_4"] }

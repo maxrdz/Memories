@@ -1,0 +1,10 @@
+option(
+  'profile',
+  type: 'combo',
+  choices: [
+    'default',
+    'dev'
+  ],
+  value: 'default',
+  description: 'The build profile for GNOME Gallery. `default` or `dev`.'
+)
