@@ -50,6 +50,8 @@ mod imp {
 
     impl ApplicationImpl for GnomeTuxTok {
         fn activate(&self) {
+            libhandy::init();
+
             let application = self.obj();
             // The activate() callback also notifies us when the user tries
             // to launch a "second instance" of the application. When they try

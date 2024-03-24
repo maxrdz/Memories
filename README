@@ -1,0 +1,36 @@
+Gallery App
+==============
+
+A free and open source Photo/Video gallery app for Linux mobile,
+built with Adwaita/GTK for the best experience on GNOME-based
+phone shells, such as Phosh. Built for x86_64 desktop and Linux
+mobile devices on aarch64 processors.
+
+SOFTWARE REQUIREMENTS
+
+    - glib version 2+
+    - gio version 2+
+    - desktop-file-utils
+    - appstream
+    - appstream-glib
+    - gtk4
+    - libadwaita
+    - libhandy
+    - Rustup (provides Cargo & rustc)
+    - Ninja build system
+    - Meson build system
+
+BUILDING FROM SOURCE
+
+    To build the release binary:
+
+    `meson setup build`
+    `meson compile -C build`
+    `meson install -C build`
+
+    To build the debug binary:
+
+    `meson setup builddevel -Dprofile=dev`
+    `meson compile -C builddevel`
+    `meson install -C builddevel`
+
