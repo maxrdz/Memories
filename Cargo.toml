@@ -6,11 +6,11 @@ license = "GPL-3.0"
 authors = [
     "Max Rodriguez <me@maxrdz.com>",
 ]
-repository = "https://github.com/maxrdz/gnome-gallery" 
-homepage = "https://github.com/maxrdz/gnome-gallery"
+repository = "https://gitlab.gnome.org/maxrdz/gallery" 
+homepage = "https://gitlab.gnome.org/maxrdz/gallery"
 
 [profile.release]
-codegen-units = 1 # Best LLVM optimization
+codegen-units = 1 # Best LLVM optimization when built on a single thread
 panic = "abort" # Remove unwinding on release
 opt-level = 3
 lto = true
@@ -20,4 +20,3 @@ strip = true
 log = { version = "0.4" }
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
 libadwaita = { version = "0.5", features = ["v1_4"] }
-libhandy = { version = "0.11" }

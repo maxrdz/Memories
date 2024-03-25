@@ -50,7 +50,7 @@ pub static APP_INFO: AboutInformation = AboutInformation {
         }
     },
     app_version: VERSION,
-    app_repo: "https://github.com/maxrdz/gnome-gallery",
+    app_repo: "https://gitlab.gnome.org/maxrdz/gallery",
     app_id: {
         match DEVELOPMENT_BUILD {
             false => "com.maxrdz.GnomeGallery",

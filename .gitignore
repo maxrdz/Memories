@@ -19,3 +19,4 @@ flatpak_repo/
 *.flatpak
 **/*.rs.bk
 *.pdb
+.vscode/
