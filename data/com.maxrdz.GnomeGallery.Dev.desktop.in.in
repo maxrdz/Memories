@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=GNOME Gallery (Dev)
+Name=Gallery (Dev)
 Comment=A Linux Mobile friendly photo gallery app for GNU/Linux systems.
-Keywords=gallery;photos;
+Keywords=gallery;photos;videos;
 Type=Application
-Exec=gnome-gallery
+Exec=gnome-gallery-dev
 # Do not translate this; xgettext marks this automatically.
-Icon=com.maxrdz.GnomeGallery
+Icon=com.maxrdz.GnomeGallery.Dev
 Categories=GTK;GNOME;Audio;Video;Player;
 Terminal=false
 # Keys below are recognized by the Phosh shell.

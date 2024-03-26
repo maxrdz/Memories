@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=GNOME Gallery
+Name=Gallery
 Comment=A Linux Mobile friendly photo gallery app for GNU/Linux systems.
-Keywords=gallery;photos;
+Keywords=gallery;photos;videos;
 Type=Application
 Exec=gnome-gallery
 # Do not translate this; xgettext marks this automatically.

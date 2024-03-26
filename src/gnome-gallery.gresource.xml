@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/maxrdz/GnomeGallery/icons/scalable/actions/">
+  <gresource prefix="/com/maxrdz/GnomeGallery/icons/scalable/">
+    <file preprocess="xml-stripblanks" alias="library-symbolic">icons/scalable/library-symbolic.svg</file>
   </gresource>
-
-  <gresource prefix="/com/maxrdz/GnomeGallery">
+  <gresource prefix="/com/maxrdz/GnomeGallery/">
     <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">ui/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/master-window.ui</file>
   </gresource>
