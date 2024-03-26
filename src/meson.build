@@ -1,13 +1,13 @@
-bin_name = meson.project_name()
+project_name = meson.project_name()
 gnome = import('gnome')
 
 # ----- Generated Source Files ----- #
 
-pkgdatadir = get_option('prefix') / get_option('datadir') / bin_name
+pkgdatadir = get_option('prefix') / get_option('datadir') / project_name
 
 conf = configuration_data()
 conf.set_quoted('VERSION', meson.project_version())
-conf.set_quoted('GETTEXT_PACKAGE', bin_name)
+conf.set_quoted('GETTEXT_PACKAGE', project_name)
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 
@@ -31,8 +31,8 @@ run_command(
 
 # ------ Compile GResource Bundle ------ #
 
-gnome.compile_resources(bin_name,
-  '@0@.gresource.xml'.format(bin_name),
+gnome.compile_resources(project_name,
+  '@0@.gresource.xml'.format(project_name),
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -40,13 +40,15 @@ gnome.compile_resources(bin_name,
 
 # ------------ Cargo Setup ------------- #
 
+out_binary_file = project_name
+
 cargo_bin  = find_program('cargo')
-cargo_opt  = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
-cargo_opt += [ '--target-dir', meson.project_build_root()  / 'src' ]
+cargo_opts  = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
+cargo_opts += [ '--target-dir', meson.project_build_root()  / 'src' ]
 cargo_env  = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 
 if get_option('profile') == 'default' or get_option('profile') == 'release'
-  cargo_opt += [ '--release' ]
+  cargo_opts += [ '--release' ]
   rust_target = 'release'
   message('Building in release mode')
 else
@@ -60,7 +62,7 @@ endif
 file_extension = '' # Unix-like default
 
 if get_option('target') != ''
-  cargo_options += [ '--target', get_option('target') ]
+  cargo_opts += [ '--target', get_option('target') ]
   if get_option('target').contains('windows')
     file_extension = '.exe'
     bindir = ''
@@ -73,18 +75,18 @@ cargo_build = custom_target(
   'cargo-build',
   build_by_default: true,
   build_always_stale: true,
-  output: bin_name,
+  output: out_binary_file + file_extension,
   console: true,
   install: true,
   install_dir: get_option('bindir'),
   command: [
     'env', cargo_env,
     cargo_bin, 'build',
-    cargo_opt,
+    cargo_opts,
     # Since vcs_tag() runs at compile time, we copy it over to source until here.
     '&&', 'cp', 'src' / 'vcs.rs', meson.project_source_root() / 'src',
     # Replace below with `--out-dir` once stable.
     # Issue: https://github.com/rust-lang/cargo/issues/6790#issuecomment-655728327=
-    '&&', 'cp', 'src' / rust_target / bin_name + file_extension, '@OUTPUT@',
+    '&&', 'cp', 'src' / rust_target / out_binary_file + file_extension, '@OUTPUT@',
   ]
 )

@@ -12,5 +12,5 @@ option(
   'target',
   type: 'string',
   value: '',
-  description: 'Rustc cross-compilation target. Default is an empty string, which compiles natively.'
+  description: 'Rustc cross-compilation target triple. Default is an empty string, which compiles natively.'
 )

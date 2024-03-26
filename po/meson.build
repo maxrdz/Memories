@@ -1,2 +1,2 @@
-bin_name = meson.project_name()
-i18n.gettext(bin_name, preset: 'glib')
+project_name = meson.project_name()
+i18n.gettext(project_name, preset: 'glib')

@@ -35,6 +35,14 @@ meson compile -C builddevel
 meson install -C builddevel
 ```
 
+## Cross Compiling
+
+To setup a build that targets ARM mobile devices:
+
+```sh
+meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
+```
+
 ## License
 
 Gallery is licensed under the GNU GPL version 3.0.
