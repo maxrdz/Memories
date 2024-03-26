@@ -12,7 +12,7 @@ phone shells, such as Phosh.
 - appstream
 - appstream-glib
 - gtk4
-- libadwaita
+- libadwaita 1.4
 - Rustup (provides Cargo & rustc)
 - Ninja build system
 - Meson build system
@@ -35,3 +35,7 @@ meson compile -C builddevel
 meson install -C builddevel
 ```
 
+## License
+
+GNOME Gallery is licensed under the GNU GPL version 3.0.
+You can read the full license in the `COPYING` file.
