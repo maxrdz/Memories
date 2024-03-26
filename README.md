@@ -1,4 +1,4 @@
-<img src="./data/icons/com.maxrdz.Gallery.png" align="left" width="20%"/>
+<img src="https://gitlab.gnome.org/maxrdz/gallery/-/raw/master/data/icons/com.maxrdz.Gallery.png" align="left" width="10%"/>
 
 # Gallery
 
