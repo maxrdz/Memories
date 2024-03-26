@@ -20,26 +20,27 @@
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::prelude::*;
-use gtk::{gio, glib};
+use gtk::{gio, glib, gdk};
 use libadwaita as adw;
 
 use crate::globals::*;
 use crate::master_window::MasterWindow;
+use crate::vcs::VCS_TAG;
 
 mod imp {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct GnomeTuxTok {}
+    pub struct Gallery {}
 
     #[glib::object_subclass]
-    impl ObjectSubclass for GnomeTuxTok {
-        const NAME: &'static str = "GnomeTuxTok";
-        type Type = super::GnomeTuxTok;
+    impl ObjectSubclass for Gallery {
+        const NAME: &'static str = "Gallery";
+        type Type = super::Gallery;
         type ParentType = adw::Application;
     }
 
-    impl ObjectImpl for GnomeTuxTok {
+    impl ObjectImpl for Gallery {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
@@ -48,9 +49,13 @@ mod imp {
         }
     }
 
-    impl ApplicationImpl for GnomeTuxTok {
+    impl ApplicationImpl for Gallery {
         fn activate(&self) {
+            let it = gtk::IconTheme::for_display(&gdk::Display::default().unwrap());
+            gtk::IconTheme::add_resource_path(&it, "/com/maxrdz/Gallery/icons/scalable");
+
             let application = self.obj();
+
             // The activate() callback also notifies us when the user tries
             // to launch a "second instance" of the application. When they try
             // to do that, we'll just present any existing window.
@@ -67,17 +72,17 @@ mod imp {
         }
     }
 
-    impl GtkApplicationImpl for GnomeTuxTok {}
-    impl AdwApplicationImpl for GnomeTuxTok {}
+    impl GtkApplicationImpl for Gallery {}
+    impl AdwApplicationImpl for Gallery {}
 }
 
 glib::wrapper! {
-    pub struct GnomeTuxTok(ObjectSubclass<imp::GnomeTuxTok>)
+    pub struct Gallery(ObjectSubclass<imp::Gallery>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl GnomeTuxTok {
+impl Gallery {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -97,6 +102,7 @@ impl GnomeTuxTok {
 
     fn show_about(&self) {
         let window = self.active_window().unwrap();
+
         // No exit/back button on this window, so mobile users
         // (at least on Phosh) need to swipe out of the program
         // and close this new tab to return back to the main window.
@@ -112,7 +118,10 @@ impl GnomeTuxTok {
             .copyright(APP_INFO.copyright)
             .license(APP_INFO.license)
             .license_type(APP_INFO.license_type)
-            .comments(APP_INFO.comments)
+            .comments(format!(
+                "{}\n\nBuild Revision (Git SHA1): {}",
+                APP_INFO.comments, VCS_TAG
+            ))
             .build();
         about.present();
     }

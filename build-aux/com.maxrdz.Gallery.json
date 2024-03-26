@@ -1,5 +1,5 @@
 {
-    "app-id" : "com.maxrdz.GnomeGallery",
+    "app-id" : "com.maxrdz.Gallery",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "45",
     "sdk" : "org.gnome.Sdk",
@@ -7,7 +7,7 @@
         "org.freedesktop.Sdk.Extension.rust-stable",
 	"org.freedesktop.Sdk.Extension.llvm16"
     ],
-    "command" : "gnome-gallery",
+    "command" : "gallery",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -21,7 +21,7 @@
         ],
         "env" : {
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "gnome-gallery=debug"
+            "RUST_LOG" : "gallery=debug"
         }
     },
     "cleanup" : [
@@ -37,7 +37,7 @@
     ],
     "modules" : [
         {
-            "name" : "gnome-gallery",
+            "name" : "gallery",
             "buildsystem" : "meson",
             "config-opts" : [
             	"-Dprofile=dev"

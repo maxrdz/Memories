@@ -26,11 +26,8 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(resource = "/com/maxrdz/GnomeGallery/ui/master-window.ui")]
-    pub struct MasterWindow {
-        #[template_child]
-        pub header_bar: TemplateChild<adw::HeaderBar>,
-    }
+    #[template(resource = "/com/maxrdz/Gallery/ui/master-window.ui")]
+    pub struct MasterWindow {}
 
     #[glib::object_subclass]
     impl ObjectSubclass for MasterWindow {

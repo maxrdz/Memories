@@ -1,8 +1,8 @@
-# GNOME Gallery
+# Gallery
 
-A free and open source Photo/Video gallery app for Linux mobile,
-built with Adwaita/GTK for the best experience on GNOME-based
-phone shells, such as Phosh.
+A free and open source photo/video gallery app for Linux mobile,
+built with GTK4 and libadwaita, designed to be well integrated
+with GNOME technologies and mobile devices.
 
 ## Software Requirements
 
@@ -37,5 +37,5 @@ meson install -C builddevel
 
 ## License
 
-GNOME Gallery is licensed under the GNU GPL version 3.0.
+Gallery is licensed under the GNU GPL version 3.0.
 You can read the full license in the `COPYING` file.

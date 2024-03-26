@@ -1,11 +1,9 @@
 [package]
-name = "gnome-gallery"
+name = "gallery"
 version = "0.1.0"
 edition = "2021"
 license = "GPL-3.0"
-authors = [
-    "Max Rodriguez <me@maxrdz.com>",
-]
+authors = ["Max Rodriguez <me@maxrdz.com>"]
 repository = "https://gitlab.gnome.org/maxrdz/gallery" 
 homepage = "https://gitlab.gnome.org/maxrdz/gallery"
 

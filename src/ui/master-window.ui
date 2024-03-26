@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.4"/>
-  <!-- Dropdown Menu for Sandwich on Window Header -->
+  <!-- Sandwich Dropdown Menu -->
   <menu id="primary_menu">
     <section>
       <item>
@@ -19,22 +19,59 @@
   <template class="MasterWindow" parent="AdwApplicationWindow">
     <property name="content">
       <object class="AdwToolbarView">
-        <child type="top">
-          <object class="AdwHeaderBar" id="header_bar">
-            <!--<property name="title-widget">
-            </property>-->
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="primary">True</property>
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Menu</property>
-                <property name="menu-model">primary_menu</property>
+        <property name="content">
+          <object class="AdwViewStack" id="master_stack">
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">library</property>
+                <property name="title">Library</property>
+                <property name="icon-name">scalable/library-symbolic</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="title">Library</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">albums</property>
+                <property name="title">Albums</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="title">Albums</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">settings</property>
+                <property name="title">Settings</property>
+                <property name="icon-name">applications-system-symbolic</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="title">Settings</property>
+                    <child>
+                      <object class="GtkMenuButton">
+                        <property name="primary">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Menu</property>
+                        <property name="menu-model">primary_menu</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
               </object>
             </child>
           </object>
+        </property>
+        <child type="bottom">
+          <object class="AdwViewSwitcherBar" id="switcher_bar">
+            <property name="stack">master_stack</property>
+            <property name="reveal">True</property>
+          </object>
         </child>
-        <!--<property name="content">
-        </property>-->
       </object>
     </property>
   </template>

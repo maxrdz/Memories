@@ -3,9 +3,9 @@ Name=Gallery (Dev)
 Comment=A Linux Mobile friendly photo gallery app for GNU/Linux systems.
 Keywords=gallery;photos;videos;
 Type=Application
-Exec=gnome-gallery-dev
+Exec=gallery-dev
 # Do not translate this; xgettext marks this automatically.
-Icon=com.maxrdz.GnomeGallery.Dev
+Icon=com.maxrdz.Gallery.Dev
 Categories=GTK;GNOME;Audio;Video;Player;
 Terminal=false
 # Keys below are recognized by the Phosh shell.

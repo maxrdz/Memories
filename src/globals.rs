@@ -45,25 +45,24 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     app_name: env!("CARGO_PKG_NAME"),
     app_title: {
         match DEVELOPMENT_BUILD {
-            false => "GNOME Gallery",
-            true => "GNOME Gallery (Dev)",
+            false => "Gallery",
+            true => "Gallery (Dev)",
         }
     },
     app_version: VERSION,
     app_repo: "https://gitlab.gnome.org/maxrdz/gallery",
     app_id: {
         match DEVELOPMENT_BUILD {
-            false => "com.maxrdz.GnomeGallery",
-            true => "com.maxrdz.GnomeGallery.Dev",
+            false => "com.maxrdz.Gallery",
+            true => "com.maxrdz.Gallery.Dev",
         }
     },
-    authors: &[
-        "Max Rodriguez <me@maxrdz.com>",
-    ],
+    authors: &["Max Rodriguez <me@maxrdz.com>"],
     artists: None,
     documenters: None,
     copyright: "© 2024 Max Rodriguez",
     license: "GNU General Public License v3.0",
     license_type: License::Gpl30,
-    comments: "A Linux mobile friendly app for viewing your photo gallery.",
+    comments: "A Linux mobile friendly app for viewing your photo gallery.\
+    \n\nReleased under the GNU General Public License version 3.0.",
 };

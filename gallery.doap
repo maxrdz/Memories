@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name>Gallery</name>
+  <shortname>Gallery</shortname>
+  <shortdesc>A photo and video gallery application for GNOME.</shortdesc>
+  <description>A free and open source photo/video gallery app for Linux mobile,
+  built with GTK4 and libadwaita, designed to be well integrated with GNOME
+  technologies and mobile devices.</description>
+
+  <homepage rdf:resource="https://gitlab.gnome.org/maxrdz/gallery"/>
+  <download-page rdf:resource="https://gitlab.gnome.org/maxrdz/gallery/-/tags"/>
+  <bug-database rdf:resource="https://gitlab.gnome.org/maxrdz/gallery/issues/"/>
+  <license rdf:resource="https://www.gnu.org/licenses/gpl-3.0.txt"/>
+
+  <programming-language>Rust</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Max Rodriguez</foaf:name>
+      <foaf:mbox rdf:resource="mailto:me@maxrdz.com"/>
+      <gnome:userid>maxrdz</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>

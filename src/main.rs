@@ -21,9 +21,10 @@ mod application;
 mod config;
 mod globals;
 mod master_window;
+mod vcs;
 
 use adw::gtk;
-use application::GnomeTuxTok;
+use application::Gallery;
 use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use globals::APP_INFO;
@@ -38,7 +39,7 @@ fn main() -> glib::ExitCode {
         .expect("Unable to set the text domain encoding!");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain!");
 
-    // Load resources
+    // Load gresource bundle
     let resources = gio::Resource::load(format!(
         "{}/{}.gresource",
         PKGDATADIR.to_owned(),
@@ -47,6 +48,6 @@ fn main() -> glib::ExitCode {
     .expect("Could not load resources!");
     gio::resources_register(&resources);
 
-    let app = GnomeTuxTok::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
+    let app = Gallery::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
     app.run()
 }

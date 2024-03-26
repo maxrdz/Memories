@@ -6,5 +6,11 @@ option(
     'dev'
   ],
   value: 'default',
-  description: 'The build profile for GNOME Gallery. `default` or `dev`.'
+  description: 'The build profile for Gallery. `default` or `dev`.'
+)
+option(
+  'target',
+  type: 'string',
+  value: '',
+  description: 'Rustc cross-compilation target. Default is an empty string, which compiles natively.'
 )
