@@ -1,3 +1,5 @@
+<img src="./data/icons/com.maxrdz.Gallery.png" align="left" width="20%"/>
+
 # Gallery
 
 A free and open source photo/video gallery app for Linux mobile,
