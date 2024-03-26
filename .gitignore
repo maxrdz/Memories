@@ -21,3 +21,4 @@ flatpak_repo/
 **/*.rs.bk
 *.pdb
 .vscode/
+*.git
