@@ -53,7 +53,7 @@ if get_option('profile') == 'default' or get_option('profile') == 'release'
   message('Building in release mode')
 else
   rust_target = 'debug'
-  out_binary_file = out_binary_file + '-dev'
+  out_binary_file += '-dev'
   message('Building in debug mode')
 endif
 
@@ -87,6 +87,6 @@ cargo_build = custom_target(
     '&&', 'cp', 'src' / 'vcs.rs', meson.project_source_root() / 'src',
     # Replace below with `--out-dir` once stable.
     # Issue: https://github.com/rust-lang/cargo/issues/6790#issuecomment-655728327=
-    '&&', 'cp', 'src' / rust_target / out_binary_file + file_extension, '@OUTPUT@',
+    '&&', 'cp', 'src' / rust_target / project_name + file_extension, '@OUTPUT@',
   ]
 )

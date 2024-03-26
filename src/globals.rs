@@ -32,6 +32,7 @@ pub struct AboutInformation {
     pub app_version: &'static str,
     pub app_id: &'static str,
     pub app_repo: &'static str,
+    pub app_author: &'static str,
     pub authors: &'static [&'static str],
     pub artists: Option<&'static [&'static str]>,
     pub documenters: Option<&'static [&'static str]>,
@@ -51,6 +52,7 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     },
     app_version: VERSION,
     app_repo: "https://gitlab.gnome.org/maxrdz/gallery",
+    app_author: "Max Rodriguez",
     app_id: {
         match DEVELOPMENT_BUILD {
             false => "com.maxrdz.Gallery",
@@ -63,6 +65,8 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     copyright: "© 2024 Max Rodriguez",
     license: "GNU General Public License v3.0",
     license_type: License::Gpl30,
-    comments: "A Linux mobile friendly app for viewing your photo gallery.\
+    comments: "A free and open source photo/video gallery app for Linux mobile, \
+    built with GTK4 and libadwaita, designed to be well integrated \
+    with GNOME technologies and mobile devices running Phosh.\
     \n\nReleased under the GNU General Public License version 3.0.",
 };

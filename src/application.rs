@@ -111,8 +111,14 @@ impl Gallery {
             .modal(true)
             .application_icon(APP_INFO.app_id)
             .application_name(APP_INFO.app_title)
-            .developer_name(*APP_INFO.authors.first().unwrap())
-            .version(APP_INFO.app_version)
+            .developer_name(APP_INFO.app_author)
+            .version({
+                if DEVELOPMENT_BUILD {
+                    VCS_TAG
+                } else {
+                    APP_INFO.app_version
+                }
+            })
             .issue_url(format!("{}/issues", APP_INFO.app_repo).as_str())
             .developers(APP_INFO.authors)
             .copyright(APP_INFO.copyright)
