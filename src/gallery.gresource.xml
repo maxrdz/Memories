@@ -5,7 +5,9 @@
     <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">ui/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/master-window.ui</file>
     <!-- Icons -->
-    <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
   </gresource>
 </gresources>
