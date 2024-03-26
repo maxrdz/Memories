@@ -25,7 +25,7 @@
               <object class="AdwViewStackPage">
                 <property name="name">library</property>
                 <property name="title">Library</property>
-                <property name="icon-name">scalable/library-symbolic</property>
+                <property name="icon-name">library-symbolic</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="title">Library</property>
@@ -37,9 +37,22 @@
               <object class="AdwViewStackPage">
                 <property name="name">albums</property>
                 <property name="title">Albums</property>
+                <property name="icon-name">albums-symbolic</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="title">Albums</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">search</property>
+                <property name="title">Search</property>
+                <property name="icon-name">system-search-symbolic</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="title">Search</property>
                   </object>
                 </property>
               </object>

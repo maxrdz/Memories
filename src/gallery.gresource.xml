@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/maxrdz/Gallery/icons/scalable/">
-    <file preprocess="xml-stripblanks" alias="library-symbolic">icons/scalable/library-symbolic.svg</file>
-  </gresource>
   <gresource prefix="/com/maxrdz/Gallery/">
+    <!-- UI Files -->
     <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">ui/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/master-window.ui</file>
+    <!-- Icons -->
+    <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
   </gresource>
 </gresources>
