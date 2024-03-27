@@ -37,6 +37,13 @@ meson compile -C builddevel
 meson install -C builddevel
 ```
 
+To uninstall the app build from your local system:
+```sh
+sudo ninja -C build uninstall
+```
+Replace `build` with the Meson build directory of the
+application build version that you want to uninstall.
+
 ## Cross Compiling
 
 To setup a build that targets ARM mobile devices:

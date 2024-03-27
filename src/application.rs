@@ -20,7 +20,7 @@
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::prelude::*;
-use gtk::{gio, glib, gdk};
+use gtk::{gio, glib};
 use libadwaita as adw;
 
 use crate::globals::*;
@@ -51,9 +51,6 @@ mod imp {
 
     impl ApplicationImpl for Gallery {
         fn activate(&self) {
-            let it = gtk::IconTheme::for_display(&gdk::Display::default().unwrap());
-            gtk::IconTheme::add_resource_path(&it, "/com/maxrdz/Gallery/icons/scalable");
-
             let application = self.obj();
 
             // The activate() callback also notifies us when the user tries

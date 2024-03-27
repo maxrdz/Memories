@@ -67,6 +67,18 @@ if get_option('target') != ''
     file_extension = '.exe'
     bindir = ''
   endif
+
+  # For cross compiling to ARM, we need to use the aarch64
+  # pkg config sysroot directory. We also need to force
+  # rustc to use an aarch64 linker via Cargo configuration.
+
+  # FIXME: This currently assumes any target with 'aarch64'
+  # is targeting linux GNU, and also assumes the specific
+  # pkg config sysroot directory and aarch64 linker binary.
+  if get_option('target').contains('aarch64')
+    cargo_env += [ 'PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu/lib/pkgconfig' ]
+    cargo_opts += [ '--config', 'build.rustflags="-C linker=aarch64-linux-gnu-ld"' ]
+  endif
 endif
 
 # ---------- Cargo Build Target ---------- #
