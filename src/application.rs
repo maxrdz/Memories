@@ -17,7 +17,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use adw::glib::gobject_ffi::G_TYPE_BOOLEAN;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::prelude::*;
@@ -123,7 +122,6 @@ impl Gallery {
                 "{}\n\nBuild Revision (Git SHA1): {}",
                 APP_INFO.comments, VCS_TAG
             ))
-            .deletable(true) // adds X button to frame on phosh mobile
             .build();
         about.present();
     }
