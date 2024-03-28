@@ -17,6 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use adw::glib::gobject_ffi::G_TYPE_BOOLEAN;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::prelude::*;
@@ -100,9 +101,6 @@ impl Gallery {
     fn show_about(&self) {
         let window = self.active_window().unwrap();
 
-        // No exit/back button on this window, so mobile users
-        // (at least on Phosh) need to swipe out of the program
-        // and close this new tab to return back to the main window.
         let about = adw::AboutWindow::builder()
             .transient_for(&window)
             .modal(true)
@@ -125,6 +123,7 @@ impl Gallery {
                 "{}\n\nBuild Revision (Git SHA1): {}",
                 APP_INFO.comments, VCS_TAG
             ))
+            .deletable(true) // adds X button to frame on phosh mobile
             .build();
         about.present();
     }
