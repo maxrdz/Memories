@@ -18,8 +18,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
@@ -98,11 +98,10 @@ impl Gallery {
     }
 
     fn show_about(&self) {
-        let window = self.active_window().unwrap();
+        let window: gtk::Window = self.active_window().unwrap();
 
-        let about = adw::AboutWindow::builder()
-            .transient_for(&window)
-            .modal(true)
+        // NOTE: This is libadwaita 1.5's new AboutDialog, not AboutWindow!
+        let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_INFO.app_id)
             .application_name(APP_INFO.app_title)
             .developer_name(APP_INFO.app_author)
@@ -123,6 +122,7 @@ impl Gallery {
                 APP_INFO.comments, VCS_TAG
             ))
             .build();
-        about.present();
+
+        about.present(&window)
     }
 }
