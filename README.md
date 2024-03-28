@@ -8,13 +8,15 @@ with GNOME technologies and mobile devices.
 
 ## Software Requirements
 
-- glib version 2+
-- gio version 2+
+- mount version 2.40+
+- pango version 1.52+
+- glib version 2.80+
+- gio version 2.80+
+- gtk4 1.13.4+
+- libadwaita 1.5
 - desktop-file-utils
 - appstream
 - appstream-glib
-- gtk4
-- libadwaita 1.4
 - Rustup (provides Cargo & rustc)
 - Ninja build system
 - Meson build system

@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
@@ -63,7 +64,7 @@ glib::wrapper! {
 }
 
 impl MasterWindow {
-    pub fn new<P: glib::IsA<adw::gtk::Application>>(application: &P) -> Self {
+    pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()

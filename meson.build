@@ -9,12 +9,14 @@ project('gallery', 'rust',
 i18n = import('i18n')
 gnome = import('gnome')
 
-# -------- Dependencies -------- #
+# -------- Library Dependencies -------- #
 
-dependency('glib-2.0', version: '>= 2.66')
-dependency('gio-2.0', version: '>= 2.66')
-dependency('gtk4', version: '>= 4.10.0')
-dependency('libadwaita-1', version: '>= 1.4.alpha')
+dependency('mount', version: '>= 2.40')
+dependency('pango', version: '>= 1.52')
+dependency('glib-2.0', version: '>= 2.80')
+dependency('gio-2.0', version: '>= 2.80')
+dependency('gtk4', version: '>= 4.13.4')
+dependency('libadwaita-1', version: '>= 1.5')
 
 # ------ Dev Dependencies ------ #
 
