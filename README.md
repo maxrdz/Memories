@@ -46,6 +46,14 @@ application build version that you want to uninstall.
 
 ## Cross Compiling
 
+For cross compiling, we use
+[cross-rs](https://github.com/cross-rs/cross), which is a
+drop-in replacement for Cargo. This tool allows the developer
+to cross compile using Docker (or a Docker drop-in replacement)
+instead of installing dependencies and additional pkg-conf
+configuration on the build machine. On setup, Meson will check
+that cross and docker, or an alternative, are installed.
+
 To setup a build that targets ARM mobile devices:
 
 ```sh

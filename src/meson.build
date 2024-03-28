@@ -42,10 +42,10 @@ gnome.compile_resources(project_name,
 
 out_binary_file = project_name
 
-cargo_bin  = find_program('cargo')
-cargo_opts  = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
+cargo_bin = find_program('cargo')
+cargo_opts = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
 cargo_opts += [ '--target-dir', meson.project_build_root()  / 'src' ]
-cargo_env  = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
+cargo_env = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 
 if get_option('profile') == 'default' or get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
@@ -68,16 +68,14 @@ if get_option('target') != ''
     bindir = ''
   endif
 
-  # For cross compiling to ARM, we need to use the aarch64
-  # pkg config sysroot directory. We also need to force
-  # rustc to use an aarch64 linker via Cargo configuration.
+  # For cross compiling to ARM, we use the cross-rs
+  # project for building our application via Docker.
+  # (This simplifies cross compiling issues by a lot)
 
-  # FIXME: This currently assumes any target with 'aarch64'
-  # is targeting linux GNU, and also assumes the specific
-  # pkg config sysroot directory and aarch64 linker binary.
   if get_option('target').contains('aarch64')
-    cargo_env += [ 'PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu/lib/pkgconfig' ]
-    cargo_opts += [ '--config', 'build.rustflags="-C linker=aarch64-linux-gnu-ld"' ]
+    # cross-rs requires Docker, or a drop-in alternative.
+    find_program(['docker', 'podman'])
+    cargo_bin  = find_program('cross')
   endif
 endif
 
