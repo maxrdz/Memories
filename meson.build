@@ -13,6 +13,7 @@ gnome = import('gnome')
 
 dependency('mount', version: '>= 2.40')
 dependency('pango', version: '>= 1.52')
+dependency('gstreamer-1.0', version: '>= 1.24')
 dependency('glib-2.0', version: '>= 2.80')
 dependency('gio-2.0', version: '>= 2.80')
 dependency('gtk4', version: '>= 4.13.4')

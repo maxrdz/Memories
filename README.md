@@ -10,6 +10,7 @@ with GNOME technologies and mobile devices.
 
 - mount version 2.40+
 - pango version 1.52+
+- gstreamer 1.24+
 - glib version 2.80+
 - gio version 2.80+
 - gtk4 1.13.4+
