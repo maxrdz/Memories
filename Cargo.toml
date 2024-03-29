@@ -15,6 +15,5 @@ lto = true
 strip = true
 
 [dependencies]
-log = { version = "0.4" }
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }

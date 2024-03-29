@@ -17,6 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::library_view::LibraryView;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -28,7 +29,20 @@ mod imp {
 
     #[derive(Debug, Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/maxrdz/Gallery/ui/master-window.ui")]
-    pub struct MasterWindow {}
+    pub struct MasterWindow {
+        #[template_child]
+        pub master_stack: TemplateChild<adw::ViewStack>,
+        #[template_child]
+        pub library_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub album_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub search_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub options_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub library_view: TemplateChild<LibraryView>,
+    }
 
     #[glib::object_subclass]
     impl ObjectSubclass for MasterWindow {
@@ -38,6 +52,7 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             klass.bind_template();
+            klass.bind_template_instance_callbacks();
         }
 
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
@@ -63,10 +78,22 @@ glib::wrapper! {
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
+#[gtk::template_callbacks]
 impl MasterWindow {
     pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()
+    }
+
+    #[template_callback]
+    fn master_stack_child_visible(&self) {
+        let class_imp: &imp::MasterWindow = self.imp();
+
+        if let Some(child_name) = class_imp.master_stack.visible_child_name() {
+            if child_name == "library" {
+                class_imp.library_view.load_library();
+            }
+        }
     }
 }

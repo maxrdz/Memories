@@ -12,20 +12,19 @@
       <object class="AdwToolbarView">
         <property name="content">
           <object class="AdwViewStack" id="master_stack">
+            <signal name="notify::visible-child-name" handler="master_stack_child_visible" swapped="true"/>
             <child>
-              <object class="AdwViewStackPage">
+              <object class="AdwViewStackPage" id="library_page">
                 <property name="name">library</property>
                 <property name="title">Library</property>
                 <property name="icon-name">library-symbolic</property>
                 <property name="child">
-                  <object class="AdwStatusPage">
-                    <property name="title">Library</property>
-                  </object>
+                  <object class="LibraryView" id="library_view"/>
                 </property>
               </object>
             </child>
             <child>
-              <object class="AdwViewStackPage">
+              <object class="AdwViewStackPage" id="album_page">
                 <property name="name">albums</property>
                 <property name="title">Albums</property>
                 <property name="icon-name">albums-symbolic</property>
@@ -37,7 +36,7 @@
               </object>
             </child>
             <child>
-              <object class="AdwViewStackPage">
+              <object class="AdwViewStackPage" id="search_page">
                 <property name="name">search</property>
                 <property name="title">Search</property>
                 <property name="icon-name">system-search-symbolic</property>
@@ -49,7 +48,7 @@
               </object>
             </child>
             <child>
-              <object class="AdwViewStackPage">
+              <object class="AdwViewStackPage" id="options_page">
                 <property name="name">options</property>
                 <property name="title">Options</property>
                 <property name="icon-name">applications-system-symbolic</property>
@@ -68,6 +67,8 @@
                 </property>
               </object>
             </child>
+            <!-- We have to set this property *after* defining our children. -->
+            <property name="visible-child-name">library</property>
           </object>
         </property>
         <child type="bottom">

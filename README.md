@@ -24,7 +24,8 @@ with GNOME technologies and mobile devices.
 
 ## Building from Source
 
-To build for release:
+We use Meson/Ninja as the build system for Gallery.
+The quickest way to build for release is to do the following:
 
 ```sh
 meson setup build

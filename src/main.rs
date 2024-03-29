@@ -20,6 +20,7 @@
 mod application;
 mod config;
 mod globals;
+mod library_view;
 mod master_window;
 mod vcs;
 
@@ -33,19 +34,19 @@ use gtk::{gio, glib};
 use libadwaita as adw;
 
 fn main() -> glib::ExitCode {
-    // Set up gettext translations
+    // Set up gettext translations.
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR).expect("Unable to bind the text domain!");
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8")
         .expect("Unable to set the text domain encoding!");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain!");
 
-    // Load gresource bundle
+    // Load the gresource bundle.
     let resources = gio::Resource::load(format!(
         "{}/{}.gresource",
         PKGDATADIR.to_owned(),
         APP_INFO.app_name
     ))
-    .expect("Could not load resources!");
+    .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
 
     let app = Gallery::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
