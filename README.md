@@ -80,7 +80,10 @@ meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
 
 We follow [Phosh's Guidelines for Maintainers](https://gitlab.gnome.org/World/Phosh/phosh/-/wikis/Guidelines-for-maintainers).
 
-## License
+## Copyright and License
 
-Gallery is licensed under the GNU GPL version 3.0.
-You can read the full license in the `COPYING` file.
+Copyright &copy; 2024 Max Rodriguez
+
+Gallery is released under the terms of the GNU General Public
+License, either version 3.0 or, at your option, any later
+version. You can read the full license in the `COPYING` file.
