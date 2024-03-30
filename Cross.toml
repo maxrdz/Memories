@@ -1,0 +1,19 @@
+# This is the TOML configuration file for cross-rs.
+# The cross config docs can be found here: https://github.com/cross-rs/cross/blob/main/docs/config_file.md
+
+[target.aarch64-unknown-linux-gnu]
+image.name = "ubuntu:latest"
+image.toolchain = ["x86_64-unknown-linux-gnu"]
+# Refer to: https://github.com/cross-rs/cross/issues/751
+pre-build = [
+    "export DEBIAN_FRONTEND=noninteractive",
+    "sed 's/^deb http/deb [arch=amd64] http/' -i '/etc/apt/sources.list'",
+    "echo 'deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted universe multiverse' >> /etc/apt/sources.list",
+    "echo 'deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted universe multiverse' >> /etc/apt/sources.list",
+    "echo 'deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse' >> /etc/apt/sources.list",
+    "echo 'deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted universe multiverse' >> /etc/apt/sources.list",
+    "dpkg --add-architecture $CROSS_DEB_ARCH",
+    "apt-get update",
+    "apt-get install --assume-yes apt-utils gcc g++-aarch64-linux-gnu libc6-dev-arm64-cross"
+    #"apt-get install --assume-yes libgtk-4-dev:$CROSS_DEB_ARCH libadwaita-1-dev:$CROSS_DEB_ARCH",
+]

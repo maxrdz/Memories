@@ -50,11 +50,11 @@ cargo_env = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 if get_option('profile') == 'default' or get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
   rust_target = 'release'
-  message('Building in release mode')
+  message('Building Gallery for Release.')
 else
   rust_target = 'debug'
   out_binary_file += '-dev'
-  message('Building in debug mode')
+  message('Building Gallery for Debug.')
 endif
 
 # ---------- Cross Compilation ---------- #
@@ -63,19 +63,23 @@ file_extension = '' # Unix-like default
 
 if get_option('target') != ''
   cargo_opts += [ '--target', get_option('target') ]
+
+  # For cross compiling, we use the cross-rs 
+  # project for building our application via Docker.
+  # This makes the cross compilation process simpler,
+  # and requires less setup on the developer's machine.
+
+  find_program(['docker', 'podman']) # podman also works
+  cargo_bin  = find_program('cross')
+  cargo_env += [ 'CROSS_BUILD_OPTS=--network=host' ]
+
+  if get_option('cross-verbose')
+    cargo_opts += [ '-v' ]
+  endif
+
   if get_option('target').contains('windows')
     file_extension = '.exe'
     bindir = ''
-  endif
-
-  # For cross compiling to ARM, we use the cross-rs
-  # project for building our application via Docker.
-  # (This simplifies cross compiling issues by a lot)
-
-  if get_option('target').contains('aarch64')
-    # cross-rs requires Docker, or a drop-in alternative.
-    find_program(['docker', 'podman'])
-    cargo_bin  = find_program('cross')
   endif
 endif
 

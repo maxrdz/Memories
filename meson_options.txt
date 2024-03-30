@@ -14,3 +14,9 @@ option(
   value: '',
   description: 'Rustc cross-compilation target triple. Default is an empty string, which compiles natively.'
 )
+option(
+  'cross-verbose',
+  type: 'boolean',
+  value: false,
+  description: 'Appends the -v flag when invoking cross. Applies if cross compiling.'
+)

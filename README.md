@@ -1,4 +1,4 @@
-<img src="https://gitlab.gnome.org/maxrdz/gallery/-/raw/master/data/icons/com.maxrdz.Gallery.png" align="left" width="100em"/>
+<img src="https://gitlab.gnome.org/maxrdz/gallery/-/raw/master/data/icons/com.maxrdz.Gallery.png" align="right" width="125em"/>
 
 # Gallery
 
@@ -53,12 +53,20 @@ application build version that you want to uninstall.
 For cross compiling, we use
 [cross-rs](https://github.com/cross-rs/cross), which is a
 drop-in replacement for Cargo. This tool allows the developer
-to cross compile using Docker (or a Docker drop-in replacement)
+to cross compile using **Docker** (or a Docker drop-in
+replacement, such as [Podman](https://podman.io/))
 instead of installing dependencies and additional pkg-conf
 configuration on the build machine. On setup, Meson will check
 that cross and docker, or an alternative, are installed.
 
-To setup a build that targets ARM mobile devices:
+To install the cross binary on your system user's cargo:
+```sh
+cargo install cross --git https://github.com/cross-rs/cross
+```
+NOTE: This will install the `cross` program under `~/.cargo/bin`.
+Be sure to add `~/.cargo/bin` to your PATH so Meson can find it.
+
+To setup a build that targets ARM64 GNU/Linux:
 
 ```sh
 meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
