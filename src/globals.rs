@@ -43,7 +43,6 @@ pub struct AboutInformation {
     pub copyright: &'static str,
     pub license: &'static str,
     pub license_type: License,
-    pub comments: &'static str,
 }
 
 pub static APP_INFO: AboutInformation = AboutInformation {
@@ -69,8 +68,4 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     copyright: "© 2024 Max Rodriguez",
     license: "GNU General Public License v3.0",
     license_type: License::Gpl30,
-    comments: "A free and open source photo/video gallery app for Linux mobile, \
-    built with GTK4 and libadwaita, designed to be well integrated \
-    with GNOME technologies and mobile devices running Phosh.\
-    \n\nReleased under the GNU General Public License version 3.0.",
 };

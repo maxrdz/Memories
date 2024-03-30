@@ -1,0 +1,11 @@
+data/com.maxrdz.Gallery.Dev.desktop.in.in
+data/com.maxrdz.Gallery.desktop.in.in
+data/com.maxrdz.Gallery.metainfo.xml.in.in
+src/application.rs
+src/globals.rs
+src/library_view.rs
+src/main.rs
+src/master_window.rs
+src/ui/help-overlay.ui
+src/ui/library-view.ui
+src/ui/master-window.ui

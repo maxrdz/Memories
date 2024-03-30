@@ -12,9 +12,7 @@ build-aux/app
 vendor
 **/.flatpak-builder
 .fenv
-po/*.pot
 po/*~
-help/*.pot
 flatpak_out/
 flatpak_repo/
 *.flatpak

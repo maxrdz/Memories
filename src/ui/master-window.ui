@@ -16,7 +16,7 @@
             <child>
               <object class="AdwViewStackPage" id="library_page">
                 <property name="name">library</property>
-                <property name="title">Library</property>
+                <property name="title" translatable="yes">Library</property>
                 <property name="icon-name">library-symbolic</property>
                 <property name="child">
                   <object class="LibraryView" id="library_view"/>
@@ -26,7 +26,7 @@
             <child>
               <object class="AdwViewStackPage" id="album_page">
                 <property name="name">albums</property>
-                <property name="title">Albums</property>
+                <property name="title" translatable="yes">Albums</property>
                 <property name="icon-name">albums-symbolic</property>
                 <property name="child">
                   <object class="AdwStatusPage">
@@ -38,7 +38,7 @@
             <child>
               <object class="AdwViewStackPage" id="search_page">
                 <property name="name">search</property>
-                <property name="title">Search</property>
+                <property name="title" translatable="yes">Search</property>
                 <property name="icon-name">system-search-symbolic</property>
                 <property name="child">
                   <object class="AdwStatusPage">
@@ -50,11 +50,11 @@
             <child>
               <object class="AdwViewStackPage" id="options_page">
                 <property name="name">options</property>
-                <property name="title">Options</property>
+                <property name="title" translatable="yes">Options</property>
                 <property name="icon-name">applications-system-symbolic</property>
                 <property name="child">
                   <object class="AdwStatusPage">
-                    <property name="title">Options</property>
+                    <property name="title" translatable="yes">Options</property>
                     <child>
                       <object class="GtkMenuButton">
                         <property name="primary">True</property>

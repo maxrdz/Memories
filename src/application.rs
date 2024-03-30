@@ -20,6 +20,7 @@
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use gettextrs::gettext;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
@@ -100,7 +101,6 @@ impl Gallery {
     fn show_about(&self) {
         let window: gtk::Window = self.active_window().unwrap();
 
-        // NOTE: This is libadwaita 1.5's new AboutDialog, not AboutWindow!
         let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_INFO.app_id)
             .application_name(APP_INFO.app_title)
@@ -118,8 +118,17 @@ impl Gallery {
             .license(APP_INFO.license)
             .license_type(APP_INFO.license_type)
             .comments(format!(
-                "{}\n\nBuild Revision (Git SHA1): {}",
-                APP_INFO.comments, VCS_TAG
+                "{}\n\n{} (Git SHA1): {}",
+                &gettext(
+                    // TRANSLATORS: Generated POT file will have lots of whitespace.
+                    // This is due to code linting. You can remove the whitespace in your PO file.
+                    "A free and open source photo/video gallery app for Linux mobile, \
+                        built with GTK4 and libadwaita, designed to be well integrated \
+                        with GNOME technologies and mobile devices running Phosh.\
+                        \n\nReleased under the GNU General Public License version 3.0."
+                ),
+                &gettext("Build Revision"),
+                VCS_TAG
             ))
             .build();
 

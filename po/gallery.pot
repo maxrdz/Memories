@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-30 00:20-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.maxrdz.Gallery.Dev.desktop.in.in:3
+msgid "Gallery (Dev)"
+msgstr ""
+
+#: data/com.maxrdz.Gallery.Dev.desktop.in.in:4
+#: data/com.maxrdz.Gallery.desktop.in.in:4
+msgid "A Linux Mobile friendly photo gallery app for GNU/Linux systems."
+msgstr ""
+
+#: data/com.maxrdz.Gallery.Dev.desktop.in.in:5
+#: data/com.maxrdz.Gallery.desktop.in.in:5
+msgid "gallery;photos;videos;"
+msgstr ""
+
+#: data/com.maxrdz.Gallery.desktop.in.in:3 src/ui/master-window.ui:6
+msgid "Gallery"
+msgstr ""
+
+#: data/com.maxrdz.Gallery.metainfo.xml.in.in:7
+msgid "A photo and video gallery application for GNOME."
+msgstr ""
+
+#. TRANSLATORS: Generated POT file will have lots of whitespace.
+#. This is due to code linting. You can remove the whitespace in your PO file.
+#: src/application.rs:125
+msgid ""
+"A free and open source photo/video gallery app for Linux "
+"mobile,                         built with GTK4 and libadwaita, designed to "
+"be well integrated                         with GNOME technologies and "
+"mobile devices running Phosh.                        \n"
+"\n"
+"Released under the GNU General Public License version 3.0."
+msgstr ""
+
+#: src/application.rs:130
+msgid "Build Revision"
+msgstr ""
+
+#: src/ui/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr ""
+
+#: src/ui/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: src/ui/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/ui/master-window.ui:19
+msgid "Library"
+msgstr ""
+
+#: src/ui/master-window.ui:29
+msgid "Albums"
+msgstr ""
+
+#: src/ui/master-window.ui:41
+msgid "Search"
+msgstr ""
+
+#: src/ui/master-window.ui:53 src/ui/master-window.ui:57
+msgid "Options"
+msgstr ""
+
+#: src/ui/master-window.ui:62
+msgid "Menu"
+msgstr ""
+
+#: src/ui/master-window.ui:86
+msgid "_Preferences"
+msgstr ""
+
+#: src/ui/master-window.ui:90
+msgid "_About"
+msgstr ""

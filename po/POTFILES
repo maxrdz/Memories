@@ -1,7 +1,0 @@
-data/com.maxrdz.GnomeGallery.desktop.in
-data/com.maxrdz.GnomeGallery.metainfo.xml.in
-src/ui/help-overlay.ui
-src/ui/master-window.ui
-src/main.rs
-src/globals.rs
-src/application.rs
