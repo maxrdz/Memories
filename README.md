@@ -80,6 +80,14 @@ meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
 
 We follow [Phosh's Guidelines for Maintainers](https://gitlab.gnome.org/World/Phosh/phosh/-/wikis/Guidelines-for-maintainers).
 
+For Gallery's UX, we follow the
+[GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).
+
+## Code of Conduct
+
+The Gallery project, its maintainers, and its contributors should
+follow the [GNOME Code of Conduct](https://conduct.gnome.org/).
+
 ## Copyright and License
 
 Copyright &copy; 2024 Max Rodriguez
