@@ -85,8 +85,9 @@ For Gallery's UX, we follow the
 
 ## Code of Conduct
 
-The Gallery project, its maintainers, and its contributors should
-follow the [GNOME Code of Conduct](https://conduct.gnome.org/).
+The Gallery project, its maintainers, and its contributors are
+required to follow the
+[GNOME Code of Conduct](https://conduct.gnome.org/).
 
 ## Copyright and License
 
