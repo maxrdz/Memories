@@ -1,11 +1,11 @@
 {
     "app-id" : "com.maxrdz.Gallery",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "45",
+    "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable",
-	"org.freedesktop.Sdk.Extension.llvm16"
+	    "org.freedesktop.Sdk.Extension.llvm16"
     ],
     "command" : "gallery",
     "finish-args" : [
