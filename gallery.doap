@@ -22,11 +22,11 @@
 
   <!-- GNOME GitLab Repository -->
   <repository>
-		<GitRepository>
-			<location rdf:resource="https://gitlab.gnome.org/maxrdz/gallery.git"/>
-			<browse rdf:resource="https://gitlab.gnome.org/maxrdz/gallery"/>
-		</GitRepository>
-	</repository>
+    <GitRepository>
+      <location rdf:resource="https://gitlab.gnome.org/maxrdz/gallery.git"/>
+      <browse rdf:resource="https://gitlab.gnome.org/maxrdz/gallery"/>
+    </GitRepository>
+  </repository>
 
   <!-- Project Maintainers -->
   <maintainer>
