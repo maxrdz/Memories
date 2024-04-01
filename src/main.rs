@@ -36,8 +36,7 @@ use libadwaita as adw;
 fn main() -> glib::ExitCode {
     // Set up gettext translations.
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR).expect("Unable to bind the text domain!");
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8")
-        .expect("Unable to set the text domain encoding!");
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").expect("Unable to set the text domain encoding!");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain!");
 
     // Load the gresource bundle.
