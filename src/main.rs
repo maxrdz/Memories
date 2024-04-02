@@ -20,6 +20,7 @@
 mod application;
 mod config;
 mod globals;
+mod library_list_model;
 mod library_view;
 mod master_window;
 mod vcs;

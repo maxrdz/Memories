@@ -51,12 +51,7 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for LibraryView {
-        fn constructed(&self) {
-            self.parent_constructed();
-            let _obj = self.obj();
-        }
-    }
+    impl ObjectImpl for LibraryView {}
     impl WidgetImpl for LibraryView {}
     impl WindowImpl for LibraryView {}
     impl ApplicationWindowImpl for LibraryView {}
@@ -76,8 +71,9 @@ impl LibraryView {
             .build()
     }
 
-    /// Called once the Library view stack page is visible on screen.
+    /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
-        let _ = gtk::DirectoryList::new(None, Some(&gio::File::for_path(DEFAULT_LIBRARY_DIR)));
+        use crate::library_list_model::LibraryListModel;
+        self.imp().photo_grid_view.set_model(Some(&LibraryListModel::new()));
     }
 }
