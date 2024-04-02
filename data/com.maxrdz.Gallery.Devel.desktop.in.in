@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=Gallery (Dev)
+Name=Gallery (Devel)
 Comment=A Linux Mobile friendly photo gallery app for GNU/Linux systems.
 Keywords=gallery;photos;videos;
 Type=Application
-Exec=gallery-dev
+Exec=gallery-devel
 # Do not translate this; xgettext marks this automatically.
-Icon=com.maxrdz.Gallery.Dev
+Icon=com.maxrdz.Gallery.Devel
 Categories=GTK;GNOME;Audio;Video;Player;
 Terminal=false
 # Keys below are recognized by the Phosh shell.

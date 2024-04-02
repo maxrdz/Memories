@@ -53,7 +53,7 @@ if get_option('profile') == 'default' or get_option('profile') == 'release'
   message('Building Gallery for Release.')
 else
   rust_target = 'debug'
-  out_binary_file += '-dev'
+  out_binary_file += '-devel'
   message('Building Gallery for Debug.')
 endif
 

@@ -50,7 +50,7 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     app_title: {
         match DEVELOPMENT_BUILD {
             false => "Gallery",
-            true => "Gallery (Dev)",
+            true => "Gallery (Devel)",
         }
     },
     app_version: VERSION,
@@ -59,7 +59,7 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     app_id: {
         match DEVELOPMENT_BUILD {
             false => "com.maxrdz.Gallery",
-            true => "com.maxrdz.Gallery.Dev",
+            true => "com.maxrdz.Gallery.Devel",
         }
     },
     authors: &["Max Rodriguez <me@maxrdz.com>"],

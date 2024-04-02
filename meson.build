@@ -31,9 +31,9 @@ cargo = find_program('cargo', required: true)
 
 base_id = 'com.maxrdz.Gallery'
 
-if get_option('profile') == 'dev'
-  profile = 'dev'
-  application_id = '@0@.Dev'.format(base_id)
+if get_option('profile') == 'devel'
+  profile = 'devel'
+  application_id = '@0@.Devel'.format(base_id)
 else
   profile = ''
   application_id = base_id

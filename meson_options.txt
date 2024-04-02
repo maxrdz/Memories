@@ -3,10 +3,10 @@ option(
   type: 'combo',
   choices: [
     'default',
-    'dev'
+    'devel'
   ],
   value: 'default',
-  description: 'The build profile for Gallery. `default` or `dev`.'
+  description: 'The build profile for Gallery. `default` or `devel`.'
 )
 option(
   'target',

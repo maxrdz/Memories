@@ -1,5 +1,5 @@
 {
-    "app-id" : "com.maxrdz.Gallery",
+    "app-id" : "com.maxrdz.Gallery.Devel",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
