@@ -6,8 +6,8 @@ gnome = import('gnome')
 pkgdatadir = get_option('prefix') / get_option('datadir') / project_name
 
 conf = configuration_data()
+conf.set_quoted('APP_NAME', project_name)
 conf.set_quoted('VERSION', meson.project_version())
-conf.set_quoted('GETTEXT_PACKAGE', project_name)
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 

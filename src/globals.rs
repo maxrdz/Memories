@@ -17,7 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::config::VERSION;
+use crate::config::{APP_NAME, VERSION};
 use adw::gtk::License;
 use libadwaita as adw;
 
@@ -46,7 +46,7 @@ pub struct AboutInformation {
 }
 
 pub static APP_INFO: AboutInformation = AboutInformation {
-    app_name: env!("CARGO_PKG_NAME"),
+    app_name: APP_NAME,
     app_title: {
         match DEVELOPMENT_BUILD {
             false => "Gallery",

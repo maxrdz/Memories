@@ -74,6 +74,8 @@ impl LibraryView {
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
         use crate::library_list_model::LibraryListModel;
-        self.imp().photo_grid_view.set_model(Some(&LibraryListModel::new()));
+        self.imp()
+            .photo_grid_view
+            .set_model(Some(&LibraryListModel::new()));
     }
 }

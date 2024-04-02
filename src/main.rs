@@ -27,26 +27,21 @@ mod vcs;
 
 use adw::gtk;
 use application::Gallery;
-use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
+use config::{APP_NAME, LOCALEDIR, PKGDATADIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
-use globals::APP_INFO;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
 fn main() -> glib::ExitCode {
     // Set up gettext translations.
-    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR).expect("Unable to bind the text domain!");
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").expect("Unable to set the text domain encoding!");
-    textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain!");
+    bindtextdomain(APP_NAME, LOCALEDIR).expect("Unable to bind the text domain!");
+    bind_textdomain_codeset(APP_NAME, "UTF-8").expect("Unable to set the text domain encoding!");
+    textdomain(APP_NAME).expect("Unable to switch to the text domain!");
 
     // Load the gresource bundle.
-    let resources = gio::Resource::load(format!(
-        "{}/{}.gresource",
-        PKGDATADIR.to_owned(),
-        APP_INFO.app_name
-    ))
-    .expect("Failed to load the gresource bundle!");
+    let resources = gio::Resource::load(format!("{}/{}.gresource", PKGDATADIR.to_owned(), APP_NAME))
+        .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
 
     let app = Gallery::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
