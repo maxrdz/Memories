@@ -5,7 +5,7 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name>Gallery</name>
+  <name xml:lang="en">Gallery</name>
   <shortname>Gallery</shortname>
   <created>2024-03-13</created>
   <shortdesc xml:lang="en">A photo and video gallery application for GNOME.</shortdesc>
@@ -19,6 +19,8 @@
   <license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
 
   <programming-language>Rust</programming-language>
+  <platform>GTK 4</platform>
+  <platform>Libadwaita</platform>
 
   <!-- GNOME GitLab Repository -->
   <repository>
@@ -35,6 +37,12 @@
       <foaf:mbox rdf:resource="mailto:me@maxrdz.com"/>
       <foaf:homepage rdf:resource="https://maxrdz.com/"/>
       <gnome:userid>maxrdz</gnome:userid>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
+          <foaf:accountName>maxrdz</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
     </foaf:Person>
   </maintainer>
 </Project>
