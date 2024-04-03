@@ -40,7 +40,7 @@
             "name" : "gallery",
             "buildsystem" : "meson",
             "config-opts" : [
-            	"-Dprofile=dev"
+            	"-Dprofile=devel"
             ],
             "builddir" : true,
             "sources" : [
