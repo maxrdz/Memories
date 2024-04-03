@@ -68,7 +68,7 @@
               </object>
             </child>
             <!-- We have to set this property *after* defining our children. -->
-            <property name="visible-child-name">library</property>
+            <property name="visible-child-name">albums</property>
           </object>
         </property>
         <child type="bottom">

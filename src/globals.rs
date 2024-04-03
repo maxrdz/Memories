@@ -26,9 +26,9 @@ pub static DEVELOPMENT_BUILD: bool = true;
 #[cfg(not(debug_assertions))]
 pub static DEVELOPMENT_BUILD: bool = false;
 
-pub static DEFAULT_LIBRARY_DIR: &str = "$HOME/Pictures";
-pub static DEFAULT_SCREENSHOTS_DIR: &str = "Screenshots";
-pub static DEFAULT_CAMERA_DIR: &str = "Camera";
+pub static DEFAULT_LIBRARY_ABS_DIR: &str = "/home/max/Pictures";
+pub static DEFAULT_SCREENSHOTS_REL_DIR: &str = "Screenshots";
+pub static DEFAULT_CAMERA_REL_DIR: &str = "Camera";
 
 pub struct AboutInformation {
     pub app_name: &'static str,

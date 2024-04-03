@@ -17,7 +17,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::globals::DEFAULT_LIBRARY_DIR;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -30,6 +29,12 @@ mod imp {
     #[derive(Debug, Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/maxrdz/Gallery/ui/library-view.ui")]
     pub struct LibraryView {
+        #[template_child]
+        pub library_view_stack: TemplateChild<adw::ViewStack>,
+        #[template_child]
+        pub spinner_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub gallery_page: TemplateChild<adw::ViewStackPage>,
         #[template_child]
         pub photo_grid_view: TemplateChild<gtk::GridView>,
     }
@@ -73,9 +78,30 @@ impl LibraryView {
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
+        use crate::globals::DEFAULT_LIBRARY_ABS_DIR;
         use crate::library_list_model::LibraryListModel;
+
         self.imp()
             .photo_grid_view
-            .set_model(Some(&LibraryListModel::new()));
+            .set_factory(Some(&gtk::BuilderListItemFactory::from_resource(
+                None::<&gtk::BuilderScope>,
+                "/com/maxrdz/Gallery/ui/library-list-item.ui",
+            )));
+
+        let llm: LibraryListModel = LibraryListModel::new();
+
+        // how am i supposed to change the stack page if the callback
+        // has to be a static method and doesnt have a reference to the view stack :sob:
+        llm.connect_loading_notify(LibraryView::library_list_model_loaded);
+        // todo: set a callback for error too
+        llm.set_file(Some(&gio::File::for_path(DEFAULT_LIBRARY_ABS_DIR)));
+
+        self.imp().photo_grid_view.set_model(Some(&llm));
+    }
+
+    fn library_list_model_loaded(dl: &gtk::DirectoryList) {
+        if dl.is_loading() == false {
+            println!("loaded");
+        }
     }
 }

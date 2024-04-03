@@ -63,7 +63,10 @@ mod imp {
     impl ObjectImpl for MasterWindow {
         fn constructed(&self) {
             self.parent_constructed();
-            let _obj = self.obj();
+            let obj = self.obj();
+            // This callback wont be triggered on start up by itself, so we
+            // want to check the very first visible child in the master stack.
+            obj.master_stack_child_visible();
         }
     }
     impl WidgetImpl for MasterWindow {}
