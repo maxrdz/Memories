@@ -2,10 +2,13 @@
 name = "gallery"
 version = "0.1.0"
 edition = "2021"
-license = "GPL-3.0"
+license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
 repository = "https://gitlab.gnome.org/maxrdz/gallery" 
 homepage = "https://gitlab.gnome.org/maxrdz/gallery"
+
+[package.metadata.urls]
+issuetracker = "https://gitlab.gnome.org/maxrdz/gallery/issues"
 
 [profile.release]
 codegen-units = 1 # Best LLVM optimization when built on a single thread
@@ -16,4 +19,7 @@ strip = true
 
 [dependencies]
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
+gdk = { version = "0.8", package = "gdk4", features = ["v4_14"] }
+gio = { version = "0.19", features = ["v2_76"] }
+gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }

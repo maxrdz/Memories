@@ -158,7 +158,10 @@ dependencies = [
 name = "gallery"
 version = "0.1.0"
 dependencies = [
+ "gdk4",
  "gettext-rs",
+ "gio",
+ "gtk4",
  "libadwaita",
 ]
 
