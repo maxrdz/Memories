@@ -12,6 +12,9 @@ indent_size = 2
 [*.{json,py,rs}]
 indent_size = 4
 
+[*.rs]
+max_line_length = 110
+
 [*.{c,h,h.in}]
 indent_size = 2
 max_line_length = 80
