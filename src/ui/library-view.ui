@@ -20,10 +20,14 @@
           <object class="AdwViewStackPage" id="gallery_page">
             <property name="name">gallery_page</property>
             <property name="child">
-              <object class="GtkGridView" id="photo_grid_view">
-                <property name="max-columns">5</property>
-                <property name="min-columns">5</property>
-                <property name="orientation">horizontal</property>
+              <object class="GtkScrolledWindow">
+                <property name="child">
+                  <object class="GtkGridView" id="photo_grid_view">
+                    <property name="max-columns">5</property>
+                    <property name="min-columns">5</property>
+                    <property name="orientation">horizontal</property>
+                  </object>
+                </property>
               </object>
             </property>
           </object>

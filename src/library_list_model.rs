@@ -34,18 +34,11 @@ mod imp {
     /// Wraps GtkDirectoryList with a GObject that implements
     /// GListModel, GtkSelectionModel, and GtkSectionModel.
     #[derive(Debug)]
-    pub struct LibraryListModel {
-        pub(super) library_directory: gtk::DirectoryList,
-    }
+    pub struct LibraryListModel (pub(super) gtk::DirectoryList);
 
     impl Default for LibraryListModel {
         fn default() -> Self {
-            Self {
-                library_directory: gtk::DirectoryList::new(
-                    None,
-                    None::<&gio::File>,
-                ),
-            }
+            Self(gtk::DirectoryList::new(None, None::<&gio::File>))
         }
     }
 
@@ -63,7 +56,7 @@ mod imp {
     /// to our underlying GtkDirectoryList object.
     impl ListModelImpl for LibraryListModel {
         fn item(&self, position: u32) -> Option<glib::Object> {
-            self.library_directory.item(position)
+            self.0.item(position)
         }
 
         fn item_type(&self) -> glib::Type {
@@ -71,7 +64,7 @@ mod imp {
         }
 
         fn n_items(&self) -> u32 {
-            self.library_directory.n_items()
+            self.0.n_items()
         }
     }
 
@@ -91,7 +84,7 @@ impl LibraryListModel {
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
     pub fn is_loading(&self) -> bool {
-        self.imp().library_directory.is_loading()
+        self.imp().0.is_loading()
     }
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
@@ -99,11 +92,19 @@ impl LibraryListModel {
     where
         F: Fn(&gtk::DirectoryList) + 'static,
     {
-        self.imp().library_directory.connect_loading_notify(callback)
+        self.imp().0.connect_loading_notify(callback)
+    }
+
+    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
+    pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
+    where
+        F: Fn(&gtk::DirectoryList) + 'static,
+    {
+        self.imp().0.connect_error_notify(callback)
     }
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
     pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
-        self.imp().library_directory.set_file(file)
+        self.imp().0.set_file(file)
     }
 }

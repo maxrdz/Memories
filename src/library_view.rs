@@ -17,9 +17,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::globals::DEFAULT_LIBRARY_ABS_DIR;
+use crate::library_list_model::LibraryListModel;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
@@ -78,30 +81,25 @@ impl LibraryView {
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
-        use crate::globals::DEFAULT_LIBRARY_ABS_DIR;
-        use crate::library_list_model::LibraryListModel;
+        let llm: LibraryListModel = LibraryListModel::new();
 
+        llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
+            if dl.is_loading() == false {
+                s.imp().library_view_stack.set_visible_child_name("gallery_page");
+                println!("{}", dl.n_items());
+            }
+        }));
+        llm.connect_error_notify(move |_| {
+            panic!("GtkDirectoryList returned an error!\n");
+        });
+
+        self.imp().photo_grid_view.set_model(Some(&llm));
         self.imp()
             .photo_grid_view
             .set_factory(Some(&gtk::BuilderListItemFactory::from_resource(
-                None::<&gtk::BuilderScope>,
+                Some(&gtk::BuilderRustScope::new()),
                 "/com/maxrdz/Gallery/ui/library-list-item.ui",
             )));
-
-        let llm: LibraryListModel = LibraryListModel::new();
-
-        // how am i supposed to change the stack page if the callback
-        // has to be a static method and doesnt have a reference to the view stack :sob:
-        llm.connect_loading_notify(LibraryView::library_list_model_loaded);
-        // todo: set a callback for error too
         llm.set_file(Some(&gio::File::for_path(DEFAULT_LIBRARY_ABS_DIR)));
-
-        self.imp().photo_grid_view.set_model(Some(&llm));
-    }
-
-    fn library_list_model_loaded(dl: &gtk::DirectoryList) {
-        if dl.is_loading() == false {
-            println!("loaded");
-        }
     }
 }
