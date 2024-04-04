@@ -161,6 +161,7 @@ dependencies = [
  "gdk4",
  "gettext-rs",
  "gio",
+ "glib-macros",
  "gtk4",
  "libadwaita",
 ]
