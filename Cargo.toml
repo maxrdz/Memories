@@ -2,10 +2,12 @@
 name = "gallery"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.76"
 license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
 repository = "https://gitlab.gnome.org/maxrdz/gallery" 
 homepage = "https://gitlab.gnome.org/maxrdz/gallery"
+publish = false
 
 [package.metadata.urls]
 issuetracker = "https://gitlab.gnome.org/maxrdz/gallery/issues"
