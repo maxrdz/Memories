@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gallery\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-30 00:20-0700\n"
+"POT-Creation-Date: 2024-04-04 16:41-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/com.maxrdz.Gallery.Dev.desktop.in.in:3
-msgid "Gallery (Dev)"
+#: data/com.maxrdz.Gallery.Devel.desktop.in.in:3
+msgid "Gallery (Devel)"
 msgstr ""
 
-#: data/com.maxrdz.Gallery.Dev.desktop.in.in:4
+#: data/com.maxrdz.Gallery.Devel.desktop.in.in:4
 #: data/com.maxrdz.Gallery.desktop.in.in:4
 msgid "A Linux Mobile friendly photo gallery app for GNU/Linux systems."
 msgstr ""
 
-#: data/com.maxrdz.Gallery.Dev.desktop.in.in:5
+#: data/com.maxrdz.Gallery.Devel.desktop.in.in:5
 #: data/com.maxrdz.Gallery.desktop.in.in:5
 msgid "gallery;photos;videos;"
 msgstr ""
