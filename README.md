@@ -78,6 +78,8 @@ meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
 
 ## Contributing
 
+Please read the project's [Contributing Guide](./CONTRIBUTING.md).
+
 It is very helpful for new contributors to read the
 [GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
 before starting to write your own changes to Gallery.
