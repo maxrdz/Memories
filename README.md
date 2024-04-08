@@ -76,11 +76,13 @@ To setup a build that targets ARM64 GNU/Linux:
 meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
 ```
 
-## Guidelines for Maintainers
+## Contributing
 
-We follow [Phosh's Guidelines for Maintainers](https://gitlab.gnome.org/World/Phosh/phosh/-/wikis/Guidelines-for-maintainers).
+It is very helpful for new contributors to read the
+[GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
+before starting to write your own changes to Gallery.
 
-For Gallery's UX, we follow the
+If your change or proposal is related to Gallery's UX, please see the
 [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).
 
 ## Code of Conduct
@@ -89,10 +91,18 @@ The Gallery project, its maintainers, and its contributors are
 required to follow the
 [GNOME Code of Conduct](https://conduct.gnome.org/).
 
+## Guidelines for Maintainers
+
+We follow
+[Phosh's Guidelines for Maintainers](https://gitlab.gnome.org/World/Phosh/phosh/-/wikis/Guidelines-for-maintainers).
+
+Additionally, the GNOME Handbook has a section for
+[project maintainers](https://handbook.gnome.org/maintainers.html).
+
 ## Copyright and License
 
 Copyright &copy; 2024 Max Rodriguez
 
-Gallery is released under the terms of the GNU General Public
+Gallery is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
-version. You can read the full license in the `COPYING` file.
+version. You can read the full license in the [COPYING](./COPYING) file.
