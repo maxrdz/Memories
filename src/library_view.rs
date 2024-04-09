@@ -42,8 +42,6 @@ mod imp {
         pub photo_grid_view: TemplateChild<gtk::GridView>,
     }
 
-    unsafe impl IsSubclassable<LibraryView> for adw::Bin {}
-
     #[glib::object_subclass]
     impl ObjectSubclass for LibraryView {
         const NAME: &'static str = "LibraryView";
@@ -61,9 +59,7 @@ mod imp {
 
     impl ObjectImpl for LibraryView {}
     impl WidgetImpl for LibraryView {}
-    impl WindowImpl for LibraryView {}
-    impl ApplicationWindowImpl for LibraryView {}
-    impl AdwApplicationWindowImpl for LibraryView {}
+    impl BinImpl for LibraryView {}
 }
 
 glib::wrapper! {
@@ -93,13 +89,13 @@ impl LibraryView {
             panic!("GtkDirectoryList returned an error!\n");
         });
 
+        let slif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
+        slif.connect_setup(move |factory: &gtk::SignalListItemFactory, new_gobject: &glib::Object| {
+            ()
+        });
+
         self.imp().photo_grid_view.set_model(Some(&llm));
-        self.imp()
-            .photo_grid_view
-            .set_factory(Some(&gtk::BuilderListItemFactory::from_resource(
-                Some(&gtk::BuilderRustScope::new()),
-                "/com/maxrdz/Gallery/ui/library-list-item.ui",
-            )));
+        self.imp().photo_grid_view.set_factory(Some(&slif));
         llm.set_file(Some(&gio::File::for_path(DEFAULT_LIBRARY_ABS_DIR)));
     }
 }

@@ -114,6 +114,8 @@ impl Gallery {
             })
             .issue_url(format!("{}/issues", APP_INFO.app_repo).as_str())
             .developers(APP_INFO.authors)
+            .artists(APP_INFO.artists.to_vec())
+            //.documenters(APP_INFO.documenters.to_vec())
             .copyright(APP_INFO.copyright)
             .license(APP_INFO.license)
             .license_type(APP_INFO.license_type)

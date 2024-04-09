@@ -42,10 +42,7 @@ fn freplace(s: String, args: &[(&str, &str)]) -> String {
     debug_assert!(!s.contains('{'), "all format variables must be replaced");
 
     if tracing::enabled!(tracing::Level::WARN) && s.contains('{') {
-        tracing::warn!(
-            "all format variables must be replaced, but some were not: {}",
-            s
-        );
+        tracing::warn!("all format variables must be replaced, but some were not: {}", s);
     }
 
     s
@@ -71,10 +68,7 @@ mod tests {
     fn gettext_f_simple() {
         assert_eq!(gettext_f("no replace", &[("one", "1")]), "no replace");
         assert_eq!(gettext_f("{one} param", &[("one", "1")]), "1 param");
-        assert_eq!(
-            gettext_f("middle {one} param", &[("one", "1")]),
-            "middle 1 param"
-        );
+        assert_eq!(gettext_f("middle {one} param", &[("one", "1")]), "middle 1 param");
         assert_eq!(gettext_f("end {one}", &[("one", "1")]), "end 1");
     }
 
@@ -160,4 +154,3 @@ mod tests {
         );
     }
 }
-

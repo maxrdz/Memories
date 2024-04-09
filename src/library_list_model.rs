@@ -34,7 +34,7 @@ mod imp {
     /// Wraps GtkDirectoryList with a GObject that implements
     /// GListModel, GtkSelectionModel, and GtkSectionModel.
     #[derive(Debug)]
-    pub struct LibraryListModel (pub(super) gtk::DirectoryList);
+    pub struct LibraryListModel(pub(super) gtk::DirectoryList);
 
     impl Default for LibraryListModel {
         fn default() -> Self {
