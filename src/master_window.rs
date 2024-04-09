@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::library_view::LibraryView;
+use crate::options_view::OptionsView;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -42,6 +43,8 @@ mod imp {
         pub options_page: TemplateChild<adw::ViewStackPage>,
         #[template_child]
         pub library_view: TemplateChild<LibraryView>,
+        #[template_child]
+        pub options_view: TemplateChild<OptionsView>,
     }
 
     #[glib::object_subclass]
