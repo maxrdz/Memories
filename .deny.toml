@@ -1,0 +1,27 @@
+# deny.toml is used by the cargo-deny utility.
+# Utility source: https://github.com/EmbarkStudios/cargo-deny
+#
+# We use this tool to verify our dependencies all use FLOSS
+# software licenses that allow Gallery to meet the app criteria
+# for being accepted into the GNOME Circle initiative in the future.
+#
+# For more info on the criteria Gallery aims to meet, see:
+# https://gitlab.gnome.org/Teams/Releng/AppOrganization/-/blob/main/AppCriteria.md#legal
+
+
+# This section is considered when running `cargo deny check licenses`
+# More documentation for the licenses section can be found here:
+# https://embarkstudios.github.io/cargo-deny/checks/licenses/cfg.html
+[licenses]
+version = 2
+# We want really high confidence when inferring licenses from text
+confidence-threshold = 0.93
+# Allow only OSI-Approved software licenses.
+allow = [
+    "GPL-3.0",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "MIT",
+    "Unicode-DFS-2016",
+]
+
