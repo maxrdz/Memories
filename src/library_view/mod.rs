@@ -1,4 +1,4 @@
-// library_view.rs
+// library_view/mod.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -17,6 +17,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+mod imp;
+
 use crate::globals::DEFAULT_LIBRARY_ABS_DIR;
 use crate::library_list_model::LibraryListModel;
 use adw::gtk;
@@ -25,42 +27,6 @@ use adw::subclass::prelude::*;
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
-
-mod imp {
-    use super::*;
-
-    #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(resource = "/com/maxrdz/Gallery/ui/library-view.ui")]
-    pub struct LibraryView {
-        #[template_child]
-        pub library_view_stack: TemplateChild<adw::ViewStack>,
-        #[template_child]
-        pub spinner_page: TemplateChild<adw::ViewStackPage>,
-        #[template_child]
-        pub gallery_page: TemplateChild<adw::ViewStackPage>,
-        #[template_child]
-        pub photo_grid_view: TemplateChild<gtk::GridView>,
-    }
-
-    #[glib::object_subclass]
-    impl ObjectSubclass for LibraryView {
-        const NAME: &'static str = "LibraryView";
-        type Type = super::LibraryView;
-        type ParentType = adw::Bin;
-
-        fn class_init(klass: &mut Self::Class) {
-            klass.bind_template();
-        }
-
-        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
-            obj.init_template();
-        }
-    }
-
-    impl ObjectImpl for LibraryView {}
-    impl WidgetImpl for LibraryView {}
-    impl BinImpl for LibraryView {}
-}
 
 glib::wrapper! {
     pub struct LibraryView(ObjectSubclass<imp::LibraryView>)

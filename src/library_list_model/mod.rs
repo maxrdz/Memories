@@ -1,4 +1,4 @@
-// library_list_model.rs
+// library_list_model/mod.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -21,56 +21,12 @@
 //! and implements the GListModel and GtkSelectionModel interfaces.
 //! Used by the GtkGridView in the Library view as its list model.
 
+mod imp;
+
 use adw::gtk;
 use gio::glib::subclass::types::ObjectSubclassIsExt;
 use gtk::{gio, glib};
 use libadwaita as adw;
-
-mod imp {
-    use super::*;
-    use gio::prelude::*;
-    use gtk::subclass::prelude::*;
-
-    /// Wraps GtkDirectoryList with a GObject that implements
-    /// GListModel, GtkSelectionModel, and GtkSectionModel.
-    #[derive(Debug)]
-    pub struct LibraryListModel(pub(super) gtk::DirectoryList);
-
-    impl Default for LibraryListModel {
-        fn default() -> Self {
-            Self(gtk::DirectoryList::new(None, None::<&gio::File>))
-        }
-    }
-
-    #[glib::object_subclass]
-    impl ObjectSubclass for LibraryListModel {
-        const NAME: &'static str = "LibraryListModel";
-        type Type = super::LibraryListModel;
-        type ParentType = glib::Object;
-        type Interfaces = (gio::ListModel, gtk::SelectionModel);
-    }
-
-    impl ObjectImpl for LibraryListModel {}
-
-    /// Basically just redirect all GListModel interface calls
-    /// to our underlying GtkDirectoryList object.
-    impl ListModelImpl for LibraryListModel {
-        fn item(&self, position: u32) -> Option<glib::Object> {
-            self.0.item(position)
-        }
-
-        fn item_type(&self) -> glib::Type {
-            glib::Object::static_type()
-        }
-
-        fn n_items(&self) -> u32 {
-            self.0.n_items()
-        }
-    }
-
-    impl SectionModelImpl for LibraryListModel {}
-    impl SelectionModelImpl for LibraryListModel {}
-}
 
 glib::wrapper! {
     pub struct LibraryListModel(ObjectSubclass<imp::LibraryListModel>)

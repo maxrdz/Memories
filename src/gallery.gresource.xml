@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/maxrdz/Gallery/">
-    <!-- UI Files -->
-    <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">ui/help-overlay.ui</file>
-    <file preprocess="xml-stripblanks">ui/library-list-item.ui</file>
-    <file preprocess="xml-stripblanks">ui/library-view.ui</file>
-    <file preprocess="xml-stripblanks">ui/master-window.ui</file>
-    <file preprocess="xml-stripblanks">ui/options-view.ui</file>
     <!-- Icons -->
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
+    <!-- UI Files -->
+    <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks">library_list_model/library-list-item.ui</file>
+    <file preprocess="xml-stripblanks">library_view/library-view.ui</file>
+    <file preprocess="xml-stripblanks">master_window/master-window.ui</file>
+    <file preprocess="xml-stripblanks">options_view/options-view.ui</file>
   </gresource>
 </gresources>

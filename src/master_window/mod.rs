@@ -1,4 +1,4 @@
-// options_view.rs
+// master_window/mod.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -17,49 +17,39 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+mod imp;
+
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
-mod imp {
-    use super::*;
-
-    #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(resource = "/com/maxrdz/Gallery/ui/options-view.ui")]
-    pub struct OptionsView {}
-
-    #[glib::object_subclass]
-    impl ObjectSubclass for OptionsView {
-        const NAME: &'static str = "OptionsView";
-        type Type = super::OptionsView;
-        type ParentType = adw::Bin;
-
-        fn class_init(klass: &mut Self::Class) {
-            klass.bind_template();
-        }
-
-        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
-            obj.init_template();
-        }
-    }
-
-    impl ObjectImpl for OptionsView {}
-    impl WidgetImpl for OptionsView {}
-    impl BinImpl for OptionsView {}
-}
-
 glib::wrapper! {
-    pub struct OptionsView(ObjectSubclass<imp::OptionsView>)
-        @extends gtk::Widget, adw::Bin,
+    pub struct MasterWindow(ObjectSubclass<imp::MasterWindow>)
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl OptionsView {
+#[gtk::template_callbacks]
+impl MasterWindow {
     pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()
+    }
+
+    #[template_callback]
+    fn master_stack_child_visible(&self) {
+        let class_imp: &imp::MasterWindow = self.imp();
+
+        if let Some(child_name) = class_imp.master_stack.visible_child_name() {
+            if child_name == "library" {
+                // if the photo grid has no model, it has not been loaded before
+                if let None = class_imp.library_view.imp().photo_grid_view.model() {
+                    class_imp.library_view.load_library();
+                }
+            }
+        }
     }
 }
