@@ -1,13 +1,13 @@
 {
     "app-id" : "com.maxrdz.Gallery.Devel",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
+    "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable",
 	    "org.freedesktop.Sdk.Extension.llvm16"
     ],
-    "command" : "gallery",
+    "command" : "gallery-devel",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
