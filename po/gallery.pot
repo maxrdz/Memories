@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-04 16:41-0700\n"
+"POT-Creation-Date: 2024-04-09 13:57-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "gallery;photos;videos;"
 msgstr ""
 
-#: data/com.maxrdz.Gallery.desktop.in.in:3 src/ui/master-window.ui:6
+#: data/com.maxrdz.Gallery.desktop.in.in:3 src/master_window/master-window.ui:6
 msgid "Gallery"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 
 #. TRANSLATORS: Generated POT file will have lots of whitespace.
 #. This is due to code linting. You can remove the whitespace in your PO file.
-#: src/application.rs:125
+#: src/application.rs:127
 msgid ""
 "A free and open source photo/video gallery app for Linux "
 "mobile,                         built with GTK4 and libadwaita, designed to "
@@ -51,49 +51,49 @@ msgid ""
 "Released under the GNU General Public License version 3.0."
 msgstr ""
 
-#: src/application.rs:130
+#: src/application.rs:132
 msgid "Build Revision"
 msgstr ""
 
-#: src/ui/help-overlay.ui:11
+#: src/gtk/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "General"
 msgstr ""
 
-#: src/ui/help-overlay.ui:14
+#: src/gtk/help-overlay.ui:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr ""
 
-#: src/ui/help-overlay.ui:20
+#: src/gtk/help-overlay.ui:20
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: src/ui/master-window.ui:19
+#: src/master_window/master-window.ui:19
 msgid "Library"
 msgstr ""
 
-#: src/ui/master-window.ui:29
+#: src/master_window/master-window.ui:29
 msgid "Albums"
 msgstr ""
 
-#: src/ui/master-window.ui:41
+#: src/master_window/master-window.ui:41
 msgid "Search"
 msgstr ""
 
-#: src/ui/master-window.ui:53 src/ui/master-window.ui:57
+#: src/master_window/master-window.ui:53 src/options_view/options-view.ui:6
 msgid "Options"
 msgstr ""
 
-#: src/ui/master-window.ui:62
+#: src/options_view/options-view.ui:11
 msgid "Menu"
 msgstr ""
 
-#: src/ui/master-window.ui:86
+#: src/options_view/options-view.ui:21
 msgid "_Preferences"
 msgstr ""
 
-#: src/ui/master-window.ui:90
+#: src/options_view/options-view.ui:25
 msgid "_About"
 msgstr ""
