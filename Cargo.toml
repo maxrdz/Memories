@@ -1,8 +1,8 @@
 [package]
 name = "gallery"
-version = "0.1.0"
+version = "46.1.0"
 edition = "2021"
-rust-version = "1.76"
+rust-version = "1.77"
 license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
 repository = "https://gitlab.gnome.org/maxrdz/gallery" 
