@@ -5,7 +5,7 @@
 GITLAB_USER=maxrdz
 GITLAB_NAME=gallery
 MIRROR_USER=maxrdz
-MIRROR_NAME=gnome-gallery
+MIRROR_NAME=gallery
 
 git clone --bare https://gitlab.gnome.org/$GITLAB_USER/$GITLAB_NAME.git/
 cd $GITLAB_NAME.git
