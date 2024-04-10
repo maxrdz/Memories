@@ -65,8 +65,18 @@ mod imp {
             };
 
             window.set_title(Some(APP_INFO.app_title));
-
             window.present();
+
+            // Setup our own CSS provider from gresource
+            let gdk_screen: gdk::Display = gdk::Display::default().unwrap();
+            let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
+            new_css_provider.load_from_resource("/com/maxrdz/Album/style.css");
+
+            gtk::StyleContext::add_provider_for_display(
+                &gdk_screen,
+                &new_css_provider,
+                gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+            );
         }
     }
 

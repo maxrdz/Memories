@@ -7,11 +7,46 @@
           <object class="AdwViewStackPage" id="spinner_page">
             <property name="name">spinner_page</property>
             <property name="child">
-              <object class="GtkSpinner">
-                <property name="valign">center</property>
-                <property name="halign">center</property>
-                <property name="vexpand">True</property>
-                <property name="spinning">True</property>
+              <object class="AdwClamp">
+                <property name="orientation">vertical</property>
+                <property name="maximum-size">75</property>
+                <property name="child">
+                  <object class="GtkListBox">
+                    <style>
+                      <class name="spinner_page_list_box"/>
+                    </style>
+                    <property name="vexpand">True</property>
+                    <property name="sensitive">False</property>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="child">
+                          <object class="GtkSpinner">
+                            <property name="width_request">32</property>
+                            <property name="height_request">32</property>
+                            <property name="valign">center</property>
+                            <property name="halign">center</property>
+                            <property name="vexpand">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="spinning">True</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="child">
+                          <object class="GtkLabel">
+                            <attributes>
+                              <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+                            </attributes>
+                            <property name="label" translatable="yes">Loading your library..</property>
+                            <property name="selectable">False</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
               </object>
             </property>
           </object>

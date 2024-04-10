@@ -19,13 +19,19 @@
 
 mod application;
 mod config;
+#[allow(dead_code)]
 mod globals;
+#[allow(dead_code)]
 mod i18n;
 mod library_list_model;
 mod library_view;
 mod master_window;
 mod options_view;
 mod vcs;
+
+extern crate pretty_env_logger;
+#[macro_use]
+extern crate log;
 
 use adw::gtk;
 use application::Album;
@@ -34,10 +40,6 @@ use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
-
-extern crate pretty_env_logger;
-#[macro_use]
-extern crate log;
 
 fn main() -> glib::ExitCode {
     pretty_env_logger::init();
