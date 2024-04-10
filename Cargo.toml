@@ -26,5 +26,7 @@ gio = { version = "0.19", features = ["v2_76"] }
 glib-macros = { version = "0.19" }
 gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }
-tracing = "0.1.36"
+log = { version = "0.4" }
+pretty_env_logger = { version = "0.5" }
+tracing = { version = "0.1.36" }
 
