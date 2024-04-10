@@ -5,17 +5,17 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">Gallery</name>
-  <shortname>Gallery</shortname>
+  <name xml:lang="en">Album</name>
+  <shortname>Album</shortname>
   <created>2024-03-13</created>
-  <shortdesc xml:lang="en">A photo and video gallery application for GNOME.</shortdesc>
-  <description xml:lang="en">A free and open source photo/video gallery app for Linux
+  <shortdesc xml:lang="en">A photo and video album application for GNOME.</shortdesc>
+  <description xml:lang="en">A free and open source photo/video album app for Linux
   mobile, built with GTK4 and libadwaita, designed to be well integrated with GNOME
   technologies and mobile devices.</description>
 
-  <homepage rdf:resource="https://gitlab.gnome.org/maxrdz/gallery"/>
-  <download-page rdf:resource="https://gitlab.gnome.org/maxrdz/gallery/-/tags"/>
-  <bug-database rdf:resource="https://gitlab.gnome.org/maxrdz/gallery/issues/"/>
+  <homepage rdf:resource="https://gitlab.gnome.org/maxrdz/Album"/>
+  <download-page rdf:resource="https://gitlab.gnome.org/maxrdz/Album/-/tags"/>
+  <bug-database rdf:resource="https://gitlab.gnome.org/maxrdz/Album/issues/"/>
   <license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
 
   <programming-language>Rust</programming-language>
@@ -25,8 +25,8 @@
   <!-- GNOME GitLab Repository -->
   <repository>
     <GitRepository>
-      <location rdf:resource="https://gitlab.gnome.org/maxrdz/gallery.git"/>
-      <browse rdf:resource="https://gitlab.gnome.org/maxrdz/gallery"/>
+      <location rdf:resource="https://gitlab.gnome.org/maxrdz/Album.git"/>
+      <browse rdf:resource="https://gitlab.gnome.org/maxrdz/Album"/>
     </GitRepository>
   </repository>
 

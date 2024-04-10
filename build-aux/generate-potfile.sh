@@ -2,7 +2,7 @@
 # Original Source taken from World/Warp, licensed under the GNU GPLv3 or later.
 # https://gitlab.gnome.org/World/warp/-/blob/main/build-aux/generate-potfile.sh
 
-PROJECT_NAME=gallery
+PROJECT_NAME=album
 
 src="$(find src/ -path '*.rs')"
 ui="$(find src/ -path '*.ui')"

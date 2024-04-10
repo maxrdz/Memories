@@ -49,17 +49,17 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     app_name: APP_NAME,
     app_title: {
         match DEVELOPMENT_BUILD {
-            false => "Gallery",
-            true => "Gallery (Devel)",
+            false => "Album",
+            true => "Album (Devel)",
         }
     },
     app_version: VERSION,
-    app_repo: "https://gitlab.gnome.org/maxrdz/gallery",
+    app_repo: "https://gitlab.gnome.org/maxrdz/Album",
     app_author: "Max Rodriguez",
     app_id: {
         match DEVELOPMENT_BUILD {
-            false => "com.maxrdz.Gallery",
-            true => "com.maxrdz.Gallery.Devel",
+            false => "com.maxrdz.Album",
+            true => "com.maxrdz.Album.Devel",
         }
     },
     authors: &["Max Rodriguez <me@maxrdz.com>"],

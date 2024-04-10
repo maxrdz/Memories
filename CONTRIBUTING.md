@@ -1,7 +1,7 @@
 # Contributing Guidelines
 
 If you are new to the GNOME community and software ecosystem,
-the Gallery project would like to give you a warm welcome to
+the Album project would like to give you a warm welcome to
 the GNOME community. We highly encourage you to visit
 [welcome.gnome.org](https://welcome.gnome.org/), a website
 made by the GNOME foundation to introduce new users to GNOME.

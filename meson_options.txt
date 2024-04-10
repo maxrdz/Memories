@@ -6,7 +6,7 @@ option(
     'devel'
   ],
   value: 'default',
-  description: 'The build profile for Gallery. `default` or `devel`.'
+  description: 'The build profile for Album. `default` or `devel`.'
 )
 option(
   'target',

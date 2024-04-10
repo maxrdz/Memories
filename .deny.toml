@@ -2,10 +2,10 @@
 # Utility source: https://github.com/EmbarkStudios/cargo-deny
 #
 # We use this tool to verify our dependencies all use FLOSS
-# software licenses that allow Gallery to meet the app criteria
+# software licenses that allow Album to meet the app criteria
 # for being accepted into the GNOME Circle initiative in the future.
 #
-# For more info on the criteria Gallery aims to meet, see:
+# For more info on the criteria Album aims to meet, see:
 # https://gitlab.gnome.org/Teams/Releng/AppOrganization/-/blob/main/AppCriteria.md#legal
 
 

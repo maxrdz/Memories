@@ -50,11 +50,11 @@ cargo_env = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 if get_option('profile') == 'default' or get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
   rust_target = 'release'
-  message('Building Gallery for Release.')
+  message('Building Album for Release.')
 else
   rust_target = 'debug'
   out_binary_file += '-devel'
-  message('Building Gallery for Debug.')
+  message('Building Album for Debug.')
 endif
 
 # ---------- Cross Compilation ---------- #

@@ -25,7 +25,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Gallery/master_window/master-window.ui")]
+#[template(resource = "/com/maxrdz/Album/master_window/master-window.ui")]
 pub struct MasterWindow {
     #[template_child]
     pub master_stack: TemplateChild<adw::ViewStack>,

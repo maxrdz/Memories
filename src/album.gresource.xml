@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/maxrdz/Gallery/">
+  <gresource prefix="/com/maxrdz/Album/">
     <!-- Icons -->
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>

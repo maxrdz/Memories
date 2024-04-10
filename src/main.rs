@@ -28,7 +28,7 @@ mod options_view;
 mod vcs;
 
 use adw::gtk;
-use application::Gallery;
+use application::Album;
 use config::{APP_NAME, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::prelude::*;
@@ -36,12 +36,18 @@ use gtk::{gio, glib};
 use libadwaita as adw;
 
 extern crate pretty_env_logger;
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 fn main() -> glib::ExitCode {
     pretty_env_logger::init();
-    info!("{} v{}; Build revision (Git SHA1): {}", APP_NAME, VERSION, vcs::VCS_TAG);
 
+    info!(
+        "{} v{}; Build revision (Git SHA1): {}",
+        APP_NAME,
+        VERSION,
+        vcs::VCS_TAG
+    );
     // Set up gettext translations.
     bindtextdomain(APP_NAME, LOCALEDIR).expect("Unable to bind the text domain!");
     bind_textdomain_codeset(APP_NAME, "UTF-8").expect("Unable to set the text domain encoding!");
@@ -52,6 +58,6 @@ fn main() -> glib::ExitCode {
         .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
 
-    let app = Gallery::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
+    let app = Album::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
     app.run()
 }

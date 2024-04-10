@@ -23,7 +23,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Gallery/options_view/options-view.ui")]
+#[template(resource = "/com/maxrdz/Album/options_view/options-view.ui")]
 pub struct OptionsView {}
 
 #[glib::object_subclass]

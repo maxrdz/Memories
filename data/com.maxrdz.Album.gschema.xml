@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="album">
+  <schema id="com.maxrdz.Album" path="/com/maxrdz/Album/">
+  </schema>
+</schemalist>

@@ -1,6 +1,6 @@
 NAME: Pipeline
-LINK: https://gitlab.gnome.org/maxrdz/gallery/-/commits/%{default_branch}
-BADGE_IMG_URL: https://gitlab.gnome.org/maxrdz/gallery/badges/%{default_branch}/pipeline.svg
+LINK: https://gitlab.gnome.org/maxrdz/Album/-/commits/%{default_branch}
+BADGE_IMG_URL: https://gitlab.gnome.org/maxrdz/Album/badges/%{default_branch}/pipeline.svg
 
 NAME: License
 LINK: https://spdx.org/licenses/GPL-3.0-or-later.html

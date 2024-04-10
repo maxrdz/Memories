@@ -1,24 +1,24 @@
-# Gallery
+# Album
 
-A free and open source photo and video gallery application designed
+A free and open source photo and video album application designed
 for mobile devices, built with GTK4 and libadwaita, aiming to be
 well integrated with GNOME technologies and the Phosh shell.
 
 ## Building from Source
 
-We use Meson/Ninja as the build system for Gallery.
+We use Meson/Ninja as the build system for Album.
 The quickest way to build for release is to do the following:
 
 ### Getting the Source
 
 ```sh
-git clone https://gitlab.gnome.org/maxrdz/gallery
-cd gallery
+git clone https://gitlab.gnome.org/maxrdz/Album
+cd Album
 ```
 
-### Build Gallery
+### Build Album
 
-Before building Gallery, make sure you have the required
+Before building Album, make sure you have the required
 dependencies installed. Meson will let you know what binaries or
 libraries it is missing or cannot find, but you can also read the
 root [Meson](./meson.build) build file to see the list of
@@ -40,7 +40,7 @@ meson install -C builddevel
 
 ### Running from the source tree
 
-If you would like to run Gallery without installing it on your
+If you would like to run Album without installing it on your
 system, you can use `cargo` directly to build and run the source.
 
 ### Uninstalling
@@ -82,14 +82,14 @@ Please read the project's [Contributing Guide](./CONTRIBUTING.md).
 
 It is very helpful for new contributors to read the
 [GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
-before starting to write your own changes to Gallery.
+before starting to write your own changes to Album.
 
-If your change or proposal is related to Gallery's UX, please see the
+If your change or proposal is related to Album's UX, please see the
 [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).
 
 ## Code of Conduct
 
-The Gallery project, its maintainers, and its contributors are
+The Album project, its maintainers, and its contributors are
 required to follow the
 [GNOME Code of Conduct](https://conduct.gnome.org/).
 
@@ -105,6 +105,6 @@ Additionally, the GNOME Handbook has a section for
 
 Copyright &copy; 2024 Max Rodriguez
 
-Gallery is distributed under the terms of the GNU General Public
+Album is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
 version. You can read the full license in the [COPYING](./COPYING) file.

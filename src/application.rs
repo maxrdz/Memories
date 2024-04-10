@@ -32,16 +32,16 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct Gallery {}
+    pub struct Album {}
 
     #[glib::object_subclass]
-    impl ObjectSubclass for Gallery {
-        const NAME: &'static str = "Gallery";
-        type Type = super::Gallery;
+    impl ObjectSubclass for Album {
+        const NAME: &'static str = "Album";
+        type Type = super::Album;
         type ParentType = adw::Application;
     }
 
-    impl ObjectImpl for Gallery {
+    impl ObjectImpl for Album {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
@@ -50,7 +50,7 @@ mod imp {
         }
     }
 
-    impl ApplicationImpl for Gallery {
+    impl ApplicationImpl for Album {
         fn activate(&self) {
             let application = self.obj();
 
@@ -70,17 +70,17 @@ mod imp {
         }
     }
 
-    impl GtkApplicationImpl for Gallery {}
-    impl AdwApplicationImpl for Gallery {}
+    impl GtkApplicationImpl for Album {}
+    impl AdwApplicationImpl for Album {}
 }
 
 glib::wrapper! {
-    pub struct Gallery(ObjectSubclass<imp::Gallery>)
+    pub struct Album(ObjectSubclass<imp::Album>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl Gallery {
+impl Album {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -124,7 +124,7 @@ impl Gallery {
                 &gettext(
                     // TRANSLATORS: Generated POT file will have lots of whitespace.
                     // This is due to code linting. You can remove the whitespace in your PO file.
-                    "A free and open source photo/video gallery app for Linux mobile, \
+                    "A free and open source photo/video album app for Linux mobile, \
                         built with GTK4 and libadwaita, designed to be well integrated \
                         with GNOME technologies and mobile devices running Phosh.\
                         \n\nReleased under the GNU General Public License version 3.0."
