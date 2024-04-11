@@ -42,7 +42,16 @@ use gtk::{gio, glib};
 use libadwaita as adw;
 
 fn main() -> glib::ExitCode {
-    pretty_env_logger::init();
+    if let Err(_) = std::env::var("RUST_LOG") {
+        std::env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
+        pretty_env_logger::init();
+        info!(
+            "No RUST_LOG env var found. Setting to default: '{}'",
+            globals::RUST_LOG_ENVVAR_DEFAULT
+        );
+    } else {
+        pretty_env_logger::init();
+    }
 
     info!(
         "{} v{}; Build revision (Git SHA1): {}",

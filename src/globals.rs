@@ -20,11 +20,20 @@
 use crate::config::{APP_NAME, VERSION};
 use adw::gtk::License;
 use libadwaita as adw;
+use cfg_if::cfg_if;
 
 #[cfg(debug_assertions)]
 pub static DEVELOPMENT_BUILD: bool = true;
 #[cfg(not(debug_assertions))]
 pub static DEVELOPMENT_BUILD: bool = false;
+
+cfg_if! {
+    if #[cfg(debug_assertions)] {
+        pub static RUST_LOG_ENVVAR_DEFAULT: &str = "debug";
+    } else {
+        pub static RUST_LOG_ENVVAR_DEFAULT: &str = "info";
+    }
+}
 
 /// DEFAULT_LIBRARY_DIRECTORY path relative to $HOME env var path.
 pub static DEFAULT_LIBRARY_DIRECTORY: &str = "Pictures";
