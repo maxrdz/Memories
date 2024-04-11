@@ -29,7 +29,7 @@ pub fn ngettext_f(msgid: &str, msgid_plural: &str, n: u32, args: &[(&str, &str)]
 /// in a key-value tuple.
 fn freplace(s: String, args: &[(&str, &str)]) -> String {
     // This function is useless if there are no arguments
-    debug_assert!(!args.is_empty(), "atleast one key-value pair must be given");
+    debug_assert!(!args.is_empty(), "At least one key-value pair must be given.");
 
     // We could check here if all keys were used, but some translations might
     // not use all variables, so we don't do that.
@@ -39,12 +39,14 @@ fn freplace(s: String, args: &[(&str, &str)]) -> String {
         s = s.replace(&format!("{{{key}}}"), val);
     }
 
-    debug_assert!(!s.contains('{'), "all format variables must be replaced");
+    debug_assert!(!s.contains('{'), "All format variables must be replaced.");
 
-    if tracing::enabled!(tracing::Level::WARN) && s.contains('{') {
-        tracing::warn!("all format variables must be replaced, but some were not: {}", s);
+    if s.contains('{') {
+        trace!(
+            "All format variables must be replaced, but some were not.\n\n{}",
+            s,
+        );
     }
-
     s
 }
 
@@ -53,13 +55,13 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic = "atleast one key-value pair must be given"]
+    #[should_panic = "At least one key-value pair must be given"]
     fn freplace_no_args() {
         gettext_f("no args", &[]);
     }
 
     #[test]
-    #[should_panic = "all format variables must be replaced"]
+    #[should_panic = "All format variables must be replaced"]
     fn freplace_missing_key() {
         gettext_f("missing {one}", &[("two", "2")]);
     }

@@ -28,5 +28,4 @@ gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }
 log = { version = "0.4" }
 pretty_env_logger = { version = "0.5" }
-tracing = { version = "0.1.36" }
 
