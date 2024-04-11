@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 20:32-0700\n"
+"POT-Creation-Date: 2024-04-10 20:41-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "album;gallery;photos;videos;"
 msgstr ""
 
-#: data/com.maxrdz.Album.desktop.in.in:3
+#: data/com.maxrdz.Album.desktop.in.in:3 src/master_window/master-window.ui:6
 msgid "Album"
 msgstr ""
 
@@ -83,10 +83,6 @@ msgstr ""
 msgid ""
 "The {ENV_VAR} environment variable was found,                         so "
 "Album cannot open your photo library."
-msgstr ""
-
-#: src/master_window/master-window.ui:6
-msgid "Gallery"
 msgstr ""
 
 #: src/master_window/master-window.ui:19

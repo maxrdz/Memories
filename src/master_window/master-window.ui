@@ -3,7 +3,7 @@
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
   <template class="MasterWindow" parent="AdwApplicationWindow">
-    <property name="title" translatable="yes">Gallery</property>
+    <property name="title" translatable="yes">Album</property>
     <property name="default-width">360</property>
     <property name="default-height">576</property>
     <property name="width-request">300</property>
