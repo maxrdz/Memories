@@ -63,6 +63,18 @@
           </object>
         </child>
         <child>
+          <object class="AdwViewStackPage">
+            <property name="name">placeholder_page</property>
+            <property name="child">
+              <object class="AdwStatusPage">
+                <property name="icon-name">emblem-photos-symbolic</property>
+                <property name="title" translatable="yes">Your library is empty</property>
+                <property name="description" translatable="yes">Go take some pictures!</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
           <object class="AdwViewStackPage" id="gallery_page">
             <property name="name">gallery_page</property>
             <property name="child">

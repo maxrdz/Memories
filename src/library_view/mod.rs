@@ -51,9 +51,15 @@ impl LibraryView {
 
         llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
             if dl.is_loading() == false {
+                let item_count: u32 = dl.n_items();
+                debug!("Enumerated {} items in library path.", item_count);
+
+                if item_count == 0 {
+                    s.imp().library_view_stack.set_visible_child_name("placeholder_page");
+                    return;
+                }
                 s.imp().library_view_stack.set_visible_child_name("gallery_page");
                 s.imp().spinner.stop();
-                debug!("Enumerated {} items in library path.", dl.n_items());
             }
         }));
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
