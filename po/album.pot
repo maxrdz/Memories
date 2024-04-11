@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-09 13:57-0700\n"
+"POT-Creation-Date: 2024-04-10 20:32-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,33 +17,33 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/com.maxrdz.Gallery.Devel.desktop.in.in:3
-msgid "Gallery (Devel)"
+#: data/com.maxrdz.Album.Devel.desktop.in.in:3
+msgid "Album (Devel)"
 msgstr ""
 
-#: data/com.maxrdz.Gallery.Devel.desktop.in.in:4
-#: data/com.maxrdz.Gallery.desktop.in.in:4
-msgid "A Linux Mobile friendly photo gallery app for GNU/Linux systems."
+#: data/com.maxrdz.Album.Devel.desktop.in.in:4
+#: data/com.maxrdz.Album.desktop.in.in:4
+msgid "A Linux Mobile friendly photo album app for GNU/Linux systems."
 msgstr ""
 
-#: data/com.maxrdz.Gallery.Devel.desktop.in.in:5
-#: data/com.maxrdz.Gallery.desktop.in.in:5
-msgid "gallery;photos;videos;"
+#: data/com.maxrdz.Album.Devel.desktop.in.in:5
+#: data/com.maxrdz.Album.desktop.in.in:5
+msgid "album;gallery;photos;videos;"
 msgstr ""
 
-#: data/com.maxrdz.Gallery.desktop.in.in:3 src/master_window/master-window.ui:6
-msgid "Gallery"
+#: data/com.maxrdz.Album.desktop.in.in:3
+msgid "Album"
 msgstr ""
 
-#: data/com.maxrdz.Gallery.metainfo.xml.in.in:7
-msgid "A photo and video gallery application for GNOME."
+#: data/com.maxrdz.Album.metainfo.xml.in.in:7
+msgid "A photo and video album application for GNOME and Phosh."
 msgstr ""
 
 #. TRANSLATORS: Generated POT file will have lots of whitespace.
 #. This is due to code linting. You can remove the whitespace in your PO file.
-#: src/application.rs:127
+#: src/application.rs:137
 msgid ""
-"A free and open source photo/video gallery app for Linux "
+"A free and open source photo/video album app for Linux "
 "mobile,                         built with GTK4 and libadwaita, designed to "
 "be well integrated                         with GNOME technologies and "
 "mobile devices running Phosh.                        \n"
@@ -51,7 +51,7 @@ msgid ""
 "Released under the GNU General Public License version 3.0."
 msgstr ""
 
-#: src/application.rs:132
+#: src/application.rs:142
 msgid "Build Revision"
 msgstr ""
 
@@ -68,6 +68,25 @@ msgstr ""
 #: src/gtk/help-overlay.ui:20
 msgctxt "shortcut window"
 msgid "Quit"
+msgstr ""
+
+#: src/library_view/library-view.ui:41
+msgid "Loading your library.."
+msgstr ""
+
+#: src/library_view/library-view.ui:59
+msgid "An error occurred"
+msgstr ""
+
+#. TRANSLATORS: You can remove odd spacing. This is due to code linting.
+#: src/library_view/mod.rs:89
+msgid ""
+"The {ENV_VAR} environment variable was found,                         so "
+"Album cannot open your photo library."
+msgstr ""
+
+#: src/master_window/master-window.ui:6
+msgid "Gallery"
 msgstr ""
 
 #: src/master_window/master-window.ui:19
