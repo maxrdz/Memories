@@ -3,6 +3,7 @@
 # https://gitlab.gnome.org/World/warp/-/blob/main/build-aux/generate-potfile.sh
 
 PROJECT_NAME=album
+XGETTEXT_ARGS="--add-comments --from-code=utf-8 --keyword=gettext_f --keyword=ngettext_f:1,2"
 
 src="$(find src/ -path '*.rs')"
 ui="$(find src/ -path '*.ui')"
@@ -13,7 +14,13 @@ git ls-files \
 	>> po/POTFILES.in
 
 cd po || exit 1
+
+while IFS= read -r line; do
+    grep -vF "$line" POTFILES.in > 1.tmp && mv 1.tmp POTFILES.in
+done < <(grep -v '^#' POTFILES.skip)
+rm 1.tmp # Clean up temp file
+
 intltool-update --maintain 2> /dev/null
 
 cd ..
-xgettext --add-comments --from-code=utf-8 --files-from=po/POTFILES.in -o po/$PROJECT_NAME.pot 2>/dev/null || (echo "Error running xgettext"; exit 1)
+xgettext $XGETTEXT_ARGS --files-from=po/POTFILES.in -o po/$PROJECT_NAME.pot 2>/dev/null || (echo "Error running xgettext"; exit 1)
