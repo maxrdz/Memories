@@ -26,7 +26,8 @@ pub static DEVELOPMENT_BUILD: bool = true;
 #[cfg(not(debug_assertions))]
 pub static DEVELOPMENT_BUILD: bool = false;
 
-pub static DEFAULT_LIBRARY_ABS_DIR: &str = "/home/max/Pictures";
+/// DEFAULT_LIBRARY_DIRECTORY path relative to $HOME env var path.
+pub static DEFAULT_LIBRARY_DIRECTORY: &str = "Pictures";
 pub static DEFAULT_SCREENSHOTS_REL_DIR: &str = "Screenshots";
 pub static DEFAULT_CAMERA_REL_DIR: &str = "Camera";
 

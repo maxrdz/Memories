@@ -30,6 +30,12 @@ pub struct LibraryView {
     #[template_child]
     pub spinner_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
+    pub spinner: TemplateChild<gtk::Spinner>,
+    #[template_child]
+    pub error_page: TemplateChild<adw::ViewStackPage>,
+    #[template_child]
+    pub error_status_widget: TemplateChild<adw::StatusPage>,
+    #[template_child]
     pub gallery_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub photo_grid_view: TemplateChild<gtk::GridView>,

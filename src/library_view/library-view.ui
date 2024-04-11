@@ -20,14 +20,13 @@
                     <child>
                       <object class="GtkListBoxRow">
                         <property name="child">
-                          <object class="GtkSpinner">
+                          <object class="GtkSpinner" id="spinner">
                             <property name="width_request">32</property>
                             <property name="height_request">32</property>
                             <property name="valign">center</property>
                             <property name="halign">center</property>
                             <property name="vexpand">True</property>
                             <property name="hexpand">True</property>
-                            <property name="spinning">True</property>
                           </object>
                         </property>
                       </object>
@@ -47,6 +46,18 @@
                     </child>
                   </object>
                 </property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage" id="error_page">
+            <property name="name">error_page</property>
+            <property name="child">
+              <object class="AdwStatusPage" id="error_status_widget">
+                <property name="icon-name">emblem-important-symbolic</property>
+                <property name="title" translatable="yes">An error occurred</property>
+                <property name="description">PLACEHOLDER DESCRIPTION</property>
               </object>
             </property>
           </object>
