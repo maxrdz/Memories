@@ -38,7 +38,7 @@
                             <attributes>
                               <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
                             </attributes>
-                            <property name="label" translatable="yes">Loading your library...</property>
+                            <property name="label" translatable="yes">Loading Your Library...</property>
                             <property name="selectable">False</property>
                           </object>
                         </property>
@@ -56,7 +56,7 @@
             <property name="child">
               <object class="AdwStatusPage" id="error_status_widget">
                 <property name="icon-name">emblem-important-symbolic</property>
-                <property name="title" translatable="yes">An error occurred</property>
+                <property name="title" translatable="yes">An Error Occurred</property>
                 <property name="description">PLACEHOLDER DESCRIPTION</property>
               </object>
             </property>
@@ -68,7 +68,7 @@
             <property name="child">
               <object class="AdwStatusPage">
                 <property name="icon-name">emblem-photos-symbolic</property>
-                <property name="title" translatable="yes">Your library is empty</property>
+                <property name="title" translatable="yes">Your Library Is Empty</property>
                 <property name="description" translatable="yes">Go take some pictures!</property>
               </object>
             </property>
