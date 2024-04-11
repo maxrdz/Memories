@@ -72,7 +72,7 @@ mod imp {
             let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
             new_css_provider.load_from_resource("/com/maxrdz/Album/style.css");
 
-            gtk::StyleContext::add_provider_for_display(
+            gtk::style_context_add_provider_for_display(
                 &gdk_screen,
                 &new_css_provider,
                 gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
