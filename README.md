@@ -1,8 +1,10 @@
-# Album
+<div align="center">
+<img src="./data/icons/com.maxrdz.Album.svg" height="128"/>
 
-A free and open source photo and video album application designed
-for mobile devices, built with GTK4 and libadwaita, aiming to be
-well integrated with GNOME technologies and the Phosh shell.
+# Album
+A photo and video album application designed for mobile devices.
+
+</div>
 
 ## Building from Source
 
