@@ -27,9 +27,10 @@ appstream_util = find_program('appstream-util', required: false)
 appstream_cli = find_program('appstreamcli', required: false)
 cargo = find_program('cargo', required: true)
 
-# ------- Build Profile ------- #
-
 base_id = 'com.maxrdz.Album'
+project_git = 'https://gitlab.gnome.org/maxrdz/Album'
+
+# ------- Build Profile ------- #
 
 if get_option('profile') == 'devel'
   profile = 'devel'

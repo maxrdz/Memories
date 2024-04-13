@@ -32,18 +32,20 @@ endif
 # ----------- App Data ----------- #
 
 appdata_conf = configuration_data()
-appdata_conf.set('app-id', application_id)
+appdata_conf.set('APP_ID', application_id)
+appdata_conf.set('PROJECT_GIT', project_git)
+appdata_conf.set('GETTEXT_DOMAIN', meson.project_name())
 
 appdata_file = i18n.merge_file(
   input: configure_file(
-    input: '@0@.metainfo.xml.in.in'.format(base_id),
-    output: '@BASENAME@',
+    input: '@0@.appdata.xml.in.in'.format(base_id),
+    output: '@0@.appdata.xml.in'.format(base_id),
     configuration: appdata_conf
   ),
-  output: '@0@.metainfo.xml'.format(application_id),
+  output: '@0@.appdata.xml'.format(application_id),
   po_dir: podir,
   install: true,
-  install_dir: datadir / 'metainfo'
+  install_dir: datadir / 'appdata'
 )
 
 if appstream_util.found()
