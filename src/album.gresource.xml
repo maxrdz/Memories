@@ -8,9 +8,11 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
     <!-- UI Files -->
+    <file preprocess="xml-stripblanks">greeter_dialog/greeter-dialog.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">library_view/library-view.ui</file>
     <file preprocess="xml-stripblanks">master_window/master-window.ui</file>
     <file preprocess="xml-stripblanks">options_view/options-view.ui</file>
+    <file preprocess="xml-stripblanks">theme_selector/theme-selector.ui</file>
   </gresource>
 </gresources>

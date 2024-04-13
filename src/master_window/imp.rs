@@ -19,6 +19,7 @@
 
 use crate::library_view::LibraryView;
 use crate::options_view::OptionsView;
+use crate::theme_selector::ThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
@@ -27,6 +28,10 @@ use libadwaita as adw;
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Album/master_window/master-window.ui")]
 pub struct MasterWindow {
+    #[template_child]
+    pub header_bar: TemplateChild<adw::HeaderBar>,
+    #[template_child]
+    pub primary_menu: TemplateChild<gtk::PopoverMenu>,
     #[template_child]
     pub master_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -63,6 +68,14 @@ impl ObjectImpl for MasterWindow {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
+
+        // We have to add the theme selector widget as a child of our
+        // GtkPopoverMenu widget manually here, because the UI XML method
+        // does not work (for some reason..) GTK and its docs are a pain.
+        let new_theme_selector = ThemeSelector::new();
+        self.primary_menu.add_child(&new_theme_selector, "theme-selector");
+
+        obj.setup_gactions();
         // This callback wont be triggered on start up by itself, so we
         // want to check the very first visible child in the master stack.
         obj.master_stack_child_visible();

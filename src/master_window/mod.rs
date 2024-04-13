@@ -39,12 +39,21 @@ impl MasterWindow {
             .build()
     }
 
+    fn setup_gactions(&self) {
+        let settings_action = gio::ActionEntry::builder("settings")
+            .activate(move |win: &Self, _, _| {
+                win.imp().master_stack.set_visible_child_name("options");
+            })
+            .build();
+        self.add_action_entries([settings_action]);
+    }
+
     #[template_callback]
     fn master_stack_child_visible(&self) {
         let class_imp: &imp::MasterWindow = self.imp();
 
         if let Some(child_name) = class_imp.master_stack.visible_child_name() {
-            if child_name == "library" {
+            if child_name == class_imp.library_page.name().unwrap() {
                 // if the photo grid has no model, it has not been loaded before
                 if let None = class_imp.library_view.imp().photo_grid_view.model() {
                     class_imp.library_view.load_library();

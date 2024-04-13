@@ -1,4 +1,4 @@
-// application.rs
+// application/mod.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -17,72 +17,16 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+mod imp;
+
 use adw::gtk;
 use adw::prelude::*;
-use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
 use crate::globals::*;
-use crate::master_window::MasterWindow;
 use crate::vcs::VCS_TAG;
-
-mod imp {
-    use super::*;
-
-    #[derive(Debug, Default)]
-    pub struct Album {}
-
-    #[glib::object_subclass]
-    impl ObjectSubclass for Album {
-        const NAME: &'static str = "Album";
-        type Type = super::Album;
-        type ParentType = adw::Application;
-    }
-
-    impl ObjectImpl for Album {
-        fn constructed(&self) {
-            self.parent_constructed();
-            let obj = self.obj();
-            obj.setup_gactions();
-            obj.set_accels_for_action("app.quit", &["<primary>q"]);
-        }
-    }
-
-    impl ApplicationImpl for Album {
-        fn activate(&self) {
-            let application = self.obj();
-
-            // The activate() callback also notifies us when the user tries
-            // to launch a "second instance" of the application. When they try
-            // to do that, we'll just present any existing window.
-            let window = if let Some(window) = application.active_window() {
-                window
-            } else {
-                let window = MasterWindow::new(&*application);
-                window.upcast()
-            };
-
-            window.set_title(Some(APP_INFO.app_title));
-            window.present();
-
-            // Setup our own CSS provider from gresource
-            let gdk_screen: gdk::Display = gdk::Display::default().unwrap();
-            let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
-            new_css_provider.load_from_resource("/com/maxrdz/Album/style.css");
-
-            gtk::style_context_add_provider_for_display(
-                &gdk_screen,
-                &new_css_provider,
-                gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-            );
-        }
-    }
-
-    impl GtkApplicationImpl for Album {}
-    impl AdwApplicationImpl for Album {}
-}
 
 glib::wrapper! {
     pub struct Album(ObjectSubclass<imp::Album>)
@@ -99,13 +43,45 @@ impl Album {
     }
 
     fn setup_gactions(&self) {
-        let quit_action = gio::ActionEntry::builder("quit")
-            .activate(move |app: &Self, _, _| app.quit())
+        // The reason we have a separate action per theme is for allowing the
+        // user to be able to set the application theme via keyboard shortcuts.
+        let system_theme_action = gio::ActionEntry::builder("system-theme")
+            .activate(
+                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::Default);
+                },
+            )
             .build();
+        let light_theme_action = gio::ActionEntry::builder("light-theme")
+            .activate(
+                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceLight);
+                },
+            )
+            .build();
+        let dark_theme_action = gio::ActionEntry::builder("dark-theme")
+            .activate(
+                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceDark);
+                },
+            )
+            .build();
+
         let about_action = gio::ActionEntry::builder("about")
             .activate(move |app: &Self, _, _| app.show_about())
             .build();
-        self.add_action_entries([quit_action, about_action]);
+        let quit_action = gio::ActionEntry::builder("quit")
+            .activate(move |app: &Self, _, _| app.quit())
+            .build();
+
+        self.add_action_entries([
+            system_theme_action, light_theme_action, dark_theme_action, about_action, quit_action,
+        ]);
+    }
+
+    fn set_adwaita_color_scheme(&self, color_scheme: adw::ColorScheme) {
+        let adw_style_manager: adw::StyleManager = adw::StyleManager::default();
+        adw_style_manager.set_color_scheme(color_scheme);
     }
 
     fn show_about(&self) {

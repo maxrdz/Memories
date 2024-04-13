@@ -21,12 +21,14 @@ mod application;
 mod config;
 #[allow(dead_code)]
 mod globals;
+mod greeter_dialog;
 #[allow(dead_code)]
 mod i18n;
 mod library_list_model;
 mod library_view;
 mod master_window;
 mod options_view;
+mod theme_selector;
 mod vcs;
 
 extern crate pretty_env_logger;
@@ -40,10 +42,11 @@ use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
+use std::env;
 
 fn main() -> glib::ExitCode {
-    if let Err(_) = std::env::var("RUST_LOG") {
-        std::env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
+    if let Err(_) = env::var("RUST_LOG") {
+        env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
         pretty_env_logger::init();
         info!(
             "No RUST_LOG env var found. Setting to default: '{}'",

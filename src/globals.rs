@@ -19,8 +19,8 @@
 
 use crate::config::{APP_NAME, VERSION};
 use adw::gtk::License;
-use libadwaita as adw;
 use cfg_if::cfg_if;
+use libadwaita as adw;
 
 #[cfg(debug_assertions)]
 pub static DEVELOPMENT_BUILD: bool = true;

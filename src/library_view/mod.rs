@@ -74,9 +74,7 @@ impl LibraryView {
             list_item.set_property("child", &img);
         });
 
-        slif.connect_bind(move |_, list_item: &glib::Object| {
-            ()
-        });
+        slif.connect_bind(move |_, _list_item: &glib::Object| ());
 
         self.imp().photo_grid_view.set_model(Some(&llm));
         self.imp().photo_grid_view.set_factory(Some(&slif));
