@@ -2,8 +2,12 @@
 data/com.maxrdz.Album.Devel.desktop.in.in
 data/com.maxrdz.Album.desktop.in.in
 data/com.maxrdz.Album.metainfo.xml.in.in
-src/application.rs
+src/application/imp.rs
+src/application/mod.rs
 src/globals.rs
+src/greeter_dialog/greeter-dialog.ui
+src/greeter_dialog/imp.rs
+src/greeter_dialog/mod.rs
 src/gtk/help-overlay.ui
 src/library_list_model/imp.rs
 src/library_list_model/mod.rs
@@ -17,3 +21,6 @@ src/master_window/mod.rs
 src/options_view/imp.rs
 src/options_view/mod.rs
 src/options_view/options-view.ui
+src/theme_selector/imp.rs
+src/theme_selector/mod.rs
+src/theme_selector/theme-selector.ui

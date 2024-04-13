@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 20:41-0700\n"
+"POT-Creation-Date: 2024-04-12 21:59-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 
 #. TRANSLATORS: Generated POT file will have lots of whitespace.
 #. This is due to code linting. You can remove the whitespace in your PO file.
-#: src/application.rs:137
+#: src/application/mod.rs:113
 msgid ""
 "A free and open source photo/video album app for Linux "
 "mobile,                         built with GTK4 and libadwaita, designed to "
@@ -51,7 +51,7 @@ msgid ""
 "Released under the GNU General Public License version 3.0."
 msgstr ""
 
-#: src/application.rs:142
+#: src/application/mod.rs:118
 msgid "Build Revision"
 msgstr ""
 
@@ -71,34 +71,58 @@ msgid "Quit"
 msgstr ""
 
 #: src/library_view/library-view.ui:41
-msgid "Loading your library.."
+msgid "Loading Your Library..."
 msgstr ""
 
 #: src/library_view/library-view.ui:59
-msgid "An error occurred"
+msgid "An Error Occurred"
+msgstr ""
+
+#: src/library_view/library-view.ui:71
+msgid "Your Library Is Empty"
+msgstr ""
+
+#: src/library_view/library-view.ui:72
+msgid "Go take some pictures!"
 msgstr ""
 
 #. TRANSLATORS: You can remove odd spacing. This is due to code linting.
-#: src/library_view/mod.rs:89
+#: src/library_view/mod.rs:93
 msgid ""
 "The {ENV_VAR} environment variable was found,                         so "
 "Album cannot open your photo library."
 msgstr ""
 
-#: src/master_window/master-window.ui:19
+#: src/master_window/master-window.ui:31
+msgid "Main Menu"
+msgstr ""
+
+#: src/master_window/master-window.ui:42
 msgid "Library"
 msgstr ""
 
-#: src/master_window/master-window.ui:29
+#: src/master_window/master-window.ui:52
 msgid "Albums"
 msgstr ""
 
-#: src/master_window/master-window.ui:41
+#: src/master_window/master-window.ui:64
 msgid "Search"
 msgstr ""
 
-#: src/master_window/master-window.ui:53 src/options_view/options-view.ui:6
+#: src/master_window/master-window.ui:76 src/options_view/options-view.ui:6
 msgid "Options"
+msgstr ""
+
+#: src/master_window/master-window.ui:103
+msgid "Preferences"
+msgstr ""
+
+#: src/master_window/master-window.ui:107
+msgid "_About Album"
+msgstr ""
+
+#: src/master_window/master-window.ui:111
+msgid "_Quit"
 msgstr ""
 
 #: src/options_view/options-view.ui:11
@@ -111,4 +135,16 @@ msgstr ""
 
 #: src/options_view/options-view.ui:25
 msgid "_About"
+msgstr ""
+
+#: src/theme_selector/theme-selector.ui:17
+msgid "Follow system theme"
+msgstr ""
+
+#: src/theme_selector/theme-selector.ui:33
+msgid "Light theme"
+msgstr ""
+
+#: src/theme_selector/theme-selector.ui:50
+msgid "Dark theme"
 msgstr ""
