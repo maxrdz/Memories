@@ -31,6 +31,10 @@ pub struct MasterWindow {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
+    pub desktop_view_switcher: TemplateChild<adw::ViewSwitcher>,
+    #[template_child]
+    pub mobile_switcher_bar: TemplateChild<adw::ViewSwitcherBar>,
+    #[template_child]
     pub primary_menu: TemplateChild<gtk::PopoverMenu>,
     #[template_child]
     pub master_stack: TemplateChild<adw::ViewStack>,

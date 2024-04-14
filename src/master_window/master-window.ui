@@ -12,6 +12,7 @@
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
         <setter object="header_bar" property="visible">True</setter>
+        <setter object="mobile_switcher_bar" property="reveal">False</setter>
       </object>
     </child>
     <property name="content">
@@ -19,6 +20,12 @@
         <child type="top">
           <object class="AdwHeaderBar" id="header_bar">
             <property name="visible">False</property>
+            <property name="title-widget">
+              <object class="AdwViewSwitcher" id="desktop_view_switcher">
+                <property name="stack">master_stack</property>
+                <property name="policy">wide</property>
+              </object>
+            </property>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
@@ -84,7 +91,7 @@
           </object>
         </property>
         <child type="bottom">
-          <object class="AdwViewSwitcherBar" id="switcher_bar">
+          <object class="AdwViewSwitcherBar" id="mobile_switcher_bar">
             <property name="stack">master_stack</property>
             <property name="reveal">True</property>
           </object>
