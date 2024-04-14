@@ -71,12 +71,12 @@
               </object>
             </child>
             <child>
-              <object class="AdwViewStackPage" id="options_page">
-                <property name="name">options</property>
-                <property name="title" translatable="yes">Options</property>
+              <object class="AdwViewStackPage" id="preferences_page">
+                <property name="name">preferences</property>
+                <property name="title" translatable="yes">Preferences</property>
                 <property name="icon-name">applications-system-symbolic</property>
                 <property name="child">
-                  <object class="OptionsView" id="options_view"/>
+                  <object class="PreferencesView" id="preferences_view"/>
                 </property>
               </object>
             </child>
@@ -104,11 +104,11 @@
         <attribute name="action">win.settings</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About Album</attribute>
+        <attribute name="label" translatable="yes">About Album</attribute>
         <attribute name="action">app.about</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="label" translatable="yes">Quit</attribute>
         <attribute name="action">app.quit</attribute>
       </item>
     </section>

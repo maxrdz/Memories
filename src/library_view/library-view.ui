@@ -13,7 +13,7 @@
                 <property name="child">
                   <object class="GtkListBox">
                     <style>
-                      <class name="spinner_page_list_box"/>
+                      <class name="transparent_list_box"/>
                     </style>
                     <property name="vexpand">True</property>
                     <property name="sensitive">False</property>

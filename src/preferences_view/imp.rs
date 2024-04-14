@@ -1,4 +1,4 @@
-// options_view/imp.rs
+// preferences_view/imp.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -17,20 +17,26 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::theme_selector::ThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Album/options_view/options-view.ui")]
-pub struct OptionsView {}
+#[template(resource = "/com/maxrdz/Album/preferences_view/preferences-view.ui")]
+pub struct PreferencesView {
+    #[template_child]
+    pub theme_selector: TemplateChild<ThemeSelector>,
+    #[template_child]
+    pub mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
+}
 
 #[glib::object_subclass]
-impl ObjectSubclass for OptionsView {
-    const NAME: &'static str = "OptionsView";
-    type Type = super::OptionsView;
-    type ParentType = adw::Bin;
+impl ObjectSubclass for PreferencesView {
+    const NAME: &'static str = "PreferencesView";
+    type Type = super::PreferencesView;
+    type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -41,6 +47,6 @@ impl ObjectSubclass for OptionsView {
     }
 }
 
-impl ObjectImpl for OptionsView {}
-impl WidgetImpl for OptionsView {}
-impl BinImpl for OptionsView {}
+impl ObjectImpl for PreferencesView {}
+impl WidgetImpl for PreferencesView {}
+impl BreakpointBinImpl for PreferencesView {}

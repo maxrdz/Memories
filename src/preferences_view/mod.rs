@@ -1,4 +1,4 @@
-// options_view/mod.rs
+// preferences_view/mod.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -21,16 +21,16 @@ mod imp;
 
 use adw::gtk;
 use adw::prelude::*;
-use gtk::{gio, glib};
+use gtk::glib;
 use libadwaita as adw;
 
 glib::wrapper! {
-    pub struct OptionsView(ObjectSubclass<imp::OptionsView>)
-        @extends gtk::Widget, adw::Bin,
-        @implements gio::ActionGroup, gio::ActionMap;
+    pub struct PreferencesView(ObjectSubclass<imp::PreferencesView>)
+        @extends gtk::Widget, adw::BreakpointBin,
+        @implements gtk::Accessible, gtk::Buildable;
 }
 
-impl OptionsView {
+impl PreferencesView {
     pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
         glib::Object::builder()
             .property("application", application)

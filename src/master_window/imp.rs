@@ -18,7 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::library_view::LibraryView;
-use crate::options_view::OptionsView;
+use crate::preferences_view::PreferencesView;
 use crate::theme_selector::ThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
@@ -41,11 +41,11 @@ pub struct MasterWindow {
     #[template_child]
     pub search_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub options_page: TemplateChild<adw::ViewStackPage>,
+    pub preferences_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub library_view: TemplateChild<LibraryView>,
     #[template_child]
-    pub options_view: TemplateChild<OptionsView>,
+    pub preferences_view: TemplateChild<PreferencesView>,
 }
 
 #[glib::object_subclass]

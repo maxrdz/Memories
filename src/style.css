@@ -1,5 +1,10 @@
 /* src/library_view/library-view.ui */
-.spinner_page_list_box {
+/* src/preferences_view/preferences-view.ui */
+.transparent_list_box {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.transparent_list_box row.activatable {
   background-color: rgba(0, 0, 0, 0);
 }
 

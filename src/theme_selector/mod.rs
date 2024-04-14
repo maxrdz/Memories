@@ -34,3 +34,9 @@ impl ThemeSelector {
         glib::Object::builder().build()
     }
 }
+
+impl Default for ThemeSelector {
+    fn default() -> Self {
+        Self::new()
+    }
+}

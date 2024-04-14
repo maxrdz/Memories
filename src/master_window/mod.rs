@@ -42,7 +42,7 @@ impl MasterWindow {
     fn setup_gactions(&self) {
         let settings_action = gio::ActionEntry::builder("settings")
             .activate(move |win: &Self, _, _| {
-                win.imp().master_stack.set_visible_child_name("options");
+                win.imp().master_stack.set_visible_child_name("preferences");
             })
             .build();
         self.add_action_entries([settings_action]);

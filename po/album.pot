@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 21:59-0700\n"
+"POT-Creation-Date: 2024-04-13 23:08-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,12 +31,24 @@ msgstr ""
 msgid "album;gallery;photos;videos;"
 msgstr ""
 
+#: data/com.maxrdz.Album.appdata.xml.in.in:6
 #: data/com.maxrdz.Album.desktop.in.in:3 src/master_window/master-window.ui:6
 msgid "Album"
 msgstr ""
 
-#: data/com.maxrdz.Album.metainfo.xml.in.in:7
-msgid "A photo and video album application for GNOME and Phosh."
+#: data/com.maxrdz.Album.appdata.xml.in.in:7
+msgid "A photo and video album application for GNOME."
+msgstr ""
+
+#: data/com.maxrdz.Album.appdata.xml.in.in:9
+msgid ""
+"A free and open source photo/video album app for Linux mobile, built with "
+"GTK4 and libadwaita, designed to be well integrated with GNOME technologies "
+"and mobile devices."
+msgstr ""
+
+#: data/com.maxrdz.Album.appdata.xml.in.in:16
+msgid "Max Rodriguez"
 msgstr ""
 
 #. TRANSLATORS: Generated POT file will have lots of whitespace.
@@ -109,32 +121,39 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: src/master_window/master-window.ui:76 src/options_view/options-view.ui:6
-msgid "Options"
-msgstr ""
-
-#: src/master_window/master-window.ui:103
+#: src/master_window/master-window.ui:76 src/master_window/master-window.ui:103
+#: src/preferences_view/preferences-view.ui:22
 msgid "Preferences"
 msgstr ""
 
 #: src/master_window/master-window.ui:107
-msgid "_About Album"
+#: src/preferences_view/preferences-view.ui:45
+msgid "About Album"
 msgstr ""
 
 #: src/master_window/master-window.ui:111
-msgid "_Quit"
+#: src/preferences_view/preferences-view.ui:51
+msgid "Quit"
 msgstr ""
 
-#: src/options_view/options-view.ui:11
-msgid "Menu"
+#: src/preferences_view/preferences-view.ui:64
+msgid "Album Configuration"
 msgstr ""
 
-#: src/options_view/options-view.ui:21
-msgid "_Preferences"
+#: src/preferences_view/preferences-view.ui:65
+msgid "Here you can find the main preferences for Album."
 msgstr ""
 
-#: src/options_view/options-view.ui:25
-msgid "_About"
+#: src/preferences_view/preferences-view.ui:68
+msgid "Master Album Directory"
+msgstr ""
+
+#: src/preferences_view/preferences-view.ui:69
+msgid "Select your user's photo/video album directory."
+msgstr ""
+
+#: src/preferences_view/preferences-view.ui:77
+msgid "Choose"
 msgstr ""
 
 #: src/theme_selector/theme-selector.ui:17

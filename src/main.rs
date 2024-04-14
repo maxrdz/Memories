@@ -27,7 +27,7 @@ mod i18n;
 mod library_list_model;
 mod library_view;
 mod master_window;
-mod options_view;
+mod preferences_view;
 mod theme_selector;
 mod vcs;
 
@@ -45,7 +45,7 @@ use libadwaita as adw;
 use std::env;
 
 fn main() -> glib::ExitCode {
-    if let Err(_) = env::var("RUST_LOG") {
+    if env::var("RUST_LOG").is_err() {
         env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
         pretty_env_logger::init();
         info!(
