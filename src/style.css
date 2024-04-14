@@ -47,7 +47,7 @@
   background-color: #202020;
 }
 
-.themeselector checkbutton radio {
+.themeselector checkbutton check {
   -gtk-icon-source: none;
   border: none;
   background: none;
@@ -58,8 +58,8 @@
   padding: 2px;
 }
 
-checkbutton.theme-selector radio:checked {
-  -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
+checkbutton.theme-selector check:checked {
+  -gtk-icon-source: -gtk-icontheme("checkbox-symbolic");
   background-color: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
 }
