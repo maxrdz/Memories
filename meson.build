@@ -28,6 +28,7 @@ appstream_cli = find_program('appstreamcli', required: false)
 cargo = find_program('cargo', required: true)
 
 base_id = 'com.maxrdz.Album'
+gresource_domain = base_id.replace('.', '/')
 project_git = 'https://gitlab.gnome.org/maxrdz/Album'
 
 # ------- Build Profile ------- #

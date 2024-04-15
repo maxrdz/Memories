@@ -50,7 +50,7 @@ impl LibraryView {
         let dir_model: gtk::DirectoryList = gtk::DirectoryList::new(None, None::<&gio::File>);
         let sm: gtk::MultiSelection = gtk::MultiSelection::new(
             // We can clone our GtkDirectoryList model because gobjects are reference-counted.
-            Some(dir_model.clone())
+            Some(dir_model.clone()),
         );
 
         dir_model.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
@@ -104,7 +104,7 @@ impl LibraryView {
                         &[("ENV_VAR", "$HOME")],
                     )));
                     // place NULL byte at start of string to signal error
-                    String::from("\0")
+                    String::from('\0')
                 }
             },
             DEFAULT_LIBRARY_DIRECTORY

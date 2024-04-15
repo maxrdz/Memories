@@ -10,6 +10,7 @@ conf.set_quoted('APP_NAME', project_name)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
+conf.set('GRESOURCE_DOMAIN', gresource_domain)
 
 configure_file(
   input: 'config.rs.in',
@@ -32,7 +33,11 @@ run_command(
 # ------ Compile GResource Bundle ------ #
 
 gnome.compile_resources(project_name,
-  '@0@.gresource.xml'.format(project_name),
+  configure_file(
+    input: '@0@.gresource.xml.in'.format(project_name),
+    output: '@0@.gresource.xml'.format(project_name),
+    configuration: conf
+  ),
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
