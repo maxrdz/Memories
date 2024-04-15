@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-13 23:08-0700\n"
+"POT-Creation-Date: 2024-04-15 13:26-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #. TRANSLATORS: Generated POT file will have lots of whitespace.
 #. This is due to code linting. You can remove the whitespace in your PO file.
-#: src/application/mod.rs:113
+#: src/application/mod.rs:127
 msgid ""
 "A free and open source photo/video album app for Linux "
 "mobile,                         built with GTK4 and libadwaita, designed to "
@@ -63,7 +63,7 @@ msgid ""
 "Released under the GNU General Public License version 3.0."
 msgstr ""
 
-#: src/application/mod.rs:118
+#: src/application/mod.rs:132
 msgid "Build Revision"
 msgstr ""
 
@@ -99,39 +99,39 @@ msgid "Go take some pictures!"
 msgstr ""
 
 #. TRANSLATORS: You can remove odd spacing. This is due to code linting.
-#: src/library_view/mod.rs:93
+#: src/library_view/mod.rs:95
 msgid ""
 "The {ENV_VAR} environment variable was found,                         so "
 "Album cannot open your photo library."
 msgstr ""
 
-#: src/master_window/master-window.ui:31
+#: src/master_window/master-window.ui:38
 msgid "Main Menu"
 msgstr ""
 
-#: src/master_window/master-window.ui:42
+#: src/master_window/master-window.ui:49
 msgid "Library"
 msgstr ""
 
-#: src/master_window/master-window.ui:52
+#: src/master_window/master-window.ui:59
 msgid "Albums"
 msgstr ""
 
-#: src/master_window/master-window.ui:64
+#: src/master_window/master-window.ui:71
 msgid "Search"
 msgstr ""
 
-#: src/master_window/master-window.ui:76 src/master_window/master-window.ui:103
+#: src/master_window/master-window.ui:83 src/master_window/master-window.ui:110
 #: src/preferences_view/preferences-view.ui:22
 msgid "Preferences"
 msgstr ""
 
-#: src/master_window/master-window.ui:107
+#: src/master_window/master-window.ui:114
 #: src/preferences_view/preferences-view.ui:45
 msgid "About Album"
 msgstr ""
 
-#: src/master_window/master-window.ui:111
+#: src/master_window/master-window.ui:118
 #: src/preferences_view/preferences-view.ui:51
 msgid "Quit"
 msgstr ""
@@ -145,7 +145,7 @@ msgid "Here you can find the main preferences for Album."
 msgstr ""
 
 #: src/preferences_view/preferences-view.ui:68
-msgid "Master Album Directory"
+msgid "User Album Directory"
 msgstr ""
 
 #: src/preferences_view/preferences-view.ui:69
@@ -156,14 +156,18 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: src/theme_selector/theme-selector.ui:17
+#: src/preferences_view/preferences-view.ui:88
+msgid "Auto-Play Videos and Live Photos"
+msgstr ""
+
+#: src/preferences_view/theme_selector/theme-selector.ui:17
 msgid "Follow system theme"
 msgstr ""
 
-#: src/theme_selector/theme-selector.ui:33
+#: src/preferences_view/theme_selector/theme-selector.ui:33
 msgid "Light theme"
 msgstr ""
 
-#: src/theme_selector/theme-selector.ui:50
+#: src/preferences_view/theme_selector/theme-selector.ui:50
 msgid "Dark theme"
 msgstr ""
