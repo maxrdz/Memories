@@ -64,3 +64,9 @@ impl LibraryListModel {
         self.imp().0.set_file(file)
     }
 }
+
+impl Default for LibraryListModel {
+    fn default() -> Self {
+        Self::new()
+    }
+}

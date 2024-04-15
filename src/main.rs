@@ -24,11 +24,9 @@ mod globals;
 mod greeter_dialog;
 #[allow(dead_code)]
 mod i18n;
-mod library_list_model;
 mod library_view;
 mod master_window;
 mod preferences_view;
-mod theme_selector;
 mod vcs;
 
 extern crate pretty_env_logger;

@@ -55,7 +55,7 @@ impl MasterWindow {
         if let Some(child_name) = class_imp.master_stack.visible_child_name() {
             if child_name == class_imp.library_page.name().unwrap() {
                 // if the photo grid has no model, it has not been loaded before
-                if let None = class_imp.library_view.imp().photo_grid_view.model() {
+                if class_imp.library_view.imp().photo_grid_view.model().is_none() {
                     class_imp.library_view.load_library();
                 }
             }

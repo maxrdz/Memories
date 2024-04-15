@@ -65,7 +65,7 @@
                 <property name="description" translatable="yes">Here you can find the main preferences for Album.</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="yes">Master Album Directory</property>
+                    <property name="title" translatable="yes">User Album Directory</property>
                     <property name="subtitle" translatable="yes">Select your user's photo/video album directory.</property>
                     <child type="suffix">
                       <object class="GtkButton">
@@ -81,6 +81,13 @@
                         <property name="action-name">app.choose-album-directory</property>
                       </object>
                     </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow">
+                    <property name="title" translatable="yes">Auto-Play Videos and Live Photos</property>
+                    <property name="action-name">app.configure</property>
+                    <property name="action-target">0</property>
                   </object>
                 </child>
               </object>

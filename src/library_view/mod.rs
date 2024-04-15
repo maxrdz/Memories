@@ -18,16 +18,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
+mod library_list_model;
 
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
-use crate::library_list_model::LibraryListModel;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
+use library_list_model::LibraryListModel;
 use log::{debug, error};
 use std::env;
 
@@ -50,7 +51,7 @@ impl LibraryView {
         let llm: LibraryListModel = LibraryListModel::new();
 
         llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
-            if dl.is_loading() == false {
+            if !dl.is_loading() {
                 let item_count: u32 = dl.n_items();
                 debug!("Enumerated {} items in library path.", item_count);
 
@@ -101,7 +102,7 @@ impl LibraryView {
             DEFAULT_LIBRARY_DIRECTORY
         );
 
-        if !absolute_library_dir.starts_with("\0") {
+        if !absolute_library_dir.starts_with('\0') {
             debug!(
                 "Enumerating library files from directory: {}",
                 absolute_library_dir

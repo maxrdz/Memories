@@ -23,7 +23,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Album/theme_selector/theme-selector.ui")]
+#[template(resource = "/com/maxrdz/Album/preferences_view/theme_selector/theme-selector.ui")]
 pub struct ThemeSelector {
     #[template_child]
     pub selector_box: TemplateChild<gtk::Box>,

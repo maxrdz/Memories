@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
+pub mod theme_selector;
 
 use adw::gtk;
 use adw::prelude::*;

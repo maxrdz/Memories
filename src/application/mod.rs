@@ -67,6 +67,14 @@ impl Album {
             )
             .build();
 
+        let choose_album_dir_action = gio::ActionEntry::builder("choose-album-directory")
+            .activate(move |_: &Self, _, _| ())
+            .build();
+        let configure_action = gio::ActionEntry::builder("configure")
+            .parameter_type(Some(glib::VariantTy::INT32))
+            .activate(move |_: &Self, _, _| ())
+            .build();
+
         let about_action = gio::ActionEntry::builder("about")
             .activate(move |app: &Self, _, _| app.show_about())
             .build();
@@ -75,7 +83,13 @@ impl Album {
             .build();
 
         self.add_action_entries([
-            system_theme_action, light_theme_action, dark_theme_action, about_action, quit_action,
+            system_theme_action,
+            light_theme_action,
+            dark_theme_action,
+            choose_album_dir_action,
+            configure_action,
+            about_action,
+            quit_action,
         ]);
     }
 

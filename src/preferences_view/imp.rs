@@ -17,7 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::theme_selector::ThemeSelector;
+use super::theme_selector::ThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
