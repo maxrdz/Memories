@@ -79,11 +79,13 @@
             <property name="name">gallery_page</property>
             <property name="child">
               <object class="GtkScrolledWindow">
+                <property name="hexpand-set">True</property>
+                <property name="hexpand">True</property>
                 <property name="child">
                   <object class="GtkGridView" id="photo_grid_view">
                     <property name="max-columns">5</property>
                     <property name="min-columns">5</property>
-                    <property name="orientation">horizontal</property>
+                    <property name="orientation">vertical</property>
                   </object>
                 </property>
               </object>
