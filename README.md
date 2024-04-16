@@ -8,7 +8,8 @@ A photo and video album application designed for mobile devices.
 
 ## Building from Source
 
-We use Meson/Ninja as the build system for Album.
+We use Git for version control, and Meson/Ninja as the build
+system for Album.
 The quickest way to build for release is to do the following:
 
 ### Getting the Source
