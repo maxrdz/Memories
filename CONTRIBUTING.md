@@ -25,7 +25,7 @@ please see [GNOME Damned Lies](https://l10n.gnome.org/).
 please [register on GitLab](https://gitlab.gnome.org/users/sign_up),
 this will be important for submitting your changes!
 - Set up your [SSH](https://en.wikipedia.org/wiki/Secure_Shell)
-- cryptographic key in your GNOME GitLab account.
+cryptographic key in your GNOME GitLab account.
 Alternatively, you can also register a
 [PGP](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)
 cryptographic key for signing your commits within Git.
