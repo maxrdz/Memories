@@ -46,23 +46,35 @@ impl Album {
         // The reason we have a separate action per theme is for allowing the
         // user to be able to set the application theme via keyboard shortcuts.
         let system_theme_action = gio::ActionEntry::builder("system-theme")
+            .state(true.to_variant())
             .activate(
-                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
                     app.set_adwaita_color_scheme(adw::ColorScheme::Default);
+                    app.change_action_state("dark-theme", &false.to_variant());
+                    app.change_action_state("light-theme", &false.to_variant());
+                    action.set_state(&true.to_variant());
                 },
             )
             .build();
         let light_theme_action = gio::ActionEntry::builder("light-theme")
+            .state(false.to_variant())
             .activate(
-                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
                     app.set_adwaita_color_scheme(adw::ColorScheme::ForceLight);
+                    app.change_action_state("system-theme", &false.to_variant());
+                    app.change_action_state("dark-theme", &false.to_variant());
+                    action.set_state(&true.to_variant());
                 },
             )
             .build();
         let dark_theme_action = gio::ActionEntry::builder("dark-theme")
+            .state(false.to_variant())
             .activate(
-                move |app: &Self, _: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
                     app.set_adwaita_color_scheme(adw::ColorScheme::ForceDark);
+                    app.change_action_state("system-theme", &false.to_variant());
+                    app.change_action_state("light-theme", &false.to_variant());
+                    action.set_state(&true.to_variant());
                 },
             )
             .build();

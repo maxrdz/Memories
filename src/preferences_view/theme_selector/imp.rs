@@ -28,12 +28,16 @@ pub struct ThemeSelector {
     #[template_child]
     pub selector_box: TemplateChild<gtk::Box>,
     #[template_child]
-    pub follow: TemplateChild<gtk::CheckButton>,
+    pub system_selector: TemplateChild<gtk::CheckButton>,
+    #[template_child]
+    pub light_selector: TemplateChild<gtk::CheckButton>,
+    #[template_child]
+    pub dark_selector: TemplateChild<gtk::CheckButton>,
 }
 
 #[glib::object_subclass]
 impl ObjectSubclass for ThemeSelector {
-    const NAME: &'static str = "ThemeSelector";
+    const NAME: &'static str = "AlbumThemeSelector";
     type Type = super::ThemeSelector;
     type ParentType = adw::Bin;
 

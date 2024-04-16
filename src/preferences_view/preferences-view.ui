@@ -34,7 +34,7 @@
           </object>
         </child>
         <child>
-          <object class="ThemeSelector" id="theme_selector"/>
+          <object class="AlbumThemeSelector" id="theme_selector"/>
         </child>
         <child>
           <object class="GtkFlowBox" id="mobile_actions_flowbox">

@@ -6,6 +6,7 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
     <!-- UI Files -->
     <file preprocess="xml-stripblanks" compressed="true">greeter_dialog/greeter-dialog.ui</file>
