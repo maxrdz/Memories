@@ -1,5 +1,8 @@
 # Contributing Guidelines
 
+Thank you for considering contributing to Album!
+All code contributions are made using merge requests.
+
 If you are new to the GNOME community and software ecosystem,
 the Album project would like to give you a warm welcome to
 the GNOME community. We highly encourage you to visit
@@ -92,3 +95,15 @@ Closes #1234
 commit message body than too little."
 (GNOME/[gnome-shell](https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/9f5a323e06d6b5b3818d934ba5b31c437c4c07b3/docs/commit-messages.md))
 
+### Draft Merge Requests
+
+Merge requests marked as draft will not be reviewed by Album's
+maintainers or merged. When the change is ready for review please
+mark the merge request as ready.
+
+### Inactive Merge Requests
+
+If a merge request has comments from maintainers that have not been
+responded to within 4 weeks this merge request is considered to be
+inactive and will be closed. The reporter may re-open it at a later
+date if they respond to the comments.
