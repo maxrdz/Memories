@@ -22,13 +22,13 @@ mod library_list_model;
 
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
-use library_list_model::LibraryListModel;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
+use library_list_model::LibraryListModel;
 use log::{debug, error};
 use std::env;
 

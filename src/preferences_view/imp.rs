@@ -30,6 +30,8 @@ pub struct PreferencesView {
     pub theme_selector: TemplateChild<ThemeSelector>,
     #[template_child]
     pub mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
+    #[template_child]
+    pub recently_deleted_actions: TemplateChild<gtk::Box>,
 }
 
 #[glib::object_subclass]

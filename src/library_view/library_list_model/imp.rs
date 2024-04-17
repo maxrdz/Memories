@@ -20,9 +20,9 @@
 //! Data model implementation of the LibraryListModel class.
 
 use adw::gtk;
-use adw::{glib, gio};
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use adw::{gio, glib};
 use libadwaita as adw;
 
 /// Wraps GtkDirectoryList with a GObject that implements
@@ -65,4 +65,3 @@ impl ListModelImpl for LibraryListModel {
         self.0.n_items()
     }
 }
-

@@ -35,10 +35,26 @@ cfg_if! {
     }
 }
 
-/// DEFAULT_LIBRARY_DIRECTORY path relative to $HOME env var path.
+/// Following paths relative to $HOME env var path.
 pub static DEFAULT_LIBRARY_DIRECTORY: &str = "Pictures";
+pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";
+
+/// Following paths relative to DEFAULT_LIBRARY_DIRECTORY.
 pub static DEFAULT_SCREENSHOTS_REL_DIR: &str = "Screenshots";
 pub static DEFAULT_CAMERA_REL_DIR: &str = "Camera";
+
+/// Purge delay for recently deleted library items.
+#[rustfmt::skip]
+#[repr(u8)]
+pub enum RecentlyDeletedPurgeAfter {
+    OneHour, OneDay, TwoDays, ThreeDays, FourDays,
+    FiveDays, SixDays, OneWeek, TwoWeeks, OneMonth,
+}
+
+/// Default time delay for purging recently deleted library items.
+/// Following the same default delay as org.gnome.Settings.
+pub static DEFAULT_RECENTLY_DELETED_PURGE_DELAY: RecentlyDeletedPurgeAfter =
+    RecentlyDeletedPurgeAfter::OneMonth;
 
 pub struct AboutInformation {
     pub app_name: &'static str,
