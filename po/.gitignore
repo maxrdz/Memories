@@ -1,3 +1,4 @@
 *.po~
+*.pot # Generated for translators by l10n.gnome.org!
 POTFILES
 
