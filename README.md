@@ -33,10 +33,10 @@ meson compile -C build
 meson install -C build
 ```
 
-You can append the `-Dprofile=dev` argument to build for debug:
+You can append the `-Dprofile=devel` argument to build for debug:
 
 ```sh
-meson setup builddevel -Dprofile=dev
+meson setup builddevel -Dprofile=devel
 meson compile -C builddevel
 meson install -C builddevel
 ```
