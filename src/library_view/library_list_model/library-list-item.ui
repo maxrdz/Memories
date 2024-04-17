@@ -9,6 +9,7 @@
         <property name="hexpand">True</property>
         <property name="vexpand-set">True</property>
         <property name="vexpand">True</property>
+        <property name="height-request">100px</property>
         <property name="file">/home/max/Pictures/iPhone/IMG_4213.jpg</property>
       </object>
     </property>

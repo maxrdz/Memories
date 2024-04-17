@@ -18,9 +18,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
+mod library_list_model;
 
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
+use library_list_model::LibraryListModel;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -47,16 +49,24 @@ impl LibraryView {
     pub fn load_library(&self) {
         self.imp().spinner.start();
 
-        let dir_model: gtk::DirectoryList = gtk::DirectoryList::new(None, None::<&gio::File>);
-        let sm: gtk::MultiSelection = gtk::MultiSelection::new(
-            // We can clone our GtkDirectoryList model because gobjects are reference-counted.
-            Some(dir_model.clone()),
+        let llm: LibraryListModel = LibraryListModel::default();
+        let msm: gtk::MultiSelection = gtk::MultiSelection::new(
+            // We can clone our LibraryListModel model because gobjects are reference-counted.
+            Some(llm.clone()),
         );
 
-        dir_model.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
+        llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
             if !dl.is_loading() {
                 let item_count: u32 = dl.n_items();
                 debug!("Enumerated {} items in library path.", item_count);
+
+                for item in dl.iter::<gio::FileInfo>() {
+                    debug!("{:?}", item);
+                    match item.unwrap().file_type() {
+                        gio::FileType::Directory => debug!("Directory!"),
+                        _ => debug!("Not directory!"),
+                    }
+                }
 
                 if item_count == 0 {
                     s.imp().library_view_stack.set_visible_child_name("placeholder_page");
@@ -66,26 +76,17 @@ impl LibraryView {
                 s.imp().spinner.stop();
             }
         }));
-        dir_model.connect_error_notify(move |dl: &gtk::DirectoryList| {
+        llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
             error!("GtkDirectoryList returned an error!\n\n{}", dl.error().unwrap());
             panic!("Received an error signal from a critical function.");
         });
 
-        /*let slif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
-
-        slif.connect_setup(move |_: &gtk::SignalListItemFactory, list_item: &glib::Object| {
-            let img: gtk::Image = gtk::Image::builder().file("/home/max/Pictures/iPhone/IMG_4213.jpg").build();
-            list_item.set_property("child", &img);
-        });
-
-        slif.connect_bind(move |_, _list_item: &glib::Object| ());*/
-
         let blif: gtk::BuilderListItemFactory = gtk::BuilderListItemFactory::from_resource(
             None::<&gtk::BuilderRustScope>,
-            "/com/maxrdz/Album/library_view/library-list-item.ui",
+            "/com/maxrdz/Album/library_view/library_list_model/library-list-item.ui",
         );
 
-        self.imp().photo_grid_view.set_model(Some(&sm));
+        self.imp().photo_grid_view.set_model(Some(&msm));
         self.imp().photo_grid_view.set_factory(Some(&blif));
 
         let absolute_library_dir: String = format!(
@@ -115,7 +116,7 @@ impl LibraryView {
                 "Enumerating library files from directory: {}",
                 absolute_library_dir
             );
-            dir_model.set_file(Some(&gio::File::for_path(absolute_library_dir)));
+            llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
         }
     }
 }
