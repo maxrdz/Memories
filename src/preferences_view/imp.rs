@@ -36,7 +36,7 @@ pub struct PreferencesView {
 
 #[glib::object_subclass]
 impl ObjectSubclass for PreferencesView {
-    const NAME: &'static str = "PreferencesView";
+    const NAME: &'static str = "AlbumPreferencesView";
     type Type = super::PreferencesView;
     type ParentType = adw::BreakpointBin;
 

@@ -83,7 +83,7 @@
                 <property name="title" translatable="yes">Preferences</property>
                 <property name="icon-name">applications-system-symbolic</property>
                 <property name="child">
-                  <object class="PreferencesView" id="preferences_view"/>
+                  <object class="AlbumPreferencesView" id="preferences_view"/>
                 </property>
               </object>
             </child>
