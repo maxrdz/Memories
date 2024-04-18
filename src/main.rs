@@ -21,7 +21,6 @@ mod application;
 mod config;
 #[allow(dead_code)]
 mod globals;
-mod greeter_dialog;
 #[allow(dead_code)]
 mod i18n;
 mod library_view;

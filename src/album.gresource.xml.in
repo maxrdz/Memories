@@ -9,7 +9,6 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
     <!-- UI Files -->
-    <file preprocess="xml-stripblanks" compressed="true">greeter_dialog/greeter-dialog.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library_view/library_list_model/library-list-item.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library_view/library-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">master_window/master-window.ui</file>
