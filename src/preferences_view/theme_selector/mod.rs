@@ -31,7 +31,7 @@ glib::wrapper! {
 
 impl ThemeSelector {
     pub fn new() -> Self {
-        glib::Object::builder().build()
+        glib::Object::new()
     }
 }
 

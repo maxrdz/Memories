@@ -31,7 +31,7 @@ glib::wrapper! {
 
 impl LibraryListModel {
     pub fn new() -> Self {
-        glib::Object::builder().build()
+        glib::Object::new()
     }
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
@@ -58,21 +58,6 @@ impl LibraryListModel {
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
     pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
         self.imp().0.set_file(file)
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn item(&self, position: u32) -> Option<glib::Object> {
-        self.imp().item(position)
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn item_type(&self) -> glib::Type {
-        self.imp().item_type()
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn n_items(&self) -> u32 {
-        self.imp().n_items()
     }
 }
 
