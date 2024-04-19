@@ -20,7 +20,9 @@
 mod imp;
 
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
+use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
@@ -57,6 +59,15 @@ impl LibraryListModel {
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
     pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
+        // This is a good point to connect the `items_changed` signal from
+        // GtkDirectoryList with our signal. Without this, the `GtkGridView`
+        // will never know when to tell the factory to make list item widgets.
+        self.imp()
+            .0
+            .connect_items_changed(clone!(@weak self as s => move |
+            _: &gtk::DirectoryList, a: u32, b: u32, c: u32| {
+                s.items_changed(a, b, c);
+            }));
         self.imp().0.set_file(file)
     }
 }

@@ -50,6 +50,7 @@ impl LibraryView {
         self.imp().spinner.start();
 
         let llm: LibraryListModel = LibraryListModel::default();
+        //let llm = gtk::DirectoryList::new(None, None::<&gio::File>);
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(
             // We can clone our LibraryListModel model because gobjects are reference-counted.
             Some(llm.clone()),
@@ -81,13 +82,19 @@ impl LibraryView {
             panic!("Received an error signal from a critical function.");
         });
 
-        let blif: gtk::BuilderListItemFactory = gtk::BuilderListItemFactory::from_resource(
-            None::<&gtk::BuilderRustScope>,
-            "/com/maxrdz/Album/library_view/library_list_model/library-list-item.ui",
-        );
+        let lif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
+
+        lif.connect_setup(move |_: &gtk::SignalListItemFactory, list_item: &glib::Object| {
+            let image: gtk::Image = gtk::Image::builder()
+                .file("/home/max/Pictures/iPhone/IMG_4213.jpg")
+                .build();
+            image.set_height_request(100);
+            list_item.set_property("child", &image);
+            debug!("building new list item widget!");
+        });
 
         self.imp().photo_grid_view.set_model(Some(&msm));
-        self.imp().photo_grid_view.set_factory(Some(&blif));
+        self.imp().photo_grid_view.set_factory(Some(&lif));
 
         let absolute_library_dir: String = format!(
             "{}/{}",

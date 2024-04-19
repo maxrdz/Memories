@@ -25,8 +25,7 @@ use adw::subclass::prelude::*;
 use adw::{gio, glib};
 use libadwaita as adw;
 
-/// Wraps GtkDirectoryList with a GObject that implements
-/// GListModel, GtkSelectionModel, and GtkSectionModel.
+/// Wraps GtkDirectoryList with a GObject that implements GListModel.
 #[derive(Debug)]
 pub struct LibraryListModel(pub(super) gtk::DirectoryList);
 
@@ -38,14 +37,9 @@ impl Default for LibraryListModel {
 
 #[glib::object_subclass]
 impl ObjectSubclass for LibraryListModel {
-    const NAME: &'static str = "LibraryListModel";
+    const NAME: &'static str = "AlbumLibraryListModel";
     type Type = super::LibraryListModel;
-    type ParentType = glib::Object;
     type Interfaces = (gio::ListModel,);
-
-    fn class_init(_: &mut Self::Class) {}
-
-    fn instance_init(_: &glib::subclass::InitializingObject<Self>) {}
 }
 
 impl ObjectImpl for LibraryListModel {}
