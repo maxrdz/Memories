@@ -1,31 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>@APP_ID@</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
+  <id>@APP_ID@</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
   <name>Album</name>
-  <summary>A photo and video album application for GNOME.</summary>
+  <summary>A photo and video album application for GNOME</summary>
 	<description>
-	  <p>A free and open source photo/video album app for Linux mobile,
-  built with GTK4 and libadwaita, designed to be well integrated with
-  GNOME technologies and mobile devices.</p>
+	  <p>A photo and video album application for GNOME.
+      Built with GTK 4 and libadwaita, designed to be well
+	    integrated with GNOME technologies and mobile devices.</p>
+	  <p>Features:</p>
+    <ul>
+      <li>View your photos and video library</li>
+      <li>Create new Albums to organize memories</li>
+      <li>Flip, rotate, and crop your photos</li>
+      <li>Inspect rich metadata for photos</li>
+    </ul>
 	</description>
-  <url type="homepage">@PROJECT_GIT@</url>
-  <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
-  <translation type="gettext">@GETTEXT_DOMAIN@</translation>
-  <developer_name>Max Rodriguez</developer_name>
+  <branding>
+    <color type="primary" scheme_preference="light">#ad7a59</color>
+    <color type="primary" scheme_preference="dark">#915a37</color>
+  </branding>
+  <icon type="remote" width="64" height="64" scale="1">
+    https://maxrdz.com/appstream/com.maxrdz.Album.svg
+  </icon>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
+  <developer_name>Max Rodriguez</developer_name>
+  <developer id="com.maxrdz">
+    <name>Max Rodriguez</name>
+  </developer>
+  <update_contact>me_at_maxrdz.com</update_contact>
+  <url type="vcs-browser">@PROJECT_GIT@</url>
+  <url type="homepage">@PROJECT_GIT@</url>
+  <url type="help">@PROJECT_GIT@</url>
+  <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
+  <url type="donation">https://github.com/sponsors/maxrdz</url>
+  <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
+  <!--<url type="translate">https://l10n.gnome.org/module/album</url>-->
+  <translation type="gettext">@GETTEXT_DOMAIN@</translation>
   <provides>@APP_ID@.desktop</provides>
   <requires>
+    <internet>offline-only</internet>
     <display_length>360</display_length>
   </requires>
+  <releases></releases>
+  <categories>
+    <category>GNOME</category>
+    <category>GTK</category>
+    <category>AudioVideo</category>
+    <category>Viewer</category>
+    <category>Player</category>
+    <category>ImageProcessing</category>
+    <category>Utility</category>
+  </categories>
   <supports>
     <control>keyboard</control>
     <control>pointing</control>
     <control>touch</control>
   </supports>
+  <keywords>
+    <keyword translate="yes">album</keyword>
+    <keyword translate="yes">photos</keyword>
+    <keyword translate="yes">videos</keyword>
+    <keyword translate="yes">viewer</keyword>
+  </keywords>
+  <content_rating type="oars-1.0"/>
+  <suggests>
+    <id>org.postmarketos.Megapixels</id>
+  </suggests>
   <custom>
-    <value key="Purism::form_factor">workstation</value>
     <value key="Purism::form_factor">mobile</value>
   </custom>
 </component>
