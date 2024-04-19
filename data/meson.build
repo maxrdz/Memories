@@ -1,14 +1,15 @@
 subdir('icons')
 
 desktop_conf = configuration_data()
-desktop_conf.set('icon', application_id)
+desktop_conf.set('APP_NAME', app_name)
+desktop_conf.set('BINARY', binary)
+desktop_conf.set('ICON', application_id)
 
 # ---------- Desktop File --------- #
-
 desktop_file = i18n.merge_file(
   input: configure_file(
-    input: '@0@.desktop.in.in'.format(application_id),
-    output: '@BASENAME@',
+    input: '@0@.desktop.in.in'.format(base_id),
+    output: '@0@.desktop.in'.format(application_id),
     configuration: desktop_conf
   ),
   output: '@0@.desktop'.format(application_id),
@@ -30,11 +31,10 @@ if desktop_file_validate.found()
 endif
 
 # ----------- App Data ----------- #
-
 appdata_conf = configuration_data()
 appdata_conf.set('APP_ID', application_id)
 appdata_conf.set('PROJECT_GIT', project_git)
-appdata_conf.set('GETTEXT_DOMAIN', meson.project_name())
+appdata_conf.set('GETTEXT_DOMAIN', gettext_domain)
 
 appdata_file = i18n.merge_file(
   input: configure_file(
@@ -69,7 +69,6 @@ if appstream_cli.found()
 endif
 
 # ----------- Schemas ----------- #
-
 install_data(
   '@0@.gschema.xml'.format(base_id),
   install_dir: datadir / 'glib-2.0' / 'schemas',

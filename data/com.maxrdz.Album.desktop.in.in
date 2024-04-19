@@ -1,11 +1,10 @@
 [Desktop Entry]
-Name=Album
+Name=@APP_NAME@
 Comment=A Linux Mobile friendly photo album app for GNU/Linux systems.
 Keywords=album;gallery;photos;videos;
 Type=Application
-Exec=album
-# Do not translate this; xgettext marks this automatically.
-Icon=com.maxrdz.Album
+Exec=@BINARY@
+Icon=@ICON@
 Categories=GTK;GNOME;Audio;Video;Player;
 Terminal=false
 # Keys below are recognized by the Phosh shell.

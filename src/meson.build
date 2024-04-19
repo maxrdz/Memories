@@ -2,7 +2,6 @@ project_name = meson.project_name()
 gnome = import('gnome')
 
 # ----- Generated Source Files ----- #
-
 pkgdatadir = get_option('prefix') / get_option('datadir') / project_name
 
 conf = configuration_data()
@@ -31,7 +30,6 @@ run_command(
 )
 
 # ------ Compile GResource Bundle ------ #
-
 gnome.compile_resources(project_name,
   configure_file(
     input: '@0@.gresource.xml.in'.format(project_name),
@@ -44,7 +42,6 @@ gnome.compile_resources(project_name,
 )
 
 # ------------ Cargo Setup ------------- #
-
 out_binary_file = project_name
 
 cargo_bin = find_program('cargo')
@@ -63,7 +60,6 @@ else
 endif
 
 # ---------- Cross Compilation ---------- #
-
 file_extension = '' # Unix-like default
 
 if get_option('target') != ''
@@ -89,7 +85,6 @@ if get_option('target') != ''
 endif
 
 # ---------- Cargo Build Target ---------- #
-
 cargo_build = custom_target(
   'cargo-build',
   build_by_default: true,
