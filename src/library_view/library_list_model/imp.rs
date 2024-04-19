@@ -23,15 +23,25 @@ use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use adw::{gio, glib};
+use glib_macros::clone;
 use libadwaita as adw;
+use std::cell::RefCell;
 
-/// Wraps GtkDirectoryList with a GObject that implements GListModel.
+/// Custom implementation of GListModel that uses GTK's
+/// `GtkDirectoryList` models under the hood to recursively
+/// enumerate files under a certain directory path.
 #[derive(Debug)]
-pub struct LibraryListModel(pub(super) gtk::DirectoryList);
+pub struct LibraryListModel {
+    items_changed_signal_id: RefCell<Option<glib::SignalHandlerId>>,
+    pub(super) root_model: gtk::DirectoryList,
+}
 
 impl Default for LibraryListModel {
     fn default() -> Self {
-        Self(gtk::DirectoryList::new(None, None::<&gio::File>))
+        Self {
+            items_changed_signal_id: RefCell::new(None),
+            root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
+        }
     }
 }
 
@@ -42,20 +52,34 @@ impl ObjectSubclass for LibraryListModel {
     type Interfaces = (gio::ListModel,);
 }
 
-impl ObjectImpl for LibraryListModel {}
+impl ObjectImpl for LibraryListModel {
+    fn constructed(&self) {
+        let obj = self.obj();
+        // This is a good point to connect the `items_changed` signal from
+        // GtkDirectoryList with our signal. Without this, the `GtkGridView`
+        // will never know when to tell the factory to make list item widgets.
+        let signal_handler_id: glib::SignalHandlerId =
+            self.root_model
+                .connect_items_changed(clone!(@weak obj as o => move |
+                _: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
+                    o.items_changed(pos, removed, added);
+                }));
+        self.items_changed_signal_id.replace(Some(signal_handler_id));
+    }
+}
 
 /// Basically just redirect all GListModel interface calls
 /// to our underlying GtkDirectoryList object.
 impl ListModelImpl for LibraryListModel {
     fn item(&self, position: u32) -> Option<glib::Object> {
-        self.0.item(position)
+        self.root_model.item(position)
     }
 
     fn item_type(&self) -> glib::Type {
-        self.0.item_type()
+        self.root_model.item_type()
     }
 
     fn n_items(&self) -> u32 {
-        self.0.n_items()
+        self.root_model.n_items()
     }
 }
