@@ -18,8 +18,8 @@
     </ul>
 	</description>
   <branding>
-    <color type="primary" scheme_preference="light">#ad7a59</color>
-    <color type="primary" scheme_preference="dark">#915a37</color>
+    <color type="primary" scheme_preference="light">#b5835a</color>
+    <color type="primary" scheme_preference="dark">#63452c</color>
   </branding>
   <icon type="remote" width="64" height="64" scale="1">
     https://maxrdz.com/appstream/com.maxrdz.Album.svg
