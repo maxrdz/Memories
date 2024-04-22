@@ -104,6 +104,20 @@ We follow
 Additionally, the GNOME Handbook has a section for
 [project maintainers](https://handbook.gnome.org/maintainers.html).
 
+## Why not use Loupe? (GNOME Image Viewer)
+
+[Loupe](https://apps.gnome.org/Loupe/) is a great tool for
+viewing select images, one by one, on the desktop; But it
+is not a viable *easy to use* option for those wanting to
+scroll through their photo library on their mobile device.
+This is a similar case with [Totem](https://apps.gnome.org/Totem/).
+
+Album provides a new, modern, mobile friendly application that
+was designed for the Linux mobile platform that combines the
+ability to view images and videos under one application. Album
+also brings the feature of being able to create Albums (as per
+the name) to organize your cherished memories for easy access.
+
 ## Copyright and License
 
 Copyright &copy; 2024 Max Rodriguez
