@@ -33,6 +33,7 @@ endif
 # ----------- App Data ----------- #
 appdata_conf = configuration_data()
 appdata_conf.set('APP_ID', application_id)
+appdata_conf.set('BINARY', binary)
 appdata_conf.set('PROJECT_GIT', project_git)
 appdata_conf.set('GETTEXT_DOMAIN', gettext_domain)
 

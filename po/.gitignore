@@ -1,4 +1,5 @@
+# POT file generated for translators by l10n.gnome.org.
+*.pot
 *.po~
-*.pot # Generated for translators by l10n.gnome.org!
 POTFILES
 

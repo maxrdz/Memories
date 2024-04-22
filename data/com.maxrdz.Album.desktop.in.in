@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=@APP_NAME@
+Name=Album
 Exec=@BINARY@ %u
 Icon=@ICON@
 Comment=A photo and video album application for GNOME

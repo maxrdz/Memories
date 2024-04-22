@@ -17,20 +17,24 @@
       <li>Inspect rich metadata for photos</li>
     </ul>
 	</description>
+  <icon type="remote" width="64" height="64" scale="1">
+    https://maxrdz.com/appstream/com.maxrdz.Album.svg
+  </icon>
   <branding>
     <color type="primary" scheme_preference="light">#b5835a</color>
     <color type="primary" scheme_preference="dark">#63452c</color>
   </branding>
-  <icon type="remote" width="64" height="64" scale="1">
-    https://maxrdz.com/appstream/com.maxrdz.Album.svg
-  </icon>
-  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <custom>
+    <value key="GnomeSoftware::key-colors">[(181, 131, 90), (99, 69, 44)]</value>
+    <value key="Purism::form_factor">workstation,mobile</value>
+  </custom>
+  <content_rating type="oars-1.0"/>
   <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
-  <developer_name>Max Rodriguez</developer_name>
+  <developer_name translate="no">Max Rodriguez</developer_name>
   <developer id="com.maxrdz">
-    <name>Max Rodriguez</name>
+    <name translate="no">Max Rodriguez</name>
   </developer>
-  <update_contact>me_at_maxrdz.com</update_contact>
+  <update_contact>me@maxrdz.com</update_contact>
   <url type="vcs-browser">@PROJECT_GIT@</url>
   <url type="homepage">@PROJECT_GIT@</url>
   <url type="help">@PROJECT_GIT@</url>
@@ -38,12 +42,18 @@
   <url type="donation">https://github.com/sponsors/maxrdz</url>
   <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
   <!--<url type="translate">https://l10n.gnome.org/module/album</url>-->
-  <translation type="gettext">@GETTEXT_DOMAIN@</translation>
-  <provides>@APP_ID@.desktop</provides>
+  <translation type="gettext" source_locale="en_US">@GETTEXT_DOMAIN@</translation>
+  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <provides>
+    <binary>@BINARY@</binary>
+  </provides>
   <requires>
+    <display_length compare="ge">360</display_length>
     <internet>offline-only</internet>
-    <display_length>360</display_length>
   </requires>
+  <recommends>
+    <id>org.postmarketos.Megapixels</id>
+  </recommends>
   <releases></releases>
   <categories>
     <category>GNOME</category>
@@ -65,11 +75,4 @@
     <keyword translate="yes">videos</keyword>
     <keyword translate="yes">viewer</keyword>
   </keywords>
-  <content_rating type="oars-1.0"/>
-  <suggests>
-    <id>org.postmarketos.Megapixels</id>
-  </suggests>
-  <custom>
-    <value key="Purism::form_factor">mobile</value>
-  </custom>
 </component>
