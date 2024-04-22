@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=@APP_NAME@
-Comment=A Linux Mobile friendly photo album app for GNU/Linux systems.
+Comment=A photo and video album application for GNOME.
 Keywords=album;gallery;photos;videos;
 Type=Application
 Exec=@BINARY@
@@ -9,4 +9,5 @@ Categories=GTK;GNOME;Audio;Video;Player;
 Terminal=false
 # Keys below are recognized by the Phosh shell.
 StartupNotify=true
+X-Phosh-UsesFeedback=true
 X-Purism-FormFactor=Workstation;Mobile;
