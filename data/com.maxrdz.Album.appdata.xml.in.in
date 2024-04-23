@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2024 Max Rodriguez <me@maxrdz.com> -->
 <component type="desktop-application">
   <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
@@ -18,7 +19,7 @@
     </ul>
 	</description>
   <icon type="remote" width="64" height="64" scale="1">
-    https://maxrdz.com/appstream/com.maxrdz.Album.svg
+    https://www.maxrdz.com/appstream/com.maxrdz.Album.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#b5835a</color>
@@ -28,7 +29,7 @@
     <value key="GnomeSoftware::key-colors">[(181, 131, 90), (99, 69, 44)]</value>
     <value key="Purism::form_factor">workstation,mobile</value>
   </custom>
-  <content_rating type="oars-1.0"/>
+  <content_rating type="oars-1.0" />
   <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
   <developer_name translate="no">Max Rodriguez</developer_name>
   <developer id="com.maxrdz">
@@ -51,28 +52,61 @@
     <display_length compare="ge">360</display_length>
     <internet>offline-only</internet>
   </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
   <recommends>
     <id>org.postmarketos.Megapixels</id>
   </recommends>
-  <releases></releases>
+  <screenshots>
+    <screenshot type="default" environment="gnome">
+      <image>https://www.maxrdz.com/appstream/album-placeholder-ss.png</image>
+      <caption>Library View</caption>
+    </screenshot>
+    <screenshot environment="gnome">
+      <image>https://www.maxrdz.com/appstream/album-preferences-ss.png</image>
+      <caption>Preferences View</caption>
+    </screenshot>
+    <screenshot environment="gnome:dark">
+      <image>https://www.maxrdz.com/appstream/album-placeholder-ss-dark.png</image>
+      <caption>Library View</caption>
+    </screenshot>
+    <screenshot environment="gnome:dark">
+      <image>https://www.maxrdz.com/appstream/album-preferences-ss-dark.png</image>
+      <caption>Preferences View</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="46.1" date="2024-05-20">
+      <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG#L1</url>
+      <description>
+        <p>
+          Initial release of Album; Following the GNOME release schedule
+          as of GNOME version 46.1.
+        </p>
+      </description>
+    </release>
+  </releases>
   <categories>
     <category>GNOME</category>
     <category>GTK</category>
     <category>AudioVideo</category>
     <category>Viewer</category>
     <category>Player</category>
+    <category>Graphics</category>
     <category>ImageProcessing</category>
     <category>Utility</category>
   </categories>
-  <supports>
-    <control>keyboard</control>
-    <control>pointing</control>
-    <control>touch</control>
-  </supports>
   <keywords>
     <keyword translate="yes">album</keyword>
+    <keyword translate="yes">gallery</keyword>
+    <keyword translate="yes">library</keyword>
+    <keyword translate="yes">collage</keyword>
     <keyword translate="yes">photos</keyword>
     <keyword translate="yes">videos</keyword>
     <keyword translate="yes">viewer</keyword>
+    <keyword translate="yes">memories</keyword>
   </keywords>
 </component>
