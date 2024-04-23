@@ -120,8 +120,11 @@ the name) to organize your cherished memories for easy access.
 
 ## Copyright and License
 
-Copyright &copy; 2024 Max Rodriguez
+Copyright &copy; 2024 Max Rodriguez \<me@maxrdz.com\>
 
-Album is distributed under the terms of the GNU General Public
+"Album" can be found at https://gitlab.gnome.org/maxrdz/Album
+
+"Album" is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
-version. You can read the full license in the [COPYING](./COPYING) file.
+version WITHOUT ANY WARRANTY. You can read the full copy of
+the software license in the [COPYING](./COPYING) file.
