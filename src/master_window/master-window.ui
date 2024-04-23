@@ -67,6 +67,8 @@
             </child>
             <child>
               <object class="AdwViewStackPage" id="search_page">
+                <!-- Remove line below once search page is implemented. -->
+                <property name="visible">false</property>
                 <property name="name">search</property>
                 <property name="title" translatable="yes">Search</property>
                 <property name="icon-name">system-search-symbolic</property>
