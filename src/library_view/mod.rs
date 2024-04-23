@@ -59,16 +59,6 @@ impl LibraryView {
         llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
             if !dl.is_loading() {
                 let item_count: u32 = dl.n_items();
-                debug!("Enumerated {} items in library path.", item_count);
-
-                for item in dl.iter::<gio::FileInfo>() {
-                    debug!("{:?}", item);
-                    match item.unwrap().file_type() {
-                        gio::FileType::Directory => debug!("Directory!"),
-                        _ => debug!("Not directory!"),
-                    }
-                }
-
                 if item_count == 0 {
                     s.imp().library_view_stack.set_visible_child_name("placeholder_page");
                     return;
@@ -90,7 +80,6 @@ impl LibraryView {
                 .build();
             image.set_height_request(100);
             list_item.set_property("child", &image);
-            debug!("building new list item widget!");
         });
 
         self.imp().photo_grid_view.set_model(Some(&msm));
