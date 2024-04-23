@@ -15,15 +15,8 @@
       </object>
     </child>
     <property name="child">
-      <object class="GtkListBox">
-        <property name="vexpand-set">True</property>
-        <property name="vexpand">True</property>
-        <property name="valign">fill</property>
-        <!-- GTK_SELECTION_NONE == 0 -->
-        <property name="selection-mode">0</property>
-        <style>
-          <class name="transparent_list_box"/>
-        </style>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Preferences</property>
@@ -33,7 +26,7 @@
             <property name="margin-bottom">10</property>
             <!-- GTK_JUSTIFY_CENTER == 2 -->
             <property name="justify">2</property>
-            <!-- NOTE: CSS nodes from libadwaita css stylesheets -->
+            <!-- NOTE: CSS nodes from libadwaita CSS stylesheets -->
             <style>
               <class name="title"/>
               <class name="title-1"/>
@@ -62,106 +55,110 @@
           </object>
         </child>
         <child>
-          <object class="AdwPreferencesPage">
-            <property name="height-request">475</property>
-            <property name="vexpand-set">True</property>
-            <property name="vexpand">True</property>
-            <property name="valign">fill</property>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Album Configuration</property>
-                <property name="description" translatable="yes">Here you can find the main preferences for Album.</property>
-                <property name="vexpand-set">True</property>
-                <property name="vexpand">True</property>
+          <object class="GtkScrolledWindow">
+            <property name="child">
+              <object class="AdwPreferencesPage">
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="valign">1</property>
                 <child>
-                  <object class="AdwActionRow">
-                    <property name="title" translatable="yes">User Album Directory</property>
-                    <property name="subtitle" translatable="yes">Select your user's photo/video album directory.</property>
-                    <child type="suffix">
-                      <object class="GtkButton">
-                        <property name="margin-top">5</property>
-                        <property name="margin-bottom">5</property>
-                        <property name="child">
-                          <object class="AdwButtonContent">
-                            <property name="icon-name">document-open-symbolic</property>
-                            <property name="label" translatable="yes">Choose</property>
-                            <property name="use-underline">True</property>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Album Configuration</property>
+                    <property name="description" translatable="yes">Here you can find the main preferences for Album.</property>
+                    <property name="vexpand-set">True</property>
+                    <property name="vexpand">True</property>
+                    <!-- GTK_ALIGN_START == 1 -->
+                    <property name="valign">1</property>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="yes">User Album Directory</property>
+                        <property name="subtitle" translatable="yes">Select your user's photo/video album directory.</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="margin-top">5</property>
+                            <property name="margin-bottom">5</property>
+                            <property name="child">
+                              <object class="AdwButtonContent">
+                                <property name="icon-name">document-open-symbolic</property>
+                                <property name="label" translatable="yes">Choose</property>
+                                <property name="use-underline">True</property>
+                              </object>
+                            </property>
+                            <property name="action-name">app.choose-album-directory</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwSwitchRow">
+                        <property name="title" translatable="yes">Auto-Play Videos and Live Photos</property>
+                        <property name="action-name">app.configure</property>
+                        <property name="action-target">0</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Recently Deleted</property>
+                    <property name="description" translatable="yes">Automatically deleting your recently deleted photos and videos can help optimize storage on your device.</property>
+                    <child>
+                      <object class="AdwSwitchRow">
+                        <property name="title" translatable="yes">Automatically Purge Deleted Items</property>
+                        <property name="subtitle" translatable="yes">Purges deleted items after purge period. This permanently deletes items from your device.</property>
+                        <property name="action-name">app.configure</property>
+                        <property name="action-target">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwComboRow">
+                        <property name="title" translatable="yes">Automatic Purge Period</property>
+                        <property name="use-underline">true</property>
+                        <property name="model">
+                          <!--<object class="AdwEnumListModel">
+                            <property name="enum-type">RecentlyDeletedPurgeAfter</property>
+                          </object>-->
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">1 Hour</item>
+                              <item translatable="yes">1 Day</item>
+                              <item translatable="yes">2 Days</item>
+                              <item translatable="yes">3 Days</item>
+                              <item translatable="yes">4 Days</item>
+                              <item translatable="yes">5 Days</item>
+                              <item translatable="yes">6 Days</item>
+                              <item translatable="yes">1 Week</item>
+                              <item translatable="yes">2 Weeks</item>
+                              <item translatable="yes">1 Month</item>
+                            </items>
                           </object>
                         </property>
-                        <property name="action-name">app.choose-album-directory</property>
                       </object>
                     </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwSwitchRow">
-                    <property name="title" translatable="yes">Auto-Play Videos and Live Photos</property>
-                    <property name="action-name">app.configure</property>
-                    <property name="action-target">0</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Recently Deleted</property>
-                <property name="description" translatable="yes">Automatically deleting your recently deleted photos and videos can help optimize storage on your device.</property>
-                <child>
-                  <object class="AdwSwitchRow">
-                    <property name="title" translatable="yes">Automatically Purge Deleted Items</property>
-                    <property name="subtitle" translatable="yes">Purges deleted items after purge period. This permanently deletes items from your device.</property>
-                    <property name="action-name">app.configure</property>
-                    <property name="action-target">0</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwComboRow">
-                    <property name="title" translatable="yes">Automatic Purge Period</property>
-                    <property name="use-underline">true</property>
-                    <property name="model">
-                      <!--<object class="AdwEnumListModel">
-                        <property name="enum-type">RecentlyDeletedPurgeAfter</property>
-                      </object>-->
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">1 Hour</item>
-                          <item translatable="yes">1 Day</item>
-                          <item translatable="yes">2 Days</item>
-                          <item translatable="yes">3 Days</item>
-                          <item translatable="yes">4 Days</item>
-                          <item translatable="yes">5 Days</item>
-                          <item translatable="yes">6 Days</item>
-                          <item translatable="yes">1 Week</item>
-                          <item translatable="yes">2 Weeks</item>
-                          <item translatable="yes">1 Month</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox" id="recently_deleted_actions">
-                    <property name="margin-top">12</property>
-                    <property name="spacing">12</property>
-                    <property name="hexpand">false</property>
-                    <property name="halign">center</property>
                     <child>
-                      <object class="GtkButton">
-                        <property name="halign">end</property>
-                        <property name="valign">center</property>
-                        <property name="label" translatable="yes">Purge Recently Deleted</property>
-                        <property name="can-shrink">True</property>
-                        <property name="use-underline">true</property>
-                        <!-- NOTE: CSS node from libadwaita stylesheets -->
-                        <style>
-                          <class name="destructive-action"/>
-                        </style>
+                      <object class="GtkBox" id="recently_deleted_actions">
+                        <property name="margin-top">12</property>
+                        <property name="spacing">12</property>
+                        <property name="hexpand">false</property>
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="label" translatable="yes">Purge Recently Deleted</property>
+                            <property name="can-shrink">True</property>
+                            <property name="use-underline">true</property>
+                            <!-- NOTE: CSS node from libadwaita stylesheets -->
+                            <style>
+                              <class name="destructive-action"/>
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
           </object>
         </child>
       </object>
