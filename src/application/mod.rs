@@ -146,6 +146,16 @@ impl Album {
             ))
             .build();
 
+        if let Ok(bytes) =
+            gio::resources_lookup_data("/com/maxrdz/Album/LEGAL.txt", gio::ResourceLookupFlags::NONE)
+        {
+            about.add_legal_section(
+                "Open Source Software Licenses",
+                None,
+                gtk::License::Custom,
+                Some(String::from_utf8(bytes.to_vec()).unwrap().as_str()),
+            );
+        }
         about.present(&window)
     }
 }
