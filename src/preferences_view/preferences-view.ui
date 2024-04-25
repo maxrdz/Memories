@@ -88,13 +88,6 @@
                         </child>
                       </object>
                     </child>
-                    <child>
-                      <object class="AdwSwitchRow">
-                        <property name="title" translatable="yes">Auto-Play Videos and Live Photos</property>
-                        <property name="action-name">app.configure</property>
-                        <property name="action-target">0</property>
-                      </object>
-                    </child>
                   </object>
                 </child>
                 <child>

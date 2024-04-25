@@ -26,7 +26,7 @@ use adw::subclass::prelude::*;
 use adw::{gio, glib};
 use glib_macros::clone;
 use libadwaita as adw;
-use std::cell::{RefCell, RefMut};
+use std::cell::{Ref, RefCell, RefMut};
 use std::env;
 
 /// Custom implementation of GListModel that uses GTK's
@@ -35,6 +35,7 @@ use std::env;
 #[derive(Debug)]
 pub struct LibraryListModel {
     root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
+    hidden_items: RefCell<Vec<u32>>,
     pub(super) root_model: gtk::DirectoryList,
     subdir_models: RefCell<Vec<(gtk::DirectoryList, glib::SignalHandlerId)>>,
 }
@@ -43,6 +44,7 @@ impl Default for LibraryListModel {
     fn default() -> Self {
         Self {
             root_items_changed_signal: RefCell::new(None),
+            hidden_items: RefCell::new(vec![]),
             root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
             subdir_models: RefCell::new(vec![]),
         }
@@ -59,18 +61,32 @@ impl ObjectSubclass for LibraryListModel {
 impl ObjectImpl for LibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
-        // This is a good point to connect the `items_changed` signal from
-        // GtkDirectoryList with our signal. Without this, the `GtkGridView`
-        // will never know when to tell the factory to make list item widgets.
+
+        // Clone the `hidden_items` vec for the callback to use it.
+        // It doesn't modify `hidden_items`, so ideally we would use
+        // an immutable borrow, but the borrow checker doesn't like it.
+        let a = self.hidden_items.borrow();
+        let hidden: Vec<u32> = a.clone();
+        drop(a);
+        // Connect the root model's `items_changed` signal with our model
+        // so that the view that owns the `LibraryListModel` can be notified.
         let signal_handler_id: glib::SignalHandlerId =
             self.root_model
-                .connect_items_changed(clone!(@weak obj as o => move |
+                .connect_items_changed(clone!(@weak obj as o, @strong hidden as h => move |
                 model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
                     if added != 0 {
                         let base_index: u32 = pos - removed;
                         o.imp().new_model_item_enumerated(model, base_index, Some(added));
                     }
-                    o.items_changed(pos, removed, added);
+                    // Artificially pull backward index per hidden item below given index.
+                    // This keeps the illusion of our 'hidden' items.
+                    let mut adjusted_pos: u32 = pos;
+                    for hidden in h.iter() {
+                        if *hidden <= pos {
+                            adjusted_pos += 1;
+                        }
+                    }
+                    o.items_changed(adjusted_pos, removed, added);
                 }));
         self.root_items_changed_signal.replace(Some(signal_handler_id));
     }
@@ -83,17 +99,28 @@ impl ObjectImpl for LibraryListModel {
 /// like it has a continuous list of items from all subdirs.
 impl ListModelImpl for LibraryListModel {
     fn item(&self, position: u32) -> Option<glib::Object> {
-        if let Some(res) = self.root_model.item(position) {
+        let mut pos: u32 = position;
+        {
+            let b_hidden_items: Ref<'_, Vec<u32>> = self.hidden_items.borrow();
+            // Artificially push forward index per hidden item below given index.
+            // This keeps the illusion of our 'hidden' items.
+            for hidden in b_hidden_items.iter() {
+                if *hidden <= position {
+                    pos += 1;
+                }
+            }
+        }
+        if let Some(res) = self.root_model.item(pos) {
             Some(res)
         } else {
             let sdm_mut: RefMut<'_, Vec<(gtk::DirectoryList, glib::SignalHandlerId)>> =
                 self.subdir_models.borrow_mut();
             if !sdm_mut.is_empty() {
                 assert!(
-                    position >= self.root_model.n_items(),
+                    pos >= self.root_model.n_items(),
                     "Given position u32 value is less than the size of the root GtkDirectoryList!",
                 );
-                let mut adjusted_position: u32 = position - self.root_model.n_items();
+                let mut adjusted_position: u32 = pos - self.root_model.n_items();
                 for subdir_model in sdm_mut.iter() {
                     if let Some(res) = subdir_model.0.item(adjusted_position) {
                         return Some(res);
@@ -115,11 +142,12 @@ impl ListModelImpl for LibraryListModel {
     }
 
     fn n_items(&self) -> u32 {
+        let hidden_count: u32 = self.hidden_items.borrow().len() as u32;
         let mut subdir_item_count: u32 = 0;
-        for subdir_model in self.subdir_models.borrow_mut().iter() {
+        for subdir_model in self.subdir_models.borrow().iter() {
             subdir_item_count += subdir_model.0.n_items();
         }
-        self.root_model.n_items() + subdir_item_count
+        self.root_model.n_items() + subdir_item_count - hidden_count
     }
 }
 
@@ -148,13 +176,19 @@ impl LibraryListModel {
         let file_info: gio::FileInfo = q_res.unwrap().downcast().unwrap();
 
         match file_info.file_type() {
-            gio::FileType::Directory => self.create_new_subdirectory_model(file_info),
+            gio::FileType::Directory | gio::FileType::SymbolicLink => {
+                self.create_new_subdirectory_model(file_info, base_index)
+            }
             _ => (), // no other file types currently handled
         }
     }
 
     /// Called by `new_model_item_enumerated()` if the GFile is a directory.
-    fn create_new_subdirectory_model(&self, file_info: gio::FileInfo) {
+    ///
+    /// Creates a new `GtkDirectoryList` model for the given directory,
+    /// and adds the original list item from the root model to the list
+    /// of 'hidden' items, since the directory itself is not a picture/video.
+    fn create_new_subdirectory_model(&self, file_info: gio::FileInfo, index: u32) {
         let obj = self.obj();
         let subdirectory_absolute_path: String = format!(
             "{}/{}/{}",
@@ -177,5 +211,11 @@ impl LibraryListModel {
         let mut sdm_mut: RefMut<'_, Vec<(gtk::DirectoryList, glib::SignalHandlerId)>> =
             self.subdir_models.borrow_mut();
         sdm_mut.push((new_directory_list, signal_handler_id));
+
+        drop(sdm_mut); // drop to avoid double mutable borrow error at `self.n_items`
+
+        // Since this item represents a directory, we will hide it.
+        self.hidden_items.borrow_mut().push(index);
+        //self.obj().items_changed(index, 1, 0); FIXME
     }
 }
