@@ -95,11 +95,11 @@ impl LibraryView {
         lif.connect_bind(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // TODO: There **has** to be a better way to get the GtkImage object.
-            let revealer: gtk::Revealer = list_item.child().unwrap().downcast().unwrap();
-            let frame: gtk::AspectFrame = revealer.child().unwrap().downcast().unwrap();
-            let image: gtk::Image = frame.child().unwrap().downcast().unwrap();
+            let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
+            let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
+            let image: gtk::Image = frame.child().and_downcast().unwrap();
 
-            let model_list_item: gio::FileInfo = list_item.item().unwrap().downcast().unwrap();
+            let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
             if let Some(ext) = model_list_item.name().extension() {
                 let ext_str: &str = &ext.to_str().unwrap().to_lowercase();
