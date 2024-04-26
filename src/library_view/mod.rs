@@ -29,7 +29,7 @@ use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use library_list_model::LibraryListModel;
-use log::{debug, error};
+use log::{debug, error, warn};
 use std::env;
 
 glib::wrapper! {
@@ -50,7 +50,6 @@ impl LibraryView {
         self.imp().spinner.start();
 
         let llm: LibraryListModel = LibraryListModel::default();
-        //let llm = gtk::DirectoryList::new(None, None::<&gio::File>);
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(
             // We can clone our LibraryListModel model because gobjects are reference-counted.
             Some(llm.clone()),
@@ -74,12 +73,48 @@ impl LibraryView {
 
         let lif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
 
-        lif.connect_setup(move |_: &gtk::SignalListItemFactory, list_item: &glib::Object| {
+        lif.connect_setup(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+            let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
+
             let image: gtk::Image = gtk::Image::builder()
                 .file("/home/max/Pictures/iPhone/IMG_4213.jpg")
                 .build();
-            image.set_height_request(100);
-            list_item.set_property("child", &image);
+            let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
+                .child(&image)
+                .height_request(100)
+                .build();
+            // TODO: Make proper use of the GtkRevealer for it to fade in/out items.
+            let revealer: gtk::Revealer = gtk::Revealer::builder()
+                .child(&aspect_frame)
+                .reveal_child(true)
+                .transition_type(gtk::RevealerTransitionType::Crossfade)
+                .build();
+            list_item.set_property("child", &revealer);
+        });
+
+        lif.connect_bind(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+            let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
+            // TODO: There **has** to be a better way to get the GtkImage object.
+            let revealer: gtk::Revealer = list_item.child().unwrap().downcast().unwrap();
+            let frame: gtk::AspectFrame = revealer.child().unwrap().downcast().unwrap();
+            let image: gtk::Image = frame.child().unwrap().downcast().unwrap();
+
+            let model_list_item: gio::FileInfo = list_item.item().unwrap().downcast().unwrap();
+
+            if let Some(ext) = model_list_item.name().extension() {
+                let ext_str: &str = &ext.to_str().unwrap().to_lowercase();
+                match ext_str {
+                    "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => {
+                        image.set_file(Some("/home/max/Pictures/iPhone/IMG_3406.jpeg"));
+                    }
+                    "mp4" | "webm" | "mkv" | "mov" | "avi" => (),
+                    "gif" => (),
+                    "svg" => (),
+                    _ => warn!("Found an unsupported file format."),
+                }
+            } else {
+                warn!("Found a file with no file extension.");
+            }
         });
 
         self.imp().photo_grid_view.set_model(Some(&msm));
