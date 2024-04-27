@@ -1,3 +1,9 @@
+gridview child {
+  border-radius: 0px;
+  margin: 1px;
+  padding: 0px;
+}
+
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */
 /* Licensed under the GNU GPLv3 */
 .themeselector {
