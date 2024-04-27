@@ -26,18 +26,29 @@ use adw::subclass::prelude::*;
 use adw::{gio, glib};
 use glib_macros::clone;
 use libadwaita as adw;
-use std::cell::{Ref, RefCell, RefMut};
+use std::cell::{Cell, Ref, RefCell, RefMut};
 use std::env;
+
+#[derive(Debug)]
+struct SubdirectoryListModel {
+    model: gtk::DirectoryList,
+    items_changed_callback: glib::SignalHandlerId,
+    loading_callback: glib::SignalHandlerId,
+}
 
 /// Custom implementation of GListModel that uses GTK's
 /// `GtkDirectoryList` models under the hood to recursively
 /// enumerate files under a certain directory path.
-#[derive(Debug)]
+#[derive(glib::Properties, Debug)]
+#[properties(wrapper_type = super::LibraryListModel)]
 pub struct LibraryListModel {
     root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
     hidden_items: RefCell<Vec<u32>>,
     pub(super) root_model: gtk::DirectoryList,
-    subdir_models: RefCell<Vec<(gtk::DirectoryList, glib::SignalHandlerId)>>,
+    subdir_models: RefCell<Vec<SubdirectoryListModel>>,
+    #[property(get, set)]
+    models_loaded: Cell<bool>,
+    loading_notifies: Cell<u32>,
 }
 
 impl Default for LibraryListModel {
@@ -47,6 +58,8 @@ impl Default for LibraryListModel {
             hidden_items: RefCell::new(vec![]),
             root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
             subdir_models: RefCell::new(vec![]),
+            models_loaded: Cell::new(true),
+            loading_notifies: Cell::new(0_u32),
         }
     }
 }
@@ -58,6 +71,7 @@ impl ObjectSubclass for LibraryListModel {
     type Interfaces = (gio::ListModel,);
 }
 
+#[glib::derived_properties]
 impl ObjectImpl for LibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
@@ -88,6 +102,12 @@ impl ObjectImpl for LibraryListModel {
                     }
                     o.items_changed(adjusted_pos, removed, added);
                 }));
+        self.root_model
+            .connect_loading_notify(clone!(@weak self as s => move |
+                dl: &gtk::DirectoryList| {
+                s.register_subdir_loading_notify(dl);
+            }));
+
         self.root_items_changed_signal.replace(Some(signal_handler_id));
     }
 }
@@ -113,8 +133,7 @@ impl ListModelImpl for LibraryListModel {
         if let Some(res) = self.root_model.item(pos) {
             Some(res)
         } else {
-            let sdm_mut: RefMut<'_, Vec<(gtk::DirectoryList, glib::SignalHandlerId)>> =
-                self.subdir_models.borrow_mut();
+            let sdm_mut: RefMut<'_, Vec<SubdirectoryListModel>> = self.subdir_models.borrow_mut();
             if !sdm_mut.is_empty() {
                 assert!(
                     pos >= self.root_model.n_items(),
@@ -122,11 +141,11 @@ impl ListModelImpl for LibraryListModel {
                 );
                 let mut adjusted_position: u32 = pos - self.root_model.n_items();
                 for subdir_model in sdm_mut.iter() {
-                    if let Some(res) = subdir_model.0.item(adjusted_position) {
+                    if let Some(res) = subdir_model.model.item(adjusted_position) {
                         return Some(res);
                     }
-                    if adjusted_position >= subdir_model.0.n_items() {
-                        adjusted_position -= subdir_model.0.n_items();
+                    if adjusted_position >= subdir_model.model.n_items() {
+                        adjusted_position -= subdir_model.model.n_items();
                         continue;
                     }
                     return None;
@@ -145,13 +164,29 @@ impl ListModelImpl for LibraryListModel {
         let hidden_count: u32 = self.hidden_items.borrow().len() as u32;
         let mut subdir_item_count: u32 = 0;
         for subdir_model in self.subdir_models.borrow().iter() {
-            subdir_item_count += subdir_model.0.n_items();
+            subdir_item_count += subdir_model.model.n_items();
         }
         self.root_model.n_items() + subdir_item_count - hidden_count
     }
 }
 
 impl LibraryListModel {
+    /// Called by a subdirectory GtkDirectoryList model's
+    /// 'loading_notify' signal event callback.
+    pub(super) fn register_subdir_loading_notify(&self, model: &gtk::DirectoryList) {
+        let notifies: u32 = self.loading_notifies.get();
+
+        if !model.is_loading() {
+            self.loading_notifies.set(notifies + 1);
+            // We don't take into account the latest notify, but we also
+            // don't take into account the root model as the models count.
+            // So, no need to +1 the RHS & LHS of the expression below lol.
+            if notifies == self.subdir_models.borrow().len() as u32 {
+                self.obj().set_models_loaded(true);
+            }
+        }
+    }
+
     /// Called by the handler for the root GtkDirectoryList
     /// model's `items_changed` signal event.
     pub(super) fn new_model_item_enumerated(
@@ -200,17 +235,27 @@ impl LibraryListModel {
 
         let new_directory_list = gtk::DirectoryList::new(None, None::<&gio::File>);
 
-        let signal_handler_id: glib::SignalHandlerId =
+        let items_changed_signal_id: glib::SignalHandlerId =
             new_directory_list.connect_items_changed(clone!(@weak obj as o => move |
             _: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
                 o.items_changed(pos, removed, added);
             }));
 
+        let loading_signal_id: glib::SignalHandlerId =
+            new_directory_list.connect_loading_notify(clone!(@weak obj as o => move |
+            list_model: &gtk::DirectoryList| {
+                o.imp().register_subdir_loading_notify(list_model);
+            }));
+
         new_directory_list.set_file(Some(&gio::File::for_path(subdirectory_absolute_path)));
 
-        let mut sdm_mut: RefMut<'_, Vec<(gtk::DirectoryList, glib::SignalHandlerId)>> =
-            self.subdir_models.borrow_mut();
-        sdm_mut.push((new_directory_list, signal_handler_id));
+        let mut sdm_mut: RefMut<'_, Vec<SubdirectoryListModel>> = self.subdir_models.borrow_mut();
+
+        sdm_mut.push(SubdirectoryListModel {
+            model: new_directory_list,
+            items_changed_callback: items_changed_signal_id,
+            loading_callback: loading_signal_id,
+        });
 
         drop(sdm_mut); // drop to avoid double mutable borrow error at `self.n_items`
 

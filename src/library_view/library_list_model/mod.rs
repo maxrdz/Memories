@@ -35,19 +35,6 @@ impl LibraryListModel {
     }
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn is_loading(&self) -> bool {
-        self.imp().root_model.is_loading()
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn connect_loading_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
-    where
-        F: Fn(&gtk::DirectoryList) + 'static,
-    {
-        self.imp().root_model.connect_loading_notify(callback)
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
     pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
     where
         F: Fn(&gtk::DirectoryList) + 'static,

@@ -55,17 +55,16 @@ impl LibraryView {
             Some(llm.clone()),
         );
 
-        llm.connect_loading_notify(clone!(@weak self as s => move |dl: &gtk::DirectoryList| {
-            if !dl.is_loading() {
-                let item_count: u32 = dl.n_items();
-                if item_count == 0 {
-                    s.imp().library_view_stack.set_visible_child_name("placeholder_page");
-                    return;
-                }
-                s.imp().library_view_stack.set_visible_child_name("gallery_page");
-                s.imp().spinner.stop();
+        llm.connect_models_loaded_notify(clone!(@weak self as s => move |model: &LibraryListModel| {
+            let item_count: u32 = model.n_items();
+            if item_count == 0 {
+                s.imp().library_view_stack.set_visible_child_name("placeholder_page");
+                return;
             }
+            s.imp().library_view_stack.set_visible_child_name("gallery_page");
+            s.imp().spinner.stop();
         }));
+
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
             error!("GtkDirectoryList returned an error!\n\n{}", dl.error().unwrap());
             panic!("Received an error signal from a critical function.");

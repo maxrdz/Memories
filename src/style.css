@@ -1,13 +1,3 @@
-/* src/library_view/library-view.ui */
-/* src/preferences_view/preferences-view.ui */
-.transparent_list_box {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.transparent_list_box row.activatable {
-  background-color: rgba(0, 0, 0, 0);
-}
-
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */
 /* Licensed under the GNU GPLv3 */
 .themeselector {
