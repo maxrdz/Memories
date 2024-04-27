@@ -268,6 +268,5 @@ impl LibraryListModel {
 
         // Since this item represents a directory, we will hide it.
         self.hidden_items.borrow_mut().push(index);
-        //self.obj().items_changed(index, 1, 0); FIXME
     }
 }
