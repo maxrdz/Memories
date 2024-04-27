@@ -35,16 +35,17 @@ impl LibraryListModel {
     }
 
     /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
+    pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
+        self.imp().root_model.set_file(file)
+    }
+
+    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
+    /// TODO: Don't connect to only root model, but all models, similar to loading.
     pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
     where
         F: Fn(&gtk::DirectoryList) + 'static,
     {
         self.imp().root_model.connect_error_notify(callback)
-    }
-
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
-    pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
-        self.imp().root_model.set_file(file)
     }
 }
 

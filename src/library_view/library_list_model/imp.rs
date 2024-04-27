@@ -24,10 +24,15 @@ use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use adw::{gio, glib};
+use glib::source::Priority;
 use glib_macros::clone;
 use libadwaita as adw;
 use std::cell::{Cell, Ref, RefCell, RefMut};
 use std::env;
+
+/// IO priority for new `GtkDirectoryList` models. We override
+/// the default since it is usually higher than GTK redraw priority.
+static DIRECTORY_MODEL_PRIORITY: Priority = Priority::DEFAULT_IDLE;
 
 #[derive(Debug)]
 struct SubdirectoryListModel {
@@ -109,6 +114,7 @@ impl ObjectImpl for LibraryListModel {
             }));
 
         self.root_items_changed_signal.replace(Some(signal_handler_id));
+        self.root_model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
     }
 }
 
@@ -247,6 +253,7 @@ impl LibraryListModel {
                 o.imp().register_subdir_loading_notify(list_model);
             }));
 
+        new_directory_list.set_io_priority(DIRECTORY_MODEL_PRIORITY);
         new_directory_list.set_file(Some(&gio::File::for_path(subdirectory_absolute_path)));
 
         let mut sdm_mut: RefMut<'_, Vec<SubdirectoryListModel>> = self.subdir_models.borrow_mut();
