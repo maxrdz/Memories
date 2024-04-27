@@ -2,97 +2,108 @@
 <interface>
   <template class="LibraryView" parent="AdwBin">
     <property name="child">
-      <object class="AdwViewStack" id="library_view_stack">
+      <object class="AdwBreakpointBin">
         <child>
-          <object class="AdwViewStackPage" id="spinner_page">
-            <property name="name">spinner_page</property>
-            <property name="child">
-              <object class="AdwClamp">
-                <property name="orientation">vertical</property>
-                <property name="maximum-size">75</property>
+          <object class="AdwBreakpoint">
+            <condition>min-width: 720px</condition>
+            <setter object="photo_grid_view" property="max-columns">10</setter>
+            <setter object="photo_grid_view" property="min-columns">10</setter>
+          </object>
+        </child>
+        <property name="child">
+          <object class="AdwViewStack" id="library_view_stack">
+            <child>
+              <object class="AdwViewStackPage" id="spinner_page">
+                <property name="name">spinner_page</property>
                 <property name="child">
-                  <object class="GtkListBox">
-                    <style>
-                      <class name="transparent_list_box"/>
-                    </style>
-                    <property name="vexpand">True</property>
-                    <property name="sensitive">False</property>
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="child">
-                          <object class="GtkSpinner" id="spinner">
-                            <property name="width_request">32</property>
-                            <property name="height_request">32</property>
-                            <property name="valign">center</property>
-                            <property name="halign">center</property>
-                            <property name="vexpand">True</property>
-                            <property name="hexpand">True</property>
-                          </object>
-                        </property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="child">
-                          <object class="GtkLabel">
-                            <attributes>
-                              <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-                            </attributes>
-                            <property name="label" translatable="yes">Loading Your Library...</property>
-                            <property name="selectable">False</property>
-                          </object>
-                        </property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewStackPage" id="error_page">
-            <property name="name">error_page</property>
-            <property name="child">
-              <object class="AdwStatusPage" id="error_status_widget">
-                <property name="icon-name">emblem-important-symbolic</property>
-                <property name="title" translatable="yes">An Error Occurred</property>
-                <property name="description">PLACEHOLDER DESCRIPTION</property>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewStackPage">
-            <property name="name">placeholder_page</property>
-            <property name="child">
-              <object class="AdwStatusPage">
-                <property name="icon-name">emblem-photos-symbolic</property>
-                <property name="title" translatable="yes">Your Library Is Empty</property>
-                <property name="description" translatable="yes">Go take some pictures!</property>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewStackPage" id="gallery_page">
-            <property name="name">gallery_page</property>
-            <property name="child">
-              <object class="GtkScrolledWindow">
-                <property name="hexpand-set">True</property>
-                <property name="hexpand">True</property>
-                <property name="child">
-                  <object class="GtkGridView" id="photo_grid_view">
-                    <property name="max-columns">5</property>
-                    <property name="min-columns">5</property>
+                  <object class="AdwClamp">
                     <property name="orientation">vertical</property>
+                    <property name="maximum-size">75</property>
+                    <property name="child">
+                      <object class="GtkListBox">
+                        <style>
+                          <class name="transparent_list_box"/>
+                        </style>
+                        <property name="vexpand">True</property>
+                        <property name="sensitive">False</property>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="child">
+                              <object class="GtkSpinner" id="spinner">
+                                <property name="width_request">32</property>
+                                <property name="height_request">32</property>
+                                <property name="valign">center</property>
+                                <property name="halign">center</property>
+                                <property name="vexpand">True</property>
+                                <property name="hexpand">True</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="child">
+                              <object class="GtkLabel">
+                                <attributes>
+                                  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+                                </attributes>
+                                <property name="label" translatable="yes">Loading Your Library...</property>
+                                <property name="selectable">False</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                   </object>
                 </property>
               </object>
-            </property>
+            </child>
+            <child>
+              <object class="AdwViewStackPage" id="error_page">
+                <property name="name">error_page</property>
+                <property name="child">
+                  <object class="AdwStatusPage" id="error_status_widget">
+                    <property name="icon-name">emblem-important-symbolic</property>
+                    <property name="title" translatable="yes">An Error Occurred</property>
+                    <property name="description">PLACEHOLDER DESCRIPTION</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">placeholder_page</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="icon-name">emblem-photos-symbolic</property>
+                    <property name="title" translatable="yes">Your Library Is Empty</property>
+                    <property name="description" translatable="yes">Go take some pictures!</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage" id="gallery_page">
+                <property name="name">gallery_page</property>
+                <property name="child">
+                  <object class="GtkScrolledWindow">
+                    <property name="hexpand-set">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="child">
+                      <object class="GtkGridView" id="photo_grid_view">
+                        <property name="max-columns">5</property>
+                        <property name="min-columns">5</property>
+                        <property name="orientation">vertical</property>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <property name="visible-child-name">spinner_page</property>
           </object>
-        </child>
-        <property name="visible-child-name">spinner_page</property>
+        </property>
       </object>
     </property>
   </template>
