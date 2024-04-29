@@ -36,15 +36,12 @@ use adw::gtk;
 use application::Album;
 use config::{APP_NAME, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
-use glib_macros::clone;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use std::env;
 
 fn main() -> glib::ExitCode {
-    let mut xdg_startup_data: Option<String> = None;
-
     if env::var("RUST_LOG").is_err() {
         env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
         pretty_env_logger::init();
@@ -54,16 +51,6 @@ fn main() -> glib::ExitCode {
         );
     } else {
         pretty_env_logger::init();
-    }
-
-    if let Ok(va) = env::var("DESKTOP_LAUNCH_ID") {
-        env::remove_var("DESKTOP_LAUNCH_ID");
-        xdg_startup_data = Some(va.clone());
-        debug!("DESKTOP_LAUNCH_ID env var read and unset: {}", va);
-    } else {
-        // Expected per XDG startup notification specification:
-        // https://specifications.freedesktop.org/startup-notification-spec/startup-notification-0.1.txt
-        debug!("No DESKTOP_LAUNCH_ID environment variable received. Ignoring.");
     }
 
     info!(
@@ -83,11 +70,5 @@ fn main() -> glib::ExitCode {
     gio::resources_register(&resources);
 
     let app = Album::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
-
-    if xdg_startup_data.is_some() {
-        app.connect_activate(clone!(@strong xdg_startup_data as x => move |_: &Album| {
-            () // TODO
-        }));
-    }
     app.run()
 }
