@@ -116,6 +116,8 @@ pub fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String> {
         .arg(&absolute_out_path)
         .output();
 
+    // An error should **never** occur here, since we sanity check the existence
+    // of the ffmpeg binary installation at the start of the library load.
     match ffmpeg_output {
         Err(e) => panic!("Failed to execute ffmpeg binary!\n\n{}", e),
         Ok(_) => Ok(absolute_out_path),

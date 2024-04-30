@@ -20,9 +20,10 @@
 mod imp;
 mod library_list_model;
 
+use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
-use crate::utils::generate_thumbnail_image;
+use crate::utils::{generate_thumbnail_image, FFMPEG_BINARY};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -32,6 +33,8 @@ use libadwaita as adw;
 use library_list_model::LibraryListModel;
 use log::{debug, error, warn};
 use std::env;
+use std::io;
+use std::process::Command;
 
 glib::wrapper! {
     pub struct LibraryView(ObjectSubclass<imp::LibraryView>)
@@ -48,6 +51,28 @@ impl LibraryView {
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
+        // First things first, check that the ffmpeg binary is installed.
+        if let Err(e) = Command::new(FFMPEG_BINARY).output() {
+            self.imp().library_view_stack.set_visible_child_name("error_page");
+
+            match e.kind() {
+                io::ErrorKind::NotFound => {
+                    self.imp().error_status_widget.set_description(Some(&gettext_f(
+                        "{BIN} was not found on your system. {APP} requires {BIN} to run.",
+                        &[("BIN", FFMPEG_BINARY), ("APP", APP_INFO.app_name)],
+                    )));
+                    return;
+                }
+                io::ErrorKind::PermissionDenied => {
+                    self.imp().error_status_widget.set_description(Some(&gettext_f(
+                        "{APP} does not have the sufficient permissions to run {BIN}.",
+                        &[("BIN", FFMPEG_BINARY), ("APP", APP_INFO.app_name)],
+                    )));
+                    return;
+                }
+                _ => panic!("Unexpected error received at FFMPEG binary check."),
+            }
+        }
         self.imp().spinner.start();
 
         let llm: LibraryListModel = LibraryListModel::default();
