@@ -32,7 +32,7 @@ use std::env;
 
 /// IO priority for new `GtkDirectoryList` models. We override
 /// the default since it is usually higher than GTK redraw priority.
-static DIRECTORY_MODEL_PRIORITY: Priority = Priority::DEFAULT_IDLE;
+static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 
 #[derive(Debug)]
 struct SubdirectoryListModel {

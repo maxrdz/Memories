@@ -22,6 +22,7 @@ mod library_list_model;
 
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
+use crate::utils::generate_thumbnail_image;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -75,9 +76,7 @@ impl LibraryView {
         lif.connect_setup(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
 
-            let image: gtk::Image = gtk::Image::builder()
-                .file("/home/max/Pictures/iPhone/IMG_4213.jpg")
-                .build();
+            let image: gtk::Image = gtk::Image::new();
             let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
                 .child(&image)
                 .height_request(100)
@@ -100,16 +99,20 @@ impl LibraryView {
 
             let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
+            let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
+            let file: gio::File = file_obj.downcast().unwrap();
+            let file_path_buf = file.path().unwrap();
+            let absolute_path = file_path_buf.to_str().unwrap();
+
             if let Some(ext) = model_list_item.name().extension() {
                 let ext_str: &str = &ext.to_str().unwrap().to_lowercase();
                 match ext_str {
-                    "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => {
-                        image.set_file(Some("/home/max/Pictures/iPhone/IMG_3406.jpeg"));
+                    "svg" => todo!(),
+                    _ => {
+                        if let Ok(path) = generate_thumbnail_image(absolute_path) {
+                            image.set_file(Some(&path));
+                        }
                     }
-                    "mp4" | "webm" | "mkv" | "mov" | "avi" => (),
-                    "gif" => (),
-                    "svg" => (),
-                    _ => warn!("Found an unsupported file format."),
                 }
             } else {
                 warn!("Found a file with no file extension.");

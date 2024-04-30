@@ -26,6 +26,7 @@ mod i18n;
 mod library_view;
 mod master_window;
 mod preferences_view;
+mod utils;
 mod vcs;
 
 extern crate pretty_env_logger;
