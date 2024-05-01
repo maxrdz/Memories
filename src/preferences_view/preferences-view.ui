@@ -62,7 +62,7 @@
                 <property name="valign">1</property>
                 <child>
                   <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Album Configuration</property>
+                    <property name="title" translatable="yes">Library Configuration</property>
                     <property name="description" translatable="yes">Here you can find the main preferences for Album.</property>
                     <property name="vexpand-set">True</property>
                     <property name="vexpand">True</property>
@@ -70,8 +70,8 @@
                     <property name="valign">1</property>
                     <child>
                       <object class="AdwActionRow">
-                        <property name="title" translatable="yes">User Album Directory</property>
-                        <property name="subtitle" translatable="yes">Select your user's photo/video album directory.</property>
+                        <property name="title" translatable="yes">User Library Directory</property>
+                        <property name="subtitle" translatable="yes">Select your user's photo/video library directory.</property>
                         <child type="suffix">
                           <object class="GtkButton">
                             <property name="margin-top">5</property>
@@ -83,7 +83,7 @@
                                 <property name="use-underline">True</property>
                               </object>
                             </property>
-                            <property name="action-name">app.choose-album-directory</property>
+                            <property name="action-name">app.choose-library-directory</property>
                           </object>
                         </child>
                       </object>

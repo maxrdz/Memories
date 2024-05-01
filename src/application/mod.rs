@@ -79,7 +79,7 @@ impl Album {
             )
             .build();
 
-        let choose_album_dir_action = gio::ActionEntry::builder("choose-album-directory")
+        let choose_album_dir_action = gio::ActionEntry::builder("choose-library-directory")
             .activate(move |_: &Self, _, _| ())
             .build();
         let configure_action = gio::ActionEntry::builder("configure")
