@@ -18,7 +18,6 @@ cd po || exit 1
 while IFS= read -r line; do
     grep -vF "$line" POTFILES.in > 1.tmp && mv 1.tmp POTFILES.in
 done < <(grep -v '^#' POTFILES.skip)
-rm 1.tmp # Clean up temp file
 
 intltool-update --maintain 2> /dev/null
 

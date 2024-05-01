@@ -67,7 +67,7 @@
                   <object class="AdwStatusPage" id="error_status_widget">
                     <property name="icon-name">emblem-important-symbolic</property>
                     <property name="title" translatable="yes">An Error Occurred</property>
-                    <property name="description">PLACEHOLDER DESCRIPTION</property>
+                    <property name="description" translatable="yes">This is a placeholder error description. If you see this, please file an issue to Album. You can visit the issue tracker via the about dialog.</property>
                   </object>
                 </property>
               </object>
