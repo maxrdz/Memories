@@ -104,7 +104,11 @@ impl LibraryView {
         lif.connect_setup(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
 
-            let image: gtk::Image = gtk::Image::new();
+            let image: gtk::Image = gtk::Image::builder()
+                .use_fallback(true)
+                .icon_size(gtk::IconSize::Large)
+                .icon_name("emblem-photos-symbolic")
+                .build();
             let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
                 .child(&image)
                 .height_request(100)
@@ -112,9 +116,16 @@ impl LibraryView {
             // TODO: Make proper use of the GtkRevealer for it to fade in/out items.
             let revealer: gtk::Revealer = gtk::Revealer::builder()
                 .child(&aspect_frame)
+                .transition_type(gtk::RevealerTransitionType::None)
                 .reveal_child(true)
-                .transition_type(gtk::RevealerTransitionType::Crossfade)
                 .build();
+
+            image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
+                r.set_reveal_child(false);
+                r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
+                r.set_reveal_child(true);
+            }));
+
             list_item.set_property("child", &revealer);
         });
 
@@ -138,10 +149,10 @@ impl LibraryView {
                     "svg" => todo!(),
                     _ => {
                         if let Ok(path) = generate_thumbnail_image(absolute_path) {
+                            image.clear();
                             image.set_file(Some(&path));
                         } else {
-                            g_error!("LibraryView", "ffmpeg failed to generate a thumbnail image.");
-                            panic!(); // silence error. g_error crashes for us.
+                            g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
                         }
                     }
                 }
