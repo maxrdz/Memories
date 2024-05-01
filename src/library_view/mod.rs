@@ -134,9 +134,14 @@ impl LibraryView {
                 match ext_str {
                     "svg" => todo!(),
                     _ => {
-                        if let Ok(path) = generate_thumbnail_image(absolute_path) {
-                            image.set_file(Some(&path));
-                        }
+                        let ffmpeg_future = async {
+                            if let Ok(path) = generate_thumbnail_image(absolute_path).await {
+                                return path;
+                            }
+                            panic!("ffmpeg failed to generate a thumbnail image.");
+                        };
+                        let thumbnail_path: String = smol::block_on(ffmpeg_future);
+                        image.set_file(Some(&thumbnail_path));
                     }
                 }
             } else {

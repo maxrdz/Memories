@@ -89,6 +89,7 @@
                 <property name="name">gallery_page</property>
                 <property name="child">
                   <object class="GtkScrolledWindow">
+                    <property name="kinetic-scrolling">True</property>
                     <property name="hexpand-set">True</property>
                     <property name="hexpand">True</property>
                     <property name="child">
