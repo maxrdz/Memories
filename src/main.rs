@@ -41,10 +41,9 @@ use std::env;
 
 fn main() -> glib::ExitCode {
     if let Ok(v) = env::var("RUST_LOG") {
-        match v.as_str() {
-            "debug" => env::set_var("G_MESSAGES_DEBUG", "all"),
-            _ => (),
-        }
+        if v.as_str() == "debug" {
+            env::set_var("G_MESSAGES_DEBUG", "all");
+        };
     } else {
         env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
         env::set_var("G_MESSAGES_DEBUG", globals::G_MESSAGES_DEBUG_DEFAULT);
