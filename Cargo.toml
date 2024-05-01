@@ -20,8 +20,6 @@ lto = true
 strip = true
 
 [dependencies]
-async-channel = { version = "2.2" }
-async-process = { version = "2.2" }
 cfg-if = { version = "1" }
 gdk = { version = "0.8", package = "gdk4", features = ["v4_14"] }
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
@@ -29,5 +27,4 @@ gio = { version = "0.19", features = ["v2_80"] }
 glib-macros = { version = "0.19" }
 gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }
-smol = { version = "2" }
 
