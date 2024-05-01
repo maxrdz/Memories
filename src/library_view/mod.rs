@@ -27,11 +27,11 @@ use crate::utils::{generate_thumbnail_image, FFMPEG_BINARY};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use glib::{g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use library_list_model::LibraryListModel;
-use log::{debug, error, warn};
 use std::env;
 use std::io;
 use std::process::Command;
@@ -92,7 +92,11 @@ impl LibraryView {
         }));
 
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
-            error!("GtkDirectoryList returned an error!\n\n{}", dl.error().unwrap());
+            g_error!(
+                "LibraryView",
+                "GtkDirectoryList returned an error!\n\n{}",
+                dl.error().unwrap()
+            );
             panic!("Received an error signal from a critical function.");
         });
 
@@ -145,7 +149,7 @@ impl LibraryView {
                     }
                 }
             } else {
-                warn!("Found a file with no file extension.");
+                g_warning!("LibraryView", "Found a file with no file extension.");
             }
         });
 
@@ -158,7 +162,7 @@ impl LibraryView {
                 if let Ok(home_path) = env::var("HOME") {
                     home_path
                 } else {
-                    error!("No $HOME env var found! Cannot open photo albums.");
+                    g_error!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
 
                     self.imp().library_view_stack.set_visible_child_name("error_page");
                     self.imp().error_status_widget.set_description(Some(&gettext_f(
@@ -175,7 +179,8 @@ impl LibraryView {
         );
 
         if !absolute_library_dir.starts_with('\0') {
-            debug!(
+            g_debug!(
+                "LibraryView",
                 "Enumerating library files from directory: {}",
                 absolute_library_dir
             );

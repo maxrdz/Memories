@@ -29,32 +29,33 @@ mod preferences_view;
 mod utils;
 mod vcs;
 
-extern crate pretty_env_logger;
-#[macro_use]
-extern crate log;
-
 use adw::gtk;
 use application::Album;
 use config::{APP_NAME, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
+use gtk::glib::g_info;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use std::env;
 
 fn main() -> glib::ExitCode {
-    if env::var("RUST_LOG").is_err() {
+    if let Ok(v) = env::var("RUST_LOG") {
+        match v.as_str() {
+            "debug" => env::set_var("G_MESSAGES_DEBUG", "all"),
+            _ => (),
+        }
+    } else {
         env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
-        pretty_env_logger::init();
-        info!(
+        env::set_var("G_MESSAGES_DEBUG", globals::G_MESSAGES_DEBUG_DEFAULT);
+        g_info!(
+            "Album",
             "No RUST_LOG env var found. Setting to default: '{}'",
             globals::RUST_LOG_ENVVAR_DEFAULT
         );
-    } else {
-        pretty_env_logger::init();
     }
-
-    info!(
+    g_info!(
+        "Album",
         "{} v{}; Build revision (Git SHA1): {}",
         APP_NAME,
         VERSION,

@@ -2,6 +2,7 @@
 // See https://gitlab.gnome.org/World/bustle/-/blob/1920115486dab32bb91dc19bba3b98d67d54c56f/src/i18n.rs
 
 use gettextrs::{gettext, ngettext};
+use gtk::glib::g_warning;
 
 /// Like `gettext`, but replaces named variables using the given key-value
 /// tuples.
@@ -42,7 +43,8 @@ fn freplace(s: String, args: &[(&str, &str)]) -> String {
     debug_assert!(!s.contains('{'), "All format variables must be replaced.");
 
     if s.contains('{') {
-        trace!(
+        g_warning!(
+            "i18n",
             "All format variables must be replaced, but some were not.\n\n{}",
             s,
         );

@@ -30,8 +30,10 @@ pub static DEVELOPMENT_BUILD: bool = false;
 cfg_if! {
     if #[cfg(debug_assertions)] {
         pub static RUST_LOG_ENVVAR_DEFAULT: &str = "debug";
+        pub static G_MESSAGES_DEBUG_DEFAULT: &str = "all";
     } else {
         pub static RUST_LOG_ENVVAR_DEFAULT: &str = "info";
+        pub static G_MESSAGES_DEBUG_DEFAULT: &str = "";
     }
 }
 

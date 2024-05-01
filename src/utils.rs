@@ -20,8 +20,9 @@
 //! Utility functions used by Album, such as thumbnail image generation.
 
 use crate::config::APP_NAME;
+use adw::glib::{g_debug, g_warning};
 use async_process::{Command, Output};
-use log::{debug, warn};
+use libadwaita as adw;
 use std::fs::File;
 use std::io;
 use std::path::{Path, PathBuf};
@@ -71,7 +72,8 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
             return Ok(absolute_out_path);
         }
         Err(e) => match e.kind() {
-            io::ErrorKind::NotFound => debug!(
+            io::ErrorKind::NotFound => g_debug!(
+                "Utils",
                 "'{}' not found in app cache. Generating new thumbnail.",
                 absolute_out_path,
             ),
@@ -98,7 +100,8 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
             ]
         }
         _ => {
-            warn!(
+            g_warning!(
+                "Utils",
                 "'{}': unsupported file format, or an unrecognized extension.",
                 file_extension
             );

@@ -24,6 +24,7 @@ use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use adw::{gio, glib};
+use glib::g_debug;
 use glib::source::Priority;
 use glib_macros::clone;
 use libadwaita as adw;
@@ -237,7 +238,11 @@ impl LibraryListModel {
             DEFAULT_LIBRARY_DIRECTORY,
             file_info.name().to_str().unwrap(),
         );
-        debug!("Enumerated new subdirectory: {}", subdirectory_absolute_path);
+        g_debug!(
+            "LibraryListModel",
+            "Enumerated new subdirectory: {}",
+            subdirectory_absolute_path
+        );
 
         let new_directory_list = gtk::DirectoryList::new(None, None::<&gio::File>);
 
