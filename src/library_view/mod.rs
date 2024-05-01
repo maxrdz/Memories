@@ -27,7 +27,7 @@ use crate::utils::{generate_thumbnail_image, FFMPEG_BINARY};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{g_debug, g_error, g_warning};
+use glib::{g_critical, g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
@@ -70,7 +70,7 @@ impl LibraryView {
                     )));
                     return;
                 }
-                _ => panic!("Unexpected error received at FFMPEG binary check."),
+                _ => g_error!("LibraryView", "Unexpected error received at ffmpeg binary check."),
             }
         }
         self.imp().spinner.start();
@@ -97,7 +97,6 @@ impl LibraryView {
                 "GtkDirectoryList returned an error!\n\n{}",
                 dl.error().unwrap()
             );
-            panic!("Received an error signal from a critical function.");
         });
 
         let lif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
@@ -142,7 +141,8 @@ impl LibraryView {
                             if let Ok(path) = generate_thumbnail_image(absolute_path).await {
                                 return path;
                             }
-                            panic!("ffmpeg failed to generate a thumbnail image.");
+                            g_error!("LibraryView", "ffmpeg failed to generate a thumbnail image.");
+                            panic!(); // silence error. g_error crashes for us.
                         };
                         let thumbnail_path: String = smol::block_on(ffmpeg_future);
                         image.set_file(Some(&thumbnail_path));
@@ -162,7 +162,7 @@ impl LibraryView {
                 if let Ok(home_path) = env::var("HOME") {
                     home_path
                 } else {
-                    g_error!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
+                    g_critical!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
 
                     self.imp().library_view_stack.set_visible_child_name("error_page");
                     self.imp().error_status_widget.set_description(Some(&gettext_f(
