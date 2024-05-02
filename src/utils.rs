@@ -21,9 +21,9 @@
 
 use crate::config::APP_NAME;
 use adw::glib::{g_debug, g_warning};
+use async_fs::File;
 use async_process::{Command, Output};
 use libadwaita as adw;
-use std::fs::File;
 use std::io;
 use std::path::{Path, PathBuf};
 
@@ -67,7 +67,7 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
     );
 
     // Check if we have the thumbnail already cached, if so, return its path.
-    match File::open(Path::new(&absolute_out_path)) {
+    match File::open(Path::new(&absolute_out_path)).await {
         Ok(_) => {
             return Ok(absolute_out_path);
         }
@@ -94,7 +94,7 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => {
             &[
                 "-vf",
-                "thumbnail,crop='if(gt(iw,ih),min(iw,ih)/2*2,min(iw,ih))':'if(gt(iw,ih),min(iw,ih),min(iw,ih)/2)*2',scale=100:100",
+                "thumbnail,crop='min(iw,ih):min(iw,ih)',scale=100:100",
                 "-frames:v",
                 "1",
             ]
@@ -119,10 +119,17 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         .output()
         .await;
 
-    // An error should **never** occur here, since we check the existence
-    // of the ffmpeg binary installation at the start of the library load.
     match ffmpeg_output {
+        // An error should **never** occur here, since we check the existence
+        // of the ffmpeg binary installation at the start of the library load.
         Err(e) => panic!("Failed to execute ffmpeg binary!\n\n{}", e),
-        Ok(_) => Ok(absolute_out_path),
+        Ok(v) => {
+            if !v.stderr.is_empty() {
+                g_debug!("Utils", "FFmpeg printed to stderr: {:?}", v);
+                Err(io::Error::new(io::ErrorKind::Other, "FFmpeg printed to stderr."))
+            } else {
+                Ok(absolute_out_path)
+            }
+        },
     }
 }
