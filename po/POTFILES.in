@@ -20,4 +20,4 @@ src/preferences_view/preferences-view.ui
 src/preferences_view/theme_selector/imp.rs
 src/preferences_view/theme_selector/mod.rs
 src/preferences_view/theme_selector/theme-selector.ui
-src/utils.rs
+src/thumbnails.rs
