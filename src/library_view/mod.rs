@@ -152,7 +152,9 @@ impl LibraryView {
                 let ext_str: &str = &ext.to_str().unwrap().to_lowercase();
 
                 match ext_str {
-                    "svg" => todo!(),
+                    // SVGs are rendered by GNOME's librsvg, which is cheap and optimal
+                    // and making a thumbnail for it would be more expensive than rendering it.
+                    "svg" => image.set_file(Some(&absolute_path)),
                     _ => {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
