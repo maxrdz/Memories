@@ -37,6 +37,8 @@ cfg_if! {
     }
 }
 
+pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
+
 /// Following paths relative to $HOME env var path.
 pub static DEFAULT_LIBRARY_DIRECTORY: &str = "Pictures";
 pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";

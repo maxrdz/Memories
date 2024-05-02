@@ -33,11 +33,13 @@ use adw::gtk;
 use application::Album;
 use config::{APP_NAME, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
-use gtk::glib::g_info;
+use gtk::glib::{g_debug, g_info};
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use std::env;
+use std::fs::{DirBuilder, File};
+use std::path::Path;
 
 fn main() -> glib::ExitCode {
     if let Ok(v) = env::var("RUST_LOG") {
@@ -60,6 +62,47 @@ fn main() -> glib::ExitCode {
         VERSION,
         vcs::VCS_TAG
     );
+
+    let cache_dir: String = match env::var("XDG_CACHE_HOME") {
+        Ok(value) => value,
+        Err(e) => {
+            match e {
+                env::VarError::NotPresent => {
+                    // If $XDG_CACHE_HOME is either not set or empty,
+                    // a default equal to $HOME/.cache should be used.
+                    // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+                    format!("{}/.cache", env::var("HOME").unwrap())
+                }
+                _ => panic!("Unexpected std::env::VarError variant received."),
+            }
+        }
+    };
+    // TODO: If running within a Flapak sandboxed environment,
+    // we can use just $XDG_CACHE_HOME as the app cache directory.
+    let album_cache_dir: String = format!("{}/{}", cache_dir, APP_NAME);
+    let cache_subdirs: &[&str] = &[globals::CACHE_THUMBNAILS_SUBDIR];
+
+    for subdirectory in cache_subdirs {
+        let absolute_path: String = format!("{}/{}", album_cache_dir, subdirectory);
+
+        match File::open(Path::new(&absolute_path)) {
+            Ok(_) => (),
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::NotFound => {
+                    g_debug!(
+                        "Album",
+                        "Cache subdirectory '{}' does not exist. A new one will be made.",
+                        absolute_path,
+                    );
+                    DirBuilder::new()
+                        .recursive(true)
+                        .create(absolute_path)
+                        .expect("Failed to create new cache subdirectory.");
+                }
+                _ => todo!(), // TODO: Extend error handling for cache check
+            },
+        }
+    }
     // Set up gettext translations.
     bindtextdomain(APP_NAME, LOCALEDIR).expect("Unable to bind the text domain!");
     bind_textdomain_codeset(APP_NAME, "UTF-8").expect("Unable to set the text domain encoding!");

@@ -20,6 +20,7 @@
 //! Asynchronous function for generating thumbnails via FFmpeg.
 
 use crate::config::APP_NAME;
+use crate::globals::CACHE_THUMBNAILS_SUBDIR;
 use adw::glib::{g_debug, g_warning};
 use async_fs::File;
 use async_process::{Command, Output};
@@ -43,7 +44,7 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         .unwrap();
 
     // TODO: If running within a Flapak sandboxed environment,
-    // we can just store the cached jpeg files in $XDG_CACHE_HOME.
+    // we can use just $XDG_CACHE_HOME as the app cache directory.
     // FIXME: Do not store by file name, but by fingerprint hash.
     let absolute_out_path: String = format!(
         "{}/{}/{}/{}-thumbnail.jpeg",
@@ -57,12 +58,12 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
                         // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
                         format!("{}/.cache", std::env::var("HOME").unwrap())
                     }
-                    _ => panic!("Unexpected std::env::VarError type received."),
+                    _ => panic!("Unexpected std::env::VarError variant received."),
                 }
             }
         },
         APP_NAME,
-        "thumbnails",
+        CACHE_THUMBNAILS_SUBDIR,
         file_name
     );
 
