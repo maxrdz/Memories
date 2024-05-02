@@ -21,6 +21,7 @@ strip = true
 
 [dependencies]
 async-channel = { version = "2.2" }
+async-fs = { version = "2.1" }
 async-process = { version = "2.2" }
 cfg-if = { version = "1" }
 gdk = { version = "0.8", package = "gdk4", features = ["v4_14"] }

@@ -16,6 +16,7 @@ name = "album"
 version = "46.1.0"
 dependencies = [
  "async-channel",
+ "async-fs",
  "async-process",
  "cfg-if",
  "gdk4",
@@ -43,6 +44,17 @@ dependencies = [
  "event-listener-strategy 0.5.2",
  "futures-core",
  "pin-project-lite",
+]
+
+[[package]]
+name = "async-fs"
+version = "2.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ebcd09b382f40fcd159c2d695175b2ae620ffa5f3bd6f664131efff4e8b9e04a"
+dependencies = [
+ "async-lock",
+ "blocking",
+ "futures-lite",
 ]
 
 [[package]]
