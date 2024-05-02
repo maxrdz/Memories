@@ -129,7 +129,7 @@ impl LibraryView {
             list_item.set_property("child", &revealer);
         });
 
-        lif.connect_bind(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+        lif.connect_bind(move |factory: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // TODO: There **has** to be a better way to get the GtkImage object.
             let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
@@ -140,20 +140,33 @@ impl LibraryView {
 
             let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
             let file: gio::File = file_obj.downcast().unwrap();
-            let file_path_buf = file.path().unwrap();
-            let absolute_path = file_path_buf.to_str().unwrap();
+            let file_path_buf: std::path::PathBuf = file.path().unwrap();
+
+            // Convert file_path_buf to a String (not a string slice) since file_path_buf
+            // does not live long enough to be borrowed in the futures spawned below.
+            let absolute_path: String = file_path_buf.to_string_lossy().to_string();
 
             if let Some(ext) = model_list_item.name().extension() {
                 let ext_str: &str = &ext.to_str().unwrap().to_lowercase();
+
                 match ext_str {
                     "svg" => todo!(),
                     _ => {
-                        if let Ok(path) = generate_thumbnail_image(absolute_path) {
-                            image.clear();
-                            image.set_file(Some(&path));
-                        } else {
-                            g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
-                        }
+                        let (tx, rx) = async_channel::bounded(1);
+
+                        glib::spawn_future_local(clone!(@strong tx => async move {
+                            if let Ok(path) = generate_thumbnail_image(&absolute_path).await {
+                                tx.send(path).await.expect("Async channel needs to be open.");
+                            } else {
+                                g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
+                            }
+                        }));
+                        glib::spawn_future_local(clone!(@weak image => async move {
+                            while let Ok(path) = rx.recv().await {
+                                image.clear();
+                                image.set_file(Some(&path));
+                            }
+                        }));
                     }
                 }
             } else {
