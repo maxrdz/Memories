@@ -113,9 +113,8 @@ impl LibraryView {
                 .build();
             let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
                 .child(&image)
-                .height_request(100)
+                .height_request(70)
                 .build();
-            // TODO: Make proper use of the GtkRevealer for it to fade in/out items.
             let revealer: gtk::Revealer = gtk::Revealer::builder()
                 .child(&aspect_frame)
                 .transition_type(gtk::RevealerTransitionType::None)
@@ -124,6 +123,7 @@ impl LibraryView {
 
             image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
                 r.set_reveal_child(false);
+                r.set_transition_duration(1000); // milliseconds
                 r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
                 r.set_reveal_child(true);
             }));
@@ -176,7 +176,11 @@ impl LibraryView {
                     }
                 }
             } else {
-                g_warning!("LibraryView", "Found a file with no file extension.");
+                g_warning!(
+                    "LibraryView",
+                    "Found a file with no file extension, with file path '{}'.",
+                    absolute_path
+                );
             }
         }));
 
