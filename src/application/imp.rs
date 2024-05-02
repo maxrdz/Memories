@@ -17,14 +17,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::master_window::MasterWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use gettextrs::gettext;
 use gtk::glib;
 use libadwaita as adw;
-
-use crate::globals::*;
-use crate::master_window::MasterWindow;
 
 #[derive(Debug, Default)]
 pub struct Album {}
@@ -66,7 +65,7 @@ impl ApplicationImpl for Album {
             window.upcast()
         };
 
-        window.set_title(Some(APP_INFO.app_title));
+        window.set_title(Some(&gettext("Album")));
         window.present();
 
         // Setup our own CSS provider from gresource

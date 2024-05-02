@@ -115,7 +115,7 @@ impl Album {
 
         let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_INFO.app_id)
-            .application_name(APP_INFO.app_title)
+            .application_name(&gettext("Album"))
             .developer_name(APP_INFO.app_author)
             .version({
                 if DEVELOPMENT_BUILD {
