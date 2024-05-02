@@ -23,10 +23,11 @@ mod library_list_model;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
-use crate::utils::{generate_thumbnail_image, FFMPEG_BINARY};
+use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use async_semaphore::{Semaphore, SemaphoreGuard};
 use glib::{g_critical, g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
@@ -35,6 +36,7 @@ use library_list_model::LibraryListModel;
 use std::env;
 use std::io;
 use std::process::Command;
+use std::sync::Arc;
 
 glib::wrapper! {
     pub struct LibraryView(ObjectSubclass<imp::LibraryView>)
@@ -129,7 +131,7 @@ impl LibraryView {
             list_item.set_property("child", &revealer);
         });
 
-        lif.connect_bind(move |factory: &gtk::SignalListItemFactory, obj: &glib::Object| {
+        lif.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // TODO: There **has** to be a better way to get the GtkImage object.
             let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
@@ -153,9 +155,13 @@ impl LibraryView {
                     "svg" => todo!(),
                     _ => {
                         let (tx, rx) = async_channel::bounded(1);
+                        let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
 
-                        glib::spawn_future_local(clone!(@strong tx => async move {
+                        glib::spawn_future_local(clone!(@strong tx, @strong semaphore as sp => async move {
+                            let semaphore_guard: SemaphoreGuard<'_> = sp.acquire().await;
+
                             if let Ok(path) = generate_thumbnail_image(&absolute_path).await {
+                                drop(semaphore_guard);
                                 tx.send(path).await.expect("Async channel needs to be open.");
                             } else {
                                 g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
@@ -172,7 +178,7 @@ impl LibraryView {
             } else {
                 g_warning!("LibraryView", "Found a file with no file extension.");
             }
-        });
+        }));
 
         self.imp().photo_grid_view.set_model(Some(&msm));
         self.imp().photo_grid_view.set_factory(Some(&lif));

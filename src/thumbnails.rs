@@ -1,4 +1,4 @@
-// utils.rs
+// thumbnails.rs
 //
 // Copyright (c) 2024 Max Rodriguez
 //
@@ -17,7 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! Utility functions used by Album, such as thumbnail image generation.
+//! Asynchronous function for generating thumbnails via FFmpeg.
 
 use crate::config::APP_NAME;
 use adw::glib::{g_debug, g_warning};
@@ -91,14 +91,12 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => {
             &["-vf", "crop='min(iw,ih):min(iw,ih)',scale=100:100"]
         }
-        "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => {
-            &[
-                "-vf",
-                "thumbnail,crop='min(iw,ih):min(iw,ih)',scale=100:100",
-                "-frames:v",
-                "1",
-            ]
-        }
+        "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => &[
+            "-vf",
+            "thumbnail,crop='min(iw,ih):min(iw,ih)',scale=100:100",
+            "-frames:v",
+            "1",
+        ],
         _ => {
             g_warning!(
                 "Utils",
@@ -130,6 +128,6 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
             } else {
                 Ok(absolute_out_path)
             }
-        },
+        }
     }
 }

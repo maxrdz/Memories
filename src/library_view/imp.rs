@@ -19,31 +19,49 @@
 
 use adw::gtk;
 use adw::subclass::prelude::*;
+use async_semaphore::Semaphore;
 use gtk::glib;
 use libadwaita as adw;
+use std::sync::Arc;
 
-#[derive(Debug, Default, gtk::CompositeTemplate)]
+#[derive(Debug, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Album/library_view/library-view.ui")]
 pub struct LibraryView {
+    pub(super) subprocess_semaphore: Arc<Semaphore>,
     #[template_child]
-    pub library_view_stack: TemplateChild<adw::ViewStack>,
+    pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
-    pub spinner_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) spinner_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub spinner: TemplateChild<gtk::Spinner>,
+    pub(super) spinner: TemplateChild<gtk::Spinner>,
     #[template_child]
-    pub error_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) error_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub error_status_widget: TemplateChild<adw::StatusPage>,
+    pub(super) error_status_widget: TemplateChild<adw::StatusPage>,
     #[template_child]
-    pub gallery_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub photo_grid_view: TemplateChild<gtk::GridView>,
 }
 
+impl Default for LibraryView {
+    fn default() -> Self {
+        Self {
+            subprocess_semaphore: Arc::new(Semaphore::new(5)),
+            library_view_stack: TemplateChild::default(),
+            spinner_page: TemplateChild::default(),
+            spinner: TemplateChild::default(),
+            error_page: TemplateChild::default(),
+            error_status_widget: TemplateChild::default(),
+            gallery_page: TemplateChild::default(),
+            photo_grid_view: TemplateChild::default(),
+        }
+    }
+}
+
 #[glib::object_subclass]
 impl ObjectSubclass for LibraryView {
-    const NAME: &'static str = "LibraryView";
+    const NAME: &'static str = "AlbumLibraryView";
     type Type = super::LibraryView;
     type ParentType = adw::Bin;
 

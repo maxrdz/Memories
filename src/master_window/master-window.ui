@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
-  <template class="MasterWindow" parent="AdwApplicationWindow">
+  <template class="AlbumMasterWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Album</property>
     <property name="default-width">1200</property>
     <property name="default-height">720</property>
@@ -49,7 +49,7 @@
                 <property name="title" translatable="yes">Library</property>
                 <property name="icon-name">library-symbolic</property>
                 <property name="child">
-                  <object class="LibraryView" id="library_view"/>
+                  <object class="AlbumLibraryView" id="library_view"/>
                 </property>
               </object>
             </child>

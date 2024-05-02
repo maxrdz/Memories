@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="LibraryView" parent="AdwBin">
+  <template class="AlbumLibraryView" parent="AdwBin">
     <property name="child">
       <object class="AdwBreakpointBin">
         <property name="width-request">300</property>
@@ -90,8 +90,6 @@
                 <property name="child">
                   <object class="GtkScrolledWindow">
                     <property name="kinetic-scrolling">True</property>
-                    <property name="hexpand-set">True</property>
-                    <property name="hexpand">True</property>
                     <property name="child">
                       <object class="GtkGridView" id="photo_grid_view">
                         <property name="max-columns">5</property>

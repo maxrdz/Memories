@@ -26,7 +26,7 @@ mod i18n;
 mod library_view;
 mod master_window;
 mod preferences_view;
-mod utils;
+mod thumbnails;
 mod vcs;
 
 use adw::gtk;

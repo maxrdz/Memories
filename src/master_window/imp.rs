@@ -54,7 +54,7 @@ pub struct MasterWindow {
 
 #[glib::object_subclass]
 impl ObjectSubclass for MasterWindow {
-    const NAME: &'static str = "MasterWindow";
+    const NAME: &'static str = "AlbumMasterWindow";
     type Type = super::MasterWindow;
     type ParentType = adw::ApplicationWindow;
 
