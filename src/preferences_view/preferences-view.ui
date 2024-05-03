@@ -157,12 +157,12 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Clear App Cache</property>
-                        <property name="subtitle" translatable="yes">Clears Album's cache directory.</property>
+                        <property name="subtitle" translatable="yes">May result in a delay on the next launch.</property>
                         <child type="suffix">
                           <object class="GtkButton">
                             <property name="halign">end</property>
                             <property name="valign">center</property>
-                            <property name="label" translatable="yes">Clear App _Cache</property>
+                            <property name="label" translatable="yes">Clear _Cache</property>
                             <property name="can-shrink">True</property>
                             <property name="use-underline">true</property>
                             <!-- NOTE: CSS node from libadwaita stylesheets -->

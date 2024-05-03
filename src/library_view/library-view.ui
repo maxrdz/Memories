@@ -96,7 +96,8 @@
                           <object class="GtkFrame">
                             <!-- GTK_ALIGN_START == 1 -->
                             <property name="valign">1</property>
-                            <property name="height-request">150</property>
+                            <property name="can-target">False</property>
+                            <property name="height-request">200</property>
                             <style>
                               <class name="overlay-gradient"/>
                             </style>
@@ -104,6 +105,7 @@
                         </child>
                         <child type="overlay">
                           <object class="GtkBox" id="overlay_labels_box">
+                            <property name="can-target">False</property>
                             <!-- GTK_ALIGN_START == 1 -->
                             <property name="halign">1</property>
                             <!-- GTK_ALIGN_START == 1 -->
