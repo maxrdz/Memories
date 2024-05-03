@@ -17,6 +17,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::globals::FFMPEG_CONCURRENT_PROCESSES;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use async_semaphore::Semaphore;
@@ -41,19 +42,31 @@ pub struct LibraryView {
     #[template_child]
     pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
+    pub(super) gallery_toast_overlay: TemplateChild<adw::ToastOverlay>,
+    #[template_child]
+    pub(super) overlay_labels_box: TemplateChild<gtk::Box>,
+    #[template_child]
+    pub(super) time_period_label: TemplateChild<gtk::Label>,
+    #[template_child]
+    pub(super) total_items_label: TemplateChild<gtk::Label>,
+    #[template_child]
     pub photo_grid_view: TemplateChild<gtk::GridView>,
 }
 
 impl Default for LibraryView {
     fn default() -> Self {
         Self {
-            subprocess_semaphore: Arc::new(Semaphore::new(5)),
+            subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
             library_view_stack: TemplateChild::default(),
             spinner_page: TemplateChild::default(),
             spinner: TemplateChild::default(),
             error_page: TemplateChild::default(),
             error_status_widget: TemplateChild::default(),
             gallery_page: TemplateChild::default(),
+            gallery_toast_overlay: TemplateChild::default(),
+            overlay_labels_box: TemplateChild::default(),
+            time_period_label: TemplateChild::default(),
+            total_items_label: TemplateChild::default(),
             photo_grid_view: TemplateChild::default(),
         }
     }

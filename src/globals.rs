@@ -37,6 +37,11 @@ cfg_if! {
     }
 }
 
+/// The number of permits given to the async semaphore
+/// used to control the amount of ffmpeg processes spawned.
+pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
+
+/// The following statics are related to Album's cache.
 pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
 
 /// Following paths relative to $HOME env var path.

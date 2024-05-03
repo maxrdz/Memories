@@ -28,6 +28,7 @@ use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_semaphore::{Semaphore, SemaphoreGuard};
+use gettextrs::gettext;
 use glib::{g_critical, g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
@@ -92,6 +93,13 @@ impl LibraryView {
             s.imp().library_view_stack.set_visible_child_name("gallery_page");
             s.imp().spinner.stop();
         }));
+
+        llm.connect_items_changed(
+            clone!(@weak self as s => move |model: &LibraryListModel, _: u32, _: u32, _:u32| {
+                let item_count: u32 = model.n_items();
+                s.imp().total_items_label.set_label(&format!("{} {}", item_count, &gettext("Items")));
+            }),
+        );
 
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(

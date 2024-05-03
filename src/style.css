@@ -1,3 +1,9 @@
+.overlay-gradient {
+  border: none;
+  border-radius: 0px;
+  background: linear-gradient(@window_bg_color, #00000000);
+}
+
 gridview child {
   border-radius: 0px;
   margin: 1px;
