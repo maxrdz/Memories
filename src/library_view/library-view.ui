@@ -8,8 +8,10 @@
         <child>
           <object class="AdwBreakpoint">
             <condition>min-width: 720px</condition>
-            <setter object="photo_grid_view" property="min-columns">10</setter>
+            <setter object="photo_grid_view" property="min-columns">15</setter>
             <setter object="photo_grid_view" property="max-columns">15</setter>
+            <setter object="AlbumLibraryView" property="grid-widget-height">100</setter>
+            <setter object="AlbumLibraryView" property="grid-desktop-zoom">True</setter>
             <setter object="overlay_labels_box" property="margin-top">10</setter>
           </object>
         </child>
@@ -187,7 +189,7 @@
       </item>
       <item>
         <attribute name="label" translatable="yes">Zoom _Out</attribute>
-        <attribute name="action">app.grid-zoom-out</attribute>
+        <attribute name="action">win.grid-zoom-out</attribute>
       </item>
     </section>
   </menu>

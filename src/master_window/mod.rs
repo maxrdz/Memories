@@ -19,6 +19,7 @@
 
 mod imp;
 
+use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -45,7 +46,60 @@ impl MasterWindow {
                 win.imp().master_stack.set_visible_child_name("preferences");
             })
             .build();
-        self.add_action_entries([settings_action]);
+        let grid_zoom_in_action = gio::ActionEntry::builder("grid-zoom-in")
+            .activate(move |win: &Self, _, _| {
+                win.gallery_grid_zoom(true);
+            })
+            .build();
+        let grid_zoom_out_action = gio::ActionEntry::builder("grid-zoom-out")
+            .activate(move |win: &Self, _, _| {
+                win.gallery_grid_zoom(false);
+            })
+            .build();
+        self.add_action_entries([settings_action, grid_zoom_in_action, grid_zoom_out_action]);
+    }
+
+    fn gallery_grid_zoom(&self, zoom_in: bool) {
+        let current_columns: u32 = self.imp().library_view.imp().photo_grid_view.max_columns();
+        let mut current_zoom_level: usize = 0;
+
+        let zoom_levels: &'static [(u32, i32)] = {
+            if self.imp().library_view.grid_desktop_zoom() {
+                GRID_DESKTOP_ZOOM_LEVELS
+            } else {
+                GRID_MOBILE_ZOOM_LEVELS
+            }
+        };
+        for (i, set) in zoom_levels.iter().enumerate() {
+            if set.0 == current_columns {
+                current_zoom_level = i;
+            }
+        }
+        if zoom_in {
+            if current_zoom_level == 0 {
+                return;
+            }
+            self.set_grid_zoom_level(zoom_levels[current_zoom_level - 1]);
+        } else {
+            if current_zoom_level == zoom_levels.len() - 1 {
+                return;
+            }
+            self.set_grid_zoom_level(zoom_levels[current_zoom_level + 1]);
+        }
+    }
+
+    fn set_grid_zoom_level(&self, new_zoom_level: (u32, i32)) {
+        self.imp().library_view.set_grid_widget_height(new_zoom_level.1);
+        self.imp()
+            .library_view
+            .imp()
+            .photo_grid_view
+            .set_min_columns(new_zoom_level.0);
+        self.imp()
+            .library_view
+            .imp()
+            .photo_grid_view
+            .set_max_columns(new_zoom_level.0);
     }
 
     #[template_callback]

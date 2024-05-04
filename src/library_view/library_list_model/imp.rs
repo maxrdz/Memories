@@ -38,8 +38,8 @@ static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 #[derive(Debug)]
 struct SubdirectoryListModel {
     model: gtk::DirectoryList,
-    items_changed_callback: glib::SignalHandlerId,
-    loading_callback: glib::SignalHandlerId,
+    _items_changed_callback: glib::SignalHandlerId,
+    _loading_callback: glib::SignalHandlerId,
 }
 
 /// Custom implementation of GListModel that uses GTK's
@@ -265,8 +265,8 @@ impl LibraryListModel {
 
         sdm_mut.push(SubdirectoryListModel {
             model: new_directory_list,
-            items_changed_callback: items_changed_signal_id,
-            loading_callback: loading_signal_id,
+            _items_changed_callback: items_changed_signal_id,
+            _loading_callback: loading_signal_id,
         });
 
         drop(sdm_mut); // drop to avoid double mutable borrow error at `self.n_items`

@@ -17,18 +17,25 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::globals::FFMPEG_CONCURRENT_PROCESSES;
+use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_semaphore::Semaphore;
 use gtk::glib;
 use libadwaita as adw;
+use std::cell::Cell;
 use std::sync::Arc;
 
-#[derive(Debug, gtk::CompositeTemplate)]
+#[derive(Debug, glib::Properties, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Album/library_view/library-view.ui")]
+#[properties(wrapper_type = super::LibraryView)]
 pub struct LibraryView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
+    #[property(get, set)]
+    grid_widget_height: Cell<i32>,
+    #[property(get, set)]
+    grid_desktop_zoom: Cell<bool>,
     #[template_child]
     pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -57,6 +64,8 @@ impl Default for LibraryView {
     fn default() -> Self {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
+            grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
+            grid_desktop_zoom: Cell::new(false),
             library_view_stack: TemplateChild::default(),
             spinner_page: TemplateChild::default(),
             spinner: TemplateChild::default(),
@@ -87,6 +96,7 @@ impl ObjectSubclass for LibraryView {
     }
 }
 
+#[glib::derived_properties]
 impl ObjectImpl for LibraryView {}
 impl WidgetImpl for LibraryView {}
 impl BinImpl for LibraryView {}

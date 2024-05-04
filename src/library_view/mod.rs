@@ -111,37 +111,44 @@ impl LibraryView {
 
         let lif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
 
-        lif.connect_setup(move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
-            let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
+        lif.connect_setup(
+            clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+                let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
 
-            let image: gtk::Image = gtk::Image::builder()
-                .use_fallback(true)
-                .icon_size(gtk::IconSize::Large)
-                .icon_name("emblem-photos-symbolic")
-                .build();
-            let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
-                .child(&image)
-                .height_request(70)
-                .build();
-            let revealer: gtk::Revealer = gtk::Revealer::builder()
-                .child(&aspect_frame)
-                .transition_type(gtk::RevealerTransitionType::None)
-                .reveal_child(true)
-                .build();
+                let image: gtk::Image = gtk::Image::builder()
+                    .use_fallback(true)
+                    .icon_size(gtk::IconSize::Large)
+                    .icon_name("emblem-photos-symbolic")
+                    .build();
+                let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
+                    .child(&image)
+                    .height_request(s.grid_widget_height())
+                    .build();
+                s.bind_property("grid-widget-height", &aspect_frame, "height-request").sync_create().build();
 
-            image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
-                r.set_reveal_child(false);
-                r.set_transition_duration(1000); // milliseconds
-                r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
-                r.set_reveal_child(true);
-            }));
+                let revealer: gtk::Revealer = gtk::Revealer::builder()
+                    .child(&aspect_frame)
+                    .transition_type(gtk::RevealerTransitionType::None)
+                    .reveal_child(true)
+                    .build();
 
-            list_item.set_property("child", &revealer);
-        });
+                // Once the image file has been set, we know it has been loaded, so
+                // we can hide the content (placeholder icon) immediately, then reveal
+                // the actual image content with a proper delay + transition type.
+                image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
+                    r.set_reveal_child(false);
+                    r.set_transition_duration(1000); // milliseconds
+                    r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
+                    r.set_reveal_child(true);
+                }));
+
+                list_item.set_property("child", &revealer);
+            }
+        ));
 
         lif.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
-            // TODO: There **has** to be a better way to get the GtkImage object.
+            // There **has** to be a better way to get the GtkImage object.
             let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
             let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
             let image: gtk::Image = frame.child().and_downcast().unwrap();
