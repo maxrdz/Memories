@@ -140,6 +140,21 @@
                             </child>
                           </object>
                         </child>
+                        <child type="overlay">
+                          <object class="GtkMenuButton">
+                            <!-- GTK_ALIGN_START == 1 -->
+                            <property name="valign">1</property>
+                            <!-- GTK_ALIGN_END == 2 -->
+                            <property name="halign">2</property>
+                            <property name="margin-end">20</property>
+                            <property name="margin-top">15</property>
+                            <property name="icon-name">view-grid-symbolic</property>
+                            <property name="menu-model">grid_controls</property>
+                            <style>
+                              <class name="circular"/>
+                            </style>
+                          </object>
+                        </child>
                         <property name="child">
                           <object class="GtkScrolledWindow">
                             <property name="kinetic-scrolling">True</property>
@@ -164,4 +179,16 @@
       </object>
     </property>
   </template>
+  <menu id="grid_controls">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _In</attribute>
+        <attribute name="action">win.grid-zoom-in</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _Out</attribute>
+        <attribute name="action">app.grid-zoom-out</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
