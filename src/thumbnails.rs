@@ -74,7 +74,7 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         }
         Err(e) => match e.kind() {
             io::ErrorKind::NotFound => g_debug!(
-                "Utils",
+                "Thumbnails",
                 "'{}' not found in app cache. Generating new thumbnail.",
                 absolute_out_path,
             ),
@@ -90,17 +90,17 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
 
     let extra_arguments: &[&str] = match file_extension.to_lowercase().as_str() {
         "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => {
-            &["-vf", "crop='min(iw,ih):min(iw,ih)',scale=100:100"]
+            &["-vf", "crop='min(iw,ih):min(iw,ih)',scale=150:150"]
         }
         "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => &[
             "-vf",
-            "thumbnail,crop='min(iw,ih):min(iw,ih)',scale=100:100",
+            "thumbnail,crop='min(iw,ih):min(iw,ih)',scale=150:150",
             "-frames:v",
             "1",
         ],
         _ => {
             g_warning!(
-                "Utils",
+                "Thumbnails",
                 "'{}': unsupported file format, or an unrecognized extension.",
                 file_extension
             );
@@ -113,6 +113,9 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
     let ffmpeg_output: Result<Output, io::Error> = Command::new(FFMPEG_BINARY)
         .arg("-i")
         .arg(file_path)
+        // For some reason, ffmpeg loves to print to stderr. Setting the log level
+        // to **only** error messages fixes the issue of an error always being returned.
+        .args(["-loglevel", "error"])
         .args(extra_arguments)
         .arg(&absolute_out_path)
         .output()
@@ -124,7 +127,7 @@ pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String>
         Err(e) => panic!("Failed to execute ffmpeg binary!\n\n{}", e),
         Ok(v) => {
             if !v.stderr.is_empty() {
-                g_debug!("Utils", "FFmpeg printed to stderr: {:?}", v);
+                g_debug!("Thumbnails", "FFmpeg printed to stderr: {:?}", v);
                 Err(io::Error::new(io::ErrorKind::Other, "FFmpeg printed to stderr."))
             } else {
                 Ok(absolute_out_path)
