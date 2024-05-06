@@ -1,16 +1,16 @@
 # Contributing Guidelines
 
-Thank you for considering contributing to Album!
+Thank you for considering contributing to Albums!
 All code contributions are made using merge requests.
 
 If you are new to the GNOME community and software ecosystem,
-the Album project would like to give you a warm welcome to
+the Albums project would like to give you a warm welcome to
 the GNOME community. We highly encourage you to visit
 [welcome.gnome.org](https://welcome.gnome.org/), a website
 made by the GNOME foundation to introduce new users to GNOME.
 
 Users interested in making contributions to the software
-behind Album are encouraged to check out
+behind Albums are encouraged to check out
 [developer.gnome.org](https://developer.gnome.org/).
 
 Before starting to write your own contribution, please make
@@ -35,16 +35,16 @@ cryptographic key for signing your commits within Git.
 [welcome.gnome.org](https://welcome.gnome.org/en/app/Loupe/#setting-up-gitlab)
 has a good tutorial on setting up your GNOME GitLab account.
 - Once you have your account setup and signed in,
-[fork the project Git repository](https://gitlab.gnome.org/maxrdz/Album).
+[fork the project Git repository](https://gitlab.gnome.org/maxrdz/Albums).
 This will create your own copy of the source under your user's namespace.
 - Next, **clone** your new fork on your local machine. If you have your
 SSH key configured on your GNOME GitLab account, run the following:
 ```sh
-git clone git@ssh.gitlab.gnome.org:maxrdz/Album.git
+git clone git@ssh.gitlab.gnome.org:maxrdz/Albums.git
 ```
 If you do not have SSH set up, you can also clone via HTTPS.
 ```sh
-git clone https://gitlab.gnome.org/maxrdz/Album.git
+git clone https://gitlab.gnome.org/maxrdz/Albums.git
 ```
 - Before starting to write your contribution, create a **new branch**
 for your patch/contribution within Git:
@@ -97,7 +97,7 @@ commit message body than too little."
 
 ### Draft Merge Requests
 
-Merge requests marked as draft will not be reviewed by Album's
+Merge requests marked as draft will not be reviewed by Albums'
 maintainers or merged. When the change is ready for review please
 mark the merge request as ready.
 

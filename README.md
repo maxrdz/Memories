@@ -1,7 +1,7 @@
 <div align="center">
-<img src="./data/icons/com.maxrdz.Album.svg" height="128"/>
+<img src="./data/icons/com.maxrdz.Albums.svg" height="128"/>
 
-# Album
+# Albums
 A photo and video album application designed for mobile devices.
 
 </div>
@@ -9,19 +9,19 @@ A photo and video album application designed for mobile devices.
 ## Building from Source
 
 We use Git for version control, and Meson/Ninja as the build
-system for Album.
+system for Albums.
 The quickest way to build for release is to do the following:
 
 ### Getting the Source
 
 ```sh
-git clone https://gitlab.gnome.org/maxrdz/Album
-cd Album
+git clone https://gitlab.gnome.org/maxrdz/Albums
+cd Albums
 ```
 
-### Build Album
+### Build Albums
 
-Before building Album, make sure you have the required
+Before building Albums, make sure you have the required
 dependencies installed. Meson will let you know what binaries or
 libraries it is missing or cannot find, but you can also read the
 root [Meson](./meson.build) build file to see the list of
@@ -43,7 +43,7 @@ meson install -C builddevel
 
 ### Running from the source tree
 
-If you would like to run Album without installing it on your
+If you would like to run Albums without installing it on your
 system, you can use `cargo` directly to build and run the source.
 
 ### Uninstalling
@@ -85,14 +85,14 @@ Please read the project's [Contributing Guide](./CONTRIBUTING.md).
 
 It is very helpful for new contributors to read the
 [GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
-before starting to write your own changes to Album.
+before starting to write your own changes to Albums.
 
-If your change or proposal is related to Album's UX, please see the
+If your change or proposal is related to Albums' UX, please see the
 [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).
 
 ## Code of Conduct
 
-The Album project, its maintainers, and its contributors are
+The Albums project, its maintainers, and its contributors are
 required to follow the
 [GNOME Code of Conduct](https://conduct.gnome.org/).
 
@@ -112,9 +112,9 @@ is not a viable *easy to use* option for those wanting to
 scroll through their photo library on their mobile device.
 This is a similar case with [Totem](https://apps.gnome.org/Totem/).
 
-Album provides a new, modern, mobile friendly application that
+Albums provides a new, modern, mobile friendly application that
 was designed for the Linux mobile platform that combines the
-ability to view images and videos under one application. Album
+ability to view images and videos under one application. Albums
 also brings the feature of being able to create Albums (as per
 the name) to organize your cherished memories for easy access.
 
@@ -122,9 +122,9 @@ the name) to organize your cherished memories for easy access.
 
 Copyright &copy; 2024 Max Rodriguez \<me@maxrdz.com\>
 
-"Album" can be found at https://gitlab.gnome.org/maxrdz/Album
+"Albums" can be found at https://gitlab.gnome.org/maxrdz/Albums
 
-"Album" is distributed under the terms of the GNU General Public
+"Albums" is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
 version WITHOUT ANY WARRANTY. You can read the full copy of
 the software license in the [COPYING](./COPYING) file.

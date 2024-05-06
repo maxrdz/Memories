@@ -1,19 +1,20 @@
-// application/mod.rs
+// This file is part of Albums.
 //
 // Copyright (c) 2024 Max Rodriguez
+// All rights reserved.
 //
-// This program is free software: you can redistribute it and/or modify
+// Albums is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Albums is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -29,12 +30,12 @@ use crate::globals::*;
 use crate::vcs::VCS_TAG;
 
 glib::wrapper! {
-    pub struct Album(ObjectSubclass<imp::Album>)
+    pub struct Albums(ObjectSubclass<imp::Albums>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl Album {
+impl Albums {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -115,7 +116,7 @@ impl Album {
 
         let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_INFO.app_id)
-            .application_name(gettext("Album"))
+            .application_name(gettext("Albums"))
             .developer_name(APP_INFO.app_author)
             .version({
                 if DEVELOPMENT_BUILD {
@@ -147,10 +148,10 @@ impl Album {
             .build();
 
         if let Ok(bytes) =
-            gio::resources_lookup_data("/com/maxrdz/Album/LEGAL.txt", gio::ResourceLookupFlags::NONE)
+            gio::resources_lookup_data("/com/maxrdz/Albums/LEGAL.txt", gio::ResourceLookupFlags::NONE)
         {
             about.add_legal_section(
-                "Open Source Software Licenses",
+                &gettext("Open Source Software Licenses"),
                 None,
                 gtk::License::Custom,
                 Some(String::from_utf8(bytes.to_vec()).unwrap().as_str()),

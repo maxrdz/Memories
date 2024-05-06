@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Album
+Name=Albums
 Exec=@BINARY@ %u
 Icon=@ICON@
 Comment=A photo and video album application for GNOME
-Keywords=album;gallery;pictures;photos;videos;
+Keywords=albums;gallery;pictures;photos;videos;
 Categories=GTK;GNOME;Audio;Video;Player;
 Type=Application
 Terminal=false

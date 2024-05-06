@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumPreferencesView" parent="AdwBreakpointBin">
+  <template class="AlbumsPreferencesView" parent="AdwBreakpointBin">
     <property name="width-request">300</property>
     <property name="height-request">200</property>
     <property name="vexpand-set">True</property>
@@ -34,7 +34,7 @@
           </object>
         </child>
         <child>
-          <object class="AlbumThemeSelector" id="theme_selector"/>
+          <object class="AlbumsThemeSelector" id="theme_selector"/>
         </child>
         <child>
           <object class="GtkFlowBox" id="mobile_actions_flowbox">
@@ -42,7 +42,7 @@
             <property name="max-children-per-line">2</property>
             <child>
               <object class="GtkButton">
-                <property name="label" translatable="yes">About Album</property>
+                <property name="label" translatable="yes">About Albums</property>
                 <property name="action-name">app.about</property>
               </object>
             </child>
@@ -63,7 +63,7 @@
                 <child>
                   <object class="AdwPreferencesGroup">
                     <property name="title" translatable="yes">Library Configuration</property>
-                    <property name="description" translatable="yes">Here you can find the main preferences for Album.</property>
+                    <property name="description" translatable="yes">Here you can find the main preferences for Albums.</property>
                     <property name="vexpand-set">True</property>
                     <property name="vexpand">True</property>
                     <!-- GTK_ALIGN_START == 1 -->
@@ -153,7 +153,7 @@
                 <child>
                   <object class="AdwPreferencesGroup">
                     <property name="title" translatable="yes">Advanced Options</property>
-                    <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Album.</property>
+                    <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Albums.</property>
                     <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Clear App Cache</property>

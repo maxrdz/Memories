@@ -4,7 +4,7 @@
   <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Album</name>
+  <name>Albums</name>
   <summary>A photo and video album application for GNOME</summary>
 	<description>
 	  <p>A photo and video album application for GNOME.
@@ -19,7 +19,7 @@
     </ul>
 	</description>
   <icon type="remote" width="64" height="64" scale="1">
-    https://www.maxrdz.com/appstream/com.maxrdz.Album.svg
+    https://www.maxrdz.com/appstream/com.maxrdz.Albums.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#b5835a</color>
@@ -42,7 +42,7 @@
   <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
   <url type="donation">https://github.com/sponsors/maxrdz</url>
   <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
-  <!--<url type="translate">https://l10n.gnome.org/module/album</url>-->
+  <!--<url type="translate">https://l10n.gnome.org/module/albums</url>-->
   <translation type="gettext" source_locale="en_US">@GETTEXT_DOMAIN@</translation>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
   <provides>
@@ -62,19 +62,19 @@
   </recommends>
   <screenshots>
     <screenshot type="default" environment="gnome">
-      <image>https://www.maxrdz.com/appstream/album-placeholder-ss.png</image>
+      <image>https://www.maxrdz.com/appstream/albums-placeholder-ss.png</image>
       <caption>Library View</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>https://www.maxrdz.com/appstream/album-preferences-ss.png</image>
+      <image>https://www.maxrdz.com/appstream/albums-preferences-ss.png</image>
       <caption>Preferences View</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>https://www.maxrdz.com/appstream/album-placeholder-ss-dark.png</image>
+      <image>https://www.maxrdz.com/appstream/albums-placeholder-ss-dark.png</image>
       <caption>Library View</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>https://www.maxrdz.com/appstream/album-preferences-ss-dark.png</image>
+      <image>https://www.maxrdz.com/appstream/albums-preferences-ss-dark.png</image>
       <caption>Preferences View</caption>
     </screenshot>
   </screenshots>
@@ -83,7 +83,7 @@
       <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG#L1</url>
       <description>
         <p>
-          Initial release of Album; Following the GNOME release schedule
+          Initial release of Albums; Following the GNOME release schedule
           as of GNOME version 46.1.
         </p>
       </description>
@@ -100,7 +100,7 @@
     <category>Utility</category>
   </categories>
   <keywords>
-    <keyword translate="yes">album</keyword>
+    <keyword translate="yes">albums</keyword>
     <keyword translate="yes">gallery</keyword>
     <keyword translate="yes">library</keyword>
     <keyword translate="yes">collage</keyword>

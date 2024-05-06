@@ -1,4 +1,4 @@
-project('album', 'rust',
+project('albums', 'rust',
           version: '46.1',
     meson_version: '>= 0.62.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
@@ -24,14 +24,14 @@ appstream_util = find_program('appstream-util', required: false)
 appstream_cli = find_program('appstreamcli', required: false)
 cargo = find_program('cargo', required: true)
 
-base_id = 'com.maxrdz.Album'
+base_id = 'com.maxrdz.Albums'
 # App name is just the Meson project name capitalized
 app_name = meson.project_name().substring(0, 1).to_upper()
 app_name += meson.project_name().substring(1, 99)
 binary = meson.project_name()
 gettext_domain = meson.project_name()
 gresource_domain = base_id.replace('.', '/')
-project_git = 'https://gitlab.gnome.org/maxrdz/Album'
+project_git = 'https://gitlab.gnome.org/maxrdz/Albums'
 
 # ------- Build Profile ------- #
 if get_option('profile') == 'devel'

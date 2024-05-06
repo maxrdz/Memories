@@ -1,19 +1,20 @@
-// master_window/imp.rs
+// This file is part of Albums.
 //
 // Copyright (c) 2024 Max Rodriguez
+// All rights reserved.
 //
-// This program is free software: you can redistribute it and/or modify
+// Albums is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Albums is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -26,7 +27,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Album/master_window/master-window.ui")]
+#[template(resource = "/com/maxrdz/Albums/master_window/master-window.ui")]
 pub struct MasterWindow {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
@@ -41,7 +42,7 @@ pub struct MasterWindow {
     #[template_child]
     pub library_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub album_page: TemplateChild<adw::ViewStackPage>,
+    pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub search_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
@@ -54,7 +55,7 @@ pub struct MasterWindow {
 
 #[glib::object_subclass]
 impl ObjectSubclass for MasterWindow {
-    const NAME: &'static str = "AlbumMasterWindow";
+    const NAME: &'static str = "AlbumsMasterWindow";
     type Type = super::MasterWindow;
     type ParentType = adw::ApplicationWindow;
 

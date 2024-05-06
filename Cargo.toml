@@ -1,16 +1,16 @@
 [package]
-name = "album"
+name = "albums"
 version = "46.1.0"
 edition = "2021"
 rust-version = "1.77"
 license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
-repository = "https://gitlab.gnome.org/maxrdz/Album"
-homepage = "https://gitlab.gnome.org/maxrdz/Album"
+repository = "https://gitlab.gnome.org/maxrdz/Albums"
+homepage = "https://gitlab.gnome.org/maxrdz/Albums"
 publish = false
 
 [package.metadata.urls]
-issuetracker = "https://gitlab.gnome.org/maxrdz/Album/issues"
+issuetracker = "https://gitlab.gnome.org/maxrdz/Albums/issues"
 
 [profile.release]
 codegen-units = 1 # Best LLVM optimization when built on a single thread

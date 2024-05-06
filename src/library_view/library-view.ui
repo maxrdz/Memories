@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumLibraryView" parent="AdwBin">
+  <template class="AlbumsLibraryView" parent="AdwBin">
     <property name="child">
       <object class="AdwBreakpointBin">
         <property name="width-request">300</property>
@@ -10,8 +10,8 @@
             <condition>min-width: 720px</condition>
             <setter object="photo_grid_view" property="min-columns">15</setter>
             <setter object="photo_grid_view" property="max-columns">15</setter>
-            <setter object="AlbumLibraryView" property="grid-widget-height">100</setter>
-            <setter object="AlbumLibraryView" property="grid-desktop-zoom">True</setter>
+            <setter object="AlbumsLibraryView" property="grid-widget-height">100</setter>
+            <setter object="AlbumsLibraryView" property="grid-desktop-zoom">True</setter>
             <setter object="overlay_labels_box" property="margin-top">10</setter>
           </object>
         </child>
@@ -70,7 +70,7 @@
                   <object class="AdwStatusPage" id="error_status_widget">
                     <property name="icon-name">emblem-important-symbolic</property>
                     <property name="title" translatable="yes">An Error Occurred</property>
-                    <property name="description" translatable="yes">This is a placeholder error description. If you see this, please file an issue to Album. You can visit the issue tracker via the about dialog.</property>
+                    <property name="description" translatable="yes">This is a placeholder error description. If you see this, please file an issue to Albums. You can visit the issue tracker via the about dialog.</property>
                   </object>
                 </property>
               </object>

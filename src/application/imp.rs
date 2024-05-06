@@ -1,19 +1,20 @@
-// application/imp.rs
+// This file is part of Albums.
 //
 // Copyright (c) 2024 Max Rodriguez
+// All rights reserved.
 //
-// This program is free software: you can redistribute it and/or modify
+// Albums is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Albums is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -26,16 +27,16 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default)]
-pub struct Album {}
+pub struct Albums {}
 
 #[glib::object_subclass]
-impl ObjectSubclass for Album {
-    const NAME: &'static str = "Album";
-    type Type = super::Album;
+impl ObjectSubclass for Albums {
+    const NAME: &'static str = "Albums";
+    type Type = super::Albums;
     type ParentType = adw::Application;
 }
 
-impl ObjectImpl for Album {
+impl ObjectImpl for Albums {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
@@ -51,7 +52,7 @@ impl ObjectImpl for Album {
     }
 }
 
-impl ApplicationImpl for Album {
+impl ApplicationImpl for Albums {
     fn activate(&self) {
         let application = self.obj();
 
@@ -65,13 +66,13 @@ impl ApplicationImpl for Album {
             window.upcast()
         };
 
-        window.set_title(Some(&gettext("Album")));
+        window.set_title(Some(&gettext("Albums")));
         window.present();
 
         // Setup our own CSS provider from gresource
         let gdk_screen: gdk::Display = gdk::Display::default().unwrap();
         let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
-        new_css_provider.load_from_resource("/com/maxrdz/Album/style.css");
+        new_css_provider.load_from_resource("/com/maxrdz/Albums/style.css");
 
         gtk::style_context_add_provider_for_display(
             &gdk_screen,
@@ -81,5 +82,5 @@ impl ApplicationImpl for Album {
     }
 }
 
-impl GtkApplicationImpl for Album {}
-impl AdwApplicationImpl for Album {}
+impl GtkApplicationImpl for Albums {}
+impl AdwApplicationImpl for Albums {}

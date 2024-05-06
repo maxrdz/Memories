@@ -1,13 +1,13 @@
 {
-    "app-id" : "com.maxrdz.Album.Devel",
+    "app-id" : "com.maxrdz.Albums",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable",
 	    "org.freedesktop.Sdk.Extension.llvm16"
     ],
-    "command" : "album-devel",
+    "command" : "albums",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -18,11 +18,7 @@
         "append-path" : "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
         "build-args" : [
             "--share=network"
-        ],
-        "env" : {
-            "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "album=debug"
-        }
+        ]
     },
     "cleanup" : [
         "/include",
@@ -37,11 +33,8 @@
     ],
     "modules" : [
         {
-            "name" : "album",
+            "name" : "albums",
             "buildsystem" : "meson",
-            "config-opts" : [
-            	"-Dprofile=devel"
-            ],
             "builddir" : true,
             "sources" : [
                 {
