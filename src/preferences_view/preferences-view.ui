@@ -157,7 +157,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Clear App Cache</property>
-                        <property name="subtitle" translatable="yes">May result in a delay on the next launch.</property>
+                        <property name="subtitle" translatable="yes">May result in a delay next launch.</property>
                         <child type="suffix">
                           <object class="GtkButton">
                             <property name="halign">end</property>

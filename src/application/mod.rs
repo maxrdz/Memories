@@ -20,6 +20,7 @@
 
 mod imp;
 
+use crate::i18n::gettext_f;
 use adw::gtk;
 use adw::prelude::*;
 use gettextrs::gettext;
@@ -146,6 +147,17 @@ impl Albums {
                 VCS_TAG
             ))
             .build();
+
+        about.add_credit_section(
+            Some(&gettext("Powered by the following technologies")),
+            &[
+                &gettext_f("{GNOME} https://www.gnome.org", &[("GNOME", "The GNOME Project")]),
+                "GTK https://gtk.org/",
+                "Libadwaita https://gnome.pages.gitlab.gnome.org/libadwaita/",
+                "FFmpeg https://ffmpeg.org/",
+                "smol-rs https://github.com/smol-rs",
+            ],
+        );
 
         if let Ok(bytes) =
             gio::resources_lookup_data("/com/maxrdz/Albums/LEGAL.txt", gio::ResourceLookupFlags::NONE)
