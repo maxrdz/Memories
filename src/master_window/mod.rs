@@ -77,15 +77,15 @@ impl MasterWindow {
             }
         }
         if zoom_in {
-            if current_zoom_level == 0 {
-                return;
-            }
-            self.set_grid_zoom_level(zoom_levels[current_zoom_level - 1]);
-        } else {
             if current_zoom_level == zoom_levels.len() - 1 {
                 return;
             }
             self.set_grid_zoom_level(zoom_levels[current_zoom_level + 1]);
+        } else {
+            if current_zoom_level == 0 {
+                return;
+            }
+            self.set_grid_zoom_level(zoom_levels[current_zoom_level - 1]);
         }
     }
 

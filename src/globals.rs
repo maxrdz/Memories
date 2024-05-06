@@ -53,12 +53,12 @@ pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";
 pub static DEFAULT_SCREENSHOTS_REL_DIR: &str = "Screenshots";
 pub static DEFAULT_CAMERA_REL_DIR: &str = "Camera";
 
-/// Default `height-request` used in list item
-/// widgets displayed on the library grid view.
+/// Default `height-request` used in list item widgets
+/// displayed on the library grid view on mobile.
 pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 70;
 
-pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(2, 178), (3, 119), (5, 70)];
-pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(10, 151), (15, 100)];
+pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 70), (3, 119), (2, 178)];
+pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(15, 78), (10, 118)];
 
 /// Purge delay for recently deleted library items.
 #[rustfmt::skip]
