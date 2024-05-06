@@ -61,16 +61,11 @@ impl MasterWindow {
     }
 
     fn gallery_grid_zoom(&self, zoom_in: bool) {
-        let current_columns: u32 = self.imp().library_view.imp().photo_grid_view.max_columns();
+        let library_view_imp = self.imp().library_view.imp();
+        let current_columns: u32 = library_view_imp.photo_grid_view.max_columns();
         let mut current_zoom_level: usize = 0;
 
-        let zoom_levels: &'static [(u32, i32)] = {
-            if self.imp().library_view.grid_desktop_zoom() {
-                GRID_DESKTOP_ZOOM_LEVELS
-            } else {
-                GRID_MOBILE_ZOOM_LEVELS
-            }
-        };
+        let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
         for (i, set) in zoom_levels.iter().enumerate() {
             if set.0 == current_columns {
                 current_zoom_level = i;
@@ -80,27 +75,51 @@ impl MasterWindow {
             if current_zoom_level == zoom_levels.len() - 1 {
                 return;
             }
-            self.set_grid_zoom_level(zoom_levels[current_zoom_level + 1]);
+            self.set_grid_zoom_level(current_zoom_level + 1);
         } else {
             if current_zoom_level == 0 {
                 return;
             }
-            self.set_grid_zoom_level(zoom_levels[current_zoom_level - 1]);
+            self.set_grid_zoom_level(current_zoom_level - 1);
         }
     }
 
-    fn set_grid_zoom_level(&self, new_zoom_level: (u32, i32)) {
+    /// Returns the zoom levels array for the appropriate window size.
+    fn get_zoom_levels(&self) -> &'static [(u32, i32)] {
+        if self.imp().library_view.grid_desktop_zoom() {
+            GRID_DESKTOP_ZOOM_LEVELS
+        } else {
+            GRID_MOBILE_ZOOM_LEVELS
+        }
+    }
+
+    /// Sets the grid view columns and list item widget height requests
+    /// using the given zoom level index, and updates the grid control
+    /// popover menu if the user has reached the min/max zoom setting.
+    fn set_grid_zoom_level(&self, zoom_level: usize) {
+        let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
+        let new_zoom_level: (u32, i32) = zoom_levels[zoom_level];
+        let library_view_imp = self.imp().library_view.imp();
+
         self.imp().library_view.set_grid_widget_height(new_zoom_level.1);
-        self.imp()
-            .library_view
-            .imp()
-            .photo_grid_view
-            .set_min_columns(new_zoom_level.0);
-        self.imp()
-            .library_view
-            .imp()
-            .photo_grid_view
-            .set_max_columns(new_zoom_level.0);
+        library_view_imp.photo_grid_view.set_min_columns(new_zoom_level.0);
+        library_view_imp.photo_grid_view.set_max_columns(new_zoom_level.0);
+
+        if zoom_level == 0 {
+            // Reached minimum zoom level
+            library_view_imp
+                .photo_grid_controls
+                .set_menu_model(Some(&library_view_imp.grid_controls_menu_min_zoom.clone()));
+        } else if zoom_level == zoom_levels.len() - 1 {
+            // Reached maximum zoom level
+            library_view_imp
+                .photo_grid_controls
+                .set_menu_model(Some(&library_view_imp.grid_controls_menu_max_zoom.clone()));
+        } else {
+            library_view_imp
+                .photo_grid_controls
+                .set_menu_model(Some(&library_view_imp.grid_controls_menu.clone()));
+        }
     }
 
     #[template_callback]

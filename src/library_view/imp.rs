@@ -59,6 +59,14 @@ pub struct LibraryView {
     pub(super) total_items_label: TemplateChild<gtk::Label>,
     #[template_child]
     pub photo_grid_view: TemplateChild<gtk::GridView>,
+    #[template_child]
+    pub photo_grid_controls: TemplateChild<gtk::MenuButton>,
+    #[template_child]
+    pub grid_controls_menu: TemplateChild<gio::MenuModel>,
+    #[template_child]
+    pub grid_controls_menu_max_zoom: TemplateChild<gio::MenuModel>,
+    #[template_child]
+    pub grid_controls_menu_min_zoom: TemplateChild<gio::MenuModel>,
 }
 
 impl Default for LibraryView {
@@ -78,6 +86,10 @@ impl Default for LibraryView {
             time_period_label: TemplateChild::default(),
             total_items_label: TemplateChild::default(),
             photo_grid_view: TemplateChild::default(),
+            photo_grid_controls: TemplateChild::default(),
+            grid_controls_menu: TemplateChild::default(),
+            grid_controls_menu_max_zoom: TemplateChild::default(),
+            grid_controls_menu_min_zoom: TemplateChild::default(),
         }
     }
 }
@@ -98,6 +110,20 @@ impl ObjectSubclass for LibraryView {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for LibraryView {}
+impl ObjectImpl for LibraryView {
+    fn constructed(&self) {
+        self.obj()
+            .connect_grid_desktop_zoom_notify(move |view: &super::LibraryView| {
+                let library_view_imp = view.imp();
+                // `grid_desktop_zoom` is modified only when the `AdwBreakpoint` is triggered.
+                // The default zoom settings for the grid view are always at the minimum zoom
+                // by default in the UI files, so we reset the grid controls to min zoom below.
+                library_view_imp
+                    .photo_grid_controls
+                    .set_menu_model(Some(&library_view_imp.grid_controls_menu_min_zoom.clone()));
+            });
+    }
+}
+
 impl WidgetImpl for LibraryView {}
 impl BinImpl for LibraryView {}
