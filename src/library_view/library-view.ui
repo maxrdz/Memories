@@ -129,7 +129,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="total_items_label">
-                                <property name="label" translatable="yes">0 Items</property>
+                                <property name="label" translatable="yes">Enumerating Items</property>
                                 <!-- GTK_ALIGN_START == 1 -->
                                 <property name="halign">1</property>
                                 <!-- GTK_ALIGN_START == 1 -->

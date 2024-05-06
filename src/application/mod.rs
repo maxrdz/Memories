@@ -151,7 +151,7 @@ impl Albums {
         about.add_credit_section(
             Some(&gettext("Powered by the following technologies")),
             &[
-                &gettext_f("{GNOME} https://www.gnome.org", &[("GNOME", "The GNOME Project")]),
+                &gettext_f("The GNOME Project {WEBSITE}", &[("WEBSITE", "https://www.gnome.org")]),
                 "GTK https://gtk.org/",
                 "Libadwaita https://gnome.pages.gitlab.gnome.org/libadwaita/",
                 "FFmpeg https://ffmpeg.org/",
