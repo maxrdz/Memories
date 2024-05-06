@@ -148,10 +148,20 @@ impl Albums {
             ))
             .build();
 
+        about.set_release_notes(
+            "<p>\
+          Initial release of Albums; Following the GNOME release schedule \
+          as of GNOME version 46.1.\
+        </p>",
+        );
+
         about.add_credit_section(
             Some(&gettext("Powered by the following technologies")),
             &[
-                &gettext_f("The GNOME Project {WEBSITE}", &[("WEBSITE", "https://www.gnome.org")]),
+                &gettext_f(
+                    "The GNOME Project {WEBSITE}",
+                    &[("WEBSITE", "https://www.gnome.org")],
+                ),
                 "GTK https://gtk.org/",
                 "Libadwaita https://gnome.pages.gitlab.gnome.org/libadwaita/",
                 "FFmpeg https://ffmpeg.org/",
