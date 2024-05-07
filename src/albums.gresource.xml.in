@@ -5,8 +5,10 @@
     <file compressed="true">style.css</file>
     <!-- Icons -->
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/gif-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/svg-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
     <!-- UI Files -->
