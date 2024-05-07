@@ -21,3 +21,4 @@ src/preferences_view/theme_selector/imp.rs
 src/preferences_view/theme_selector/mod.rs
 src/preferences_view/theme_selector/theme-selector.ui
 src/thumbnails.rs
+src/utils.rs
