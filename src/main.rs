@@ -28,6 +28,7 @@ mod library_view;
 mod master_window;
 mod preferences_view;
 mod thumbnails;
+mod utils;
 mod vcs;
 
 use adw::gtk;
@@ -64,23 +65,7 @@ fn main() -> glib::ExitCode {
         vcs::VCS_TAG
     );
 
-    let cache_dir: String = match env::var("XDG_CACHE_HOME") {
-        Ok(value) => value,
-        Err(e) => {
-            match e {
-                env::VarError::NotPresent => {
-                    // If $XDG_CACHE_HOME is either not set or empty,
-                    // a default equal to $HOME/.cache should be used.
-                    // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-                    format!("{}/.cache", env::var("HOME").unwrap())
-                }
-                _ => panic!("Unexpected std::env::VarError variant received."),
-            }
-        }
-    };
-    // TODO: If running within a Flapak sandboxed environment,
-    // we can use just $XDG_CACHE_HOME as the app cache directory.
-    let albums_cache_dir: String = format!("{}/{}", cache_dir, APP_NAME);
+    let albums_cache_dir: String = utils::get_app_cache_directory();
     let cache_subdirs: &[&str] = &[globals::CACHE_THUMBNAILS_SUBDIR];
 
     for subdirectory in cache_subdirs {

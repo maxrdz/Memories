@@ -21,9 +21,12 @@
 mod imp;
 
 use crate::i18n::gettext_f;
+use crate::utils::get_app_cache_directory;
 use adw::gtk;
 use adw::prelude::*;
 use gettextrs::gettext;
+use glib::{g_critical, g_error};
+use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 
@@ -88,6 +91,9 @@ impl Albums {
             .parameter_type(Some(glib::VariantTy::INT32))
             .activate(move |_: &Self, _, _| ())
             .build();
+        let clear_cache_action = gio::ActionEntry::builder("clear-app-cache")
+            .activate(move |app: &Self, _, _| app.show_clear_app_cache_prompt())
+            .build();
 
         let about_action = gio::ActionEntry::builder("about")
             .activate(move |app: &Self, _, _| app.show_about())
@@ -102,6 +108,7 @@ impl Albums {
             dark_theme_action,
             choose_album_dir_action,
             configure_action,
+            clear_cache_action,
             about_action,
             quit_action,
         ]);
@@ -110,6 +117,44 @@ impl Albums {
     fn set_adwaita_color_scheme(&self, color_scheme: adw::ColorScheme) {
         let adw_style_manager: adw::StyleManager = adw::StyleManager::default();
         adw_style_manager.set_color_scheme(color_scheme);
+    }
+
+    fn show_clear_app_cache_prompt(&self) {
+        let window: gtk::Window = self.active_window().unwrap();
+
+        let alert_dialog: adw::AlertDialog = adw::AlertDialog::builder()
+            .heading(gettext("Clear App Cache?"))
+            .body(gettext("Are you sure you want to clear Albums' cache? This may result in a slower start up on the next launch."))
+            .build();
+
+        alert_dialog.add_responses(&[("cancel", &gettext("Cancel")), ("clear", &gettext("Clear Cache"))]);
+        alert_dialog.set_response_appearance("clear", adw::ResponseAppearance::Destructive);
+
+        alert_dialog.connect_response(
+            None,
+            clone!(@weak self as s => move |_: &adw::AlertDialog, response: &str| {
+                if response == "clear" {
+                    glib::spawn_future_local(async move {
+                        let app_cache_dir: String = get_app_cache_directory();
+
+                        if let Err(io_error) = async_fs::remove_dir_all(&app_cache_dir).await {
+                            match io_error.kind() {
+                                std::io::ErrorKind::NotFound => (),
+                                std::io::ErrorKind::PermissionDenied => g_critical!(
+                                    "Application",
+                                    "Insufficient permissions to clear cache directory."
+                                ),
+                                _ => g_error!(
+                                    "Application",
+                                    "Received an unexpected error kind after trying to clear the cache."
+                                ),
+                            }
+                        }
+                    });
+                }
+            }),
+        );
+        alert_dialog.present(&window);
     }
 
     fn show_about(&self) {
