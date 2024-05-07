@@ -21,11 +21,12 @@
 //! Asynchronous function for generating thumbnails via FFmpeg.
 
 use crate::globals::CACHE_THUMBNAILS_SUBDIR;
-use crate::utils::get_app_cache_directory;
+use crate::utils::{get_app_cache_directory, serialize_file_metadata};
 use adw::glib::{g_debug, g_warning};
-use async_fs::File;
+use async_fs::{File, Metadata};
 use async_process::{Command, Output};
 use libadwaita as adw;
+use md5::{Digest, Md5};
 use std::io;
 use std::path::{Path, PathBuf};
 
@@ -38,18 +39,17 @@ pub static FFMPEG_BINARY: &str = "ffmpeg";
 pub async fn generate_thumbnail_image(file_str_path: &str) -> io::Result<String> {
     let file_path: PathBuf = PathBuf::from(file_str_path);
 
-    let file_name: &str = file_path
-        .file_name()
-        .expect("Failed to get file name.")
-        .to_str()
-        .unwrap();
+    let in_file: File = File::open(Path::new(&file_str_path)).await?;
+    let in_metadata: Metadata = in_file.metadata().await?;
 
-    // FIXME: Do not store by file name, but by fingerprint hash.
+    let mut md5_hasher: Md5 = Md5::new();
+    md5_hasher.update(serialize_file_metadata(&in_metadata)?);
+
     let absolute_out_path: String = format!(
-        "{}/{}/{}-thumbnail.jpeg",
+        "{}/{}/{:x}.jpeg",
         get_app_cache_directory(),
         CACHE_THUMBNAILS_SUBDIR,
-        file_name
+        md5_hasher.finalize()
     );
 
     // Check if we have the thumbnail already cached, if so, return its path.

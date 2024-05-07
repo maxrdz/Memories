@@ -21,6 +21,35 @@
 //! Utility functions used at seldom in Albums source.
 
 use crate::config::APP_NAME;
+use async_fs::Metadata;
+use serde::Serialize;
+use std::io;
+use std::time::SystemTime;
+
+/// A data structure that contains the file metadata information
+/// that the thumbnailer needs to serialize and fingerprint hash.
+#[derive(Serialize)]
+struct MetadataInfo {
+    file_type: String,
+    permissions: String,
+    size: u64,
+    modified: SystemTime,
+    accessed: SystemTime,
+    created: SystemTime,
+}
+
+/// Serializes an `std::fs::Metadata` structure to a serialized JSON byte array.
+pub fn serialize_file_metadata(metadata: &Metadata) -> io::Result<Vec<u8>> {
+    let structure: MetadataInfo = MetadataInfo {
+        file_type: format!("{:?}", metadata.file_type()),
+        permissions: format!("{:?}", metadata.permissions()),
+        size: metadata.len(),
+        modified: metadata.modified()?,
+        accessed: metadata.accessed()?,
+        created: metadata.created()?,
+    };
+    Ok(serde_json::to_vec(&structure)?)
+}
 
 /// Returns a `String` that represents the absolute path of
 /// the user's cache directory, which is either the equivalent
@@ -45,7 +74,5 @@ pub fn get_cache_directory() -> String {
 /// Returns a `String` that represents the absolute
 /// path of the application's cache directory location.
 pub fn get_app_cache_directory() -> String {
-    // TODO: If running within a Flapak sandboxed environment,
-    // we can use just $XDG_CACHE_HOME as the app cache directory.
     format!("{}/{}", get_cache_directory(), APP_NAME)
 }
