@@ -21,13 +21,15 @@
 mod imp;
 
 use crate::i18n::gettext_f;
+use crate::master_window::MasterWindow;
 use crate::utils::get_app_cache_directory;
 use adw::gtk;
 use adw::prelude::*;
+use adw::subclass::prelude::*;
+use adw::{gio, glib};
 use gettextrs::gettext;
 use glib::{g_critical, g_error};
 use glib_macros::clone;
-use gtk::{gio, glib};
 use libadwaita as adw;
 
 use crate::globals::*;
@@ -45,6 +47,10 @@ impl Albums {
             .property("application-id", application_id)
             .property("flags", flags)
             .build()
+    }
+
+    pub fn gsettings(&self) -> gio::Settings {
+        self.imp().gsettings.clone()
     }
 
     fn setup_gactions(&self) {
@@ -91,6 +97,23 @@ impl Albums {
             .parameter_type(Some(glib::VariantTy::INT32))
             .activate(move |_: &Self, _, _| ())
             .build();
+
+        // Application GAction for toggling FFmpeg hardware acceleration
+        let toggle_hwaccel_action = gio::ActionEntry::builder("toggle-hardware-acceleration")
+            .state(self.gsettings().boolean("hardware-acceleration").to_variant())
+            .activate(
+                move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                    let previous_state: glib::Variant = action.state().unwrap();
+
+                    let previous_toggle: bool = bool::from_variant(&previous_state).unwrap();
+                    let new_toggle: bool = !previous_toggle;
+
+                    action.set_state(&new_toggle.to_variant());
+                    app.toggle_hardware_acceleration(new_toggle);
+                },
+            )
+            .build();
+
         let clear_cache_action = gio::ActionEntry::builder("clear-app-cache")
             .activate(move |app: &Self, _, _| app.show_clear_app_cache_prompt())
             .build();
@@ -108,6 +131,7 @@ impl Albums {
             dark_theme_action,
             choose_album_dir_action,
             configure_action,
+            toggle_hwaccel_action,
             clear_cache_action,
             about_action,
             quit_action,
@@ -117,6 +141,13 @@ impl Albums {
     fn set_adwaita_color_scheme(&self, color_scheme: adw::ColorScheme) {
         let adw_style_manager: adw::StyleManager = adw::StyleManager::default();
         adw_style_manager.set_color_scheme(color_scheme);
+    }
+
+    fn toggle_hardware_acceleration(&self, toggle: bool) {
+        let window: gtk::Window = self.active_window().unwrap();
+        let master_window: MasterWindow = window.downcast().unwrap();
+
+        master_window.imp().library_view.set_hardware_accel(toggle);
     }
 
     fn show_clear_app_cache_prompt(&self) {
@@ -225,5 +256,11 @@ impl Albums {
             );
         }
         about.present(&window)
+    }
+}
+
+impl Default for Albums {
+    fn default() -> Self {
+        gio::Application::default().and_downcast::<Albums>().unwrap()
     }
 }

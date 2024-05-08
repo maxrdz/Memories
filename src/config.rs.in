@@ -2,6 +2,7 @@
 // THE OUTPUT SOURCE FILE IS IGNORED BY GIT.
 
 pub static APP_NAME: &str = @APP_NAME@;
+pub static APP_ID: &str = @APP_ID@;
 pub static VERSION: &str = @VERSION@;
 pub static LOCALEDIR: &str = @LOCALEDIR@;
 pub static PKGDATADIR: &str = @PKGDATADIR@;

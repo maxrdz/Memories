@@ -33,7 +33,7 @@ mod vcs;
 
 use adw::gtk;
 use application::Albums;
-use config::{APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
+use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::glib::{g_debug, g_info};
 use gtk::prelude::*;
@@ -99,6 +99,6 @@ fn main() -> glib::ExitCode {
         .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
 
-    let app = Albums::new(globals::APP_INFO.app_id, &gio::ApplicationFlags::empty());
+    let app = Albums::new(APP_ID, &gio::ApplicationFlags::empty());
     app.run()
 }

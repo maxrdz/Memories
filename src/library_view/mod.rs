@@ -175,10 +175,10 @@ impl LibraryView {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
 
-                        glib::spawn_future_local(clone!(@strong tx, @strong semaphore as sp => async move {
+                        glib::spawn_future_local(clone!(@weak s as lv, @strong tx, @strong semaphore as sp => async move {
                             let semaphore_guard: SemaphoreGuard<'_> = sp.acquire().await;
 
-                            if let Ok(path) = generate_thumbnail_image(&absolute_path).await {
+                            if let Ok(path) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
                                 drop(semaphore_guard);
                                 tx.send(path).await.expect("Async channel needs to be open.");
                             } else {

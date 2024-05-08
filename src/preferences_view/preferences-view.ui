@@ -155,6 +155,13 @@
                     <property name="title" translatable="yes">Advanced Options</property>
                     <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Albums.</property>
                     <child>
+                      <object class="AdwSwitchRow">
+                        <property name="title" translatable="yes">Use Hardware Acceleration</property>
+                        <property name="subtitle" translatable="yes">You may need to disable hardware acceleration if your image thumbnails are failing to load.</property>
+                        <property name="action-name">app.toggle-hardware-acceleration</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Clear App Cache</property>
                         <property name="subtitle" translatable="yes">May result in a delay next launch.</property>

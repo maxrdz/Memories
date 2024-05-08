@@ -76,6 +76,11 @@ configure_file(
   install_dir: datadir / 'glib-2.0' / 'schemas'
 )
 
-test('Validate schema file',
-     glib_compile_schemas,
-     args: ['--strict', '--dry-run', meson.current_source_dir()])
+if glib_compile_schemas.found()
+  test(
+    'validate-gschema', glib_compile_schemas,
+    args: [
+      '--strict', '--dry-run', meson.current_source_dir()
+    ]
+  )
+endif

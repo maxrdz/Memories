@@ -18,16 +18,27 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::config::APP_ID;
 use crate::master_window::MasterWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use adw::{gio, glib};
 use gettextrs::gettext;
-use gtk::glib;
 use libadwaita as adw;
 
-#[derive(Debug, Default)]
-pub struct Albums {}
+#[derive(Debug)]
+pub struct Albums {
+    pub(super) gsettings: gio::Settings,
+}
+
+impl Default for Albums {
+    fn default() -> Self {
+        Self {
+            gsettings: gio::Settings::new(APP_ID),
+        }
+    }
+}
 
 #[glib::object_subclass]
 impl ObjectSubclass for Albums {
