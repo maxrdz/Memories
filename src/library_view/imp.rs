@@ -81,7 +81,7 @@ impl Default for LibraryView {
                 gsettings.boolean("hardware-acceleration")
             }),
             grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
-            grid_desktop_zoom: Cell::new(true),
+            grid_desktop_zoom: Cell::new(false),
             library_view_stack: TemplateChild::default(),
             spinner_page: TemplateChild::default(),
             spinner: TemplateChild::default(),
