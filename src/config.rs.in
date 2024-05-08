@@ -5,3 +5,4 @@ pub static APP_NAME: &str = @APP_NAME@;
 pub static VERSION: &str = @VERSION@;
 pub static LOCALEDIR: &str = @LOCALEDIR@;
 pub static PKGDATADIR: &str = @PKGDATADIR@;
+pub static GETTEXT_DOMAIN: &str = @GETTEXT_DOMAIN@;

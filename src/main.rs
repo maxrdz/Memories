@@ -33,7 +33,7 @@ mod vcs;
 
 use adw::gtk;
 use application::Albums;
-use config::{APP_NAME, LOCALEDIR, PKGDATADIR, VERSION};
+use config::{APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::glib::{g_debug, g_info};
 use gtk::prelude::*;
@@ -90,9 +90,9 @@ fn main() -> glib::ExitCode {
         }
     }
     // Set up gettext translations.
-    bindtextdomain(APP_NAME, LOCALEDIR).expect("Unable to bind the text domain!");
-    bind_textdomain_codeset(APP_NAME, "UTF-8").expect("Unable to set the text domain encoding!");
-    textdomain(APP_NAME).expect("Unable to switch to the text domain!");
+    bindtextdomain(GETTEXT_DOMAIN, LOCALEDIR).expect("Unable to bind the text domain!");
+    bind_textdomain_codeset(GETTEXT_DOMAIN, "UTF-8").expect("Unable to set the text domain encoding!");
+    textdomain(GETTEXT_DOMAIN).expect("Unable to switch to the text domain!");
 
     // Load the gresource bundle.
     let resources = gio::Resource::load(format!("{}/{}.gresource", PKGDATADIR.to_owned(), APP_NAME))
