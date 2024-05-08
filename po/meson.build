@@ -1,5 +1,5 @@
 i18n.gettext(
-    meson.project_name(),
+    gettext_domain,
     preset: 'glib',
     args: [
         '--add-comments',

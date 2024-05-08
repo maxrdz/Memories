@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@" gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@" gettext-domain="@GETTEXT_DOMAIN@">
     <key name="hardware-acceleration" type="b">
       <default>true</default>
       <summary>Toggle Hardware Acceleration</summary>

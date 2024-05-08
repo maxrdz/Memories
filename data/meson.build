@@ -7,7 +7,7 @@ config.set('ICON', application_id)
 config.set('BINARY', binary)
 config.set('PROJECT_GIT', project_git)
 config.set('GRESOURCE_DOMAIN', gresource_domain)
-config.set('GETTEXT_PACKAGE', gettext_package)
+config.set('GETTEXT_DOMAIN', gettext_domain)
 
 # ---------- Desktop File --------- #
 desktop_file = i18n.merge_file(
