@@ -1,16 +1,20 @@
 subdir('icons')
 
-desktop_conf = configuration_data()
-desktop_conf.set('APP_NAME', app_name)
-desktop_conf.set('BINARY', binary)
-desktop_conf.set('ICON', application_id)
+config = configuration_data()
+config.set('APP_NAME', app_name)
+config.set('APP_ID', application_id)
+config.set('ICON', application_id)
+config.set('BINARY', binary)
+config.set('PROJECT_GIT', project_git)
+config.set('GRESOURCE_DOMAIN', gresource_domain)
+config.set('GETTEXT_PACKAGE', gettext_package)
 
 # ---------- Desktop File --------- #
 desktop_file = i18n.merge_file(
   input: configure_file(
     input: '@0@.desktop.in.in'.format(base_id),
     output: '@0@.desktop.in'.format(application_id),
-    configuration: desktop_conf
+    configuration: config
   ),
   output: '@0@.desktop'.format(application_id),
   type: 'desktop',
@@ -31,17 +35,11 @@ if desktop_file_validate.found()
 endif
 
 # ----------- App Data ----------- #
-appdata_conf = configuration_data()
-appdata_conf.set('APP_ID', application_id)
-appdata_conf.set('BINARY', binary)
-appdata_conf.set('PROJECT_GIT', project_git)
-appdata_conf.set('GETTEXT_DOMAIN', gettext_domain)
-
 appdata_file = i18n.merge_file(
   input: configure_file(
     input: '@0@.appdata.xml.in.in'.format(base_id),
     output: '@0@.appdata.xml.in'.format(base_id),
-    configuration: appdata_conf
+    configuration: config
   ),
   output: '@0@.appdata.xml'.format(application_id),
   po_dir: podir,
@@ -69,11 +67,13 @@ if appstream_cli.found()
   )
 endif
 
-# ----------- Schemas ----------- #
-install_data(
-  '@0@.gschema.xml'.format(base_id),
-  install_dir: datadir / 'glib-2.0' / 'schemas',
-  rename: '@0@.gschema.xml'.format(application_id)
+# ----------- GSchema ----------- #
+configure_file(
+  input: '@0@.gschema.xml.in'.format(base_id),
+  output: '@0@.gschema.xml'.format(application_id),
+  configuration: config,
+  install: true,
+  install_dir: datadir / 'glib-2.0' / 'schemas'
 )
 
 test('Validate schema file',

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@" gettext-domain="@GETTEXT_PACKAGE@">
+    <key name="hardware-acceleration" type="b">
+      <default>true</default>
+      <summary>Toggle Hardware Acceleration</summary>
+      <description>Enables the use of hardware acceleration with FFmpeg.</description>
+    </key>
+  </schema>
+</schemalist>

@@ -43,7 +43,7 @@
   <url type="donation">https://github.com/sponsors/maxrdz</url>
   <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
   <!--<url type="translate">https://l10n.gnome.org/module/albums</url>-->
-  <translation type="gettext" source_locale="en_US">@GETTEXT_DOMAIN@</translation>
+  <translation type="gettext" source_locale="en_US">@GETTEXT_PACKAGE@</translation>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
   <provides>
     <binary>@BINARY@</binary>

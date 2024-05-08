@@ -29,8 +29,8 @@ base_id = 'com.maxrdz.Albums'
 app_name = meson.project_name().substring(0, 1).to_upper()
 app_name += meson.project_name().substring(1, 99)
 binary = meson.project_name()
-gettext_domain = meson.project_name()
-gresource_domain = base_id.replace('.', '/')
+gettext_package = meson.project_name()
+gresource_domain = '/' + base_id.replace('.', '/')
 project_git = 'https://gitlab.gnome.org/maxrdz/Albums'
 
 # ------- Build Profile ------- #
@@ -52,7 +52,6 @@ datadir = prefix / get_option('datadir')
 pkgdatadir = datadir / meson.project_name()
 iconsdir = datadir / 'icons'
 podir = meson.project_source_root() / 'po'
-gettext_package = meson.project_name()
 
 subdir('data')
 subdir('src')
