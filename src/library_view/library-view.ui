@@ -147,6 +147,7 @@
                         </child>
                         <child type="overlay">
                           <object class="GtkMenuButton" id="photo_grid_controls">
+                            <property name="tooltip-text">Photo Grid Controls</property>
                             <!-- GTK_ALIGN_START == 1 -->
                             <property name="valign">1</property>
                             <!-- GTK_ALIGN_END == 2 -->
@@ -169,6 +170,7 @@
                                 <property name="min-columns">5</property>
                                 <property name="max-columns">5</property>
                                 <property name="orientation">vertical</property>
+                                <property name="single-click-activate">True</property>
                               </object>
                             </property>
                           </object>
