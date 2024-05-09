@@ -22,7 +22,6 @@ mod imp;
 pub mod theme_selector;
 
 use adw::gtk;
-use adw::prelude::*;
 use gtk::glib;
 use libadwaita as adw;
 
@@ -33,9 +32,14 @@ glib::wrapper! {
 }
 
 impl PreferencesView {
-    pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
-        glib::Object::builder()
-            .property("application", application)
-            .build()
+    pub fn new() -> Self {
+        glib::Object::new()
     }
 }
+
+impl Default for PreferencesView {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
