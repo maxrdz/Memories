@@ -39,8 +39,8 @@ static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 #[derive(Debug)]
 struct SubdirectoryListModel {
     model: gtk::DirectoryList,
-    _items_changed_callback: glib::SignalHandlerId,
-    _loading_callback: glib::SignalHandlerId,
+    items_changed_callback: glib::SignalHandlerId,
+    loading_callback: glib::SignalHandlerId,
 }
 
 /// Custom implementation of GListModel that uses GTK's
@@ -49,9 +49,9 @@ struct SubdirectoryListModel {
 #[derive(glib::Properties, Debug)]
 #[properties(wrapper_type = super::LibraryListModel)]
 pub struct LibraryListModel {
-    root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
     hidden_items: RefCell<Vec<u32>>,
     pub(super) root_model: gtk::DirectoryList,
+    root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
     subdir_models: RefCell<Vec<SubdirectoryListModel>>,
     #[property(get, set)]
     models_loaded: Cell<bool>,
@@ -61,9 +61,9 @@ pub struct LibraryListModel {
 impl Default for LibraryListModel {
     fn default() -> Self {
         Self {
-            root_items_changed_signal: RefCell::new(None),
             hidden_items: RefCell::new(vec![]),
             root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
+            root_items_changed_signal: RefCell::new(None),
             subdir_models: RefCell::new(vec![]),
             models_loaded: Cell::new(true),
             loading_notifies: Cell::new(0_u32),
@@ -117,6 +117,10 @@ impl ObjectImpl for LibraryListModel {
 
         self.root_items_changed_signal.replace(Some(signal_handler_id));
         self.root_model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
+    }
+
+    fn dispose(&self) {
+        self.cleanup_model();
     }
 }
 
@@ -266,13 +270,21 @@ impl LibraryListModel {
 
         sdm_mut.push(SubdirectoryListModel {
             model: new_directory_list,
-            _items_changed_callback: items_changed_signal_id,
-            _loading_callback: loading_signal_id,
+            items_changed_callback: items_changed_signal_id,
+            loading_callback: loading_signal_id,
         });
 
         drop(sdm_mut); // drop to avoid double mutable borrow error at `self.n_items`
 
         // Since this item represents a directory, we will hide it.
         self.hidden_items.borrow_mut().push(index);
+    }
+
+    /// Cleans up all `GtkDirectoryList` instances and their signal handlers.
+    /// This is usually called by `GObject::dispose()` or `Self::set_file`.
+    pub(super) fn cleanup_model(&self) {
+        if self.root_model.file().is_some() {
+            todo!()
+        }
     }
 }

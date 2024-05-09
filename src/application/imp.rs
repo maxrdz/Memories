@@ -19,38 +19,50 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::APP_ID;
-use crate::master_window::MasterWindow;
+use crate::library_view::library_list_model::LibraryListModel;
+use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use adw::{gio, glib};
 use gettextrs::gettext;
+use glib::g_debug;
 use libadwaita as adw;
+use std::cell::OnceCell;
 
-#[derive(Debug)]
-pub struct Albums {
+#[derive(Debug, glib::Properties)]
+#[properties(wrapper_type = super::AlbumsApplication)]
+pub struct AlbumsApplication {
     pub(super) gsettings: gio::Settings,
+    /// Core GListModel for enumerating photo and video album files.
+    /// Initialized after the application window is presented.
+    #[property(get, set)]
+    pub library_list_model: OnceCell<LibraryListModel>,
 }
 
-impl Default for Albums {
+impl Default for AlbumsApplication {
     fn default() -> Self {
         Self {
             gsettings: gio::Settings::new(APP_ID),
+            library_list_model: OnceCell::default(),
         }
     }
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for Albums {
-    const NAME: &'static str = "Albums";
-    type Type = super::Albums;
+impl ObjectSubclass for AlbumsApplication {
+    const NAME: &'static str = "AlbumsApplication";
+    type Type = super::AlbumsApplication;
     type ParentType = adw::Application;
 }
 
-impl ObjectImpl for Albums {
+#[glib::derived_properties]
+impl ObjectImpl for AlbumsApplication {
     fn constructed(&self) {
+        g_debug!("AlbumsApplication", "Reached constructed()");
         self.parent_constructed();
         let obj = self.obj();
+
         obj.setup_gactions();
         obj.set_accels_for_action("win.settings", &["<primary>comma"]);
 
@@ -63,7 +75,7 @@ impl ObjectImpl for Albums {
     }
 }
 
-impl ApplicationImpl for Albums {
+impl ApplicationImpl for AlbumsApplication {
     fn activate(&self) {
         let application = self.obj();
 
@@ -71,9 +83,14 @@ impl ApplicationImpl for Albums {
         // to launch a "second instance" of the application. When they try
         // to do that, we'll just present any existing window.
         let window = if let Some(window) = application.active_window() {
+            g_debug!("AlbumsApplication", "Application has an active window present!");
             window
         } else {
-            let window = MasterWindow::new(&*application);
+            g_debug!(
+                "AlbumsApplication",
+                "No active window found; Creating a new window."
+            );
+            let window = AlbumsApplicationWindow::new(&application);
             window.upcast()
         };
 
@@ -93,5 +110,5 @@ impl ApplicationImpl for Albums {
     }
 }
 
-impl GtkApplicationImpl for Albums {}
-impl AdwApplicationImpl for Albums {}
+impl GtkApplicationImpl for AlbumsApplication {}
+impl AdwApplicationImpl for AlbumsApplication {}

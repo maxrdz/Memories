@@ -21,8 +21,8 @@
 mod imp;
 
 use crate::i18n::gettext_f;
-use crate::master_window::MasterWindow;
 use crate::utils::get_app_cache_directory;
+use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -36,12 +36,12 @@ use crate::globals::*;
 use crate::vcs::VCS_TAG;
 
 glib::wrapper! {
-    pub struct Albums(ObjectSubclass<imp::Albums>)
+    pub struct AlbumsApplication(ObjectSubclass<imp::AlbumsApplication>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl Albums {
+impl AlbumsApplication {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -49,6 +49,7 @@ impl Albums {
             .build()
     }
 
+    /// Clones and returns a reference to the app's GSettings instance.
     pub fn gsettings(&self) -> gio::Settings {
         self.imp().gsettings.clone()
     }
@@ -145,7 +146,7 @@ impl Albums {
 
     fn toggle_hardware_acceleration(&self, toggle: bool) {
         let window: gtk::Window = self.active_window().unwrap();
-        let master_window: MasterWindow = window.downcast().unwrap();
+        let master_window: AlbumsApplicationWindow = window.downcast().unwrap();
 
         master_window.imp().library_view.set_hardware_accel(toggle);
     }
@@ -172,11 +173,11 @@ impl Albums {
                             match io_error.kind() {
                                 std::io::ErrorKind::NotFound => (),
                                 std::io::ErrorKind::PermissionDenied => g_critical!(
-                                    "Application",
+                                    "AlbumsApplication",
                                     "Insufficient permissions to clear cache directory."
                                 ),
                                 _ => g_error!(
-                                    "Application",
+                                    "AlbumsApplication",
                                     "Received an unexpected error kind after trying to clear the cache."
                                 ),
                             }
@@ -259,8 +260,10 @@ impl Albums {
     }
 }
 
-impl Default for Albums {
+impl Default for AlbumsApplication {
     fn default() -> Self {
-        gio::Application::default().and_downcast::<Albums>().unwrap()
+        gio::Application::default()
+            .and_downcast::<AlbumsApplication>()
+            .unwrap()
     }
 }

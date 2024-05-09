@@ -18,7 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::application::Albums;
+use crate::application::AlbumsApplication;
 use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
 use adw::gtk;
 use adw::prelude::*;
@@ -77,7 +77,7 @@ impl Default for LibraryView {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
             hardware_accel: Cell::new({
-                let gsettings: gio::Settings = Albums::default().gsettings();
+                let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
                 gsettings.boolean("hardware-acceleration")
             }),
             grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
@@ -130,7 +130,7 @@ impl ObjectImpl for LibraryView {
                     .set_menu_model(Some(&library_view_imp.grid_controls_menu_min_zoom.clone()));
             });
         // Bind any application preferences to our application's GSettings.
-        let gsettings: gio::Settings = Albums::default().gsettings();
+        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
         gsettings
             .bind("hardware-acceleration", &self.obj().clone(), "hardware-accel")
             .build();

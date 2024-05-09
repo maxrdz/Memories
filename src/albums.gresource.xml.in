@@ -13,11 +13,11 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/video-symbolic.svg</file>
     <!-- UI Files -->
     <file preprocess="xml-stripblanks" compressed="true">library_view/library-view.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">master_window/master-window.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">preferences_view/preferences-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">preferences_view/theme_selector/theme-selector.ui</file>
   </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/gtk">
-    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">master_window/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>
   </gresource>
 </gresources>

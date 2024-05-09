@@ -35,8 +35,10 @@ impl LibraryListModel {
         glib::Object::new()
     }
 
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
+    /// Relays the `set_file` call to the root `GtkDirectoryList` model.
+    /// If `file` is NULL, alling this method will initialize the enumeration process.
     pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
+        self.imp().cleanup_model();
         self.imp().root_model.set_file(file)
     }
 

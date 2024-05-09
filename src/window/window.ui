@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
-  <template class="AlbumsMasterWindow" parent="AdwApplicationWindow">
+  <template class="AlbumsApplicationWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Albums</property>
     <property name="default-width">1200</property>
     <property name="default-height">800</property>

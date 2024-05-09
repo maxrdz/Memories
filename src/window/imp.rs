@@ -18,17 +18,19 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::library_view::library_list_model::LibraryListModel;
 use crate::library_view::LibraryView;
 use crate::preferences_view::theme_selector::ThemeSelector;
 use crate::preferences_view::PreferencesView;
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/master_window/master-window.ui")]
-pub struct MasterWindow {
+#[template(resource = "/com/maxrdz/Albums/window/window.ui")]
+pub struct AlbumsApplicationWindow {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
@@ -54,9 +56,9 @@ pub struct MasterWindow {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MasterWindow {
-    const NAME: &'static str = "AlbumsMasterWindow";
-    type Type = super::MasterWindow;
+impl ObjectSubclass for AlbumsApplicationWindow {
+    const NAME: &'static str = "AlbumsApplicationWindow";
+    type Type = super::AlbumsApplicationWindow;
     type ParentType = adw::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
@@ -69,7 +71,7 @@ impl ObjectSubclass for MasterWindow {
     }
 }
 
-impl ObjectImpl for MasterWindow {
+impl ObjectImpl for AlbumsApplicationWindow {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
@@ -81,12 +83,23 @@ impl ObjectImpl for MasterWindow {
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
 
         obj.setup_gactions();
-        // This callback wont be triggered on start up by itself, so we
-        // want to check the very first visible child in the master stack.
-        obj.master_stack_child_visible();
+
+        obj.connect_show(move |window: &super::AlbumsApplicationWindow| {
+            // LibraryListModel instance MUST be initialized after
+            // the application window, but before the library view.
+            window
+                .app()
+                .unwrap()
+                .set_library_list_model(LibraryListModel::default());
+
+            // This callback wont be triggered on start up by itself, so we
+            // want to check the very first visible child in the master view stack.
+            window.master_stack_child_visible();
+        });
     }
 }
-impl WidgetImpl for MasterWindow {}
-impl WindowImpl for MasterWindow {}
-impl ApplicationWindowImpl for MasterWindow {}
-impl AdwApplicationWindowImpl for MasterWindow {}
+
+impl WidgetImpl for AlbumsApplicationWindow {}
+impl WindowImpl for AlbumsApplicationWindow {}
+impl ApplicationWindowImpl for AlbumsApplicationWindow {}
+impl AdwApplicationWindowImpl for AlbumsApplicationWindow {}

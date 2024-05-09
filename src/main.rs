@@ -25,14 +25,14 @@ mod globals;
 #[allow(dead_code)]
 mod i18n;
 mod library_view;
-mod master_window;
 mod preferences_view;
 mod thumbnails;
 mod utils;
 mod vcs;
+mod window;
 
 use adw::gtk;
-use application::Albums;
+use application::AlbumsApplication;
 use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::glib::{g_debug, g_info};
@@ -99,6 +99,6 @@ fn main() -> glib::ExitCode {
         .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
 
-    let app = Albums::new(APP_ID, &gio::ApplicationFlags::empty());
+    let app = AlbumsApplication::new(APP_ID, &gio::ApplicationFlags::empty());
     app.run()
 }

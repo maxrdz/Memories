@@ -20,6 +20,7 @@
 
 mod imp;
 
+use crate::application::AlbumsApplication;
 use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
 use adw::gtk;
 use adw::prelude::*;
@@ -28,17 +29,21 @@ use gtk::{gio, glib};
 use libadwaita as adw;
 
 glib::wrapper! {
-    pub struct MasterWindow(ObjectSubclass<imp::MasterWindow>)
+    pub struct AlbumsApplicationWindow(ObjectSubclass<imp::AlbumsApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
-        @implements gio::ActionGroup, gio::ActionMap;
+        @implements gio::ActionGroup, gio::ActionMap, gtk::Root;
 }
 
 #[gtk::template_callbacks]
-impl MasterWindow {
-    pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
+impl AlbumsApplicationWindow {
+    pub fn new(application: &AlbumsApplication) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()
+    }
+
+    pub fn app(&self) -> Option<AlbumsApplication> {
+        self.application().and_downcast()
     }
 
     fn setup_gactions(&self) {
@@ -124,13 +129,11 @@ impl MasterWindow {
 
     #[template_callback]
     fn master_stack_child_visible(&self) {
-        let class_imp: &imp::MasterWindow = self.imp();
-
-        if let Some(child_name) = class_imp.master_stack.visible_child_name() {
-            if child_name == class_imp.library_page.name().unwrap() {
-                // if the photo grid has no model, it has not been loaded before
-                if class_imp.library_view.imp().photo_grid_view.model().is_none() {
-                    class_imp.library_view.load_library();
+        if let Some(child_name) = self.imp().master_stack.visible_child_name() {
+            if child_name == self.imp().library_page.name().unwrap() {
+                // If the photo grid has no model, load the photo library now.
+                if self.imp().library_view.imp().photo_grid_view.model().is_none() {
+                    self.imp().library_view.load_library();
                 }
             }
         }

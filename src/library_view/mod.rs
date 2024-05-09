@@ -19,12 +19,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
-mod library_list_model;
+pub mod library_list_model;
 
+use crate::application::AlbumsApplication;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
+use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -47,10 +49,15 @@ glib::wrapper! {
 }
 
 impl LibraryView {
-    pub fn new<P: IsA<adw::gtk::Application>>(application: &P) -> Self {
-        glib::Object::builder()
-            .property("application", application)
-            .build()
+    pub fn new() -> Self {
+        glib::Object::new()
+    }
+
+    fn window(&self) -> AlbumsApplicationWindow {
+        self.root()
+            .expect("Must be in a GtkApplicationWindow.")
+            .downcast()
+            .expect("Failed to downcast to AlbumsApplicationWindow.")
     }
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
@@ -79,7 +86,9 @@ impl LibraryView {
         }
         self.imp().spinner.start();
 
-        let llm: LibraryListModel = LibraryListModel::default();
+        let albums: AlbumsApplication = self.window().app().unwrap();
+        let llm: LibraryListModel = albums.library_list_model();
+
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(
             // We can clone our LibraryListModel model because gobjects are reference-counted.
             Some(llm.clone()),
@@ -237,3 +246,10 @@ impl LibraryView {
         }
     }
 }
+
+impl Default for LibraryView {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
