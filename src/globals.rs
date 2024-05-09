@@ -76,7 +76,6 @@ pub static DEFAULT_RECENTLY_DELETED_PURGE_DELAY: RecentlyDeletedPurgeAfter =
 pub struct AboutInformation {
     pub app_name: &'static str,
     pub app_version: &'static str,
-    pub app_id: &'static str,
     pub app_repo: &'static str,
     pub app_author: &'static str,
     pub authors: &'static [&'static str],
@@ -92,12 +91,6 @@ pub static APP_INFO: AboutInformation = AboutInformation {
     app_version: VERSION,
     app_repo: "https://gitlab.gnome.org/maxrdz/Albums",
     app_author: "Max Rodriguez",
-    app_id: {
-        match DEVELOPMENT_BUILD {
-            false => "com.maxrdz.Albums",
-            true => "com.maxrdz.Albums.Devel",
-        }
-    },
     authors: &["Max Rodriguez <me@maxrdz.com>"],
     artists: &["Max Rodriguez <me@maxrdz.com>"],
     documenters: &[""],

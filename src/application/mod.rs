@@ -20,6 +20,7 @@
 
 mod imp;
 
+use crate::config::APP_ID;
 use crate::i18n::gettext_f;
 use crate::utils::get_app_cache_directory;
 use crate::window::AlbumsApplicationWindow;
@@ -193,7 +194,7 @@ impl AlbumsApplication {
         let window: gtk::Window = self.active_window().unwrap();
 
         let about: adw::AboutDialog = adw::AboutDialog::builder()
-            .application_icon(APP_INFO.app_id)
+            .application_icon(APP_ID)
             .application_name(gettext("Albums"))
             .developer_name(APP_INFO.app_author)
             .version({

@@ -42,4 +42,3 @@ impl Default for PreferencesView {
         Self::new()
     }
 }
-

@@ -252,4 +252,3 @@ impl Default for LibraryView {
         Self::new()
     }
 }
-
