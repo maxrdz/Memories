@@ -2,10 +2,11 @@
 <schemalist>
   <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@/" gettext-domain="@GETTEXT_DOMAIN@">
     <key name="hardware-acceleration" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Toggle Hardware Acceleration</summary>
       <description>
         Enables the use of hardware acceleration with FFmpeg.
+        This is an experimental feature.
       </description>
     </key>
   </schema>

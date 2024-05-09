@@ -157,7 +157,7 @@
                     <child>
                       <object class="AdwSwitchRow">
                         <property name="title" translatable="yes">Use Hardware Acceleration</property>
-                        <property name="subtitle" translatable="yes">You may need to disable hardware acceleration if your image thumbnails are failing to load.</property>
+                        <property name="subtitle" translatable="yes">This is an experimental feature. Allows FFmpeg to use hardware acceleration.</property>
                         <property name="action-name">app.toggle-hardware-acceleration</property>
                       </object>
                     </child>
