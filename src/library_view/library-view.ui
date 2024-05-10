@@ -31,31 +31,25 @@
                         <property name="vexpand">True</property>
                         <property name="sensitive">False</property>
                         <child>
-                          <object class="GtkListBoxRow">
-                            <property name="child">
-                              <object class="GtkSpinner" id="spinner">
-                                <property name="width_request">32</property>
-                                <property name="height_request">32</property>
-                                <property name="valign">center</property>
-                                <property name="halign">center</property>
-                                <property name="vexpand">True</property>
-                                <property name="hexpand">True</property>
-                              </object>
-                            </property>
+                          <object class="GtkSpinner" id="spinner">
+                            <property name="width_request">64</property>
+                            <property name="height_request">64</property>
+                            <property name="valign">center</property>
+                            <property name="halign">center</property>
+                            <property name="vexpand">True</property>
+                            <property name="hexpand">True</property>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkListBoxRow">
-                            <property name="margin-top">5</property>
-                            <property name="child">
-                              <object class="GtkLabel">
-                                <attributes>
-                                  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-                                </attributes>
-                                <property name="label" translatable="yes">Loading Your Library...</property>
-                                <property name="selectable">False</property>
-                              </object>
-                            </property>
+                          <object class="GtkLabel">
+                            <property name="margin-top">20</property>
+                            <property name="label" translatable="yes">Loading Your Library...</property>
+                            <property name="selectable">False</property>
+                            <!-- NOTE: CSS from GTK stylesheets -->
+                            <style>
+                              <class name="title"/>
+                              <class name="title-2"/>
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -120,7 +114,7 @@
                             <child>
                               <object class="GtkLabel" id="time_period_label">
                                 <property name="label" translatable="yes">Photo Library</property>
-                                <!-- NOTE: CSS nodes from libadwaita CSS stylesheets -->
+                                <!-- NOTE: CSS from GTK stylesheets -->
                                 <style>
                                   <class name="title"/>
                                   <class name="title-2"/>
@@ -135,7 +129,7 @@
                                 <property name="halign">1</property>
                                 <!-- GTK_ALIGN_START == 1 -->
                                 <property name="valign">1</property>
-                                <!-- NOTE: CSS nodes from libadwaita CSS stylesheets -->
+                                <!-- NOTE: CSS from GTK stylesheets -->
                                 <style>
                                   <class name="title"/>
                                   <class name="title-5"/>
