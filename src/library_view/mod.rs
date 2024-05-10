@@ -89,20 +89,24 @@ impl LibraryView {
         let albums: AlbumsApplication = self.window().app().unwrap();
         let llm: LibraryListModel = albums.library_list_model();
 
-        let msm: gtk::MultiSelection = gtk::MultiSelection::new(
-            // We can clone our LibraryListModel model because gobjects are reference-counted.
-            Some(llm.clone()),
-        );
+        let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(llm.clone()));
 
-        llm.connect_models_loaded_notify(clone!(@weak self as s => move |model: &LibraryListModel| {
-            let item_count: u32 = model.n_items();
-            if item_count == 0 {
-                s.imp().library_view_stack.set_visible_child_name("placeholder_page");
-                return;
-            }
-            s.imp().library_view_stack.set_visible_child_name("gallery_page");
-            s.imp().spinner.stop();
-        }));
+        if !llm.models_loaded() {
+            llm.connect_models_loaded_notify(clone!(@weak self as s => move |model: &LibraryListModel| {
+                let item_count: u32 = model.n_items();
+                if item_count == 0 {
+                    s.imp().library_view_stack.set_visible_child_name("placeholder_page");
+                    return;
+                }
+                s.imp().library_view_stack.set_visible_child_name("gallery_page");
+                s.imp().spinner.stop();
+            }));
+        } else {
+            self.imp()
+                .library_view_stack
+                .set_visible_child_name("gallery_page");
+            self.imp().spinner.stop();
+        }
 
         llm.connect_items_changed(
             clone!(@weak self as s => move |model: &LibraryListModel, _: u32, _: u32, _:u32| {

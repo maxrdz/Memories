@@ -65,7 +65,7 @@ impl Default for LibraryListModel {
             root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
             root_items_changed_signal: RefCell::new(None),
             subdir_models: RefCell::new(vec![]),
-            models_loaded: Cell::new(true),
+            models_loaded: Cell::new(false),
             loading_notifies: Cell::new(0_u32),
         }
     }
