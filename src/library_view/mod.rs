@@ -123,9 +123,49 @@ impl LibraryView {
             );
         });
 
-        let lif: gtk::SignalListItemFactory = gtk::SignalListItemFactory::new();
+        let factory: gtk::SignalListItemFactory = self.create_list_item_factory();
 
-        lif.connect_setup(
+        self.imp().photo_grid_view.set_model(Some(&msm));
+        self.imp().photo_grid_view.set_factory(Some(&factory));
+
+        let absolute_library_dir: String = format!(
+            "{}/{}",
+            {
+                if let Ok(home_path) = env::var("HOME") {
+                    home_path
+                } else {
+                    g_critical!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
+
+                    self.imp().library_view_stack.set_visible_child_name("error_page");
+                    self.imp().error_status_widget.set_description(Some(&gettext_f(
+                        // TRANSLATORS: You can remove odd spacing. This is due to code linting.
+                        "The {ENV_VAR} environment variable was found, \
+                        so Albums cannot open your photo library.",
+                        &[("ENV_VAR", "$HOME")],
+                    )));
+                    // place NULL byte at start of string to signal error
+                    String::from('\0')
+                }
+            },
+            DEFAULT_LIBRARY_DIRECTORY
+        );
+
+        if !absolute_library_dir.starts_with('\0') {
+            g_debug!(
+                "LibraryView",
+                "Enumerating library files from directory: {}",
+                absolute_library_dir
+            );
+            llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
+        }
+    }
+
+    /// Returns a new `GtkSignalListItemFactory` with signal handlers allocated
+    /// to create, bind, and clean up list item widgets in the library grid view.
+    fn create_list_item_factory(&self) -> gtk::SignalListItemFactory {
+        let factory = gtk::SignalListItemFactory::new();
+
+        factory.connect_setup(
             clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
                 let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
 
@@ -160,7 +200,7 @@ impl LibraryView {
             }
         ));
 
-        lif.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+        factory.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // There **has** to be a better way to get the GtkImage object.
             let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
@@ -215,39 +255,7 @@ impl LibraryView {
             }
         }));
 
-        self.imp().photo_grid_view.set_model(Some(&msm));
-        self.imp().photo_grid_view.set_factory(Some(&lif));
-
-        let absolute_library_dir: String = format!(
-            "{}/{}",
-            {
-                if let Ok(home_path) = env::var("HOME") {
-                    home_path
-                } else {
-                    g_critical!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
-
-                    self.imp().library_view_stack.set_visible_child_name("error_page");
-                    self.imp().error_status_widget.set_description(Some(&gettext_f(
-                        // TRANSLATORS: You can remove odd spacing. This is due to code linting.
-                        "The {ENV_VAR} environment variable was found, \
-                        so Albums cannot open your photo library.",
-                        &[("ENV_VAR", "$HOME")],
-                    )));
-                    // place NULL byte at start of string to signal error
-                    String::from('\0')
-                }
-            },
-            DEFAULT_LIBRARY_DIRECTORY
-        );
-
-        if !absolute_library_dir.starts_with('\0') {
-            g_debug!(
-                "LibraryView",
-                "Enumerating library files from directory: {}",
-                absolute_library_dir
-            );
-            llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
-        }
+        factory
     }
 }
 
