@@ -167,7 +167,7 @@ impl LibraryView {
 
         factory.connect_setup(
             clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
-                let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
+                let list_item_widget: gtk::ListItem = obj.clone().downcast().unwrap();
 
                 let image: gtk::Image = gtk::Image::builder()
                     .use_fallback(true)
@@ -178,6 +178,7 @@ impl LibraryView {
                     .child(&image)
                     .height_request(s.grid_widget_height())
                     .build();
+
                 s.bind_property("grid-widget-height", &aspect_frame, "height-request").sync_create().build();
 
                 let revealer: gtk::Revealer = gtk::Revealer::builder()
@@ -186,24 +187,35 @@ impl LibraryView {
                     .reveal_child(true)
                     .build();
 
+                let cell_data: GridCellData = GridCellData::builder()
+                    .child(&revealer)
+                    .build();
+
                 // Once the image file has been set, we know it has been loaded, so
                 // we can hide the content (placeholder icon) immediately, then reveal
                 // the actual image content with a proper delay + transition type.
-                image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
+                let handler_id: glib::SignalHandlerId = image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
                     r.set_reveal_child(false);
                     r.set_transition_duration(1000); // milliseconds
                     r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
                     r.set_reveal_child(true);
                 }));
 
-                list_item.set_property("child", &revealer);
+                cell_data.imp()
+                    .img_file_notify
+                    .borrow()
+                    .set(handler_id)
+                    .expect("Cell data `img_file_notify` already initialized!");
+
+                list_item_widget.set_property("child", &cell_data);
             }
         ));
 
         factory.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // There **has** to be a better way to get the GtkImage object.
-            let revealer: gtk::Revealer = list_item.child().and_downcast().unwrap();
+            let cell_data: GridCellData = list_item.child().and_downcast().unwrap();
+            let revealer: gtk::Revealer = cell_data.child().and_downcast().unwrap();
             let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
             let image: gtk::Image = frame.child().and_downcast().unwrap();
 
@@ -228,8 +240,8 @@ impl LibraryView {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
 
-                        glib::spawn_future_local(clone!(@weak s as lv, @strong tx, @strong semaphore as sp => async move {
-                            let semaphore_guard: SemaphoreGuard<'_> = sp.acquire().await;
+                        let tx_handle = glib::spawn_future_local(clone!(@weak s as lv => async move {
+                            let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
 
                             if let Ok(path) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
                                 drop(semaphore_guard);
@@ -238,12 +250,15 @@ impl LibraryView {
                                 g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
                             }
                         }));
-                        glib::spawn_future_local(clone!(@weak image => async move {
+                        let rx_handle = glib::spawn_future_local(clone!(@weak image => async move {
                             while let Ok(path) = rx.recv().await {
                                 image.clear();
                                 image.set_file(Some(&path));
                             }
                         }));
+
+                        cell_data.imp().tx_join_handle.set(Some(tx_handle));
+                        cell_data.imp().rx_join_handle.set(Some(rx_handle));
                     }
                 }
             } else {
@@ -262,5 +277,82 @@ impl LibraryView {
 impl Default for LibraryView {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+mod grid_cell_data_imp {
+    use super::adw;
+    use super::glib;
+    use adw::subclass::prelude::*;
+    use std::cell::{Cell, OnceCell, RefCell};
+
+    /// AdwBin subclass to store arbitrary data for grid cells
+    /// of the library photo grid view. Stores signal
+    /// handler IDs and glib async join handles.
+    #[derive(Default)]
+    pub struct GridCellData {
+        pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
+        pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
+        pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for GridCellData {
+        const NAME: &'static str = "GridCellData";
+        type ParentType = adw::Bin;
+        type Type = super::GridCellData;
+    }
+
+    impl ObjectImpl for GridCellData {}
+    impl WidgetImpl for GridCellData {}
+    impl BinImpl for GridCellData {}
+}
+
+glib::wrapper! {
+    pub struct GridCellData(ObjectSubclass<grid_cell_data_imp::GridCellData>)
+        @extends gtk::Widget, adw::Bin;
+}
+
+impl GridCellData {
+    pub fn new() -> Self {
+        glib::Object::new()
+    }
+
+    pub fn builder() -> GridCellDataBuilder {
+        GridCellDataBuilder::new()
+    }
+}
+
+impl Default for GridCellData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+/// A [builder-pattern] type to construct `LibraryGridCellData` objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+#[must_use = "The builder must be built to be used."]
+pub struct GridCellDataBuilder {
+    builder: glib::object::ObjectBuilder<'static, GridCellData>,
+}
+
+impl GridCellDataBuilder {
+    fn new() -> Self {
+        Self {
+            builder: glib::object::Object::builder(),
+        }
+    }
+
+    pub fn child(self, child: &impl IsA<gtk::Widget>) -> Self {
+        Self {
+            builder: self.builder.property("child", child.clone().upcast()),
+        }
+    }
+
+    /// Build the `GridCellData` object.
+    #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects."]
+    pub fn build(self) -> GridCellData {
+        self.builder.build()
     }
 }
