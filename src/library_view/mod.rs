@@ -245,7 +245,13 @@ impl LibraryView {
 
                             if let Ok(path) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
                                 drop(semaphore_guard);
-                                tx.send(path).await.expect("Async channel needs to be open.");
+                                if let Err(err_string) = tx.send(path).await {
+                                    g_critical!(
+                                        "LibraryView",
+                                        "Tried to transmit thumbnail path, async channel is not open.\n{}",
+                                        err_string
+                                    );
+                                }
                             } else {
                                 g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
                             }
