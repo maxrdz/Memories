@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::albums::AlbumsView;
 use crate::library::library_list_model::LibraryListModel;
 use crate::library::LibraryView;
 use crate::preferences::theme_selector::ThemeSelector;
@@ -46,9 +47,9 @@ pub struct AlbumsApplicationWindow {
     #[template_child]
     pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub search_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
     pub preferences_page: TemplateChild<adw::ViewStackPage>,
+    #[template_child]
+    pub albums_view: TemplateChild<AlbumsView>,
     #[template_child]
     pub library_view: TemplateChild<LibraryView>,
     #[template_child]

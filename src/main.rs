@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+mod albums;
 mod application;
 mod config;
 #[allow(dead_code)]

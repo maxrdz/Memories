@@ -1,3 +1,13 @@
+.albums-filter row {
+	background-color: @borders;
+	border-radius: 20px;
+}
+
+.albums-filter row button {
+	background-color: @borders;
+	border-radius: 13px;
+}
+
 .overlay-gradient {
   border: none;
   border-radius: 0px;
