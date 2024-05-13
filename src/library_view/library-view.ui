@@ -8,11 +8,13 @@
         <child>
           <object class="AdwBreakpoint">
             <condition>min-width: 720px</condition>
+            <setter object="photo_grid_view" property="single-click-activate">False</setter>
             <setter object="photo_grid_view" property="min-columns">15</setter>
             <setter object="photo_grid_view" property="max-columns">15</setter>
             <!-- See src/globals.rs for corresponding `grid-widget-height` to grid columns. -->
             <setter object="AlbumsLibraryView" property="grid-widget-height">78</setter>
             <setter object="AlbumsLibraryView" property="grid-desktop-zoom">True</setter>
+            <setter object="overlay_labels_box" property="margin-start">20</setter>
             <setter object="overlay_labels_box" property="margin-top">10</setter>
           </object>
         </child>
@@ -107,7 +109,7 @@
                             <property name="halign">1</property>
                             <!-- GTK_ALIGN_START == 1 -->
                             <property name="valign">1</property>
-                            <property name="margin-start">20</property>
+                            <property name="margin-start">15</property>
                             <property name="margin-top">15</property>
                             <!-- GTK_ORIENTATION_VERTICAL == 1 -->
                             <property name="orientation">1</property>
