@@ -24,8 +24,8 @@ mod config;
 mod globals;
 #[allow(dead_code)]
 mod i18n;
-mod library_view;
-mod preferences_view;
+mod library;
+mod preferences;
 mod thumbnails;
 mod utils;
 mod vcs;

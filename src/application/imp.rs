@@ -19,7 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::APP_ID;
-use crate::library_view::library_list_model::LibraryListModel;
+use crate::library::library_list_model::LibraryListModel;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;

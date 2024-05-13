@@ -30,7 +30,7 @@ use std::cell::Cell;
 use std::sync::Arc;
 
 #[derive(Debug, glib::Properties, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library_view/library-view.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/library-view.ui")]
 #[properties(wrapper_type = super::LibraryView)]
 pub struct LibraryView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,

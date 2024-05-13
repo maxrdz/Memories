@@ -18,10 +18,10 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::library_view::library_list_model::LibraryListModel;
-use crate::library_view::LibraryView;
-use crate::preferences_view::theme_selector::ThemeSelector;
-use crate::preferences_view::PreferencesView;
+use crate::library::library_list_model::LibraryListModel;
+use crate::library::LibraryView;
+use crate::preferences::theme_selector::ThemeSelector;
+use crate::preferences::PreferencesView;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;

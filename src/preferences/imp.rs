@@ -18,29 +18,28 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use super::theme_selector::ThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/preferences_view/theme_selector/theme-selector.ui")]
-pub struct ThemeSelector {
+#[template(resource = "/com/maxrdz/Albums/preferences/preferences-view.ui")]
+pub struct PreferencesView {
     #[template_child]
-    pub selector_box: TemplateChild<gtk::Box>,
+    pub theme_selector: TemplateChild<ThemeSelector>,
     #[template_child]
-    pub system_selector: TemplateChild<gtk::CheckButton>,
+    pub mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
     #[template_child]
-    pub light_selector: TemplateChild<gtk::CheckButton>,
-    #[template_child]
-    pub dark_selector: TemplateChild<gtk::CheckButton>,
+    pub recently_deleted_actions: TemplateChild<gtk::Box>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for ThemeSelector {
-    const NAME: &'static str = "AlbumsThemeSelector";
-    type Type = super::ThemeSelector;
-    type ParentType = adw::Bin;
+impl ObjectSubclass for PreferencesView {
+    const NAME: &'static str = "AlbumsPreferencesView";
+    type Type = super::PreferencesView;
+    type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -51,6 +50,6 @@ impl ObjectSubclass for ThemeSelector {
     }
 }
 
-impl ObjectImpl for ThemeSelector {}
-impl WidgetImpl for ThemeSelector {}
-impl BinImpl for ThemeSelector {}
+impl ObjectImpl for PreferencesView {}
+impl WidgetImpl for PreferencesView {}
+impl BreakpointBinImpl for PreferencesView {}
