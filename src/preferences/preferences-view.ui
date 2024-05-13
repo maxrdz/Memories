@@ -171,7 +171,6 @@
                             <property name="valign">center</property>
                             <property name="label" translatable="yes">Clear _Cache</property>
                             <property name="action-name">app.clear-app-cache</property>
-                            <property name="can-shrink">True</property>
                             <property name="use-underline">true</property>
                             <!-- NOTE: CSS node from libadwaita stylesheets -->
                             <style>
