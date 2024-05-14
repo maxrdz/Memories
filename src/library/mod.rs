@@ -266,7 +266,7 @@ impl LibraryView {
                                     );
                                 }
                             } else {
-                                g_critical!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
+                                g_warning!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
                             }
                         }));
                         let rx_handle = glib::spawn_future_local(clone!(@weak image => async move {
