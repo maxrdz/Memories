@@ -92,66 +92,6 @@
                 </child>
                 <child>
                   <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Recently Deleted</property>
-                    <property name="description" translatable="yes">Automatically deleting your recently deleted photos and videos can help optimize storage on your device.</property>
-                    <child>
-                      <object class="AdwSwitchRow">
-                        <property name="title" translatable="yes">Automatically Purge Deleted Items</property>
-                        <property name="subtitle" translatable="yes">Purges deleted items after purge period. This permanently deletes items from your device.</property>
-                        <property name="action-name">app.configure</property>
-                        <property name="action-target">0</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwComboRow">
-                        <property name="title" translatable="yes">Automatic Purge Period</property>
-                        <property name="use-underline">true</property>
-                        <property name="model">
-                          <!--<object class="AdwEnumListModel">
-                            <property name="enum-type">RecentlyDeletedPurgeAfter</property>
-                          </object>-->
-                          <object class="GtkStringList">
-                            <items>
-                              <item translatable="yes">1 Hour</item>
-                              <item translatable="yes">1 Day</item>
-                              <item translatable="yes">2 Days</item>
-                              <item translatable="yes">3 Days</item>
-                              <item translatable="yes">4 Days</item>
-                              <item translatable="yes">5 Days</item>
-                              <item translatable="yes">6 Days</item>
-                              <item translatable="yes">1 Week</item>
-                              <item translatable="yes">2 Weeks</item>
-                              <item translatable="yes">1 Month</item>
-                            </items>
-                          </object>
-                        </property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="recently_deleted_actions">
-                        <property name="margin-top">12</property>
-                        <property name="spacing">12</property>
-                        <property name="hexpand">false</property>
-                        <property name="halign">center</property>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="halign">end</property>
-                            <property name="valign">center</property>
-                            <property name="label" translatable="yes">_Purge Recently Deleted</property>
-                            <property name="can-shrink">True</property>
-                            <property name="use-underline">true</property>
-                            <!-- NOTE: CSS node from libadwaita stylesheets -->
-                            <style>
-                              <class name="destructive-action"/>
-                            </style>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPreferencesGroup">
                     <property name="title" translatable="yes">Advanced Options</property>
                     <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Albums.</property>
                     <child>

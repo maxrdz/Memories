@@ -60,19 +60,6 @@ pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 70;
 pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 70), (3, 119), (2, 178)];
 pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(15, 78), (10, 118)];
 
-/// Purge delay for recently deleted library items.
-#[rustfmt::skip]
-#[repr(u8)]
-pub enum RecentlyDeletedPurgeAfter {
-    OneHour, OneDay, TwoDays, ThreeDays, FourDays,
-    FiveDays, SixDays, OneWeek, TwoWeeks, OneMonth,
-}
-
-/// Default time delay for purging recently deleted library items.
-/// Following the same default delay as org.gnome.Settings.
-pub static DEFAULT_RECENTLY_DELETED_PURGE_DELAY: RecentlyDeletedPurgeAfter =
-    RecentlyDeletedPurgeAfter::OneMonth;
-
 pub struct AboutInformation {
     pub app_name: &'static str,
     pub app_version: &'static str,
