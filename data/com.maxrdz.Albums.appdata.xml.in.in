@@ -7,14 +7,13 @@
   <name>Albums</name>
   <summary>A photo and video album application for GNOME</summary>
 	<description>
-	  <p>A photo and video album application for GNOME.
-      Built with GTK 4 and libadwaita, designed to be well
-	    integrated with GNOME technologies and mobile devices.</p>
+    <p>A photo and video album application for GNOME.
+    Designed to be well integrated with GNOME technologies
+    and Linux mobile devices.</p>
 	  <p>Features:</p>
     <ul>
       <li>View your photos and video library</li>
-      <li>Create new Albums to organize memories</li>
-      <li>Flip, rotate, and crop your photos</li>
+      <li>Organize your memories with Albums</li>
       <li>Inspect rich metadata for photos</li>
     </ul>
 	</description>
@@ -79,12 +78,12 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="46.1" date="2024-05-20">
-      <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG#L1</url>
+    <release version="46.2" date="2024-05-31">
+      <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG</url>
       <description>
         <p>
-          Initial release of Albums; Following the GNOME release schedule
-          as of GNOME version 46.1.
+          Initial release of Albums. Following the GNOME release
+          schedule as of GNOME version 46.2.
         </p>
       </description>
     </release>
