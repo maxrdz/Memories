@@ -221,6 +221,22 @@ impl LibraryView {
                     .expect("Cell data `img_file_notify` already initialized!");
 
                 list_item_widget.set_property("child", &cell_data);
+
+                let gesture_click: gtk::GestureClick = gtk::GestureClick::new();
+                image.add_controller(gesture_click.clone());
+
+                gesture_click.connect_pressed(
+                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_: &gtk::GestureClick, _, _, _| {
+                        if li.is_selected() {
+                            let model_item: gio::FileInfo = li.item().and_downcast().unwrap();
+                            let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
+                            let file: gio::File = file_obj.downcast().unwrap();
+
+                            library_view.imp().viewer_picture.set_file(Some(&file));
+                            library_view.imp().gallery_nav_view.push_by_tag("viewer");
+                        }
+                    }),
+                );
             }
         ));
 

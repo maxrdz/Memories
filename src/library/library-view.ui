@@ -93,6 +93,7 @@
                       <object class="AdwNavigationView" id="gallery_nav_view">
                         <child>
                           <object class="AdwNavigationPage">
+                            <property name="tag">library</property>
                             <property name="title" translatable="yes">Library</property>
                             <property name="child">
                               <object class="GtkOverlay">
@@ -174,6 +175,38 @@
                                         <property name="single-click-activate">True</property>
                                       </object>
                                     </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwNavigationPage">
+                            <property name="tag">viewer</property>
+                            <property name="title" translatable="yes">Viewer</property>
+                            <property name="child">
+                              <object class="GtkOverlay">
+                                <child type="overlay">
+                                  <object class="GtkButton">
+                                    <property name="icon-name">go-previous-symbolic</property>
+                                    <property name="tooltip-text" translatable="yes">Go Back</property>
+                                    <!-- GTK_ALIGN_START == 1 -->
+                                    <property name="halign">1</property>
+                                    <property name="valign">1</property>
+                                    <property name="action-name">navigation.pop</property>
+                                    <property name="margin-start">10</property>
+                                    <property name="margin-top">10</property>
+                                    <style>
+                                      <class name="circular"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <property name="child">
+                                  <object class="GtkPicture" id="viewer_picture">
+                                    <property name="can-shrink">True</property>
+                                    <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
+                                    <property name="content-fit">1</property>
                                   </object>
                                 </property>
                               </object>
