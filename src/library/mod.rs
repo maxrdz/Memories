@@ -158,6 +158,19 @@ impl LibraryView {
             );
             llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
         }
+
+        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+
+        if gsettings.boolean("first-boot") {
+            let new_toast: adw::Toast = adw::Toast::builder()
+                .title(gettext(
+                    "Creating photo thumbnails for the first time. This may take a while.",
+                ))
+                .build();
+            self.imp().gallery_toast_overlay.add_toast(new_toast);
+
+            let _ = gsettings.set_boolean("first-boot", false);
+        }
     }
 
     /// Returns a new `GtkSignalListItemFactory` with signal handlers allocated

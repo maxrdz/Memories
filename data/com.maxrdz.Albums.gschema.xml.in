@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@/" gettext-domain="@GETTEXT_DOMAIN@">
+    <key name="first-boot" type="b">
+      <default>true</default>
+      <summary>First boot indicator</summary>
+    </key>
     <key name="hardware-acceleration" type="b">
       <default>false</default>
       <summary>Toggle Hardware Acceleration</summary>
