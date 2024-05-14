@@ -107,3 +107,64 @@ If a merge request has comments from maintainers that have not been
 responded to within 4 weeks this merge request is considered to be
 inactive and will be closed. The reporter may re-open it at a later
 date if they respond to the comments.
+
+### Making a Release
+
+This section of the document is more of a personal note for the
+maintainer, and future maintainers of Albums. See the
+[GNOME Handbook](https://handbook.gnome.org/maintainers/making-a-release.html)
+for more details.
+
+Release versioning for Albums should follow the GNOME release
+schedule.
+See the [GNOME Handbook](https://handbook.gnome.org/maintainers.html).
+
+#### Setup Checklist
+
+- Ensure [git-evtag](https://github.com/cgwalters/git-evtag) is
+installed on your machine. This software will be used to provide
+strong signing guarantees when creating a new git release tag.
+- Verify your user `.gitconfig` file has your **SSH** key and PGP
+(**GPG**) key configured for authentication to GNOME GitLab and
+signing Git commits and tags.
+- Verify that your GNOME GitLab account has your **public** SSH/PGP
+keys up to date. These should always match the keys used when
+releasing. To verify, go to your
+[GitLab key settings](https://gitlab.gnome.org/-/user_settings/gpg_keys#index).
+- `git status` and `git pull` to ensure local repository is up to date.
+
+#### Release Commit Checklist
+
+- Update project version in root `meson.build` file.
+- Update crate version in `Cargo.toml` manifest file.
+- Update the `CHANGELOG` text document.
+- Add a `<release>` entry in the Appstream app metadata file. You
+should read through the Git commit log for this release and come up
+with a bullet point for each significant change and credit the
+people who did the work. Refer to the
+[Appstream specification](https://www.freedesktop.org/software/appstream/docs/).
+- Review the `README.md` document and update if necessary.
+- Commit changes via `git commit`, or `git commit -S<key-id>` if your
+PGP (GPG) key is not globally configured in your user `.gitconfig`.
+- Run `meson dist` to create the tarball for the release. If
+successful, Meson should output similar to the following:
+```
+Distribution package /opt/gnome/build/glib/meson-dist/glib-2.57.3.tar.xz tested.
+```
+- Run `git evtag sign 46.0`. `git-evtag` is required, see setup. The
+message included in the Git tag should be in the following format:
+```
+Albums 46.0
+
+* The contents of the CHANGELOG file for this release.
+* Dependency updates
+* A bug fix
+* Small maintenance tasks
+* Translation updates with credits
+```
+- Upload the tarball (this applies once Albums uses GNOME master):
+```
+$ scp albums-46.0.tar.xz USER@master.gnome.org:~
+$ ssh USER@master.gnome.org
+$ ftpadmin install albums-46.0.tar.xz
+```
