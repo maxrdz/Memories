@@ -19,6 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::albums::AlbumsView;
+use crate::application::AlbumsApplication;
 use crate::library::library_list_model::LibraryListModel;
 use crate::library::LibraryView;
 use crate::preferences::theme_selector::ThemeSelector;
@@ -26,6 +27,7 @@ use crate::preferences::PreferencesView;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use glib_macros::clone;
 use gtk::glib;
 use libadwaita as adw;
 
@@ -96,6 +98,27 @@ impl ObjectImpl for AlbumsApplicationWindow {
             // This callback wont be triggered on start up by itself, so we
             // want to check the very first visible child in the master view stack.
             window.master_stack_child_visible();
+        });
+
+        // Persist application window state (width, height, maximized) with GSettings
+        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+
+        obj.set_maximized(gsettings.boolean("maximized"));
+        obj.set_default_width(gsettings.int("window-width"));
+        obj.set_default_height(gsettings.int("window-height"));
+
+        obj.connect_maximized_notify(
+            clone!(@weak gsettings as gs => move |win: &super::AlbumsApplicationWindow| {
+                let _ = gs.set_boolean("maximized", win.is_maximized());
+            }),
+        );
+
+        obj.connect_close_request(move |win: &super::AlbumsApplicationWindow| {
+            if !win.is_maximized() {
+                let _ = gsettings.set_int("window-width", win.width());
+                let _ = gsettings.set_int("window-height", win.height());
+            }
+            glib::Propagation::Proceed
         });
     }
 }

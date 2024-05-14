@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="@APP_ID@" path="@GRESOURCE_DOMAIN@/" gettext-domain="@GETTEXT_DOMAIN@">
+    <key name="window-width" type="i">
+      <default>1200</default>
+      <summary>Window width state</summary>
+    </key>
+    <key name="window-height" type="i">
+      <default>800</default>
+      <summary>Window height state</summary>
+    </key>
+    <key name="maximized" type="b">
+      <default>false</default>
+      <summary>Window maximized state</summary>
+    </key>
     <key name="first-boot" type="b">
       <default>true</default>
-      <summary>First boot indicator</summary>
+      <summary>First boot indicator flag</summary>
+      <description>
+        Set to 'false' after the first launch of Albums.
+      </description>
     </key>
     <key name="hardware-acceleration" type="b">
       <default>false</default>
