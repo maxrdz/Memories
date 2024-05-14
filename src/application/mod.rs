@@ -243,6 +243,7 @@ impl AlbumsApplication {
                 "GTK https://gtk.org/",
                 "Libadwaita https://gnome.pages.gitlab.gnome.org/libadwaita/",
                 "FFmpeg https://ffmpeg.org/",
+                "glycin https://gitlab.gnome.org/sophie-h/glycin",
                 "smol-rs https://github.com/smol-rs",
             ],
         );

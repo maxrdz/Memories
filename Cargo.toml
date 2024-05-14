@@ -29,6 +29,7 @@ gdk = { version = "0.8", package = "gdk4", features = ["v4_14"] }
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
 gio = { version = "0.19", features = ["v2_80"] }
 glib-macros = { version = "0.19" }
+glycin = { version = "1.0.2" }
 gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }
 md-5 = { version = "0.10" }
