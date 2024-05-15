@@ -12,6 +12,9 @@ src/library/library-view.ui
 src/library/library_list_model/imp.rs
 src/library/library_list_model/mod.rs
 src/library/mod.rs
+src/library/viewer/imp.rs
+src/library/viewer/mod.rs
+src/library/viewer/viewer-page.ui
 src/main.rs
 src/preferences/imp.rs
 src/preferences/mod.rs
