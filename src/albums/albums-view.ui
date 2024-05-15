@@ -1,218 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsView" parent="AdwBin">
+  <template class="AlbumsView" parent="AdwBreakpointBin">
+    <property name="width-request">360</property>
+    <property name="height-request">500</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>min-width: 720px</condition>
+      </object>
+    </child>
     <property name="child">
-      <object class="AdwBreakpointBin">
-        <property name="width-request">360</property>
-        <property name="height-request">500</property>
-        <child>
-          <object class="AdwBreakpoint">
-            <condition>min-width: 720px</condition>
+      <object class="GtkOverlay">
+        <property name="vexpand-set">True</property>
+        <property name="vexpand">True</property>
+        <!-- GTK_ALIGN_FILL == 0 -->
+        <property name="valign">0</property>
+        <child type="overlay">
+          <object class="GtkButton" id="new_album_button">
+            <property name="icon-name">tab-new-symbolic</property>
+            <property name="tooltip-text" translatable="yes">Create New Album</property>
+            <!-- GTK_ALIGN_START == 1 -->
+            <property name="halign">1</property>
+            <property name="valign">1</property>
+            <property name="margin-start">15</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
           </object>
         </child>
         <property name="child">
-          <object class="GtkOverlay">
+          <object class="GtkScrolledWindow">
             <property name="vexpand-set">True</property>
             <property name="vexpand">True</property>
             <!-- GTK_ALIGN_FILL == 0 -->
             <property name="valign">0</property>
-            <child type="overlay">
-              <object class="GtkButton" id="new_album_button">
-                <property name="icon-name">tab-new-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Create New Album</property>
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="halign">1</property>
-                <property name="valign">1</property>
-                <property name="margin-start">15</property>
-                <property name="margin-top">10</property>
-                <property name="margin-bottom">10</property>
-              </object>
-            </child>
             <property name="child">
-              <object class="GtkScrolledWindow">
-                <property name="vexpand-set">True</property>
-                <property name="vexpand">True</property>
-                <!-- GTK_ALIGN_FILL == 0 -->
-                <property name="valign">0</property>
-                <property name="child">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="margin-start">15</property>
+                <property name="margin-end">15</property>
+                <property name="margin-bottom">20</property>
+                <property name="spacing">15</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Albums</property>
+                    <property name="margin-top">10</property>
+                    <property name="margin-bottom">10</property>
+                    <style>
+                      <!-- NOTE: CSS from GTK stylesheets -->
+                      <class name="title"/>
+                      <class name="title-1"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
-                    <property name="margin-start">15</property>
-                    <property name="margin-end">15</property>
-                    <property name="margin-bottom">20</property>
-                    <property name="spacing">15</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="yes">Albums</property>
-                        <property name="margin-top">10</property>
+                        <property name="label" translatable="yes">My Albums</property>
+                        <!-- GTK_ALIGN_START == 1 -->
+                        <property name="halign">1</property>
                         <property name="margin-bottom">10</property>
                         <style>
                           <!-- NOTE: CSS from GTK stylesheets -->
                           <class name="title"/>
-                          <class name="title-1"/>
+                          <class name="title-4"/>
                         </style>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox">
-                        <property name="orientation">vertical</property>
+                      <object class="AdwViewStack" id="album_carousel_stack">
                         <child>
-                          <object class="GtkLabel">
-                            <property name="label" translatable="yes">My Albums</property>
-                            <!-- GTK_ALIGN_START == 1 -->
-                            <property name="halign">1</property>
-                            <property name="margin-bottom">10</property>
-                            <style>
-                              <!-- NOTE: CSS from GTK stylesheets -->
-                              <class name="title"/>
-                              <class name="title-4"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwViewStack" id="album_carousel_stack">
-                            <child>
-                              <object class="AdwViewStackPage">
-                                <property name="name">empty</property>
-                                <property name="title">Empty</property>
-                                <property name="child">
-                                  <object class="AdwStatusPage">
-                                    <property name="icon-name">com.maxrdz.Albums-symbolic</property>
-                                    <property name="title" translatable="yes">No Albums</property>
-                                    <property name="description" translatable="yes">Create a new Album to get started.</property>
-                                    <property name="height-request">310</property>
-                                  </object>
-                                </property>
+                          <object class="AdwViewStackPage">
+                            <property name="name">empty</property>
+                            <property name="title">Empty</property>
+                            <property name="child">
+                              <object class="AdwStatusPage">
+                                <property name="icon-name">com.maxrdz.Albums-symbolic</property>
+                                <property name="title" translatable="yes">No Albums</property>
+                                <property name="description" translatable="yes">Create a new Album to get started.</property>
+                                <property name="height-request">310</property>
                               </object>
-                            </child>
-                            <child>
-                              <object class="AdwViewStackPage">
-                                <property name="name">carousel</property>
-                                <property name="title">Album Carousel</property>
-                                <property name="child">
-                                  <object class="AdwCarousel" id="album_carousel">
-                                    <property name="orientation">horizontal</property>
-                                  </object>
-                                </property>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwViewStackPage">
+                            <property name="name">carousel</property>
+                            <property name="title">Album Carousel</property>
+                            <property name="child">
+                              <object class="AdwCarousel" id="album_carousel">
+                                <property name="orientation">horizontal</property>
                               </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <style>
-                          <class name="albums-filter"/>
-                        </style>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">10</property>
-                        <property name="margin-bottom">5</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="label" translatable="yes">Media Types</property>
-                            <!-- GTK_ALIGN_START == 1 -->
-                            <property name="halign">1</property>
-                            <property name="margin-bottom">10</property>
-                            <style>
-                              <!-- NOTE: CSS from GTK stylesheets -->
-                              <class name="title"/>
-                              <class name="title-4"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwActionRow">
-                            <property name="title" translatable="yes">Videos</property>
-                            <child type="suffix">
-                              <object class="GtkButton">
-                                <property name="icon-name">camera-video-symbolic</property>
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">Videos</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwActionRow">
-                            <property name="title" translatable="yes">Screenshots</property>
-                            <child type="suffix">
-                              <object class="GtkButton">
-                                <property name="icon-name">screenshot-symbolic</property>
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">Screenshots</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwActionRow">
-                            <property name="title">Animated</property>
-                            <child type="suffix">
-                              <object class="GtkButton">
-                                <property name="icon-name">gif-symbolic</property>
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">Animated</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwActionRow">
-                            <property name="title" translatable="yes">Vector Graphics</property>
-                            <child type="suffix">
-                              <object class="GtkButton">
-                                <property name="icon-name">svg-symbolic</property>
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">Vector Graphics</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <style>
-                          <class name="albums-filter"/>
-                        </style>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">10</property>
-                        <property name="margin-bottom">5</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="label" translatable="yes">Utilities</property>
-                            <!-- GTK_ALIGN_START == 1 -->
-                            <property name="halign">1</property>
-                            <property name="margin-bottom">10</property>
-                            <style>
-                              <!-- NOTE: CSS from GTK stylesheets -->
-                              <class name="title"/>
-                              <class name="title-4"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="AdwActionRow">
-                            <property name="title" translatable="yes">Recently Deleted</property>
-                            <child type="suffix">
-                              <object class="GtkButton">
-                                <property name="icon-name">trash-symbolic</property>
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">Recently Deleted</property>
-                              </object>
-                            </child>
+                            </property>
                           </object>
                         </child>
                       </object>
                     </child>
                   </object>
-                </property>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <style>
+                      <class name="albums-filter"/>
+                    </style>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                    <property name="margin-bottom">5</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Media Types</property>
+                        <!-- GTK_ALIGN_START == 1 -->
+                        <property name="halign">1</property>
+                        <property name="margin-bottom">10</property>
+                        <style>
+                          <!-- NOTE: CSS from GTK stylesheets -->
+                          <class name="title"/>
+                          <class name="title-4"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="yes">Videos</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="icon-name">camera-video-symbolic</property>
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip-text" translatable="yes">Videos</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="yes">Screenshots</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="icon-name">screenshot-symbolic</property>
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip-text" translatable="yes">Screenshots</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Animated</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="icon-name">gif-symbolic</property>
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip-text" translatable="yes">Animated</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="yes">Vector Graphics</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="icon-name">svg-symbolic</property>
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip-text" translatable="yes">Vector Graphics</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <style>
+                      <class name="albums-filter"/>
+                    </style>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                    <property name="margin-bottom">5</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Utilities</property>
+                        <!-- GTK_ALIGN_START == 1 -->
+                        <property name="halign">1</property>
+                        <property name="margin-bottom">10</property>
+                        <style>
+                          <!-- NOTE: CSS from GTK stylesheets -->
+                          <class name="title"/>
+                          <class name="title-4"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="yes">Recently Deleted</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="icon-name">trash-symbolic</property>
+                            <property name="halign">end</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip-text" translatable="yes">Recently Deleted</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </property>
           </object>

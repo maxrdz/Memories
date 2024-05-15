@@ -38,7 +38,7 @@ pub struct AlbumsView {
 impl ObjectSubclass for AlbumsView {
     const NAME: &'static str = "AlbumsView";
     type Type = super::AlbumsView;
-    type ParentType = adw::Bin;
+    type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -52,3 +52,4 @@ impl ObjectSubclass for AlbumsView {
 impl ObjectImpl for AlbumsView {}
 impl WidgetImpl for AlbumsView {}
 impl BinImpl for AlbumsView {}
+impl BreakpointBinImpl for AlbumsView {}
