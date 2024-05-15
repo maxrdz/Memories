@@ -15,6 +15,12 @@ option(
   description: 'Rustc cross-compilation target triple. Default is an empty string, which compiles natively.'
 )
 option(
+  'disable-glycin-sandbox',
+  type: 'boolean',
+  description: 'Disable sandboxing of image loaders in glycin. Intended for devel builds.',
+  value: false,
+)
+option(
   'cross-verbose',
   type: 'boolean',
   value: false,
