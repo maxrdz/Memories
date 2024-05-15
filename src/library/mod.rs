@@ -20,12 +20,14 @@
 
 mod imp;
 pub mod library_list_model;
+pub mod viewer;
 
 use crate::application::AlbumsApplication;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
+use crate::utils::get_content_type_from_ext;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -44,8 +46,7 @@ use std::sync::Arc;
 
 glib::wrapper! {
     pub struct LibraryView(ObjectSubclass<imp::LibraryView>)
-        @extends gtk::Widget, adw::Bin,
-        @implements gio::ActionGroup, gio::ActionMap;
+        @extends gtk::Widget, adw::Bin;
 }
 
 impl LibraryView {
@@ -228,12 +229,22 @@ impl LibraryView {
                 gesture_click.connect_pressed(
                     clone!(@weak s as library_view, @weak list_item_widget as li => move |_: &gtk::GestureClick, _, _, _| {
                         if li.is_selected() {
+                            let grid_cell_data: GridCellData = li.child().and_downcast().unwrap();
+
                             let model_item: gio::FileInfo = li.item().and_downcast().unwrap();
                             let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
                             let file: gio::File = file_obj.downcast().unwrap();
 
-                            library_view.imp().viewer_picture.set_file(Some(&file));
-                            library_view.imp().gallery_nav_view.push_by_tag("viewer");
+                            let nav_view = library_view.window().imp().window_navigation.clone();
+
+                            let viewer_content: viewer::Viewer = viewer::Viewer::default();
+                            viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
+                            viewer_content.set_content_file(&file);
+
+                            let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
+                            nav_page.set_title(&file.basename().unwrap().to_string_lossy());
+
+                            nav_view.push(&nav_page);
                         }
                     }),
                 );
@@ -296,6 +307,11 @@ impl LibraryView {
                         cell_data.imp().rx_join_handle.set(Some(rx_handle));
                     }
                 }
+                // We can safely ignore the result of this since the bind callback that
+                // we are in is going to be called multiple times during the app's lifetime,
+                // so it will at one point try to set the viewer content type again.
+                let _ = cell_data.imp().viewer_content_type.set(get_content_type_from_ext(ext_str));
+
             } else {
                 g_warning!(
                     "LibraryView",
@@ -318,6 +334,7 @@ impl Default for LibraryView {
 mod grid_cell_data_imp {
     use super::adw;
     use super::glib;
+    use super::viewer::ViewerContentType;
     use adw::subclass::prelude::*;
     use std::cell::{Cell, OnceCell, RefCell};
 
@@ -329,6 +346,7 @@ mod grid_cell_data_imp {
         pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
         pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
+        pub viewer_content_type: OnceCell<ViewerContentType>,
     }
 
     #[glib::object_subclass]

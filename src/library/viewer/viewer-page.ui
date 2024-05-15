@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="AlbumsViewer" parent="AdwBreakpointBin">
+    <property name="width-request">360</property>
+    <property name="height-request">500</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>min-width: 720px</condition>
+        <setter object="header_bar" property="show-end-title-buttons">True</setter>
+        <setter object="main_menu_button" property="visible">True</setter>
+      </object>
+    </child>
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar" id="header_bar">
+            <property name="show-end-title-buttons">False</property>
+            <child type="end">
+              <object class="GtkMenuButton" id="main_menu_button">
+                <property name="visible">False</property>
+                <property name="primary">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="popover">
+                  <object class="GtkPopoverMenu" id="primary_menu">
+                    <property name="menu-model">primary_menu_model</property>
+                  </object>
+                </property>
+                <property name="tooltip_text" translatable="yes">Main Menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkOverlay">
+            <child type="overlay">
+              <object class="GtkButton">
+                <property name="icon-name">help-about-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Image Details</property>
+                <!-- GTK_ALIGN_END == 2 -->
+                <property name="halign">2</property>
+                <property name="valign">2</property>
+                <property name="action-name">navigation.pop</property>
+                <property name="margin-bottom">15</property>
+                <property name="margin-end">15</property>
+                <style>
+                  <class name="circular"/>
+                  <class name="viewer-overlay-button"/>
+                </style>
+              </object>
+            </child>
+            <property name="child">
+              <object class="AdwViewStack" id="viewer_stack">
+                <child>
+                  <object class="AdwViewStackPage" id="render_page">
+                    <property name="name">render</property>
+                    <property name="child">
+                      <object class="GtkImage" id="viewer_render"/>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewStackPage" id="image_page">
+                    <property name="name">image</property>
+                    <property name="child">
+                      <object class="GtkPicture" id="viewer_picture">
+                        <property name="can-shrink">True</property>
+                        <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
+                        <property name="content-fit">1</property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewStackPage" id="video_page">
+                    <property name="name">video</property>
+                    <property name="child">
+                      <object class="GtkVideo" id="viewer_video"/>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="primary_menu_model">
+    <section>
+      <item>
+        <attribute name="custom">theme-selector</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">win.settings</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Albums</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

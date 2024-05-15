@@ -21,7 +21,10 @@
 //! Utility functions used at seldom in Albums source.
 
 use crate::config::APP_NAME;
+use crate::library::viewer::ViewerContentType;
+use adw::glib::g_debug;
 use async_fs::Metadata;
+use libadwaita as adw;
 use serde::Serialize;
 use std::io;
 use std::time::SystemTime;
@@ -75,4 +78,20 @@ pub fn get_cache_directory() -> String {
 /// path of the application's cache directory location.
 pub fn get_app_cache_directory() -> String {
     format!("{}/{}", get_cache_directory(), APP_NAME)
+}
+
+/// Returns a `ViewerContentType` enum that matches the file extension given.
+pub fn get_content_type_from_ext(file_ext: &str) -> ViewerContentType {
+    match file_ext {
+        "svg" => ViewerContentType::Renderable,
+        "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => ViewerContentType::Image,
+        "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => ViewerContentType::Video,
+        _ => {
+            g_debug!(
+                "Utils",
+                "get_content_type_from_ext() received invalid file extension."
+            );
+            ViewerContentType::Invalid
+        }
+    }
 }

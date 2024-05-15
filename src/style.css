@@ -15,14 +15,21 @@
   opacity: .85;
 }
 
-.force-white {
+.viewer-overlay-button {
+  min-width: 42px;
+  min-height: 42px;
   color: white;
+  background-color: black;
 }
 
 gridview child {
   border-radius: 0px;
   margin: 1px;
   padding: 0px;
+}
+
+.force-light {
+  color: white;
 }
 
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */

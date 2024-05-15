@@ -35,6 +35,8 @@ use libadwaita as adw;
 #[template(resource = "/com/maxrdz/Albums/window/window.ui")]
 pub struct AlbumsApplicationWindow {
     #[template_child]
+    pub window_navigation: TemplateChild<adw::NavigationView>,
+    #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
     pub desktop_view_switcher: TemplateChild<adw::ViewSwitcher>,
