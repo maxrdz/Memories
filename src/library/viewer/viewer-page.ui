@@ -28,26 +28,16 @@
                 <property name="tooltip_text" translatable="yes">Main Menu</property>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkButton">
+                <property name="icon-name">help-about-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Image Details</property>
+              </object>
+            </child>
           </object>
         </child>
         <property name="content">
           <object class="GtkOverlay">
-            <child type="overlay">
-              <object class="GtkButton">
-                <property name="icon-name">help-about-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Image Details</property>
-                <!-- GTK_ALIGN_END == 2 -->
-                <property name="halign">2</property>
-                <property name="valign">2</property>
-                <property name="action-name">navigation.pop</property>
-                <property name="margin-bottom">15</property>
-                <property name="margin-end">15</property>
-                <style>
-                  <class name="circular"/>
-                  <class name="viewer-overlay-button"/>
-                </style>
-              </object>
-            </child>
             <property name="child">
               <object class="AdwViewStack" id="viewer_stack">
                 <child>

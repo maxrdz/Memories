@@ -229,6 +229,16 @@ impl LibraryView {
                 gesture_click.connect_pressed(
                     clone!(@weak s as library_view, @weak list_item_widget as li => move |_: &gtk::GestureClick, _, _, _| {
                         if li.is_selected() {
+                            let current_nav_page: adw::NavigationPage = library_view.window()
+                                .imp()
+                                .window_navigation
+                                .visible_page()
+                                .unwrap();
+
+                            // Do not proceed to push a new nav page if one is already open.
+                            if current_nav_page.tag().unwrap() != "window" {
+                                return;
+                            }
                             let grid_cell_data: GridCellData = li.child().and_downcast().unwrap();
 
                             let model_item: gio::FileInfo = li.item().and_downcast().unwrap();
