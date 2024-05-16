@@ -223,11 +223,8 @@ impl LibraryView {
 
                 list_item_widget.set_property("child", &cell_data);
 
-                let gesture_click: gtk::GestureClick = gtk::GestureClick::new();
-                image.add_controller(gesture_click.clone());
-
-                gesture_click.connect_pressed(
-                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_: &gtk::GestureClick, _, _, _| {
+                list_item_widget.connect_selected_notify(
+                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_| {
                         if li.is_selected() {
                             let current_nav_page: adw::NavigationPage = library_view.window()
                                 .imp()
@@ -322,6 +319,27 @@ impl LibraryView {
                 // so it will at one point try to set the viewer content type again.
                 let _ = cell_data.imp().viewer_content_type.set(get_content_type_from_ext(ext_str));
 
+                // Load image metadata using glycin. Currently video formats are not supported.
+                match ext_str {
+                    "mov" => (),
+                    "mp4" => (),
+                    _ => {
+                        // NOTE: This adds quite a performance hit on launch
+                        glib::spawn_future_local(async move {
+                            match glycin::Loader::new(file.clone()).load().await {
+                                Ok(image) => {
+                                    let _ = cell_data.imp().glycin_info.set(image.info().clone());
+                                }
+                                Err(glycin_err) => g_warning!(
+                                    "LibraryView",
+                                    "{}: Glycin error: {}",
+                                    file.basename().unwrap().to_string_lossy(),
+                                    glycin_err
+                                ),
+                            }
+                        });
+                    }
+                }
             } else {
                 g_warning!(
                     "LibraryView",
@@ -346,6 +364,7 @@ mod grid_cell_data_imp {
     use super::glib;
     use super::viewer::ViewerContentType;
     use adw::subclass::prelude::*;
+    use glycin::ImageInfo;
     use std::cell::{Cell, OnceCell, RefCell};
 
     /// AdwBin subclass to store arbitrary data for grid cells
@@ -357,6 +376,8 @@ mod grid_cell_data_imp {
         pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub viewer_content_type: OnceCell<ViewerContentType>,
+        /// Expect to be uninitialized if mime type is not supported.
+        pub glycin_info: OnceCell<ImageInfo>,
     }
 
     #[glib::object_subclass]
