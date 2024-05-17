@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+mod details;
 mod imp;
 pub mod library_list_model;
 pub mod viewer;
@@ -26,8 +27,9 @@ use crate::application::AlbumsApplication;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
+use crate::library::details::{ContentDetails, PictureDetails, VideoDetails};
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
-use crate::utils::get_content_type_from_ext;
+use crate::utils::{get_content_type_from_ext, MetadataInfo};
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -248,6 +250,14 @@ impl LibraryView {
                             viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
                             viewer_content.set_content_file(&file);
 
+                            viewer_content.imp()
+                                .details_widget
+                                .update_details(ContentDetails::Picture(PictureDetails {
+                                    file_info: model_item.clone(),
+                                    file_metadata: cell_data.imp().file_metadata.get().cloned(),
+                                    glycin: cell_data.imp().glycin_info.get().cloned().expect("Glycin data missing."),
+                                }));
+
                             let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
                             nav_page.set_title(&file.basename().unwrap().to_string_lossy());
 
@@ -287,11 +297,14 @@ impl LibraryView {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
 
-                        let tx_handle = glib::spawn_future_local(clone!(@weak s as lv => async move {
+                        let tx_handle = glib::spawn_future_local(clone!(@weak s as lv, @weak cell_data as cd => async move {
                             let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
 
-                            if let Ok(path) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
+                            if let Ok((path, metadata)) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
                                 drop(semaphore_guard);
+
+                                let _ = cd.imp().file_metadata.set(metadata);
+
                                 if let Err(err_string) = tx.send(path).await {
                                     g_critical!(
                                         "LibraryView",
@@ -315,8 +328,7 @@ impl LibraryView {
                     }
                 }
                 // We can safely ignore the result of this since the bind callback that
-                // we are in is going to be called multiple times during the app's lifetime,
-                // so it will at one point try to set the viewer content type again.
+                // we are in is going to be called multiple times during the app's lifetime.
                 let _ = cell_data.imp().viewer_content_type.set(get_content_type_from_ext(ext_str));
 
                 // Load image metadata using glycin. Currently video formats are not supported.
@@ -363,6 +375,7 @@ mod grid_cell_data_imp {
     use super::adw;
     use super::glib;
     use super::viewer::ViewerContentType;
+    use super::MetadataInfo;
     use adw::subclass::prelude::*;
     use glycin::ImageInfo;
     use std::cell::{Cell, OnceCell, RefCell};
@@ -376,6 +389,7 @@ mod grid_cell_data_imp {
         pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub viewer_content_type: OnceCell<ViewerContentType>,
+        pub file_metadata: OnceCell<MetadataInfo>,
         /// Expect to be uninitialized if mime type is not supported.
         pub glycin_info: OnceCell<ImageInfo>,
     }

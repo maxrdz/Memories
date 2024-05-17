@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::library::details::Details;
 use crate::preferences::theme_selector::ThemeSelector;
 use adw::glib;
 use adw::gtk;
@@ -34,15 +35,17 @@ pub struct Viewer {
     #[template_child]
     pub primary_menu: TemplateChild<gtk::PopoverMenu>,
     #[template_child]
-    pub viewer_stack: TemplateChild<adw::ViewStack>,
+    pub details_button: TemplateChild<gtk::ToggleButton>,
     #[template_child]
-    pub render_page: TemplateChild<adw::ViewStackPage>,
+    pub split_view: TemplateChild<adw::OverlaySplitView>,
+    #[template_child]
+    pub details_widget: TemplateChild<Details>,
+    #[template_child]
+    pub viewer_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
     pub image_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub video_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
-    pub viewer_render: TemplateChild<gtk::Image>,
     #[template_child]
     pub viewer_picture: TemplateChild<gtk::Picture>,
     #[template_child]
@@ -57,6 +60,7 @@ impl ObjectSubclass for Viewer {
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
+        klass.bind_template_instance_callbacks();
     }
 
     fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {

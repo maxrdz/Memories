@@ -8,6 +8,7 @@
 	border-radius: 13px;
 }
 
+/* Library Grid View Overlay */
 .overlay-gradient {
   border: none;
   border-radius: 0px;
@@ -20,6 +21,15 @@
   min-height: 42px;
   color: white;
   background-color: black;
+}
+
+/* Viewer Details Preference Rows */
+.sidebar-pane {
+  background-color: @window-fg-color;
+}
+
+.sidebar-pane row.property {
+  background-color: @window-fg-color;
 }
 
 gridview child {

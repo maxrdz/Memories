@@ -17,7 +17,7 @@
         <child type="overlay">
           <object class="GtkButton" id="new_album_button">
             <property name="icon-name">tab-new-symbolic</property>
-            <property name="tooltip-text" translatable="yes">Create New Album</property>
+            <property name="tooltip-text" translatable="yes" comments="'Album' referring to an album of photos.">Create New Album</property>
             <!-- GTK_ALIGN_START == 1 -->
             <property name="halign">1</property>
             <property name="valign">1</property>
@@ -41,7 +41,7 @@
                 <property name="spacing">15</property>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label" translatable="yes">Albums</property>
+                    <property name="label" translatable="yes" comments="'Albums' referring to albums of photos.">Albums</property>
                     <property name="margin-top">10</property>
                     <property name="margin-bottom">10</property>
                     <style>

@@ -23,7 +23,6 @@ mod imp;
 use adw::glib;
 use adw::glib::{g_debug, g_error};
 use adw::gtk;
-use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use libadwaita as adw;
@@ -43,6 +42,7 @@ glib::wrapper! {
         @extends gtk::Widget, adw::Bin;
 }
 
+#[gtk::template_callbacks]
 impl Viewer {
     pub fn new() -> Self {
         glib::Object::new()
@@ -53,7 +53,7 @@ impl Viewer {
     /// to a stack page that has the proper widget for the content.
     pub fn set_content_type(&self, content_type: &ViewerContentType) {
         match content_type {
-            ViewerContentType::Renderable => self.imp().viewer_stack.set_visible_child_name("render"),
+            ViewerContentType::Renderable => self.imp().viewer_stack.set_visible_child_name("image"),
             ViewerContentType::Image => self.imp().viewer_stack.set_visible_child_name("image"),
             ViewerContentType::Video => self.imp().viewer_stack.set_visible_child_name("video"),
             _ => g_debug!("Viewer", "Received invalid ViewerContentType enum!"),
@@ -62,10 +62,7 @@ impl Viewer {
 
     pub fn set_content_file(&self, file: &gio::File) {
         match self.imp().viewer_stack.visible_child_name().unwrap().as_str() {
-            "render" => self
-                .imp()
-                .viewer_render
-                .set_file(Some(&file.path().unwrap().to_string_lossy())),
+            "render" => self.imp().viewer_picture.set_file(Some(file)),
             "image" => self.imp().viewer_picture.set_file(Some(file)),
             "video" => self.imp().viewer_video.set_file(Some(file)),
             _ => g_error!("Viewer", "Found unexpected visible child name in viewer stack."),
@@ -80,6 +77,13 @@ impl Viewer {
             .child(self)
             .build();
         new_navigation_page
+    }
+
+    #[template_callback]
+    fn details_toggle(&self, _: &gtk::ToggleButton) {
+        self.imp()
+            .split_view
+            .set_show_sidebar(!self.imp().split_view.shows_sidebar());
     }
 }
 

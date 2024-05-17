@@ -66,8 +66,8 @@
                 <property name="child">
                   <object class="AdwStatusPage" id="error_status_widget">
                     <property name="icon-name">emblem-important-symbolic</property>
-                    <property name="title" translatable="yes">An Error Occurred</property>
-                    <property name="description" translatable="yes">This is a placeholder error description. If you see this, please file an issue to Albums. You can visit the issue tracker via the about dialog.</property>
+                    <property name="title" translatable="yes" context="Status Page Title">An Error Occurred</property>
+                    <property name="description" translatable="yes" context="Status Page Description">This is a placeholder error description. If you see this, please file an issue to Albums. You can visit the issue tracker via the about dialog.</property>
                   </object>
                 </property>
               </object>
@@ -78,7 +78,7 @@
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="icon-name">emblem-photos-symbolic</property>
-                    <property name="title" translatable="yes">Your Library Is Empty</property>
+                    <property name="title" translatable="yes" comments="'Library' referring to a library of photos.">Your Library Is Empty</property>
                     <property name="description" translatable="yes">Go take some pictures!</property>
                   </object>
                 </property>

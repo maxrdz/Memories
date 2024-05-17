@@ -29,45 +29,46 @@
               </object>
             </child>
             <child type="end">
-              <object class="GtkButton">
+              <object class="GtkToggleButton" id="details_button">
                 <property name="icon-name">help-about-symbolic</property>
                 <property name="tooltip-text" translatable="yes">Image Details</property>
+                <signal name="toggled" handler="details_toggle" swapped="true"/>
               </object>
             </child>
           </object>
         </child>
         <property name="content">
-          <object class="GtkOverlay">
-            <property name="child">
-              <object class="AdwViewStack" id="viewer_stack">
-                <child>
-                  <object class="AdwViewStackPage" id="render_page">
-                    <property name="name">render</property>
-                    <property name="child">
-                      <object class="GtkImage" id="viewer_render"/>
-                    </property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwViewStackPage" id="image_page">
-                    <property name="name">image</property>
-                    <property name="child">
-                      <object class="GtkPicture" id="viewer_picture">
-                        <property name="can-shrink">True</property>
-                        <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
-                        <property name="content-fit">1</property>
+          <object class="AdwOverlaySplitView" id="split_view">
+            <property name="show-sidebar">false</property>
+            <property name="sidebar">
+              <object class="AlbumsDetails" id="details_widget"/>
+            </property>
+            <property name="content">
+              <object class="GtkOverlay">
+                <property name="child">
+                  <object class="AdwViewStack" id="viewer_stack">
+                    <child>
+                      <object class="AdwViewStackPage" id="image_page">
+                        <property name="name">image</property>
+                        <property name="child">
+                          <object class="GtkPicture" id="viewer_picture">
+                            <property name="can-shrink">True</property>
+                            <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
+                            <property name="content-fit">1</property>
+                          </object>
+                        </property>
                       </object>
-                    </property>
+                    </child>
+                    <child>
+                      <object class="AdwViewStackPage" id="video_page">
+                        <property name="name">video</property>
+                        <property name="child">
+                          <object class="GtkVideo" id="viewer_video"/>
+                        </property>
+                      </object>
+                    </child>
                   </object>
-                </child>
-                <child>
-                  <object class="AdwViewStackPage" id="video_page">
-                    <property name="name">video</property>
-                    <property name="child">
-                      <object class="GtkVideo" id="viewer_video"/>
-                    </property>
-                  </object>
-                </child>
+                </property>
               </object>
             </property>
           </object>

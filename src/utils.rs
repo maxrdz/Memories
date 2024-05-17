@@ -22,8 +22,9 @@
 
 use crate::config::APP_NAME;
 use crate::library::viewer::ViewerContentType;
-use adw::glib::g_debug;
+use adw::glib;
 use async_fs::Metadata;
+use glib::g_debug;
 use libadwaita as adw;
 use serde::Serialize;
 use std::io;
@@ -31,27 +32,33 @@ use std::time::SystemTime;
 
 /// A data structure that contains the file metadata information
 /// that the thumbnailer needs to serialize and fingerprint hash.
-#[derive(Serialize)]
-struct MetadataInfo {
-    file_type: String,
-    permissions: String,
-    size: u64,
-    modified: SystemTime,
-    accessed: SystemTime,
-    created: SystemTime,
+#[derive(Debug, Clone, Serialize)]
+pub struct MetadataInfo {
+    pub file_type: String,
+    pub permissions: String,
+    pub size: u64,
+    pub modified: SystemTime,
+    pub accessed: SystemTime,
+    pub created: SystemTime,
 }
 
-/// Serializes an `std::fs::Metadata` structure to a serialized JSON byte array.
-pub fn serialize_file_metadata(metadata: &Metadata) -> io::Result<Vec<u8>> {
-    let structure: MetadataInfo = MetadataInfo {
+impl MetadataInfo {
+    pub fn pretty_print_bytes(&self) -> String {
+        glib::format_size(self.size).to_string()
+    }
+}
+
+/// Takes in `std::file::Metadata` and packs necessary
+/// information into the `MetadataInfo` structure.
+pub fn pack_metadata_as_struct(metadata: &Metadata) -> io::Result<MetadataInfo> {
+    Ok(MetadataInfo {
         file_type: format!("{:?}", metadata.file_type()),
         permissions: format!("{:?}", metadata.permissions()),
         size: metadata.len(),
         modified: metadata.modified()?,
         accessed: metadata.accessed()?,
         created: metadata.created()?,
-    };
-    Ok(serde_json::to_vec(&structure)?)
+    })
 }
 
 /// Returns a `String` that represents the absolute path of

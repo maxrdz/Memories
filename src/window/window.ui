@@ -22,9 +22,10 @@
         <child>
           <object class="AdwNavigationPage">
             <property name="tag">window</property>
-            <property name="title" translatable="yes">Main Window</property>
+            <property name="title" translatable="yes" context="Navigation Page Title">Main Window</property>
             <property name="child">
               <object class="AdwToolbarView">
+                <property name="width-request">360</property>
                 <child type="top">
                   <object class="AdwHeaderBar" id="header_bar">
                     <property name="visible">False</property>
@@ -54,7 +55,7 @@
                     <child>
                       <object class="AdwViewStackPage" id="library_page">
                         <property name="name">library</property>
-                        <property name="title" translatable="yes">Library</property>
+                        <property name="title" translatable="yes" context="View Stack Page Title" comments="'Library' referring to a library of photos">Library</property>
                         <property name="icon-name">library-symbolic</property>
                         <property name="child">
                           <object class="AlbumsLibraryView" id="library_view"/>
