@@ -10,8 +10,8 @@ check-file = false
 extend-glob = ["*.png"]
 check-file = false
 
-# Ignore LEGAL file because it doesn't handle names well.
-[type.txt]
-extend-glob = ["LEGAL.txt"]
-check-file = false
+# False positives from last names in legal sections
+[default.extend-words]
+Damon = "Damon"
+Mena = "Mena"
 
