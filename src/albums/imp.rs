@@ -32,6 +32,16 @@ pub struct AlbumsView {
     album_carousel_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
     album_carousel: TemplateChild<adw::Carousel>,
+    #[template_child]
+    videos_button: TemplateChild<gtk::Button>,
+    #[template_child]
+    screenshots_button: TemplateChild<gtk::Button>,
+    #[template_child]
+    gif_button: TemplateChild<gtk::Button>,
+    #[template_child]
+    svg_button: TemplateChild<gtk::Button>,
+    #[template_child]
+    trash_button: TemplateChild<gtk::Button>,
 }
 
 #[glib::object_subclass]
