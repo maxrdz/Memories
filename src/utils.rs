@@ -35,7 +35,6 @@ use std::time::SystemTime;
 #[derive(Debug, Clone, Serialize)]
 pub struct MetadataInfo {
     pub file_type: String,
-    pub permissions: String,
     pub size: u64,
     pub modified: SystemTime,
     pub accessed: SystemTime,
@@ -53,7 +52,6 @@ impl MetadataInfo {
 pub fn pack_metadata_as_struct(metadata: &Metadata) -> io::Result<MetadataInfo> {
     Ok(MetadataInfo {
         file_type: format!("{:?}", metadata.file_type()),
-        permissions: format!("{:?}", metadata.permissions()),
         size: metadata.len(),
         modified: metadata.modified()?,
         accessed: metadata.accessed()?,
