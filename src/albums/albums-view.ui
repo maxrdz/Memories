@@ -99,26 +99,9 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox">
-                    <style>
-                      <class name="albums-filter"/>
-                    </style>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">10</property>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Media Types</property>
                     <property name="margin-bottom">5</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Media Types</property>
-                        <!-- GTK_ALIGN_START == 1 -->
-                        <property name="halign">1</property>
-                        <property name="margin-bottom">10</property>
-                        <style>
-                          <!-- NOTE: CSS from GTK stylesheets -->
-                          <class name="title"/>
-                          <class name="title-4"/>
-                        </style>
-                      </object>
-                    </child>
                     <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Videos</property>
@@ -174,26 +157,9 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox">
-                    <style>
-                      <class name="albums-filter"/>
-                    </style>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">10</property>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Utilities</property>
                     <property name="margin-bottom">5</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Utilities</property>
-                        <!-- GTK_ALIGN_START == 1 -->
-                        <property name="halign">1</property>
-                        <property name="margin-bottom">10</property>
-                        <style>
-                          <!-- NOTE: CSS from GTK stylesheets -->
-                          <class name="title"/>
-                          <class name="title-4"/>
-                        </style>
-                      </object>
-                    </child>
                     <child>
                       <object class="AdwActionRow">
                         <property name="title" translatable="yes">Recently Deleted</property>

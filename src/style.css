@@ -1,11 +1,7 @@
-.albums-filter row {
-	background-color: @borders;
-	border-radius: 20px;
-}
-
-.albums-filter row button {
-	background-color: @borders;
-	border-radius: 13px;
+gridview child {
+  border-radius: 0px;
+  margin: 1px;
+  padding: 0px;
 }
 
 /* Library Grid View Overlay */
@@ -23,6 +19,10 @@
   background-color: black;
 }
 
+.force-light {
+  color: white;
+}
+
 /* Viewer Details Preference Rows */
 .sidebar-pane {
   background-color: @window-fg-color;
@@ -30,16 +30,6 @@
 
 .sidebar-pane row.property {
   background-color: @window-fg-color;
-}
-
-gridview child {
-  border-radius: 0px;
-  margin: 1px;
-  padding: 0px;
-}
-
-.force-light {
-  color: white;
 }
 
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */
