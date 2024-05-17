@@ -75,7 +75,7 @@
                             <property name="title">Empty</property>
                             <property name="child">
                               <object class="AdwStatusPage">
-                                <property name="icon-name">com.maxrdz.Albums-symbolic</property>
+                                <property name="icon-name">albums-symbolic</property>
                                 <property name="title" translatable="yes">No Albums</property>
                                 <property name="description" translatable="yes">Create a new Album to get started.</property>
                                 <property name="height-request">310</property>
