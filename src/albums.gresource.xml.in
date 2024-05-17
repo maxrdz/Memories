@@ -10,7 +10,6 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/svg-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/trash-symbolic.svg</file>
     <!-- UI Files -->
     <file preprocess="xml-stripblanks" compressed="true">albums/albums-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/library-view.ui</file>

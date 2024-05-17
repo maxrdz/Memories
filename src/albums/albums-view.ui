@@ -165,7 +165,7 @@
                         <property name="title" translatable="yes">Recently Deleted</property>
                         <child type="suffix">
                           <object class="GtkButton">
-                            <property name="icon-name">trash-symbolic</property>
+                            <property name="icon-name">user-trash-symbolic</property>
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Recently Deleted</property>
