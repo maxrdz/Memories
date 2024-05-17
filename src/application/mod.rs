@@ -248,16 +248,104 @@ impl AlbumsApplication {
             ],
         );
 
-        if let Ok(bytes) =
-            gio::resources_lookup_data("/com/maxrdz/Albums/LEGAL.txt", gio::ResourceLookupFlags::NONE)
-        {
-            about.add_legal_section(
-                &gettext("Open Source Software Licenses"),
-                None,
-                gtk::License::Custom,
-                Some(String::from_utf8(bytes.to_vec()).unwrap().as_str()),
-            );
-        }
+        about.add_legal_section(
+            "gtk-rs",
+            Some("Copyright (C) 2020-2024 The gtk-rs Project Developers"),
+            gtk::License::MitX11,
+            None,
+        );
+        about.add_legal_section(
+            "libadwaita-rs",
+            Some("Copyright (C) 2021-2024 Bilal Elmoussaoui (bil.elmoussaoui@gmail.com)"),
+            gtk::License::MitX11,
+            None,
+        );
+        about.add_legal_section(
+            "gettext-rs",
+            Some(
+                "Copyright (C) 2016 Konstantin Salikhov (koka58@yandex.ru)\n\
+                Copyright (C) Alexander Batischev (eual.jp@gmail.com)\n",
+            ),
+            gtk::License::MitX11,
+            None,
+        );
+        about.add_legal_section(
+            "glycin",
+            Some("Copyright (C) 2023-2024 Sophie Herold (sophieherold@gnome.org)"),
+            gtk::License::Mpl20,
+            None,
+        );
+        about.add_legal_section(
+            "ffmpeg",
+            Some("Copyright (C) 2000-2024 The FFmpeg Developers"),
+            gtk::License::Lgpl21,
+            None,
+        );
+        about.add_legal_section(
+            "smol-rs",
+            Some("Copyright (C) 2020-2024 Stjepan Glavina (stjepang@gmail.com)"),
+            gtk::License::MitX11,
+            None,
+        );
+        about.add_legal_section(
+            "libadwaita",
+            Some(
+                "Copyright (C) 2018 Adrien Plazas (adrien.plazas@puri.sm)\
+                Copyright (C) 2018 Bob Ham (bob.ham@puri.sm)\
+                Copyright (C) 2018 Dorota Czaplejewicz (dorota.czaplejewicz@puri.sm)\
+                Copyright (C) 2018 Guido Günther (agx@sigxcpu.org)\
+                Copyright (C) 2018 Heather Ellsworth (heather.ellsworth@puri.sm)\
+                Copyright (C) 2018 Julian Richen (julian@richen.io)\
+                Copyright (C) 2018 Julian Sparber (julian@sparber.net)\
+                Copyright (C) 2018 Sebastien Lafargue (slafargue@gnome.org)\
+                Copyright (C) 2019 Zander Brown (zbrown@gnome.org)",
+            ),
+            gtk::License::MitX11,
+            None,
+        );
+        about.add_legal_section(
+            "gtk",
+            Some(
+                "Copyright (C) 2000-2020 Alexander Larsson (alexl@redhat.com)\n\
+                Copyright (C) 2008-2024 Benjamin Otte (otte@gnome.org)\n\
+                Copyright (C) 2004-2024 Carlos Garnacho (mrgarnacho@gmail.com)\n\
+                Copyright (C) Carsten Haitzler (raster@gtk.org)\n\
+                Copyright (C) 2009-2024 Christian Hergert (chergert@gnome.org)\n\
+                Copyright (C) 2013-2024 Chun-wei Fan (fanchunwei@src.gnome.org)\n\
+                Copyright (C) Damon Chaplin (damon@gtk.org)\n\
+                Copyright (C) Elliot Lee (sopwith@gtk.org)\n\
+                Copyright (C) 2006-2024 Emmanuele Bassi (ebassi@gnome.org)\n\
+                Copyright (C) 2011-2022 Federico Mena (quartic@gtk.org)\n\
+                Copyright (C) Ian Main (imain@gtk.org)\n\
+                Copyright (C) Jay Painter (jpaint@gtk.org)\n\
+                Copyright (C) Jeff Garzik (jgarzik@gtk.org)\n\
+                Copyright (C) Jerome Bolliet (bolliet@gtk.org)\n\
+                Copyright (C) 2015-2023 Jonas Ådahl (jadahl@gmail.com)\n\
+                Copyright (C) 1995-1997 Josh MacDonald (jmacd@xcf.berkeley.edu)\n\
+                Copyright (C) Lars Hamann (lars@gtk.org)\n\
+                Copyright (C) 2001-2007 Manish Singh (manish@gtk.org)\n\
+                Copyright (C) 2013-2024 Matthias Clasen (mclasen@redhat.com)\n\
+                Copyright (C) 1998-2016 Owen Taylor (otaylor@gtk.org)\n\
+                Copyright (C) Paolo Molaro (lupus@gtk.org)\n\
+                Copyright (C) 1995-1997 Peter Mattis (petm@xcf.berkeley.edu)\n\
+                Copyright (C) Raja R Harinath (harinath@gtk.org)\n\
+                Copyright (C) Raph Levien (raph@gtk.org)\n\
+                Copyright (C) Shawn T. Amundson (amundson@gtk.org)\n\
+                Copyright (C) 1995-1997 Spencer Kimball (spencer@xcf.berkeley.edu)\n\
+                Copyright (C) Stefan Jeske (stefan@gtk.org)\n\
+                Copyright (C) 2013-2022 Tim Bäder (mail@baedert.org)\n\
+                Copyright (C) 1998-2007 Tim Janik (timj@gtk.org)\n\
+                Copyright (C) Tony Gale (gale@gtk.org)\n",
+            ),
+            gtk::License::Gpl20,
+            None,
+        );
+        about.add_legal_section(
+            "GNU gettext",
+            Some("Copyright (C) 1995-2024 Free Software Foundation, Inc."),
+            gtk::License::Gpl30,
+            None,
+        );
         about.present(&window)
     }
 }
