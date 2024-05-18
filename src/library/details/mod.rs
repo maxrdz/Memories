@@ -20,7 +20,7 @@
 
 mod imp;
 
-use crate::utils::MetadataInfo;
+use crate::library::GridCellData;
 use adw::glib;
 use adw::gtk;
 use adw::prelude::*;
@@ -29,55 +29,33 @@ use gettextrs::gettext;
 use glib::g_warning;
 use libadwaita as adw;
 use std::ffi::OsStr;
+use std::ops::Deref;
 use std::path::PathBuf;
 
-#[derive(Debug)]
-pub struct PictureDetails {
-    pub file_info: gio::FileInfo,
-    pub file_metadata: Option<MetadataInfo>,
-    pub glycin: glycin::ImageInfo,
-}
+#[derive(Debug, Clone)]
+pub struct PictureDetails(pub glycin::ImageInfo);
 
 impl PictureDetails {
-    pub fn pretty_print_bytes(&self) -> Result<String, ()> {
-        if let Some(metadata) = &self.file_metadata {
-            return Ok(metadata.pretty_print_bytes());
-        }
-        Err(())
-    }
-
     pub fn pretty_print_dimensions(&self) -> String {
-        let height: u32 = self.glycin.height;
-        let width: u32 = self.glycin.width;
-        // Glycin image info should always be in pixels.
-        let unit: String = gettext("pixels");
+        let height: u32 = self.0.height;
+        let width: u32 = self.0.width;
+        let unit: String = gettext("pixels"); // TODO: don't assume unit
 
         format!("{} x {} {}", height, width, unit)
     }
 }
 
-#[derive(Debug)]
-pub struct VideoDetails {
-    pub file_info: gio::FileInfo,
-    pub file_metadata: Option<MetadataInfo>,
-}
+#[derive(Debug, Clone)]
+pub struct VideoDetails;
 
-impl VideoDetails {
-    pub fn pretty_print_bytes(&self) -> Result<String, ()> {
-        if let Some(metadata) = &self.file_metadata {
-            return Ok(metadata.pretty_print_bytes());
-        }
-        Err(())
-    }
-}
-
-/// Represents the detail information
-/// of a library item, which can be
-/// a picture or a video.
-#[derive(Debug)]
+/// Represents the detail information of a library
+/// item, which can be a picture or a video.
+#[derive(Debug, Default, Clone)]
 pub enum ContentDetails {
     Picture(PictureDetails),
     Video(VideoDetails),
+    #[default]
+    Missing,
 }
 
 glib::wrapper! {
@@ -91,28 +69,73 @@ impl Details {
     }
 
     /// Updates the preference rows in the details widget with
-    /// the file metadata from the `ContentDetails` struct given.
-    pub fn update_details(&self, data_enum: ContentDetails) {
-        match data_enum {
-            ContentDetails::Picture(data) => {
-                let filename: PathBuf = data.file_info.name();
-                let size: Result<String, ()> = data.pretty_print_bytes();
-                let dimensions: String = data.pretty_print_dimensions();
-                let file_ext: Option<&OsStr> = filename.extension();
+    /// the content metadata from the `GridCellData` object passed.
+    pub fn update_details(&self, cell_data: &GridCellData) {
+        self.clear_rows();
 
-                if file_ext.is_none() {
-                    g_warning!(
-                        "Details",
-                        "Got a missing extension while trying to update details."
-                    );
-                }
-                let ext_str = file_ext.unwrap().to_str().unwrap().to_uppercase();
+        let file_info: &gio::FileInfo = cell_data.imp().file_info.get().unwrap();
 
-                self.imp().format.set_subtitle(&ext_str);
+        match cell_data.imp().content_details.borrow().deref() {
+            ContentDetails::Picture(img_data) => {
+                self.update_fileinfo(file_info);
+
+                let metadata = cell_data.imp().file_metadata.get().unwrap();
+                let size: String = metadata.pretty_print_bytes();
+                let dimensions: String = img_data.pretty_print_dimensions();
+
                 self.imp().dimensions.set_subtitle(&dimensions);
-                self.imp().size.set_subtitle(&size.unwrap());
+                self.imp().size.set_subtitle(&size);
             }
-            ContentDetails::Video(data) => panic!(),
+            ContentDetails::Video(_) => {
+                self.update_fileinfo(file_info);
+            }
+            ContentDetails::Missing => {
+                self.update_fileinfo(file_info);
+            }
+        }
+    }
+
+    /// Updates details that we get from the `GFileInfo` object.
+    fn update_fileinfo(&self, file_info: &gio::FileInfo) {
+        let filename: PathBuf = file_info.name();
+        let file_ext: Option<&OsStr> = filename.extension();
+        if file_ext.is_none() {
+            g_warning!(
+                "Details",
+                "Got a missing extension while trying to update details."
+            );
+        }
+        let ext_str = file_ext.unwrap().to_str().unwrap().to_uppercase();
+
+        self.imp().format.set_subtitle(&ext_str);
+    }
+
+    /// Sets all `AdwActionRow` widget subtitles to their placeholder text.
+    fn clear_rows(&self) {
+        let imp = self.imp();
+        Self::update_row(&imp.format, None::<String>);
+        Self::update_row(&imp.dimensions, None::<String>);
+        Self::update_row(&imp.folder, None::<String>);
+        Self::update_row(&imp.size, None::<String>);
+        Self::update_row(&imp.created, None::<String>);
+        Self::update_row(&imp.modified, None::<String>);
+        Self::update_row(&imp.timestamp, None::<String>);
+        Self::update_row(&imp.aperture, None::<String>);
+        Self::update_row(&imp.exposure, None::<String>);
+        Self::update_row(&imp.iso, None::<String>);
+        Self::update_row(&imp.focal_length, None::<String>);
+        Self::update_row(&imp.make_model, None::<String>);
+    }
+
+    /// Updates the given `AdwActionRow` with `value`.
+    /// If `value` is `None`, a placeholder string is set.
+    fn update_row(row: &adw::ActionRow, value: Option<impl AsRef<str>>) -> bool {
+        if let Some(v) = value {
+            row.set_subtitle(v.as_ref());
+            true
+        } else {
+            row.set_subtitle(&gettext("N/A"));
+            false
         }
     }
 }

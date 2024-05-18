@@ -41,7 +41,6 @@
                   <object class="AdwActionRow" id="folder">
                     <property name="title" translatable="yes">Folder</property>
                     <property name="activatable-widget">folder_button</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <child type="suffix">
                       <object class="GtkButton" id="folder_button">
                         <property name="valign">center</property>
@@ -61,7 +60,6 @@
                   <object class="AdwActionRow" id="size">
                     <property name="title" translatable="yes">Size</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -71,7 +69,6 @@
                   <object class="AdwActionRow" id="created">
                     <property name="title" translatable="yes">Created</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -81,7 +78,6 @@
                   <object class="AdwActionRow" id="modified">
                     <property name="title" translatable="yes">Modified</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -96,7 +92,6 @@
                   <object class="AdwActionRow" id="timestamp">
                     <property name="title" translatable="yes" comments="'Time taken' referring to the time the picture was taken.">Time Taken</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -106,7 +101,6 @@
                   <object class="AdwActionRow" id="aperture">
                     <property name="title" translatable="yes">Aperture</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -116,7 +110,6 @@
                   <object class="AdwActionRow" id="exposure">
                     <property name="title" translatable="yes">Exposure</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -126,7 +119,6 @@
                   <object class="AdwActionRow" id="iso">
                     <property name="title" translatable="yes">ISO</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -136,7 +128,6 @@
                   <object class="AdwActionRow" id="focal_length">
                     <property name="title" translatable="yes">Focal Length</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>
@@ -146,7 +137,6 @@
                   <object class="AdwActionRow" id="make_model">
                     <property name="title" translatable="yes" context="Camera/Phone">Maker and Model</property>
                     <property name="subtitle-selectable">True</property>
-                    <property name="subtitle" translatable="yes">Data Not Available</property>
                     <style>
                       <class name="property"/>
                     </style>

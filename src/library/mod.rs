@@ -27,13 +27,14 @@ use crate::application::AlbumsApplication;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
-use crate::library::details::{ContentDetails, PictureDetails, VideoDetails};
+use crate::library::details::{ContentDetails, PictureDetails};
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
-use crate::utils::{get_content_type_from_ext, MetadataInfo};
+use crate::utils::{get_content_type_from_ext, get_metadata_with_hash, MetadataInfo};
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use async_fs::File;
 use async_semaphore::{Semaphore, SemaphoreGuard};
 use gettextrs::gettext;
 use glib::{g_critical, g_debug, g_error, g_warning};
@@ -41,8 +42,10 @@ use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
 use library_list_model::LibraryListModel;
+use std::cell::RefCell;
 use std::env;
 use std::io;
+use std::path::Path;
 use std::process::Command;
 use std::sync::Arc;
 
@@ -252,11 +255,7 @@ impl LibraryView {
 
                             viewer_content.imp()
                                 .details_widget
-                                .update_details(ContentDetails::Picture(PictureDetails {
-                                    file_info: model_item.clone(),
-                                    file_metadata: cell_data.imp().file_metadata.get().cloned(),
-                                    glycin: cell_data.imp().glycin_info.get().cloned().expect("Glycin data missing."),
-                                }));
+                                .update_details(&grid_cell_data);
 
                             let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
                             nav_page.set_title(&file.basename().unwrap().to_string_lossy());
@@ -277,6 +276,9 @@ impl LibraryView {
             let image: gtk::Image = frame.child().and_downcast().unwrap();
 
             let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
+
+            // Store `GFileInfo` object reference in `GridCellData` object.
+            let _ = cell_data.imp().file_info.set(model_list_item.clone());
 
             let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
             let file: gio::File = file_obj.downcast().unwrap();
@@ -300,10 +302,21 @@ impl LibraryView {
                         let tx_handle = glib::spawn_future_local(clone!(@weak s as lv, @weak cell_data as cd => async move {
                             let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
 
-                            if let Ok((path, metadata)) = generate_thumbnail_image(&absolute_path, lv.hardware_accel()).await {
-                                drop(semaphore_guard);
+                            // We need to get 3 things done in this closure:
+                            // - file metadata
+                            // - metadata md5 digest
+                            // - thumbnail image
+                            // So, first, we need to open the image/video file asynchronously.
+                            let in_path: &Path = Path::new(&absolute_path);
+                            let in_file: File = File::open(in_path).await.unwrap();
 
-                                let _ = cd.imp().file_metadata.set(metadata);
+                            let (metadata, hash) = get_metadata_with_hash(in_file).await.unwrap();
+
+                            // Store the `MetadataInfo` struct in our `GridCellData` object.
+                            let _ = cd.imp().file_metadata.set(metadata);
+
+                            if let Ok(path) = generate_thumbnail_image(in_path, &hash, lv.hardware_accel()).await {
+                                drop(semaphore_guard);
 
                                 if let Err(err_string) = tx.send(path).await {
                                     g_critical!(
@@ -340,7 +353,10 @@ impl LibraryView {
                         glib::spawn_future_local(async move {
                             match glycin::Loader::new(file.clone()).load().await {
                                 Ok(image) => {
-                                    let _ = cell_data.imp().glycin_info.set(image.info().clone());
+                                    let pic_details = PictureDetails(image.info().clone());
+                                    let details = ContentDetails::Picture(pic_details);
+
+                                    cell_data.imp().content_details.swap(&RefCell::new(details));
                                 }
                                 Err(glycin_err) => g_warning!(
                                     "LibraryView",
@@ -373,25 +389,25 @@ impl Default for LibraryView {
 
 mod grid_cell_data_imp {
     use super::adw;
+    use super::details::ContentDetails;
     use super::glib;
     use super::viewer::ViewerContentType;
     use super::MetadataInfo;
     use adw::subclass::prelude::*;
-    use glycin::ImageInfo;
     use std::cell::{Cell, OnceCell, RefCell};
 
-    /// AdwBin subclass to store arbitrary data for grid cells
+    /// `AdwBin` subclass to store arbitrary data for grid cells
     /// of the library photo grid view. Stores signal
-    /// handler IDs and glib async join handles.
+    /// handler IDs, glib async join handles, metadata, etc.
     #[derive(Default)]
     pub struct GridCellData {
         pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
         pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
-        pub viewer_content_type: OnceCell<ViewerContentType>,
+        pub file_info: OnceCell<gio::FileInfo>,
         pub file_metadata: OnceCell<MetadataInfo>,
-        /// Expect to be uninitialized if mime type is not supported.
-        pub glycin_info: OnceCell<ImageInfo>,
+        pub viewer_content_type: OnceCell<ViewerContentType>,
+        pub content_details: RefCell<ContentDetails>,
     }
 
     #[glib::object_subclass]
