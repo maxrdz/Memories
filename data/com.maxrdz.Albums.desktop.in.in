@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Albums
-Exec=@BINARY@ %u
+Exec=@BINARY@
 Icon=@ICON@
 Comment=A photo and video album application for GNOME
 Keywords=albums;gallery;pictures;photos;videos;
