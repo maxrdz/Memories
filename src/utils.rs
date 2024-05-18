@@ -23,9 +23,10 @@
 use crate::config::APP_NAME;
 use crate::library::viewer::ViewerContentType;
 use adw::glib;
-use async_fs::Metadata;
+use async_fs::{File, Metadata};
 use glib::g_debug;
 use libadwaita as adw;
+use md5::{Digest, Md5};
 use serde::Serialize;
 use std::io;
 use std::time::SystemTime;
@@ -57,6 +58,18 @@ pub fn pack_metadata_as_struct(metadata: &Metadata) -> io::Result<MetadataInfo> 
         accessed: metadata.accessed()?,
         created: metadata.created()?,
     })
+}
+
+/// Returns `MetadataInfo` struct and a `String` that
+/// contains the metadata MD5 digest in hexadecimal format.
+pub async fn get_metadata_with_hash(file: File) -> io::Result<(MetadataInfo, String)> {
+    let in_metadata: Metadata = file.metadata().await?;
+
+    let mut md5_hasher: Md5 = Md5::new();
+    let metadata = pack_metadata_as_struct(&in_metadata)?;
+    md5_hasher.update(serde_json::to_vec(&metadata)?);
+
+    Ok((metadata, format!("{:x}", md5_hasher.finalize())))
 }
 
 /// Returns a `String` that represents the absolute path of
