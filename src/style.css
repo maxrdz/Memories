@@ -4,6 +4,10 @@ gridview child {
   padding: 0px;
 }
 
+video {
+  background-color: @window-fg-color;
+}
+
 /* Library Grid View Overlay */
 .overlay-gradient {
   border: none;
