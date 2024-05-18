@@ -81,8 +81,18 @@
                                   <object class="AdwStatusPage">
                                     <property name="icon-name">albums-symbolic</property>
                                     <property name="title" translatable="yes">No Albums</property>
-                                    <property name="description" translatable="yes">Create a new Album to get started.</property>
-                                    <property name="height-request">310</property>
+                                    <property name="description" translatable="yes">Your albums will show up here</property>
+                                    <property name="height-request">390</property>
+                                    <property name="child">
+                                      <object class="GtkButton" id="create_album">
+                                        <property name="label" translatable="yes">Create New Album</property>
+                                        <property name="halign">center</property>
+                                        <style>
+                                          <class name="suggested-action"/>
+                                          <class name="pill"/>
+                                        </style>
+                                      </object>
+                                    </property>
                                   </object>
                                 </property>
                               </object>

@@ -13,7 +13,7 @@
             <property name="margin-end">15</property>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Image Information</property>
+                <property name="title" translatable="yes">Media Information</property>
                 <child>
                   <object class="AdwActionRow" id="format">
                     <property name="title" translatable="yes">Format</property>
