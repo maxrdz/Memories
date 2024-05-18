@@ -5,16 +5,16 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Albums</name>
-  <summary>A photo and video album application for GNOME</summary>
+  <summary>Organize your memories with albums</summary>
 	<description>
     <p>A photo and video album application for GNOME.
     Designed to be well integrated with GNOME technologies
     and Linux mobile devices.</p>
-	  <p>Features:</p>
+	  <p>Current Features:</p>
     <ul>
-      <li>View your photos and video library</li>
+      <li>View your photo and video gallery</li>
       <li>Organize your memories with Albums</li>
-      <li>Inspect rich metadata for photos</li>
+      <li>Inspect rich metadata from photos and videos</li>
     </ul>
 	</description>
   <icon type="remote" width="64" height="64" scale="1">
