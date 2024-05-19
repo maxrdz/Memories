@@ -28,6 +28,7 @@ use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
 use crate::library::details::{ContentDetails, PictureDetails};
+use crate::library::viewer::AlbumsViewer;
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
 use crate::utils::{get_content_type_from_ext, get_metadata_with_hash, MetadataInfo};
 use crate::window::AlbumsApplicationWindow;
@@ -41,7 +42,7 @@ use glib::{g_critical, g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
-use library_list_model::LibraryListModel;
+use library_list_model::AlbumsLibraryListModel;
 use std::cell::RefCell;
 use std::env;
 use std::io;
@@ -50,11 +51,11 @@ use std::process::Command;
 use std::sync::Arc;
 
 glib::wrapper! {
-    pub struct LibraryView(ObjectSubclass<imp::LibraryView>)
+    pub struct AlbumsLibraryView(ObjectSubclass<imp::AlbumsLibraryView>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl LibraryView {
+impl AlbumsLibraryView {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -87,26 +88,28 @@ impl LibraryView {
                     )));
                     return;
                 }
-                _ => g_error!("LibraryView", "Unexpected error received at ffmpeg binary check."),
+                _ => g_error!("Library", "Unexpected error received at ffmpeg binary check."),
             }
         }
         self.imp().spinner.start();
 
         let albums: AlbumsApplication = self.window().app().unwrap();
-        let llm: LibraryListModel = albums.library_list_model();
+        let llm: AlbumsLibraryListModel = albums.library_list_model();
 
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(llm.clone()));
 
         if !llm.models_loaded() {
-            llm.connect_models_loaded_notify(clone!(@weak self as s => move |model: &LibraryListModel| {
-                let item_count: u32 = model.n_items();
-                if item_count == 0 {
-                    s.imp().library_view_stack.set_visible_child_name("placeholder_page");
-                    return;
-                }
-                s.imp().library_view_stack.set_visible_child_name("gallery_page");
-                s.imp().spinner.stop();
-            }));
+            llm.connect_models_loaded_notify(
+                clone!(@weak self as s => move |model: &AlbumsLibraryListModel| {
+                    let item_count: u32 = model.n_items();
+                    if item_count == 0 {
+                        s.imp().library_view_stack.set_visible_child_name("placeholder_page");
+                        return;
+                    }
+                    s.imp().library_view_stack.set_visible_child_name("gallery_page");
+                    s.imp().spinner.stop();
+                }),
+            );
         } else {
             self.imp()
                 .library_view_stack
@@ -115,7 +118,7 @@ impl LibraryView {
         }
 
         llm.connect_items_changed(
-            clone!(@weak self as s => move |model: &LibraryListModel, _: u32, _: u32, _:u32| {
+            clone!(@weak self as s => move |model: &AlbumsLibraryListModel, _: u32, _: u32, _:u32| {
                 let item_count: u32 = model.n_items();
                 s.imp().total_items_label.set_label(&format!("{} {}", item_count, &gettext("Items")));
             }),
@@ -123,7 +126,7 @@ impl LibraryView {
 
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(
-                "LibraryView",
+                "Library",
                 "GtkDirectoryList returned an error!\n\n{}",
                 dl.error().unwrap()
             );
@@ -140,7 +143,7 @@ impl LibraryView {
                 if let Ok(home_path) = env::var("HOME") {
                     home_path
                 } else {
-                    g_critical!("LibraryView", "No $HOME env var found! Cannot open photo albums.");
+                    g_critical!("Library", "No $HOME env var found! Cannot open photo albums.");
 
                     self.imp().library_view_stack.set_visible_child_name("error_page");
                     self.imp().error_status_widget.set_description(Some(&gettext_f(
@@ -158,7 +161,7 @@ impl LibraryView {
 
         if !absolute_library_dir.starts_with('\0') {
             g_debug!(
-                "LibraryView",
+                "Library",
                 "Enumerating library files from directory: {}",
                 absolute_library_dir
             );
@@ -249,7 +252,7 @@ impl LibraryView {
 
                             let nav_view = library_view.window().imp().window_navigation.clone();
 
-                            let viewer_content: viewer::Viewer = viewer::Viewer::default();
+                            let viewer_content: AlbumsViewer = AlbumsViewer::default();
                             viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
                             viewer_content.set_content_file(&file);
 
@@ -320,13 +323,13 @@ impl LibraryView {
 
                                 if let Err(err_string) = tx.send(path).await {
                                     g_critical!(
-                                        "LibraryView",
+                                        "Library",
                                         "Tried to transmit thumbnail path, async channel is not open.\n{}",
                                         err_string
                                     );
                                 }
                             } else {
-                                g_warning!("LibraryView", "FFmpeg failed to generate a thumbnail image.");
+                                g_warning!("Library", "FFmpeg failed to generate a thumbnail image.");
                             }
                         }));
                         let rx_handle = glib::spawn_future_local(clone!(@weak image => async move {
@@ -364,7 +367,7 @@ impl LibraryView {
                                     cell_data.imp().content_details.swap(&RefCell::new(details));
                                 }
                                 Err(glycin_err) => g_warning!(
-                                    "LibraryView",
+                                    "Library",
                                     "{}: Glycin error: {}",
                                     file.basename().unwrap().to_string_lossy(),
                                     glycin_err
@@ -375,7 +378,7 @@ impl LibraryView {
                 }
             } else {
                 g_warning!(
-                    "LibraryView",
+                    "Library",
                     "Found a file with no file extension, with file path '{}'.",
                     absolute_path
                 );
@@ -386,7 +389,7 @@ impl LibraryView {
     }
 }
 
-impl Default for LibraryView {
+impl Default for AlbumsLibraryView {
     fn default() -> Self {
         Self::new()
     }

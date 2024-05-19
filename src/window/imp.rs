@@ -20,10 +20,10 @@
 
 use crate::albums::AlbumsView;
 use crate::application::AlbumsApplication;
-use crate::library::library_list_model::LibraryListModel;
-use crate::library::LibraryView;
-use crate::preferences::theme_selector::ThemeSelector;
-use crate::preferences::PreferencesView;
+use crate::library::library_list_model::AlbumsLibraryListModel;
+use crate::library::AlbumsLibraryView;
+use crate::preferences::theme_selector::AlbumsThemeSelector;
+use crate::preferences::AlbumsPreferencesView;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -55,9 +55,9 @@ pub struct AlbumsApplicationWindow {
     #[template_child]
     pub albums_view: TemplateChild<AlbumsView>,
     #[template_child]
-    pub library_view: TemplateChild<LibraryView>,
+    pub library_view: TemplateChild<AlbumsLibraryView>,
     #[template_child]
-    pub preferences_view: TemplateChild<PreferencesView>,
+    pub preferences_view: TemplateChild<AlbumsPreferencesView>,
 }
 
 #[glib::object_subclass]
@@ -84,18 +84,18 @@ impl ObjectImpl for AlbumsApplicationWindow {
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = ThemeSelector::new();
+        let new_theme_selector = AlbumsThemeSelector::new();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
 
         obj.setup_gactions();
 
         obj.connect_show(move |window: &super::AlbumsApplicationWindow| {
-            // LibraryListModel instance MUST be initialized after
+            // AlbumsLibraryListModel instance MUST be initialized after
             // the application window, but before the library view.
             window
                 .app()
                 .unwrap()
-                .set_library_list_model(LibraryListModel::default());
+                .set_library_list_model(AlbumsLibraryListModel::default());
 
             // This callback wont be triggered on start up by itself, so we
             // want to check the very first visible child in the master view stack.
@@ -111,14 +111,14 @@ impl ObjectImpl for AlbumsApplicationWindow {
 
         obj.connect_maximized_notify(
             clone!(@weak gsettings as gs => move |win: &super::AlbumsApplicationWindow| {
-                let _ = gs.set_boolean("maximized", win.is_maximized());
+                gs.set_boolean("maximized", win.is_maximized()).unwrap();
             }),
         );
 
         obj.connect_close_request(move |win: &super::AlbumsApplicationWindow| {
             if !win.is_maximized() {
-                let _ = gsettings.set_int("window-width", win.width());
-                let _ = gsettings.set_int("window-height", win.height());
+                gsettings.set_int("window-width", win.width()).unwrap();
+                gsettings.set_int("window-height", win.height()).unwrap();
             }
             glib::Propagation::Proceed
         });

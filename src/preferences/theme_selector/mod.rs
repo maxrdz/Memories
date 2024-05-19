@@ -25,18 +25,18 @@ use adw::gtk;
 use libadwaita as adw;
 
 glib::wrapper! {
-    pub struct ThemeSelector(ObjectSubclass<imp::ThemeSelector>)
+    pub struct AlbumsThemeSelector(ObjectSubclass<imp::AlbumsThemeSelector>)
         @extends adw::Bin, gtk::Widget,
         @implements gtk::Accessible, gtk::Buildable;
 }
 
-impl ThemeSelector {
+impl AlbumsThemeSelector {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for ThemeSelector {
+impl Default for AlbumsThemeSelector {
     fn default() -> Self {
         Self::new()
     }

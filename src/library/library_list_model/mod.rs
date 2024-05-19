@@ -26,11 +26,11 @@ use gtk::{gio, glib};
 use libadwaita as adw;
 
 glib::wrapper! {
-    pub struct LibraryListModel(ObjectSubclass<imp::LibraryListModel>)
+    pub struct AlbumsLibraryListModel(ObjectSubclass<imp::AlbumsLibraryListModel>)
         @implements gio::ListModel;
 }
 
-impl LibraryListModel {
+impl AlbumsLibraryListModel {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -42,7 +42,7 @@ impl LibraryListModel {
         self.imp().root_model.set_file(file)
     }
 
-    /// Bridge LibraryListModel interface to underlying GtkDirectoryList.
+    /// Bridge AlbumsLibraryListModel interface to underlying GtkDirectoryList.
     /// TODO: Don't connect to only root model, but all models, similar to loading.
     pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
     where
@@ -52,7 +52,7 @@ impl LibraryListModel {
     }
 }
 
-impl Default for LibraryListModel {
+impl Default for AlbumsLibraryListModel {
     fn default() -> Self {
         Self::new()
     }

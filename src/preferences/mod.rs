@@ -26,18 +26,18 @@ use gtk::glib;
 use libadwaita as adw;
 
 glib::wrapper! {
-    pub struct PreferencesView(ObjectSubclass<imp::PreferencesView>)
+    pub struct AlbumsPreferencesView(ObjectSubclass<imp::AlbumsPreferencesView>)
         @extends gtk::Widget, adw::BreakpointBin,
         @implements gtk::Accessible, gtk::Buildable;
 }
 
-impl PreferencesView {
+impl AlbumsPreferencesView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for PreferencesView {
+impl Default for AlbumsPreferencesView {
     fn default() -> Self {
         Self::new()
     }

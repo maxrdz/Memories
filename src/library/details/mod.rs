@@ -58,11 +58,11 @@ pub enum ContentDetails {
 }
 
 glib::wrapper! {
-    pub struct Details(ObjectSubclass<imp::Details>)
+    pub struct AlbumsDetails(ObjectSubclass<imp::AlbumsDetails>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl Details {
+impl AlbumsDetails {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -140,7 +140,7 @@ impl Details {
     }
 }
 
-impl Default for Details {
+impl Default for AlbumsDetails {
     fn default() -> Self {
         Self::new()
     }

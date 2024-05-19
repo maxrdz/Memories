@@ -47,8 +47,8 @@ struct SubdirectoryListModel {
 /// `GtkDirectoryList` models under the hood to recursively
 /// enumerate files under a certain directory path.
 #[derive(glib::Properties, Debug)]
-#[properties(wrapper_type = super::LibraryListModel)]
-pub struct LibraryListModel {
+#[properties(wrapper_type = super::AlbumsLibraryListModel)]
+pub struct AlbumsLibraryListModel {
     hidden_items: RefCell<Vec<u32>>,
     pub(super) root_model: gtk::DirectoryList,
     root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
@@ -58,7 +58,7 @@ pub struct LibraryListModel {
     loading_notifies: Cell<u32>,
 }
 
-impl Default for LibraryListModel {
+impl Default for AlbumsLibraryListModel {
     fn default() -> Self {
         Self {
             hidden_items: RefCell::new(vec![]),
@@ -72,14 +72,14 @@ impl Default for LibraryListModel {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for LibraryListModel {
+impl ObjectSubclass for AlbumsLibraryListModel {
     const NAME: &'static str = "AlbumsLibraryListModel";
-    type Type = super::LibraryListModel;
+    type Type = super::AlbumsLibraryListModel;
     type Interfaces = (gio::ListModel,);
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for LibraryListModel {
+impl ObjectImpl for AlbumsLibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
 
@@ -129,7 +129,7 @@ impl ObjectImpl for LibraryListModel {
 /// if the root directory list model is empty, reroute data
 /// from our subdirectory models to make this object look
 /// like it has a continuous list of items from all subdirs.
-impl ListModelImpl for LibraryListModel {
+impl ListModelImpl for AlbumsLibraryListModel {
     fn item(&self, position: u32) -> Option<glib::Object> {
         let mut pos: u32 = position;
         {
@@ -182,7 +182,7 @@ impl ListModelImpl for LibraryListModel {
     }
 }
 
-impl LibraryListModel {
+impl AlbumsLibraryListModel {
     /// Called by a subdirectory GtkDirectoryList model's
     /// 'loading_notify' signal event callback.
     pub(super) fn register_subdir_loading_notify(&self, model: &gtk::DirectoryList) {

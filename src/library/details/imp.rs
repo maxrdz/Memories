@@ -25,7 +25,7 @@ use libadwaita as adw;
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/details/details-widget.ui")]
-pub struct Details {
+pub struct AlbumsDetails {
     #[template_child]
     pub(super) folder: TemplateChild<adw::ActionRow>,
     #[template_child]
@@ -53,9 +53,9 @@ pub struct Details {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for Details {
+impl ObjectSubclass for AlbumsDetails {
     const NAME: &'static str = "AlbumsDetails";
-    type Type = super::Details;
+    type Type = super::AlbumsDetails;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -67,6 +67,6 @@ impl ObjectSubclass for Details {
     }
 }
 
-impl ObjectImpl for Details {}
-impl WidgetImpl for Details {}
-impl BinImpl for Details {}
+impl ObjectImpl for AlbumsDetails {}
+impl WidgetImpl for AlbumsDetails {}
+impl BinImpl for AlbumsDetails {}

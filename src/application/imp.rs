@@ -19,7 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::APP_ID;
-use crate::library::library_list_model::LibraryListModel;
+use crate::library::library_list_model::AlbumsLibraryListModel;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -37,7 +37,7 @@ pub struct AlbumsApplication {
     /// Core GListModel for enumerating photo and video album files.
     /// Initialized after the application window is presented.
     #[property(get, set)]
-    pub library_list_model: OnceCell<LibraryListModel>,
+    pub library_list_model: OnceCell<AlbumsLibraryListModel>,
 }
 
 impl Default for AlbumsApplication {

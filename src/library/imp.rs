@@ -31,8 +31,8 @@ use std::sync::Arc;
 
 #[derive(Debug, glib::Properties, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/library-view.ui")]
-#[properties(wrapper_type = super::LibraryView)]
-pub struct LibraryView {
+#[properties(wrapper_type = super::AlbumsLibraryView)]
+pub struct AlbumsLibraryView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
     #[property(get, set)]
     hardware_accel: Cell<bool>,
@@ -72,7 +72,7 @@ pub struct LibraryView {
     pub grid_controls_menu_min_zoom: TemplateChild<gio::MenuModel>,
 }
 
-impl Default for LibraryView {
+impl Default for AlbumsLibraryView {
     fn default() -> Self {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
@@ -102,9 +102,9 @@ impl Default for LibraryView {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for LibraryView {
+impl ObjectSubclass for AlbumsLibraryView {
     const NAME: &'static str = "AlbumsLibraryView";
-    type Type = super::LibraryView;
+    type Type = super::AlbumsLibraryView;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -117,10 +117,10 @@ impl ObjectSubclass for LibraryView {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for LibraryView {
+impl ObjectImpl for AlbumsLibraryView {
     fn constructed(&self) {
         self.obj()
-            .connect_grid_desktop_zoom_notify(move |view: &super::LibraryView| {
+            .connect_grid_desktop_zoom_notify(move |view: &super::AlbumsLibraryView| {
                 let library_view_imp = view.imp();
                 // `grid_desktop_zoom` is modified only when the `AdwBreakpoint` is triggered.
                 // The default zoom settings for the grid view are always at the minimum zoom
@@ -137,5 +137,5 @@ impl ObjectImpl for LibraryView {
     }
 }
 
-impl WidgetImpl for LibraryView {}
-impl BinImpl for LibraryView {}
+impl WidgetImpl for AlbumsLibraryView {}
+impl BinImpl for AlbumsLibraryView {}

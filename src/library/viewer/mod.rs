@@ -38,12 +38,12 @@ pub enum ViewerContentType {
 }
 
 glib::wrapper! {
-    pub struct Viewer(ObjectSubclass<imp::Viewer>)
+    pub struct AlbumsViewer(ObjectSubclass<imp::AlbumsViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
 #[gtk::template_callbacks]
-impl Viewer {
+impl AlbumsViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -87,7 +87,7 @@ impl Viewer {
     }
 }
 
-impl Default for Viewer {
+impl Default for AlbumsViewer {
     fn default() -> Self {
         Self::new()
     }

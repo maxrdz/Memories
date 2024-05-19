@@ -18,8 +18,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::library::details::Details;
-use crate::preferences::theme_selector::ThemeSelector;
+use crate::library::details::AlbumsDetails;
+use crate::preferences::theme_selector::AlbumsThemeSelector;
 use adw::glib;
 use adw::gtk;
 use adw::subclass::prelude::*;
@@ -27,7 +27,7 @@ use libadwaita as adw;
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/viewer/viewer-page.ui")]
-pub struct Viewer {
+pub struct AlbumsViewer {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
@@ -39,7 +39,7 @@ pub struct Viewer {
     #[template_child]
     pub split_view: TemplateChild<adw::OverlaySplitView>,
     #[template_child]
-    pub details_widget: TemplateChild<Details>,
+    pub details_widget: TemplateChild<AlbumsDetails>,
     #[template_child]
     pub viewer_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -53,9 +53,9 @@ pub struct Viewer {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for Viewer {
+impl ObjectSubclass for AlbumsViewer {
     const NAME: &'static str = "AlbumsViewer";
-    type Type = super::Viewer;
+    type Type = super::AlbumsViewer;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -68,17 +68,17 @@ impl ObjectSubclass for Viewer {
     }
 }
 
-impl ObjectImpl for Viewer {
+impl ObjectImpl for AlbumsViewer {
     fn constructed(&self) {
         self.parent_constructed();
 
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = ThemeSelector::new();
+        let new_theme_selector = AlbumsThemeSelector::new();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
     }
 }
-impl WidgetImpl for Viewer {}
-impl BinImpl for Viewer {}
-impl BreakpointBinImpl for Viewer {}
+impl WidgetImpl for AlbumsViewer {}
+impl BinImpl for AlbumsViewer {}
+impl BreakpointBinImpl for AlbumsViewer {}

@@ -18,7 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use super::theme_selector::ThemeSelector;
+use super::theme_selector::AlbumsThemeSelector;
 use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
@@ -26,17 +26,17 @@ use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/preferences/preferences-view.ui")]
-pub struct PreferencesView {
+pub struct AlbumsPreferencesView {
     #[template_child]
-    pub theme_selector: TemplateChild<ThemeSelector>,
+    pub theme_selector: TemplateChild<AlbumsThemeSelector>,
     #[template_child]
     pub mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for PreferencesView {
+impl ObjectSubclass for AlbumsPreferencesView {
     const NAME: &'static str = "AlbumsPreferencesView";
-    type Type = super::PreferencesView;
+    type Type = super::AlbumsPreferencesView;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -48,6 +48,6 @@ impl ObjectSubclass for PreferencesView {
     }
 }
 
-impl ObjectImpl for PreferencesView {}
-impl WidgetImpl for PreferencesView {}
-impl BreakpointBinImpl for PreferencesView {}
+impl ObjectImpl for AlbumsPreferencesView {}
+impl WidgetImpl for AlbumsPreferencesView {}
+impl BreakpointBinImpl for AlbumsPreferencesView {}
