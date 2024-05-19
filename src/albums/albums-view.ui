@@ -16,7 +16,7 @@
         <property name="valign">0</property>
         <child type="overlay">
           <object class="GtkButton" id="new_album_button">
-            <property name="icon-name">tab-new-symbolic</property>
+            <property name="icon-name">albums-new-symbolic</property>
             <property name="tooltip-text" translatable="yes" comments="'Album' referring to an album of photos.">Create New Album</property>
             <!-- GTK_ALIGN_START == 1 -->
             <property name="halign">1</property>
@@ -41,7 +41,7 @@
                     <property name="orientation">vertical</property>
                     <property name="margin-start">15</property>
                     <property name="margin-end">15</property>
-                    <property name="margin-bottom">20</property>
+                    <property name="margin-bottom">45</property>
                     <property name="spacing">15</property>
                     <child>
                       <object class="GtkLabel">
@@ -126,6 +126,9 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="tooltip-text" translatable="yes">Videos</property>
+                                <style>
+                                  <class name="transparent-bg"/>
+                                </style>
                               </object>
                             </child>
                           </object>
@@ -140,6 +143,9 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="tooltip-text" translatable="yes">Screenshots</property>
+                                <style>
+                                  <class name="transparent-bg"/>
+                                </style>
                               </object>
                             </child>
                           </object>
@@ -154,6 +160,9 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="tooltip-text" translatable="yes">Animated</property>
+                                <style>
+                                  <class name="transparent-bg"/>
+                                </style>
                               </object>
                             </child>
                           </object>
@@ -168,6 +177,9 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="tooltip-text" translatable="yes">Vector Graphics</property>
+                                <style>
+                                  <class name="transparent-bg"/>
+                                </style>
                               </object>
                             </child>
                           </object>
@@ -188,6 +200,9 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="tooltip-text" translatable="yes">Recently Deleted</property>
+                                <style>
+                                  <class name="transparent-bg"/>
+                                </style>
                               </object>
                             </child>
                           </object>

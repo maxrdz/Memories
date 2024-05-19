@@ -27,6 +27,10 @@ video {
   color: white;
 }
 
+.transparent-bg {
+  background-color: transparent;
+}
+
 /* Viewer Details Preference Rows */
 .sidebar-pane {
   background-color: @window-fg-color;
