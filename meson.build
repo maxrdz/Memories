@@ -27,7 +27,6 @@ dependency('gtk4', version: '>= 4.13.4')
 dependency('libadwaita-1', version: '>= 1.5')
 
 if get_option('use-feedbackd')
-
   dependency('libfeedback-0.0', version: '>= 0')
 endif
 
