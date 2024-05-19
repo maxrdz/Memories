@@ -20,6 +20,7 @@
 
 mod details;
 mod imp;
+mod item_data;
 pub mod library_list_model;
 pub mod viewer;
 
@@ -28,9 +29,10 @@ use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
 use crate::library::details::{ContentDetails, PictureDetails};
+use crate::library::item_data::AlbumsItemData;
 use crate::library::viewer::AlbumsViewer;
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
-use crate::utils::{get_content_type_from_ext, get_metadata_with_hash, MetadataInfo};
+use crate::utils::{get_content_type_from_ext, get_metadata_with_hash};
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -209,7 +211,7 @@ impl AlbumsLibraryView {
                     .reveal_child(true)
                     .build();
 
-                let cell_data: GridCellData = GridCellData::builder()
+                let cell_data: AlbumsItemData = AlbumsItemData::builder()
                     .child(&revealer)
                     .build();
 
@@ -244,7 +246,7 @@ impl AlbumsLibraryView {
                             if current_nav_page.tag().unwrap() != "window" {
                                 return;
                             }
-                            let grid_cell_data: GridCellData = li.child().and_downcast().unwrap();
+                            let grid_cell_data: AlbumsItemData = li.child().and_downcast().unwrap();
 
                             let model_item: gio::FileInfo = li.item().and_downcast().unwrap();
                             let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
@@ -273,14 +275,14 @@ impl AlbumsLibraryView {
         factory.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // There **has** to be a better way to get the GtkImage object.
-            let cell_data: GridCellData = list_item.child().and_downcast().unwrap();
+            let cell_data: AlbumsItemData = list_item.child().and_downcast().unwrap();
             let revealer: gtk::Revealer = cell_data.child().and_downcast().unwrap();
             let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
             let image: gtk::Image = frame.child().and_downcast().unwrap();
 
             let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
-            // Store `GFileInfo` object reference in `GridCellData` object.
+            // Store `GFileInfo` object reference in `AlbumsItemData` object.
             let _ = cell_data.imp().file_info.set(model_list_item.clone());
 
             let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
@@ -392,89 +394,5 @@ impl AlbumsLibraryView {
 impl Default for AlbumsLibraryView {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-mod grid_cell_data_imp {
-    use super::adw;
-    use super::details::ContentDetails;
-    use super::glib;
-    use super::viewer::ViewerContentType;
-    use super::MetadataInfo;
-    use adw::subclass::prelude::*;
-    use std::cell::{Cell, OnceCell, RefCell};
-
-    /// `AdwBin` subclass to store arbitrary data for grid cells
-    /// of the library photo grid view. Stores signal
-    /// handler IDs, glib async join handles, metadata, etc.
-    #[derive(Default)]
-    pub struct GridCellData {
-        pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
-        pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
-        pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
-        pub file_info: OnceCell<gio::FileInfo>,
-        pub file_metadata: OnceCell<MetadataInfo>,
-        pub viewer_content_type: OnceCell<ViewerContentType>,
-        pub content_details: RefCell<ContentDetails>,
-    }
-
-    #[glib::object_subclass]
-    impl ObjectSubclass for GridCellData {
-        const NAME: &'static str = "GridCellData";
-        type ParentType = adw::Bin;
-        type Type = super::GridCellData;
-    }
-
-    impl ObjectImpl for GridCellData {}
-    impl WidgetImpl for GridCellData {}
-    impl BinImpl for GridCellData {}
-}
-
-glib::wrapper! {
-    pub struct GridCellData(ObjectSubclass<grid_cell_data_imp::GridCellData>)
-        @extends gtk::Widget, adw::Bin;
-}
-
-impl GridCellData {
-    pub fn new() -> Self {
-        glib::Object::new()
-    }
-
-    pub fn builder() -> GridCellDataBuilder {
-        GridCellDataBuilder::new()
-    }
-}
-
-impl Default for GridCellData {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-/// A [builder-pattern] type to construct `LibraryGridCellData` objects.
-///
-/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
-#[must_use = "The builder must be built to be used."]
-pub struct GridCellDataBuilder {
-    builder: glib::object::ObjectBuilder<'static, GridCellData>,
-}
-
-impl GridCellDataBuilder {
-    fn new() -> Self {
-        Self {
-            builder: glib::object::Object::builder(),
-        }
-    }
-
-    pub fn child(self, child: &impl IsA<gtk::Widget>) -> Self {
-        Self {
-            builder: self.builder.property("child", child.clone().upcast()),
-        }
-    }
-
-    /// Build the `GridCellData` object.
-    #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects."]
-    pub fn build(self) -> GridCellData {
-        self.builder.build()
     }
 }
