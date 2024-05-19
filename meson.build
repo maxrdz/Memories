@@ -4,26 +4,6 @@ project('albums', 'rust',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
-# ---------- Imports ---------- #
-i18n = import('i18n')
-gnome = import('gnome')
-
-# -------- Library Dependencies -------- #
-dependency('mount', version: '>= 2.39')
-dependency('pango', version: '>= 1.52')
-dependency('gstreamer-1.0', version: '>= 1.22')
-dependency('glib-2.0', version: '>= 2.80')
-dependency('gio-2.0', version: '>= 2.80')
-dependency('gtk4', version: '>= 4.13.4')
-dependency('libadwaita-1', version: '>= 1.5')
-
-# ------ Dev Dependencies ------ #
-glib_compile_schemas = find_program('glib-compile-schemas', required: true)
-desktop_file_validate = find_program('desktop-file-validate', required: false)
-appstream_util = find_program('appstream-util', required: false)
-appstream_cli = find_program('appstreamcli', required: false)
-cargo = find_program('cargo', required: true)
-
 base_id = 'com.maxrdz.Albums'
 # App name is just the Meson project name capitalized
 app_name = meson.project_name().substring(0, 1).to_upper()
@@ -33,7 +13,32 @@ gettext_domain = meson.project_name()
 gresource_domain = '/' + base_id.replace('.', '/')
 project_git = 'https://gitlab.gnome.org/maxrdz/Albums'
 
-# ------- Build Profile ------- #
+# Meson Module Imports
+i18n = import('i18n')
+gnome = import('gnome')
+
+# Library Dependencies
+dependency('mount', version: '>= 2.39')
+dependency('pango', version: '>= 1.52')
+dependency('gstreamer-1.0', version: '>= 1.22')
+dependency('glib-2.0', version: '>= 2.80')
+dependency('gio-2.0', version: '>= 2.80')
+dependency('gtk4', version: '>= 4.13.4')
+dependency('libadwaita-1', version: '>= 1.5')
+
+if get_option('use-feedbackd')
+
+  dependency('libfeedback-0.0', version: '>= 0')
+endif
+
+# Development Dependencies
+glib_compile_schemas = find_program('glib-compile-schemas', required: true)
+desktop_file_validate = find_program('desktop-file-validate', required: false)
+appstream_util = find_program('appstream-util', required: false)
+appstream_cli = find_program('appstreamcli', required: false)
+cargo = find_program('cargo', required: true)
+
+# Build Profile
 if get_option('profile') == 'devel'
   profile = 'devel'
   application_id = '@0@.Devel'.format(base_id)
@@ -43,7 +48,7 @@ else
   application_id = base_id
 endif
 
-# ---- Install Directories ---- #
+# Install Directories
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
 localedir = prefix / get_option('localedir')

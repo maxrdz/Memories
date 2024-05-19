@@ -351,7 +351,12 @@ impl LibraryView {
                     _ => {
                         // NOTE: This adds quite a performance hit on launch
                         glib::spawn_future_local(async move {
-                            match glycin::Loader::new(file.clone()).load().await {
+                            let loader: glycin::Loader = glycin::Loader::new(file.clone());
+
+                            #[cfg(feature = "disable-glycin-sandbox")]
+                            loader.sandbox_mechanism(Some(glycin::SandboxMechanism::NotSandboxed));
+
+                            match loader.load().await {
                                 Ok(image) => {
                                     let pic_details = PictureDetails(image.info().clone());
                                     let details = ContentDetails::Picture(pic_details);

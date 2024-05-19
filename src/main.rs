@@ -36,6 +36,8 @@ use adw::gtk;
 use application::AlbumsApplication;
 use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
+#[cfg(feature = "use-feedbackd")]
+use gtk::glib::g_error;
 use gtk::glib::{g_debug, g_info};
 use gtk::prelude::*;
 use gtk::{gio, glib};
@@ -99,6 +101,16 @@ fn main() -> glib::ExitCode {
     let resources = gio::Resource::load(format!("{}/{}.gresource", PKGDATADIR.to_owned(), APP_NAME))
         .expect("Failed to load the gresource bundle!");
     gio::resources_register(&resources);
+
+    // Initialize Lfb for haptic feedback.
+    #[cfg(feature = "use-feedbackd")]
+    if let Err(lfb_error) = libfeedback::init(APP_ID) {
+        g_error!(
+            "Albums",
+            "Failed to initialize Lfb for haptic feedback: {}",
+            lfb_error
+        );
+    }
 
     let app = AlbumsApplication::new(APP_ID, &gio::ApplicationFlags::empty());
     app.run()

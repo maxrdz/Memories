@@ -14,10 +14,14 @@ issuetracker = "https://gitlab.gnome.org/maxrdz/Albums/issues"
 
 [profile.release]
 codegen-units = 1 # Best LLVM optimization when built on a single thread
-panic = "abort" # Remove unwinding on release
 opt-level = 3
 lto = true
 strip = true
+
+[features]
+default = []
+disable-glycin-sandbox = []
+use-feedbackd = ["dep:libfeedback"]
 
 [dependencies]
 async-channel = { version = "2.2" }
@@ -32,6 +36,7 @@ glib-macros = { version = "0.19" }
 glycin = { version = "1.0.2" }
 gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
 libadwaita = { version = "0.6", features = ["v1_5"] }
+libfeedback = { git = "https://gitlab.gnome.org/guidog/libfeedback-rs.git", optional = true }
 md-5 = { version = "0.10" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1" }

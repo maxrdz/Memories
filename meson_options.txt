@@ -26,3 +26,9 @@ option(
   value: false,
   description: 'Appends the -v flag when invoking cross. Applies if cross compiling.'
 )
+option(
+  'use-feedbackd',
+  type: 'boolean',
+  value: false,
+  description: 'Compiles Albums with support for feedbackd on mobile devices.'
+)

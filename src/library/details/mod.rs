@@ -39,9 +39,8 @@ impl PictureDetails {
     pub fn pretty_print_dimensions(&self) -> String {
         let height: u32 = self.0.height;
         let width: u32 = self.0.width;
-        let unit: String = gettext("pixels"); // TODO: don't assume unit
 
-        format!("{} x {} {}", height, width, unit)
+        format!("{} x {}", height, width)
     }
 }
 
@@ -127,6 +126,7 @@ impl Details {
         Self::update_row(&imp.make_model, None::<String>);
     }
 
+    /// Modified snippet from GNOME Image Viewer (Loupe).
     /// Updates the given `AdwActionRow` with `value`.
     /// If `value` is `None`, a placeholder string is set.
     fn update_row(row: &adw::ActionRow, value: Option<impl AsRef<str>>) -> bool {
