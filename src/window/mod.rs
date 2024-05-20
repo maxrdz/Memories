@@ -49,6 +49,10 @@ impl AlbumsApplicationWindow {
     fn setup_gactions(&self) {
         let settings_action = gio::ActionEntry::builder("settings")
             .activate(move |win: &Self, _, _| {
+                // User can trigger this action from a viewer navigation page,
+                // in which we have to ensure all nav pages are popped back
+                // to the root page so the user can see the preferences page.
+                win.imp().window_navigation.pop_to_tag("window");
                 win.imp().master_stack.set_visible_child_name("preferences");
             })
             .build();
