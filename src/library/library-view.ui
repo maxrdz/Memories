@@ -8,7 +8,6 @@
         <child>
           <object class="AdwBreakpoint">
             <condition>min-width: 720px</condition>
-            <setter object="photo_grid_view" property="single-click-activate">False</setter>
             <setter object="photo_grid_view" property="min-columns">15</setter>
             <setter object="photo_grid_view" property="max-columns">15</setter>
             <!-- See src/globals.rs for corresponding `grid-widget-height` to grid columns. -->

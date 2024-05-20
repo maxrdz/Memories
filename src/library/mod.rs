@@ -233,8 +233,11 @@ impl AlbumsLibraryView {
 
                 list_item_widget.set_property("child", &cell_data);
 
-                list_item_widget.connect_selected_notify(
-                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_| {
+                let click_gesture: gtk::GestureClick = gtk::GestureClick::default();
+                revealer.add_controller(click_gesture.clone());
+
+                click_gesture.connect_pressed(
+                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_, _, _, _| {
                         if li.is_selected() {
                             let current_nav_page: adw::NavigationPage = library_view.window()
                                 .imp()
