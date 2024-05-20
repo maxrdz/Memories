@@ -63,7 +63,9 @@
                       <object class="AdwViewStackPage" id="video_page">
                         <property name="name">video</property>
                         <property name="child">
-                          <object class="GtkVideo" id="viewer_video"/>
+                          <object class="GtkVideo" id="viewer_video">
+                            <property name="autoplay">True</property>
+                          </object>
                         </property>
                       </object>
                     </child>
