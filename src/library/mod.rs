@@ -103,6 +103,7 @@ impl AlbumsLibraryView {
         if !llm.models_loaded() {
             llm.connect_models_loaded_notify(
                 clone!(@weak self as s => move |model: &AlbumsLibraryListModel| {
+                    g_debug!("Library", "notify::models_loaded");
                     let item_count: u32 = model.n_items();
                     if item_count == 0 {
                         s.imp().library_view_stack.set_visible_child_name("placeholder_page");
@@ -122,6 +123,7 @@ impl AlbumsLibraryView {
         llm.connect_items_changed(
             clone!(@weak self as s => move |model: &AlbumsLibraryListModel, _: u32, _: u32, _:u32| {
                 let item_count: u32 = model.n_items();
+                g_debug!("Library", "Updated list model item count: {}", item_count);
                 s.imp().total_items_label.set_label(&format!("{} {}", item_count, &gettext("Items")));
             }),
         );
@@ -129,7 +131,7 @@ impl AlbumsLibraryView {
         llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(
                 "Library",
-                "GtkDirectoryList returned an error!\n\n{}",
+                "AlbumsLibraryListModel returned an error!\n\n{}",
                 dl.error().unwrap()
             );
         });
