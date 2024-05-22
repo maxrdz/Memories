@@ -37,8 +37,16 @@ use std::env;
 static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 
 #[derive(Debug)]
+pub(super) struct RootListModel {
+    pub(super) model: gtk::DirectoryList,
+    public_items: Cell<u32>,
+    items_changed_callback: RefCell<Option<glib::SignalHandlerId>>,
+}
+
+#[derive(Debug)]
 struct SubdirectoryListModel {
     model: gtk::DirectoryList,
+    public_items: u32,
     _items_changed_callback: glib::SignalHandlerId,
     _loading_callback: glib::SignalHandlerId,
 }
@@ -49,8 +57,7 @@ struct SubdirectoryListModel {
 #[derive(glib::Properties, Debug)]
 #[properties(wrapper_type = super::AlbumsLibraryListModel)]
 pub struct AlbumsLibraryListModel {
-    pub(super) root_model: gtk::DirectoryList,
-    root_items_changed_signal: RefCell<Option<glib::SignalHandlerId>>,
+    pub(super) root_model: RootListModel,
     subdir_models: RefCell<Vec<SubdirectoryListModel>>,
     #[property(get, set)]
     models_loaded: Cell<bool>,
@@ -61,8 +68,11 @@ pub struct AlbumsLibraryListModel {
 impl Default for AlbumsLibraryListModel {
     fn default() -> Self {
         Self {
-            root_model: gtk::DirectoryList::new(None, None::<&gio::File>),
-            root_items_changed_signal: RefCell::new(None),
+            root_model: RootListModel {
+                model: gtk::DirectoryList::new(None, None::<&gio::File>),
+                public_items: Cell::new(0_u32),
+                items_changed_callback: RefCell::new(None),
+            },
             subdir_models: RefCell::new(vec![]),
             models_loaded: Cell::new(false),
             loading_notifies: Cell::new(0_u32),
@@ -87,6 +97,7 @@ impl ObjectImpl for AlbumsLibraryListModel {
         // so that the view that owns the `LibraryListModel` can be notified.
         let signal_handler_id: glib::SignalHandlerId =
             self.root_model
+                .model
                 .connect_items_changed(clone!(@weak obj as o => move |
                 model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
                     if added != 0 {
@@ -95,13 +106,17 @@ impl ObjectImpl for AlbumsLibraryListModel {
                     }
                 }));
         self.root_model
+            .model
             .connect_loading_notify(clone!(@weak self as s => move |
                 dl: &gtk::DirectoryList| {
                 s.register_subdir_loading_notify(dl);
             }));
 
-        self.root_items_changed_signal.replace(Some(signal_handler_id));
-        self.root_model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
+        self.root_model
+            .items_changed_callback
+            .replace(Some(signal_handler_id));
+
+        self.root_model.model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
     }
 
     fn dispose(&self) {
@@ -123,7 +138,7 @@ impl ListModelImpl for AlbumsLibraryListModel {
     }
 
     fn item_type(&self) -> glib::Type {
-        self.root_model.item_type()
+        self.root_model.model.item_type()
     }
 
     fn n_items(&self) -> u32 {
@@ -206,7 +221,7 @@ impl AlbumsLibraryListModel {
         let items_changed_signal_id: glib::SignalHandlerId =
             new_model.connect_items_changed(clone!(@weak self as s, @weak obj as o => move |
             list_model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
-                // FIXME: do not append directory items to visible items indices.
+                // FIXME: do not append directory items to public items.
                 s.update_public_items(list_model, pos, removed, added);
             }));
 
@@ -223,6 +238,7 @@ impl AlbumsLibraryListModel {
 
         subdirs.push(SubdirectoryListModel {
             model: new_model,
+            public_items: 0_u32,
             _items_changed_callback: items_changed_signal_id,
             _loading_callback: loading_signal_id,
         });
@@ -234,8 +250,19 @@ impl AlbumsLibraryListModel {
     /// signal for our GListModel gobject subclass instance.
     fn update_public_items(&self, model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32) {
         let obj = self.obj();
+
+        let model_file: gio::File = model.file().unwrap();
         let mut private_index_offset: u32 = 0;
         let mut added_items: Vec<glib::Object> = vec![];
+
+        g_debug!(
+            "LibraryListModel",
+            "update_public_items(): {:?} {} {} {}",
+            &model_file,
+            pos,
+            removed,
+            added
+        );
 
         for _ in 0..removed {
             self.public_items.borrow_mut().remove(pos.try_into().unwrap());
@@ -254,19 +281,27 @@ impl AlbumsLibraryListModel {
 
         let mut public_vec: RefMut<'_, Vec<glib::Object>> = self.public_items.borrow_mut();
 
-        if self.root_model.item(pos).is_some() {
+        // First, check if the `model` given is the root `GtkDirectoryList` model.
+        if self.root_model.model.file().unwrap() == model_file {
             for added_item in added_items.iter() {
                 public_vec.insert(pos.try_into().unwrap(), added_item.clone());
             }
             drop(public_vec);
+
+            // Update the `RootListModel`s `public_items` count.
+            let previous_public_count: u32 = self.root_model.public_items.get();
+            self.root_model
+                .public_items
+                .swap(&Cell::new(previous_public_count + added - removed));
+
             obj.items_changed(pos, removed, added);
         } else {
-            private_index_offset += self.root_model.n_items();
+            private_index_offset += self.root_model.public_items.get();
 
-            let subdirs: RefMut<'_, Vec<SubdirectoryListModel>> = self.subdir_models.borrow_mut();
+            let mut subdirs: RefMut<'_, Vec<SubdirectoryListModel>> = self.subdir_models.borrow_mut();
 
-            for subdir in subdirs.iter() {
-                if subdir.model.file().unwrap() == model.file().unwrap() {
+            for subdir in subdirs.iter_mut() {
+                if subdir.model.file().unwrap() == model_file {
                     for added_item in added_items.iter() {
                         public_vec.insert(
                             TryInto::<usize>::try_into(private_index_offset + pos).unwrap(),
@@ -275,10 +310,12 @@ impl AlbumsLibraryListModel {
                     }
                     drop(public_vec);
 
+                    subdir.public_items += added - removed;
+
                     obj.items_changed(private_index_offset + pos, removed, added);
                     return;
                 }
-                private_index_offset += subdir.model.n_items();
+                private_index_offset += subdir.public_items;
             }
             g_error!(
                 "LibraryListModel",
@@ -290,7 +327,7 @@ impl AlbumsLibraryListModel {
     /// Cleans up all `GtkDirectoryList` instances and their signal handlers.
     /// This is usually called by `GObject::dispose()` or `Self::set_file`.
     pub(super) fn cleanup_model(&self) {
-        if self.root_model.file().is_some() {
+        if self.root_model.model.file().is_some() {
             g_debug!("LibraryListModel", "cleanup_model() not yet implemented.")
         }
     }

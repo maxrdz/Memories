@@ -39,7 +39,7 @@ impl AlbumsLibraryListModel {
     /// If `file` is NULL, alling this method will initialize the enumeration process.
     pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
         self.imp().cleanup_model();
-        self.imp().root_model.set_file(file)
+        self.imp().root_model.model.set_file(file)
     }
 
     /// Bridge AlbumsLibraryListModel interface to underlying GtkDirectoryList.
@@ -48,7 +48,7 @@ impl AlbumsLibraryListModel {
     where
         F: Fn(&gtk::DirectoryList) + 'static,
     {
-        self.imp().root_model.connect_error_notify(callback)
+        self.imp().root_model.model.connect_error_notify(callback)
     }
 }
 
