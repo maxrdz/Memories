@@ -134,6 +134,7 @@ impl AlbumsDetails {
             row.set_subtitle(v.as_ref());
             true
         } else {
+            // Translators: 'N/A' is short for 'Not Available'.
             row.set_subtitle(&gettext("N/A"));
             false
         }
