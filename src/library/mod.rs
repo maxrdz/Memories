@@ -104,6 +104,7 @@ impl AlbumsLibraryView {
             llm.connect_models_loaded_notify(
                 clone!(@weak self as s => move |model: &AlbumsLibraryListModel| {
                     g_debug!("Library", "notify::models_loaded");
+
                     let item_count: u32 = model.n_items();
                     if item_count == 0 {
                         s.imp().library_view_stack.set_visible_child_name("placeholder_page");
@@ -111,6 +112,20 @@ impl AlbumsLibraryView {
                     }
                     s.imp().library_view_stack.set_visible_child_name("gallery_page");
                     s.imp().spinner.stop();
+
+                    let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+
+                    // If our cache is not populated, warn the user that this may take a while.
+                    if gsettings.boolean("fresh-cache") {
+                        let new_toast: adw::Toast = adw::Toast::builder()
+                            .title(gettext(
+                                "Making thumbnails for the first time. This may take a while.",
+                            ))
+                            .build();
+                        s.imp().gallery_toast_overlay.add_toast(new_toast);
+
+                        let _ = gsettings.set_boolean("fresh-cache", false);
+                    }
                 }),
             );
         } else {
@@ -170,19 +185,6 @@ impl AlbumsLibraryView {
                 absolute_library_dir
             );
             llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
-        }
-
-        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
-
-        if gsettings.boolean("first-boot") {
-            let new_toast: adw::Toast = adw::Toast::builder()
-                .title(gettext(
-                    "Creating photo thumbnails for the first time. This may take a while.",
-                ))
-                .build();
-            self.imp().gallery_toast_overlay.add_toast(new_toast);
-
-            let _ = gsettings.set_boolean("first-boot", false);
         }
     }
 

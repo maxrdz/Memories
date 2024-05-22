@@ -19,7 +19,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::APP_ID;
+use crate::globals::CACHE_THUMBNAILS_SUBDIR;
 use crate::library::library_list_model::AlbumsLibraryListModel;
+use crate::utils::get_app_cache_directory;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -29,6 +31,8 @@ use gettextrs::gettext;
 use glib::g_debug;
 use libadwaita as adw;
 use std::cell::OnceCell;
+use std::fs::{DirBuilder, File};
+use std::path::Path;
 
 #[derive(Debug, glib::Properties)]
 #[properties(wrapper_type = super::AlbumsApplication)]
@@ -78,6 +82,35 @@ impl ObjectImpl for AlbumsApplication {
 impl ApplicationImpl for AlbumsApplication {
     fn activate(&self) {
         let application = self.obj();
+
+        let albums_cache_dir: String = get_app_cache_directory();
+        let cache_subdirs: &[&str] = &[CACHE_THUMBNAILS_SUBDIR];
+
+        // Before initializing the window, let's check our cache directory.
+        // If the cache is missing, set the 'fresh-cache' gschema flag to true.
+        for subdirectory in cache_subdirs {
+            let absolute_path: String = format!("{}/{}", albums_cache_dir, subdirectory);
+
+            match File::open(Path::new(&absolute_path)) {
+                Ok(_) => (),
+                Err(e) => match e.kind() {
+                    std::io::ErrorKind::NotFound => {
+                        g_debug!(
+                            "Albums",
+                            "Cache subdirectory '{}' does not exist. A new one will be made.",
+                            absolute_path,
+                        );
+                        DirBuilder::new()
+                            .recursive(true)
+                            .create(absolute_path)
+                            .expect("Failed to create new cache subdirectory.");
+
+                        let _ = self.gsettings.set_boolean("fresh-cache", true);
+                    }
+                    _ => todo!(), // TODO: Extend error handling for cache check
+                },
+            }
+        }
 
         // The activate() callback also notifies us when the user tries
         // to launch a "second instance" of the application. When they try

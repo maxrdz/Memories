@@ -13,11 +13,11 @@
       <default>false</default>
       <summary>Window maximized state</summary>
     </key>
-    <key name="first-boot" type="b">
+    <key name="fresh-cache" type="b">
       <default>true</default>
-      <summary>First boot indicator flag</summary>
+      <summary>Cache Cleared Flag</summary>
       <description>
-        Set to 'false' after the first launch of Albums.
+        Set to 'false' after Albums populates its cache directory.
       </description>
     </key>
     <key name="hardware-acceleration" type="b">
