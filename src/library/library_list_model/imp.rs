@@ -25,8 +25,8 @@ use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use adw::{gio, glib};
-use glib::g_debug;
 use glib::source::Priority;
+use glib::{g_debug, g_error};
 use glib_macros::clone;
 use libadwaita as adw;
 use std::cell::{Cell, RefCell, RefMut};
@@ -142,7 +142,7 @@ impl AlbumsLibraryListModel {
             // We don't take into account the latest notify, but we also
             // don't take into account the root model as the models count.
             // So, no need to +1 the RHS & LHS of the expression below lol.
-            if notifies == self.subdir_models.borrow().len() as u32 {
+            if notifies == TryInto::<u32>::try_into(self.subdir_models.borrow().len()).unwrap() {
                 self.obj().set_models_loaded(true);
             }
         }
@@ -237,22 +237,24 @@ impl AlbumsLibraryListModel {
         let mut private_index_offset: u32 = 0;
         let mut added_items: Vec<glib::Object> = vec![];
 
-        for _ in 1..removed {
-            self.public_items.borrow_mut().remove(pos as usize);
+        for _ in 0..removed {
+            self.public_items.borrow_mut().remove(pos.try_into().unwrap());
         }
 
-        for _ in 1..added {
+        for _ in 0..added {
             if let Some(object) = model.item(pos) {
                 added_items.push(object);
             } else {
-                // FIXME
-                g_debug!("LibraryListModel", "critical error FIXME");
+                g_error!(
+                    "LibraryListModel",
+                    "update_public_items(): model.item(pos) returned None."
+                );
             }
         }
 
         let mut public_vec: RefMut<'_, Vec<glib::Object>> = self.public_items.borrow_mut();
 
-        if let Some(_) = self.root_model.item(pos) {
+        if self.root_model.item(pos).is_some() {
             for added_item in added_items.iter() {
                 public_vec.insert(pos.try_into().unwrap(), added_item.clone());
             }
@@ -272,13 +274,16 @@ impl AlbumsLibraryListModel {
                         );
                     }
                     drop(public_vec);
+
                     obj.items_changed(private_index_offset + pos, removed, added);
                     return;
                 }
                 private_index_offset += subdir.model.n_items();
             }
-            // FIXME
-            g_debug!("LibraryListModel", "critical error FIXME");
+            g_error!(
+                "LibraryListModel",
+                "Model given doesn't exist. Should not be possible."
+            );
         }
     }
 
@@ -286,7 +291,7 @@ impl AlbumsLibraryListModel {
     /// This is usually called by `GObject::dispose()` or `Self::set_file`.
     pub(super) fn cleanup_model(&self) {
         if self.root_model.file().is_some() {
-            todo!()
+            g_debug!("LibraryListModel", "cleanup_model() not yet implemented.")
         }
     }
 }
