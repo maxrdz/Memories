@@ -4,6 +4,9 @@
 # Albums
 A photo and video album application designed for mobile devices.
 
+![Library Page](./data/screenshots/library.png) | ![Albums Page](./data/screenshots/albums.png) | ![Media Viewer](./data/screenshots/viewer.png)
+-------------------------------------------- | -------------------------------------- | ----------------------------------------------
+
 </div>
 
 ## Building from Source
@@ -40,6 +43,10 @@ meson setup builddevel -Dprofile=devel
 meson compile -C builddevel
 meson install -C builddevel
 ```
+
+Albums can be built with haptic feedback support (via feedbackd)
+using the `-Duse-feedbackd=true` Meson build parameter.
+This is currently an experimental feature of Albums.
 
 ### Running from the source tree
 
