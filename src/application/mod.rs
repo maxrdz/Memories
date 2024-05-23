@@ -229,7 +229,7 @@ impl AlbumsApplication {
         about.set_release_notes(
             "<p>\
           Initial release of Albums. Following the GNOME release schedule \
-          as of GNOME version 46.2.\
+          as of GNOME version 46.3.\
         </p>",
         );
 

@@ -18,7 +18,7 @@
     </ul>
 	</description>
   <icon type="remote" width="64" height="64" scale="1">
-    https://www.maxrdz.com/appstream/com.maxrdz.Albums.svg
+    @PROJECT_GIT@/-/raw/master/data/icons/com.maxrdz.Albums.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#b5835a</color>
@@ -86,12 +86,12 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="46.2" date="2024-05-31">
+    <release version="46.3" date="2024-05-31">
       <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG</url>
       <description>
         <p>
           Initial release of Albums. Following the GNOME release
-          schedule as of GNOME version 46.2.
+          schedule as of GNOME version 46.3.
         </p>
       </description>
     </release>

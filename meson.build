@@ -1,5 +1,5 @@
 project('albums', 'rust',
-          version: '46.2',
+          version: '46.3',
     meson_version: '>= 0.62.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
