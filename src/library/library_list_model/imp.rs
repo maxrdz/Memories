@@ -264,12 +264,14 @@ impl AlbumsLibraryListModel {
             added
         );
 
-        for _ in 0..removed {
-            self.public_items.borrow_mut().remove(pos.try_into().unwrap());
+        for i in 0..removed {
+            self.public_items
+                .borrow_mut()
+                .remove((pos + i).try_into().unwrap());
         }
 
-        for _ in 0..added {
-            if let Some(object) = model.item(pos) {
+        for i in 0..added {
+            if let Some(object) = model.item(pos + i) {
                 added_items.push(object);
             } else {
                 g_error!(
