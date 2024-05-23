@@ -47,6 +47,8 @@ pub struct AlbumsViewer {
     #[template_child]
     pub video_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
+    pub scrolled_window: TemplateChild<gtk::ScrolledWindow>,
+    #[template_child]
     pub viewer_picture: TemplateChild<gtk::Picture>,
     #[template_child]
     pub viewer_video: TemplateChild<gtk::Video>,

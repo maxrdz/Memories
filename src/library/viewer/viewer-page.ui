@@ -51,10 +51,16 @@
                       <object class="AdwViewStackPage" id="image_page">
                         <property name="name">image</property>
                         <property name="child">
-                          <object class="GtkPicture" id="viewer_picture">
-                            <property name="can-shrink">True</property>
-                            <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
-                            <property name="content-fit">1</property>
+                          <object class="GtkScrolledWindow" id="scrolled_window">
+                            <property name="propagate-natural-height">True</property>
+                            <property name="propagate-natural-width">True</property>
+                            <property name="child">
+                              <object class="GtkPicture" id="viewer_picture">
+                                <property name="can-shrink">True</property>
+                                <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
+                                <property name="content-fit">1</property>
+                              </object>
+                            </property>
                           </object>
                         </property>
                       </object>
