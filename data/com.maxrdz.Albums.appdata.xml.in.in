@@ -61,20 +61,28 @@
   </recommends>
   <screenshots>
     <screenshot type="default" environment="gnome">
-      <image>https://www.maxrdz.com/appstream/albums-placeholder-ss.png</image>
-      <caption>Library View</caption>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library.png</image>
+      <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>https://www.maxrdz.com/appstream/albums-preferences-ss.png</image>
-      <caption>Preferences View</caption>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums.png</image>
+      <caption>Albums Page</caption>
+    </screenshot>
+    <screenshot environment="gnome">
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer.png</image>
+      <caption>Media Viewer</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>https://www.maxrdz.com/appstream/albums-placeholder-ss-dark.png</image>
-      <caption>Library View</caption>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library-dark.png</image>
+      <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>https://www.maxrdz.com/appstream/albums-preferences-ss-dark.png</image>
-      <caption>Preferences View</caption>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums-dark.png</image>
+      <caption>Albums Page</caption>
+    </screenshot>
+    <screenshot environment="gnome:dark">
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer-dark.png</image>
+      <caption>Media Viewer</caption>
     </screenshot>
   </screenshots>
   <releases>
