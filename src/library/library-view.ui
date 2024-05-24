@@ -4,7 +4,7 @@
     <property name="child">
       <object class="AdwBreakpointBin">
         <property name="width-request">360</property>
-        <property name="height-request">500</property>
+        <property name="height-request">150</property>
         <child>
           <object class="AdwBreakpoint">
             <condition>min-width: 720px</condition>
