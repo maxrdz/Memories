@@ -12,11 +12,12 @@ src/library/details/details-widget.ui
 src/library/details/imp.rs
 src/library/details/mod.rs
 src/library/imp.rs
-src/library/item_data/imp.rs
-src/library/item_data/mod.rs
 src/library/library-view.ui
 src/library/library_list_model/imp.rs
 src/library/library_list_model/mod.rs
+src/library/media_cell/imp.rs
+src/library/media_cell/media_cell.ui
+src/library/media_cell/mod.rs
 src/library/mod.rs
 src/library/viewer/imp.rs
 src/library/viewer/mod.rs
