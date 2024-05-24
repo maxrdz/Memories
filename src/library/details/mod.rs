@@ -20,7 +20,7 @@
 
 mod imp;
 
-use crate::library::item_data::AlbumsItemData;
+use crate::library::media_cell::AlbumsMediaCell;
 use adw::glib;
 use adw::gtk;
 use adw::prelude::*;
@@ -68,8 +68,8 @@ impl AlbumsDetails {
     }
 
     /// Updates the preference rows in the details widget with
-    /// the content metadata from the `GridCellData` object passed.
-    pub fn update_details(&self, cell_data: &AlbumsItemData) {
+    /// the content metadata from the `AlbumsMediaCell` object passed.
+    pub fn update_details(&self, cell_data: &AlbumsMediaCell) {
         self.clear_rows();
 
         let file_info: &gio::FileInfo = cell_data.imp().file_info.get().unwrap();

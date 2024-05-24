@@ -29,8 +29,16 @@ use std::cell::{Cell, OnceCell, RefCell};
 /// `AdwBin` subclass to store arbitrary data for grid cells
 /// of the library photo grid view. Stores signal
 /// handler IDs, glib async join handles, metadata, etc.
-#[derive(Default)]
-pub struct AlbumsItemData {
+#[derive(Default, gtk::CompositeTemplate)]
+#[template(resource = "/com/maxrdz/Albums/library/media_cell/media_cell.ui")]
+pub struct AlbumsMediaCell {
+    #[template_child]
+    pub(super) revealer: TemplateChild<gtk::Revealer>,
+    #[template_child]
+    pub(super) aspect_frame: TemplateChild<gtk::AspectFrame>,
+    #[template_child]
+    pub(super) image: TemplateChild<gtk::Image>,
+
     pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
     pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
     pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
@@ -41,12 +49,20 @@ pub struct AlbumsItemData {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsItemData {
-    const NAME: &'static str = "AlbumsItemData";
+impl ObjectSubclass for AlbumsMediaCell {
+    const NAME: &'static str = "AlbumsMediaCell";
     type ParentType = adw::Bin;
-    type Type = super::AlbumsItemData;
+    type Type = super::AlbumsMediaCell;
+
+    fn class_init(klass: &mut Self::Class) {
+        klass.bind_template();
+    }
+
+    fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
+        obj.init_template();
+    }
 }
 
-impl ObjectImpl for AlbumsItemData {}
-impl WidgetImpl for AlbumsItemData {}
-impl BinImpl for AlbumsItemData {}
+impl ObjectImpl for AlbumsMediaCell {}
+impl WidgetImpl for AlbumsMediaCell {}
+impl BinImpl for AlbumsMediaCell {}

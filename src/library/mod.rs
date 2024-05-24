@@ -20,8 +20,8 @@
 
 mod details;
 mod imp;
-mod item_data;
 pub mod library_list_model;
+mod media_cell;
 pub mod viewer;
 
 use crate::application::AlbumsApplication;
@@ -29,8 +29,7 @@ use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
 use crate::i18n::gettext_f;
 use crate::library::details::{ContentDetails, PictureDetails};
-use crate::library::item_data::AlbumsItemData;
-use crate::library::viewer::AlbumsViewer;
+use crate::library::media_cell::AlbumsMediaCell;
 use crate::thumbnails::{generate_thumbnail_image, FFMPEG_BINARY};
 use crate::utils::{get_content_type_from_ext, get_metadata_with_hash};
 use crate::window::AlbumsApplicationWindow;
@@ -195,102 +194,26 @@ impl AlbumsLibraryView {
 
         factory.connect_setup(
             clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
-                let list_item_widget: gtk::ListItem = obj.clone().downcast().unwrap();
+                    let list_item_widget: gtk::ListItem = obj.clone().downcast().unwrap();
 
-                let image: gtk::Image = gtk::Image::builder()
-                    .use_fallback(true)
-                    .icon_size(gtk::IconSize::Large)
-                    .icon_name("emblem-photos-symbolic")
-                    .build();
-                let aspect_frame: gtk::AspectFrame = gtk::AspectFrame::builder()
-                    .child(&image)
-                    .height_request(s.grid_widget_height())
-                    .build();
-
-                s.bind_property("grid-widget-height", &aspect_frame, "height-request").sync_create().build();
-
-                let revealer: gtk::Revealer = gtk::Revealer::builder()
-                    .child(&aspect_frame)
-                    .transition_type(gtk::RevealerTransitionType::None)
-                    .reveal_child(true)
-                    .build();
-
-                let cell_data: AlbumsItemData = AlbumsItemData::builder()
-                    .child(&revealer)
-                    .build();
-
-                // Once the image file has been set, we know it has been loaded, so
-                // we can hide the content (placeholder icon) immediately, then reveal
-                // the actual image content with a proper delay + transition type.
-                let handler_id: glib::SignalHandlerId = image.connect_file_notify(clone!(@weak revealer as r => move |_: &gtk::Image| {
-                    r.set_reveal_child(false);
-                    r.set_transition_duration(1000); // milliseconds
-                    r.set_transition_type(gtk::RevealerTransitionType::Crossfade);
-                    r.set_reveal_child(true);
-                }));
-
-                cell_data.imp()
-                    .img_file_notify
-                    .borrow()
-                    .set(handler_id)
-                    .expect("Cell data `img_file_notify` already initialized!");
-
-                list_item_widget.set_property("child", &cell_data);
-
-                let click_gesture: gtk::GestureClick = gtk::GestureClick::default();
-                revealer.add_controller(click_gesture.clone());
-
-                click_gesture.connect_pressed(
-                    clone!(@weak s as library_view, @weak list_item_widget as li => move |_, _, _, _| {
-                        if li.is_selected() {
-                            let current_nav_page: adw::NavigationPage = library_view.window()
-                                .imp()
-                                .window_navigation
-                                .visible_page()
-                                .unwrap();
-
-                            // Do not proceed to push a new nav page if one is already open.
-                            if current_nav_page.tag().unwrap() != "window" {
-                                return;
-                            }
-                            let grid_cell_data: AlbumsItemData = li.child().and_downcast().unwrap();
-
-                            let model_item: gio::FileInfo = li.item().and_downcast().unwrap();
-                            let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
-                            let file: gio::File = file_obj.downcast().unwrap();
-
-                            let nav_view = library_view.window().imp().window_navigation.clone();
-
-                            let viewer_content: AlbumsViewer = AlbumsViewer::default();
-                            viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
-                            viewer_content.set_content_file(&file);
-
-                            viewer_content.imp()
-                                .details_widget
-                                .update_details(&grid_cell_data);
-
-                            let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
-                            nav_page.set_title(&file.basename().unwrap().to_string_lossy());
-
-                            nav_view.push(&nav_page);
-                        }
-                    }),
-                );
-            }
-        ));
+                    let cell: AlbumsMediaCell = AlbumsMediaCell::default();
+                    cell.setup_cell(&s, &list_item_widget);
+                }
+            ),
+        );
 
         factory.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
             // There **has** to be a better way to get the GtkImage object.
-            let cell_data: AlbumsItemData = list_item.child().and_downcast().unwrap();
-            let revealer: gtk::Revealer = cell_data.child().and_downcast().unwrap();
+            let cell: AlbumsMediaCell = list_item.child().and_downcast().unwrap();
+            let revealer: gtk::Revealer = cell.child().and_downcast().unwrap();
             let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
             let image: gtk::Image = frame.child().and_downcast().unwrap();
 
             let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
-            // Store `GFileInfo` object reference in `AlbumsItemData` object.
-            let _ = cell_data.imp().file_info.set(model_list_item.clone());
+            // Store `GFileInfo` object reference in `AlbumsMediaCell` object.
+            let _ = cell.imp().file_info.set(model_list_item.clone());
 
             let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
             let file: gio::File = file_obj.downcast().unwrap();
@@ -311,7 +234,7 @@ impl AlbumsLibraryView {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
 
-                        let tx_handle = glib::spawn_future_local(clone!(@weak s as lv, @weak cell_data as cd => async move {
+                        let tx_handle = glib::spawn_future_local(clone!(@weak s as library, @weak cell => async move {
                             let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
 
                             // We need to get 3 things done in this closure:
@@ -325,9 +248,9 @@ impl AlbumsLibraryView {
                             let (metadata, hash) = get_metadata_with_hash(in_file).await.unwrap();
 
                             // Store the `MetadataInfo` struct in our `GridCellData` object.
-                            let _ = cd.imp().file_metadata.set(metadata);
+                            let _ = cell.imp().file_metadata.set(metadata);
 
-                            if let Ok(path) = generate_thumbnail_image(in_path, &hash, lv.hardware_accel()).await {
+                            if let Ok(path) = generate_thumbnail_image(in_path, &hash, library.hardware_accel()).await {
                                 drop(semaphore_guard);
 
                                 if let Err(err_string) = tx.send(path).await {
@@ -348,13 +271,13 @@ impl AlbumsLibraryView {
                             }
                         }));
 
-                        cell_data.imp().tx_join_handle.set(Some(tx_handle));
-                        cell_data.imp().rx_join_handle.set(Some(rx_handle));
+                        cell.imp().tx_join_handle.set(Some(tx_handle));
+                        cell.imp().rx_join_handle.set(Some(rx_handle));
                     }
                 }
                 // We can safely ignore the result of this since the bind callback that
                 // we are in is going to be called multiple times during the app's lifetime.
-                let _ = cell_data.imp().viewer_content_type.set(get_content_type_from_ext(ext_str));
+                let _ = cell.imp().viewer_content_type.set(get_content_type_from_ext(ext_str));
 
                 // Load image metadata using glycin. Currently video formats are not supported.
                 match ext_str {
@@ -373,7 +296,7 @@ impl AlbumsLibraryView {
                                     let pic_details = PictureDetails(image.info().clone());
                                     let details = ContentDetails::Picture(pic_details);
 
-                                    cell_data.imp().content_details.swap(&RefCell::new(details));
+                                    cell.imp().content_details.swap(&RefCell::new(details));
                                 }
                                 Err(glycin_err) => g_warning!(
                                     "Library",

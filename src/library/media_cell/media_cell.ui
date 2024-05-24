@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="AlbumsMediaCell" parent="AdwBin">
+    <property name="child">
+      <object class="GtkRevealer" id="revealer">
+        <property name="reveal-child">True</property>
+        <!-- GTK_REVEALER_TRANSITION_TYPE_NONE == 0 -->
+        <property name="transition-type">0</property>
+        <property name="child">
+          <object class="GtkAspectFrame" id="aspect_frame">
+            <property name="child">
+              <object class="GtkImage" id="image">
+                <property name="icon-name">emblem-photos-symbolic</property>
+                <!-- GTK_ICON_SIZE_LARGE == 2-->
+                <property name="icon-size">2</property>
+                <property name="use-fallback">True</property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>
