@@ -104,11 +104,11 @@ cargo_build = custom_target(
   install: true,
   install_dir: get_option('bindir'),
   command: [
-    'env', cargo_env,
+    # Since vcs_tag() runs at compile time, we copy it over to source until here.
+    'cp', 'src' / 'vcs.rs', meson.project_source_root() / 'src',
+    '&&', 'env', cargo_env,
     cargo_bin, 'build',
     cargo_opts,
-    # Since vcs_tag() runs at compile time, we copy it over to source until here.
-    '&&', 'cp', 'src' / 'vcs.rs', meson.project_source_root() / 'src',
     # Replace below with `--out-dir` once stable.
     # Issue: https://github.com/rust-lang/cargo/issues/6790#issuecomment-655728327=
     '&&', 'cp', 'src' / rust_target / project_name + file_extension, '@OUTPUT@',
