@@ -16,6 +16,13 @@ video {
   opacity: .85;
 }
 
+.media-cell-label {
+  font-weight: 500;
+  font-size: 100%;
+  padding: 2px;
+  padding-right: 3px;
+}
+
 .viewer-overlay-button {
   min-width: 42px;
   min-height: 42px;

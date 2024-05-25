@@ -204,11 +204,7 @@ impl AlbumsLibraryView {
 
         factory.connect_bind(clone!(@weak self as s => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
             let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
-            // There **has** to be a better way to get the GtkImage object.
             let cell: AlbumsMediaCell = list_item.child().and_downcast().unwrap();
-            let revealer: gtk::Revealer = cell.child().and_downcast().unwrap();
-            let frame: gtk::AspectFrame = revealer.child().and_downcast().unwrap();
-            let image: gtk::Image = frame.child().and_downcast().unwrap();
 
             let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
@@ -229,7 +225,7 @@ impl AlbumsLibraryView {
                 match ext_str {
                     // SVGs are rendered by GNOME's librsvg, which is cheap and optimal
                     // and making a thumbnail for it would be more expensive than rendering it.
-                    "svg" => image.set_file(Some(&absolute_path)),
+                    "svg" => cell.imp().image.set_file(Some(&absolute_path)),
                     _ => {
                         let (tx, rx) = async_channel::bounded(1);
                         let semaphore: Arc<Semaphore> = s.imp().subprocess_semaphore.clone();
@@ -264,10 +260,10 @@ impl AlbumsLibraryView {
                                 g_warning!("Library", "FFmpeg failed to generate a thumbnail image.");
                             }
                         }));
-                        let rx_handle = glib::spawn_future_local(clone!(@weak image => async move {
+                        let rx_handle = glib::spawn_future_local(clone!(@weak cell => async move {
                             while let Ok(path) = rx.recv().await {
-                                image.clear();
-                                image.set_file(Some(&path));
+                                cell.imp().image.clear();
+                                cell.imp().image.set_file(Some(&path));
                             }
                         }));
 

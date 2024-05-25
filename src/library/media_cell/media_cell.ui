@@ -7,15 +7,54 @@
         <!-- GTK_REVEALER_TRANSITION_TYPE_NONE == 0 -->
         <property name="transition-type">0</property>
         <property name="child">
-          <object class="GtkAspectFrame" id="aspect_frame">
+          <object class="GtkOverlay">
             <property name="child">
-              <object class="GtkImage" id="image">
-                <property name="icon-name">emblem-photos-symbolic</property>
-                <!-- GTK_ICON_SIZE_LARGE == 2-->
-                <property name="icon-size">2</property>
-                <property name="use-fallback">True</property>
+              <object class="GtkAspectFrame" id="aspect_frame">
+                <property name="child">
+                  <object class="GtkImage" id="image">
+                    <property name="icon-name">emblem-photos-symbolic</property>
+                    <!-- GTK_ICON_SIZE_LARGE == 2-->
+                    <property name="icon-size">2</property>
+                    <property name="use-fallback">True</property>
+                  </object>
+                </property>
               </object>
             </property>
+            <child type="overlay">
+              <object class="GtkImage" id="favorited">
+                <property name="use-fallback">True</property>
+                <property name="icon-name">emote-love-symbolic</property>
+                <property name="margin-start">2</property>
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="halign">1</property>
+                <!-- GTK_ALIGN_END == 2 -->
+                <property name="valign">2</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkImage" id="media_type_icon">
+                <property name="use-fallback">True</property>
+                <property name="icon-name">svg-symbolic</property>
+                <property name="margin-end">2</property>
+                <!-- GTK_ALIGN_END == 2 -->
+                <property name="halign">2</property>
+                <property name="valign">2</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkLabel" id="video_length">
+                <property name="label">0:00</property>
+                <!-- GTK_ALIGN_END == 2 -->
+                <property name="halign">2</property>
+                <property name="valign">2</property>
+                <property name="visible">False</property>
+                <style>
+                  <class name="media-cell-label"/>
+                </style>
+              </object>
+            </child>
           </object>
         </property>
       </object>

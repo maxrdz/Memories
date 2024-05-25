@@ -37,7 +37,13 @@ pub struct AlbumsMediaCell {
     #[template_child]
     pub(super) aspect_frame: TemplateChild<gtk::AspectFrame>,
     #[template_child]
-    pub(super) image: TemplateChild<gtk::Image>,
+    pub image: TemplateChild<gtk::Image>,
+    #[template_child]
+    favorited: TemplateChild<gtk::Image>,
+    #[template_child]
+    media_type_icon: TemplateChild<gtk::Image>,
+    #[template_child]
+    video_length: TemplateChild<gtk::Label>,
 
     pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
     pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
