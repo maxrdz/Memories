@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="@GRESOURCE_DOMAIN@">
-    <file compressed="true">style.css</file>
-    <!-- Icons -->
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/albums-new-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/gif-symbolic.svg</file>
@@ -11,7 +9,9 @@
     <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/svg-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
-    <!-- UI Files -->
+  </gresource>
+  <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
+    <file compressed="true">style.css</file>
     <file preprocess="xml-stripblanks" compressed="true">albums/albums-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/library-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/details/details-widget.ui</file>
@@ -21,7 +21,7 @@
     <file preprocess="xml-stripblanks" compressed="true">preferences/preferences-view.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">preferences/theme_selector/theme-selector.ui</file>
   </gresource>
-  <gresource prefix="@GRESOURCE_DOMAIN@/gtk">
+  <gresource prefix="@BASE_GRESOURCE_DOMAIN@/gtk">
     <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>
   </gresource>
 </gresources>

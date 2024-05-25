@@ -11,6 +11,7 @@ conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 conf.set_quoted('GETTEXT_DOMAIN', gettext_domain)
+conf.set('BASE_GRESOURCE_DOMAIN', base_gresource_domain)
 conf.set('GRESOURCE_DOMAIN', gresource_domain)
 
 configure_file(

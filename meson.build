@@ -10,7 +10,8 @@ app_name = meson.project_name().substring(0, 1).to_upper()
 app_name += meson.project_name().substring(1, 99)
 binary = meson.project_name()
 gettext_domain = meson.project_name()
-gresource_domain = '/' + base_id.replace('.', '/')
+base_gresource_domain = '/' + base_id.replace('.', '/')
+gresource_domain = base_gresource_domain
 project_git = 'https://gitlab.gnome.org/maxrdz/Albums'
 
 # Meson Module Imports
@@ -41,6 +42,7 @@ cargo = find_program('cargo', required: true)
 if get_option('profile') == 'devel'
   profile = 'devel'
   application_id = '@0@.Devel'.format(base_id)
+  gresource_domain = '/' + application_id.replace('.', '/')
   binary = '@0@-devel'.format(binary)
 else
   profile = ''
