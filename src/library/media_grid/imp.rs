@@ -20,20 +20,12 @@
 
 use adw::glib;
 use adw::gtk;
-use adw::prelude::*;
 use adw::subclass::prelude::*;
 use libadwaita as adw;
-use std::cell::Cell;
 
-#[derive(Debug, Default, gtk::CompositeTemplate, glib::Properties)]
+#[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/media_grid/media_grid.ui")]
-#[properties(wrapper_type = super::AlbumsMediaGridView)]
 pub struct AlbumsMediaGridView {
-    #[property(get, set)]
-    min_columns: Cell<u32>,
-    #[property(get, set)]
-    max_columns: Cell<u32>,
-
     #[template_child]
     pub toast_overlay: TemplateChild<adw::ToastOverlay>,
     #[template_child]
@@ -69,7 +61,6 @@ impl ObjectSubclass for AlbumsMediaGridView {
     }
 }
 
-#[glib::derived_properties]
 impl ObjectImpl for AlbumsMediaGridView {}
 impl WidgetImpl for AlbumsMediaGridView {}
 impl BinImpl for AlbumsMediaGridView {}
