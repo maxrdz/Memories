@@ -30,7 +30,7 @@ use std::cell::{Cell, OnceCell, RefCell};
 /// of the library photo grid view. Stores signal
 /// handler IDs, glib async join handles, metadata, etc.
 #[derive(Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/media_cell/media_cell.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/media_grid/media_cell/media_cell.ui")]
 pub struct AlbumsMediaCell {
     #[template_child]
     pub(super) revealer: TemplateChild<gtk::Revealer>,

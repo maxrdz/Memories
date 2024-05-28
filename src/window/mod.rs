@@ -71,7 +71,7 @@ impl AlbumsApplicationWindow {
 
     fn gallery_grid_zoom(&self, zoom_in: bool) {
         let library_view_imp = self.imp().library_view.imp();
-        let current_columns: u32 = library_view_imp.photo_grid_view.max_columns();
+        let current_columns: u32 = library_view_imp.media_grid.imp().photo_grid_view.max_columns();
         let mut current_zoom_level: usize = 0;
 
         let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
@@ -108,35 +108,37 @@ impl AlbumsApplicationWindow {
     fn set_grid_zoom_level(&self, zoom_level: usize) {
         let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
         let new_zoom_level: (u32, i32) = zoom_levels[zoom_level];
-        let library_view_imp = self.imp().library_view.imp();
+        let media_grid_imp = self.imp().library_view.imp().media_grid.imp();
 
         self.imp().library_view.set_grid_widget_height(new_zoom_level.1);
-        library_view_imp.photo_grid_view.set_min_columns(new_zoom_level.0);
-        library_view_imp.photo_grid_view.set_max_columns(new_zoom_level.0);
+        media_grid_imp.photo_grid_view.set_min_columns(new_zoom_level.0);
+        media_grid_imp.photo_grid_view.set_max_columns(new_zoom_level.0);
 
         if zoom_level == 0 {
             // Reached minimum zoom level
-            library_view_imp
+            media_grid_imp
                 .photo_grid_controls
-                .set_menu_model(Some(&library_view_imp.grid_controls_menu_min_zoom.clone()));
+                .set_menu_model(Some(&media_grid_imp.grid_controls_menu_min_zoom.clone()));
         } else if zoom_level == zoom_levels.len() - 1 {
             // Reached maximum zoom level
-            library_view_imp
+            media_grid_imp
                 .photo_grid_controls
-                .set_menu_model(Some(&library_view_imp.grid_controls_menu_max_zoom.clone()));
+                .set_menu_model(Some(&media_grid_imp.grid_controls_menu_max_zoom.clone()));
         } else {
-            library_view_imp
+            media_grid_imp
                 .photo_grid_controls
-                .set_menu_model(Some(&library_view_imp.grid_controls_menu.clone()));
+                .set_menu_model(Some(&media_grid_imp.grid_controls_menu.clone()));
         }
     }
 
     #[template_callback]
     fn master_stack_child_visible(&self) {
+        let media_grid_imp = self.imp().library_view.imp().media_grid.imp();
+
         if let Some(child_name) = self.imp().master_stack.visible_child_name() {
             if child_name == self.imp().library_page.name().unwrap() {
                 // If the photo grid has no model, load the photo library now.
-                if self.imp().library_view.imp().photo_grid_view.model().is_none() {
+                if media_grid_imp.photo_grid_view.model().is_none() {
                     self.imp().library_view.load_library();
                 }
             }

@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use super::media_grid::AlbumsMediaGridView;
 use crate::application::AlbumsApplication;
 use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
 use adw::gtk;
@@ -40,6 +41,7 @@ pub struct AlbumsLibraryView {
     grid_widget_height: Cell<i32>,
     #[property(get, set)]
     grid_desktop_zoom: Cell<bool>,
+
     #[template_child]
     pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -53,23 +55,7 @@ pub struct AlbumsLibraryView {
     #[template_child]
     pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub(super) gallery_toast_overlay: TemplateChild<adw::ToastOverlay>,
-    #[template_child]
-    pub(super) overlay_labels_box: TemplateChild<gtk::Box>,
-    #[template_child]
-    pub(super) time_period_label: TemplateChild<gtk::Label>,
-    #[template_child]
-    pub(super) total_items_label: TemplateChild<gtk::Label>,
-    #[template_child]
-    pub photo_grid_view: TemplateChild<gtk::GridView>,
-    #[template_child]
-    pub photo_grid_controls: TemplateChild<gtk::MenuButton>,
-    #[template_child]
-    pub grid_controls_menu: TemplateChild<gio::MenuModel>,
-    #[template_child]
-    pub grid_controls_menu_max_zoom: TemplateChild<gio::MenuModel>,
-    #[template_child]
-    pub grid_controls_menu_min_zoom: TemplateChild<gio::MenuModel>,
+    pub media_grid: TemplateChild<AlbumsMediaGridView>,
 }
 
 impl Default for AlbumsLibraryView {
@@ -88,15 +74,7 @@ impl Default for AlbumsLibraryView {
             error_page: TemplateChild::default(),
             error_status_widget: TemplateChild::default(),
             gallery_page: TemplateChild::default(),
-            gallery_toast_overlay: TemplateChild::default(),
-            overlay_labels_box: TemplateChild::default(),
-            time_period_label: TemplateChild::default(),
-            total_items_label: TemplateChild::default(),
-            photo_grid_view: TemplateChild::default(),
-            photo_grid_controls: TemplateChild::default(),
-            grid_controls_menu: TemplateChild::default(),
-            grid_controls_menu_max_zoom: TemplateChild::default(),
-            grid_controls_menu_min_zoom: TemplateChild::default(),
+            media_grid: TemplateChild::default(),
         }
     }
 }
@@ -105,7 +83,7 @@ impl Default for AlbumsLibraryView {
 impl ObjectSubclass for AlbumsLibraryView {
     const NAME: &'static str = "AlbumsLibraryView";
     type Type = super::AlbumsLibraryView;
-    type ParentType = adw::Bin;
+    type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -121,16 +99,19 @@ impl ObjectImpl for AlbumsLibraryView {
     fn constructed(&self) {
         self.obj()
             .connect_grid_desktop_zoom_notify(move |view: &super::AlbumsLibraryView| {
-                let library_view_imp = view.imp();
+                let media_grid_imp = view.imp().media_grid.imp();
+
                 // `grid_desktop_zoom` is modified only when the `AdwBreakpoint` is triggered.
                 // The default zoom settings for the grid view are always at the minimum zoom
                 // by default in the UI files, so we reset the grid controls to min zoom below.
-                library_view_imp
+                media_grid_imp
                     .photo_grid_controls
-                    .set_menu_model(Some(&library_view_imp.grid_controls_menu_min_zoom.clone()));
+                    .set_menu_model(Some(&media_grid_imp.grid_controls_menu_min_zoom.clone()));
             });
+
         // Bind any application preferences to our application's GSettings.
         let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+
         gsettings
             .bind("hardware-acceleration", &self.obj().clone(), "hardware-accel")
             .build();
@@ -139,3 +120,4 @@ impl ObjectImpl for AlbumsLibraryView {
 
 impl WidgetImpl for AlbumsLibraryView {}
 impl BinImpl for AlbumsLibraryView {}
+impl BreakpointBinImpl for AlbumsLibraryView {}

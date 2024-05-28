@@ -21,6 +21,7 @@
 mod imp;
 
 use crate::library::viewer::AlbumsViewer;
+use crate::library::AlbumsLibraryView;
 use adw::glib;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -37,7 +38,7 @@ impl AlbumsMediaCell {
         glib::Object::new()
     }
 
-    pub fn setup_cell(&self, library: &super::AlbumsLibraryView, list_item: &gtk::ListItem) {
+    pub fn setup_cell(&self, library: &AlbumsLibraryView, list_item: &gtk::ListItem) {
         list_item.set_property("child", self);
         self.imp()
             .aspect_frame

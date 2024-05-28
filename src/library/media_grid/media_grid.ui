@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="AlbumsMediaGridView" parent="AdwBreakpointBin">
+    <property name="width-request">360</property>
+    <property name="height-request">150</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>min-width: 720px</condition>
+        <setter object="photo_grid_view" property="min-columns">15</setter>
+        <setter object="photo_grid_view" property="max-columns">15</setter>
+        <setter object="overlay_labels_box" property="margin-start">20</setter>
+        <setter object="overlay_labels_box" property="margin-top">10</setter>
+      </object>
+    </child>
+    <property name="child">
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="GtkOverlay">
+            <child type="overlay">
+              <object class="GtkFrame">
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="valign">1</property>
+                <property name="can-target">False</property>
+                <property name="height-request">200</property>
+                <style>
+                  <class name="overlay-gradient"/>
+                </style>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkBox" id="overlay_labels_box">
+                <property name="can-target">False</property>
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="halign">1</property>
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="valign">1</property>
+                <property name="margin-start">15</property>
+                <property name="margin-top">15</property>
+                <!-- GTK_ORIENTATION_VERTICAL == 1 -->
+                <property name="orientation">1</property>
+                <child>
+                  <object class="GtkLabel" id="time_period_label">
+                    <property name="label" translatable="yes">Photo Library</property>
+                    <!-- NOTE: CSS from GTK stylesheets -->
+                    <style>
+                      <class name="title"/>
+                      <class name="title-2"/>
+                      <class name="force-light"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="total_items_label">
+                    <property name="label" translatable="yes">Enumerating Items</property>
+                    <!-- GTK_ALIGN_START == 1 -->
+                    <property name="halign">1</property>
+                    <!-- GTK_ALIGN_START == 1 -->
+                    <property name="valign">1</property>
+                    <!-- NOTE: CSS from GTK stylesheets -->
+                    <style>
+                      <class name="title"/>
+                      <class name="title-5"/>
+                      <class name="force-light"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkMenuButton" id="photo_grid_controls">
+                <property name="tooltip-text">Photo Grid Controls</property>
+                <!-- GTK_ALIGN_START == 1 -->
+                <property name="valign">1</property>
+                <!-- GTK_ALIGN_END == 2 -->
+                <property name="halign">2</property>
+                <property name="margin-end">20</property>
+                <property name="margin-top">15</property>
+                <property name="icon-name">view-grid-symbolic</property>
+                <property name="menu-model">grid_controls_menu_min_zoom</property>
+                <style>
+                  <class name="circular"/>
+                  <class name="force-light"/>
+                </style>
+              </object>
+            </child>
+            <property name="child">
+              <object class="GtkScrolledWindow">
+                <property name="kinetic-scrolling">True</property>
+                <property name="child">
+                  <object class="GtkGridView" id="photo_grid_view">
+                    <property name="min-columns">5</property>
+                    <property name="max-columns">5</property>
+                    <property name="orientation">vertical</property>
+                    <property name="single-click-activate">True</property>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="grid_controls_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _In</attribute>
+        <attribute name="action">win.grid-zoom-in</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _Out</attribute>
+        <attribute name="action">win.grid-zoom-out</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="grid_controls_menu_max_zoom">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _Out</attribute>
+        <attribute name="action">win.grid-zoom-out</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="grid_controls_menu_min_zoom">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom _In</attribute>
+        <attribute name="action">win.grid-zoom-in</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

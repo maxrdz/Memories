@@ -20,7 +20,7 @@
 
 mod imp;
 
-use crate::library::media_cell::AlbumsMediaCell;
+use crate::library::media_grid::media_cell::AlbumsMediaCell;
 use adw::glib;
 use adw::gtk;
 use adw::prelude::*;
