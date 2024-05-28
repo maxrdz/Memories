@@ -18,9 +18,9 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use super::library_list_model::AlbumsLibraryListModel;
 use crate::config::APP_ID;
 use crate::globals::CACHE_THUMBNAILS_SUBDIR;
-use crate::library::library_list_model::AlbumsLibraryListModel;
 use crate::utils::get_app_cache_directory;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;

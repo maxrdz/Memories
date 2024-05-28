@@ -19,6 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
+pub mod library_list_model;
 
 use crate::config::APP_ID;
 use crate::i18n::gettext_f;

@@ -19,8 +19,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::albums::AlbumsView;
+use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
-use crate::library::library_list_model::AlbumsLibraryListModel;
 use crate::library::AlbumsLibraryView;
 use crate::preferences::theme_selector::AlbumsThemeSelector;
 use crate::preferences::AlbumsPreferencesView;

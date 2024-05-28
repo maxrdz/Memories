@@ -20,10 +20,10 @@
 
 mod details;
 mod imp;
-pub mod library_list_model;
 mod media_cell;
 pub mod viewer;
 
+use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
 use crate::globals::APP_INFO;
 use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
@@ -43,7 +43,6 @@ use glib::{g_critical, g_debug, g_error, g_warning};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
-use library_list_model::AlbumsLibraryListModel;
 use std::cell::RefCell;
 use std::env;
 use std::io;
