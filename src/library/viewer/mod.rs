@@ -20,9 +20,11 @@
 
 mod imp;
 
+use crate::window::AlbumsApplicationWindow;
 use adw::glib;
 use adw::glib::{g_debug, g_error};
 use adw::gtk;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use libadwaita as adw;
@@ -46,6 +48,13 @@ glib::wrapper! {
 impl AlbumsViewer {
     pub fn new() -> Self {
         glib::Object::new()
+    }
+
+    fn window(&self) -> AlbumsApplicationWindow {
+        self.root()
+            .expect("Must be in a GtkApplicationWindow.")
+            .downcast()
+            .expect("Failed to downcast to AlbumsApplicationWindow.")
     }
 
     /// Sets the content type setting for the viewer page.
@@ -84,6 +93,18 @@ impl AlbumsViewer {
         self.imp()
             .split_view
             .set_show_sidebar(!self.imp().split_view.shows_sidebar());
+    }
+
+    #[template_callback]
+    fn fullscreen_toggle(&self, button: &gtk::ToggleButton) {
+        let fullscreen: bool = self.window().is_fullscreened();
+        self.window().set_fullscreened(!fullscreen);
+
+        if !fullscreen {
+            button.set_tooltip_text(Some(&gettext("Exit Fullscreen")));
+        } else {
+            button.set_tooltip_text(Some(&gettext("View Fullscreen")));
+        }
     }
 }
 

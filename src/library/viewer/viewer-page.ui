@@ -35,11 +35,20 @@
                 <signal name="toggled" handler="details_toggle" swapped="true"/>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkToggleButton" id="fullscreen_button">
+                <property name="icon-name">view-fullscreen-symbolic</property>
+                <property name="tooltip-text" translatable="yes">View Fullscreen</property>
+                <signal name="toggled" handler="fullscreen_toggle" swapped="true"/>
+              </object>
+            </child>
           </object>
         </child>
         <property name="content">
           <object class="AdwOverlaySplitView" id="split_view">
             <property name="show-sidebar">false</property>
+            <!-- GTK_PACK_END == 1 -->
+            <property name="sidebar-position">1</property>
             <property name="sidebar">
               <object class="AlbumsDetails" id="details_widget"/>
             </property>

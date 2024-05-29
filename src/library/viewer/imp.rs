@@ -37,6 +37,8 @@ pub struct AlbumsViewer {
     #[template_child]
     pub details_button: TemplateChild<gtk::ToggleButton>,
     #[template_child]
+    pub fullscreen_button: TemplateChild<gtk::ToggleButton>,
+    #[template_child]
     pub split_view: TemplateChild<adw::OverlaySplitView>,
     #[template_child]
     pub details_widget: TemplateChild<AlbumsDetails>,
