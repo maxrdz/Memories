@@ -6,6 +6,8 @@ src/albums/albums-view.ui
 src/albums/imp.rs
 src/albums/mod.rs
 src/application/imp.rs
+src/application/library_list_model/imp.rs
+src/application/library_list_model/mod.rs
 src/application/mod.rs
 src/globals.rs
 src/library/details/details-widget.ui
@@ -13,11 +15,12 @@ src/library/details/imp.rs
 src/library/details/mod.rs
 src/library/imp.rs
 src/library/library-view.ui
-src/library/library_list_model/imp.rs
-src/library/library_list_model/mod.rs
-src/library/media_cell/imp.rs
-src/library/media_cell/media_cell.ui
-src/library/media_cell/mod.rs
+src/library/media_grid/imp.rs
+src/library/media_grid/media_cell/imp.rs
+src/library/media_grid/media_cell/media_cell.ui
+src/library/media_grid/media_cell/mod.rs
+src/library/media_grid/media_grid.ui
+src/library/media_grid/mod.rs
 src/library/mod.rs
 src/library/viewer/imp.rs
 src/library/viewer/mod.rs
