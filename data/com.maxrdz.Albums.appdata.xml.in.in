@@ -57,6 +57,8 @@
     <control>touch</control>
   </supports>
   <recommends>
+    <id>org.gnome.Snapshot</id>
+    <id>org.gnome.Cheese</id>
     <id>org.postmarketos.Megapixels</id>
   </recommends>
   <screenshots>
