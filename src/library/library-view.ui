@@ -72,7 +72,7 @@
               <object class="AdwStatusPage">
                 <property name="icon-name">emblem-photos-symbolic</property>
                 <property name="title" translatable="yes" comments="'Library' referring to a library of photos.">Your Library Is Empty</property>
-                <property name="description" translatable="yes">Go take some pictures!</property>
+                <property name="description" translatable="yes">Your photos and videos will be shown here</property>
               </object>
             </property>
           </object>
