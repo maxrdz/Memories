@@ -97,8 +97,25 @@
                                         <property name="homogeneous">True</property>
                                         <child>
                                           <object class="GtkButton" id="zoom_in">
-                                            <property name="label" translatable="yes">Zoom _In</property>
-                                            <property name="use-underline">True</property>
+                                            <property name="child">
+                                              <object class="GtkBox">
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label" translatable="yes">Zoom In</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">zoom-in-symbolic</property>
+                                                    <property name="use-fallback">True</property>
+                                                    <property name="hexpand">True</property>
+                                                    <property name="halign">end</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </property>
                                             <signal name="clicked" handler="zoom_in_callback" swapped="true"/>
                                             <style>
                                               <class name="menu-button"/>
@@ -107,8 +124,25 @@
                                         </child>
                                         <child>
                                           <object class="GtkButton" id="zoom_out">
-                                            <property name="label" translatable="yes">Zoom _Out</property>
-                                            <property name="use-underline">True</property>
+                                            <property name="child">
+                                              <object class="GtkBox">
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label" translatable="yes">Zoom Out</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">zoom-out-symbolic</property>
+                                                    <property name="use-fallback">True</property>
+                                                    <property name="hexpand">True</property>
+                                                    <property name="halign">end</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </property>
                                             <signal name="clicked" handler="zoom_out_callback" swapped="true"/>
                                             <style>
                                               <class name="menu-button"/>
