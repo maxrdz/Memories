@@ -12,7 +12,7 @@
               <object class="GtkAspectFrame" id="aspect_frame">
                 <property name="child">
                   <object class="GtkImage" id="image">
-                    <property name="icon-name">emblem-photos-symbolic</property>
+                    <property name="icon-name">image-missing-symbolic</property>
                     <!-- GTK_ICON_SIZE_LARGE == 2-->
                     <property name="icon-size">2</property>
                     <property name="use-fallback">True</property>
