@@ -21,7 +21,6 @@
 mod imp;
 
 use crate::application::AlbumsApplication;
-use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -56,79 +55,8 @@ impl AlbumsApplicationWindow {
                 win.imp().master_stack.set_visible_child_name("preferences");
             })
             .build();
-        let grid_zoom_in_action = gio::ActionEntry::builder("grid-zoom-in")
-            .activate(move |win: &Self, _, _| {
-                win.gallery_grid_zoom(true);
-            })
-            .build();
-        let grid_zoom_out_action = gio::ActionEntry::builder("grid-zoom-out")
-            .activate(move |win: &Self, _, _| {
-                win.gallery_grid_zoom(false);
-            })
-            .build();
-        self.add_action_entries([settings_action, grid_zoom_in_action, grid_zoom_out_action]);
-    }
 
-    fn gallery_grid_zoom(&self, zoom_in: bool) {
-        let library_view_imp = self.imp().library_view.imp();
-        let current_columns: u32 = library_view_imp.media_grid.imp().photo_grid_view.max_columns();
-        let mut current_zoom_level: usize = 0;
-
-        let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
-        for (i, set) in zoom_levels.iter().enumerate() {
-            if set.0 == current_columns {
-                current_zoom_level = i;
-            }
-        }
-        if zoom_in {
-            if current_zoom_level == zoom_levels.len() - 1 {
-                return;
-            }
-            self.set_grid_zoom_level(current_zoom_level + 1);
-        } else {
-            if current_zoom_level == 0 {
-                return;
-            }
-            self.set_grid_zoom_level(current_zoom_level - 1);
-        }
-    }
-
-    /// Returns the zoom levels array for the appropriate window size.
-    fn get_zoom_levels(&self) -> &'static [(u32, i32)] {
-        if self.imp().library_view.grid_desktop_zoom() {
-            GRID_DESKTOP_ZOOM_LEVELS
-        } else {
-            GRID_MOBILE_ZOOM_LEVELS
-        }
-    }
-
-    /// Sets the grid view columns and list item widget height requests
-    /// using the given zoom level index, and updates the grid control
-    /// popover menu if the user has reached the min/max zoom setting.
-    fn set_grid_zoom_level(&self, zoom_level: usize) {
-        let zoom_levels: &'static [(u32, i32)] = self.get_zoom_levels();
-        let new_zoom_level: (u32, i32) = zoom_levels[zoom_level];
-        let media_grid_imp = self.imp().library_view.imp().media_grid.imp();
-
-        self.imp().library_view.set_grid_widget_height(new_zoom_level.1);
-        media_grid_imp.photo_grid_view.set_min_columns(new_zoom_level.0);
-        media_grid_imp.photo_grid_view.set_max_columns(new_zoom_level.0);
-
-        if zoom_level == 0 {
-            // Reached minimum zoom level
-            media_grid_imp
-                .photo_grid_controls
-                .set_menu_model(Some(&media_grid_imp.grid_controls_menu_min_zoom.clone()));
-        } else if zoom_level == zoom_levels.len() - 1 {
-            // Reached maximum zoom level
-            media_grid_imp
-                .photo_grid_controls
-                .set_menu_model(Some(&media_grid_imp.grid_controls_menu_max_zoom.clone()));
-        } else {
-            media_grid_imp
-                .photo_grid_controls
-                .set_menu_model(Some(&media_grid_imp.grid_controls_menu.clone()));
-        }
+        self.add_action_entries([settings_action]);
     }
 
     #[template_callback]

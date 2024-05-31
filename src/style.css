@@ -30,6 +30,18 @@ video {
   background-color: black;
 }
 
+.menu-button {
+  background-color: @window-fg-color;
+  min-height: 26px;
+  min-width: 26px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-button:hover {
+  background-color: @borders;
+}
+
 .force-light {
   color: white;
 }

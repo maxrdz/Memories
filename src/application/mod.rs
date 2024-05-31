@@ -150,7 +150,12 @@ impl AlbumsApplication {
         let window: gtk::Window = self.active_window().unwrap();
         let master_window: AlbumsApplicationWindow = window.downcast().unwrap();
 
-        master_window.imp().library_view.set_hardware_accel(toggle);
+        master_window
+            .imp()
+            .library_view
+            .imp()
+            .media_grid
+            .set_hardware_accel(toggle);
     }
 
     fn show_clear_app_cache_prompt(&self) {

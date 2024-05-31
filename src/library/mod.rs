@@ -38,14 +38,13 @@ use glib::{g_critical, g_debug, g_error};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
-use media_grid::AlbumsMediaGridView;
 use std::env;
 use std::io;
 use std::process::Command;
 
 glib::wrapper! {
     pub struct AlbumsLibraryView(ObjectSubclass<imp::AlbumsLibraryView>)
-        @extends gtk::Widget, adw::Bin, adw::BreakpointBin;
+        @extends gtk::Widget, adw::Bin;
 }
 
 impl AlbumsLibraryView {
@@ -142,7 +141,7 @@ impl AlbumsLibraryView {
             );
         });
 
-        let factory: gtk::SignalListItemFactory = AlbumsMediaGridView::create_list_item_factory(self);
+        let factory: gtk::SignalListItemFactory = self.imp().media_grid.create_list_item_factory();
 
         self.imp().media_grid.imp().photo_grid_view.set_model(Some(&msm));
         self.imp()

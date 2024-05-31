@@ -20,8 +20,8 @@
 
 mod imp;
 
+use crate::library::media_grid::AlbumsMediaGridView;
 use crate::library::viewer::AlbumsViewer;
-use crate::library::AlbumsLibraryView;
 use adw::glib;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -38,15 +38,15 @@ impl AlbumsMediaCell {
         glib::Object::new()
     }
 
-    pub fn setup_cell(&self, library: &AlbumsLibraryView, list_item: &gtk::ListItem) {
+    pub fn setup_cell(&self, media_grid: &AlbumsMediaGridView, list_item: &gtk::ListItem) {
         list_item.set_property("child", self);
         self.imp()
             .aspect_frame
-            .set_height_request(library.grid_widget_height());
+            .set_height_request(media_grid.grid_widget_height());
 
         // Bind the `GtkAspectFrame`s height-request to the `grid-widget-height`
         // property of the `AlbumsLibraryView` object.
-        library
+        media_grid
             .bind_property(
                 "grid-widget-height",
                 &self.imp().aspect_frame.clone(),
@@ -78,9 +78,9 @@ impl AlbumsMediaCell {
 
         self.imp().revealer.add_controller(click_gesture.clone());
 
-        click_gesture.connect_pressed(clone!(@weak library, @weak list_item => move |_, _, _, _| {
+        click_gesture.connect_pressed(clone!(@weak media_grid, @weak list_item => move |_, _, _, _| {
                 if list_item.is_selected() {
-                    let current_nav_page: adw::NavigationPage = library.window()
+                    let current_nav_page: adw::NavigationPage = media_grid.window()
                         .imp()
                         .window_navigation
                         .visible_page()
@@ -96,7 +96,7 @@ impl AlbumsMediaCell {
                     let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
                     let file: gio::File = file_obj.downcast().unwrap();
 
-                    let nav_view = library.window().imp().window_navigation.clone();
+                    let nav_view = media_grid.window().imp().window_navigation.clone();
 
                     let viewer_content: AlbumsViewer = AlbumsViewer::default();
                     viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
