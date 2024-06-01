@@ -141,14 +141,7 @@ impl AlbumsLibraryView {
             );
         });
 
-        let factory: gtk::SignalListItemFactory = self.imp().media_grid.create_list_item_factory();
-
         self.imp().media_grid.imp().photo_grid_view.set_model(Some(&msm));
-        self.imp()
-            .media_grid
-            .imp()
-            .photo_grid_view
-            .set_factory(Some(&factory));
 
         let absolute_library_dir: String = format!(
             "{}/{}",
