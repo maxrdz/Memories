@@ -47,7 +47,7 @@ video {
 }
 
 .overlay-action-bar {
-  background-color: alpha(mix(@insensitive_bg_color, #000, 0.1), 1.0);
+  background-color: alpha(@insensitive_bg_color, 1.0);
 }
 
 .transparent-bg {
