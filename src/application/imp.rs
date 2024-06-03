@@ -19,7 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use super::library_list_model::AlbumsLibraryListModel;
-use crate::config::APP_ID;
+use crate::config::{APP_ID, GRESOURCE_DOMAIN};
 use crate::globals::CACHE_THUMBNAILS_SUBDIR;
 use crate::utils::get_app_cache_directory;
 use crate::window::AlbumsApplicationWindow;
@@ -134,7 +134,7 @@ impl ApplicationImpl for AlbumsApplication {
         let gdk_screen: gdk::Display = gdk::Display::default().unwrap();
         let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
 
-        new_css_provider.load_from_resource("/com/maxrdz/Albums/style.css");
+        new_css_provider.load_from_resource(&format!("{}/style.css", GRESOURCE_DOMAIN));
 
         gtk::style_context_add_provider_for_display(
             &gdk_screen,

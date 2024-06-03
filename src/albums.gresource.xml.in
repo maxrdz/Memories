@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
+  <gresource prefix="@GRESOURCE_DOMAIN@">
+    <file compressed="true">style.css</file>
+  </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="albums-symbolic.svg">icons/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="albums-new-symbolic.svg">icons/albums-new-symbolic.svg</file>
@@ -11,7 +14,6 @@
     <file preprocess="xml-stripblanks" alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
-    <file compressed="true">style.css</file>
     <file preprocess="xml-stripblanks" compressed="true">albums/albums.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/library.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/details/details.ui</file>
