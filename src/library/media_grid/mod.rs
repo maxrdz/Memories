@@ -47,6 +47,11 @@ impl AlbumsMediaGridView {
             .expect("Failed to downcast to AlbumsApplicationWindow.")
     }
 
+    pub fn set_custom_title(&self, string: &str) {
+        self.imp().custom_title.set(true);
+        self.imp().time_period_label.set_label(string);
+    }
+
     fn gallery_grid_zoom(&self, zoom_in: bool) {
         let current_columns: u32 = self.imp().photo_grid_view.max_columns();
         let mut current_zoom_level: usize = 0;

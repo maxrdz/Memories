@@ -44,6 +44,13 @@ pub struct AlbumsMediaGridView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
     pub list_item_factory: gtk::SignalListItemFactory,
 
+    /// Disabled by default. Overlay title displays timestamp ranges of
+    /// visible items in the media grid view. (currently not implemented)
+    /// When enabled, a custom title has been set to the media grid view.
+    /// For example, when viewing albums, the custom title is set to
+    /// the name of the album being viewed.
+    pub(super) custom_title: Cell<bool>,
+
     #[property(get, set)]
     hardware_accel: Cell<bool>,
     #[property(get, set)]
@@ -74,6 +81,7 @@ impl Default for AlbumsMediaGridView {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
             list_item_factory: gtk::SignalListItemFactory::default(),
+            custom_title: Cell::new(false),
             hardware_accel: Cell::new({
                 let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
                 gsettings.boolean("hardware-acceleration")

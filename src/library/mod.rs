@@ -25,10 +25,8 @@ pub mod viewer;
 
 use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
-use crate::globals::APP_INFO;
-use crate::globals::DEFAULT_LIBRARY_DIRECTORY;
+use crate::globals::{APP_INFO, DEFAULT_LIBRARY_DIRECTORY, FFMPEG_BINARY};
 use crate::i18n::gettext_f;
-use crate::thumbnails::FFMPEG_BINARY;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
@@ -141,6 +139,7 @@ impl AlbumsLibraryView {
             );
         });
 
+        self.imp().media_grid.set_custom_title(&gettext("Photo Library"));
         self.imp().media_grid.imp().photo_grid_view.set_model(Some(&msm));
 
         let absolute_library_dir: String = format!(
