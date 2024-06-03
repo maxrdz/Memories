@@ -67,6 +67,7 @@ pub async fn get_metadata_with_hash(file: File) -> io::Result<(MetadataInfo, Str
 
     let mut md5_hasher: Md5 = Md5::new();
     let metadata = pack_metadata_as_struct(&in_metadata)?;
+
     md5_hasher.update(serde_json::to_vec(&metadata)?);
 
     Ok((metadata, format!("{:x}", md5_hasher.finalize())))

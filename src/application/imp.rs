@@ -133,6 +133,7 @@ impl ApplicationImpl for AlbumsApplication {
         // Setup our own CSS provider from gresource
         let gdk_screen: gdk::Display = gdk::Display::default().unwrap();
         let new_css_provider: gtk::CssProvider = gtk::CssProvider::new();
+
         new_css_provider.load_from_resource("/com/maxrdz/Albums/style.css");
 
         gtk::style_context_add_provider_for_display(

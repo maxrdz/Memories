@@ -38,6 +38,10 @@ cfg_if! {
     }
 }
 
+/// Can be read by other modules in Album to display to
+/// the user what binary needs to be installed to use Album.
+pub static FFMPEG_BINARY: &str = "ffmpeg";
+
 /// The number of permits given to the async semaphore
 /// used to control the amount of ffmpeg processes spawned.
 pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
