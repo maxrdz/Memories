@@ -38,7 +38,7 @@ use std::path::Path;
 use std::sync::Arc;
 
 #[derive(Debug, glib::Properties, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/media_grid/media_grid.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/media_grid/media-grid.ui")]
 #[properties(wrapper_type = super::AlbumsMediaGridView)]
 pub struct AlbumsMediaGridView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,

@@ -24,7 +24,7 @@ use adw::subclass::prelude::*;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/albums/albums-view.ui")]
+#[template(resource = "/com/maxrdz/Albums/albums/albums.ui")]
 pub struct AlbumsView {
     #[template_child]
     new_album_button: TemplateChild<gtk::Button>,

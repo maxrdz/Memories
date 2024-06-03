@@ -24,7 +24,7 @@ use adw::subclass::prelude::*;
 use libadwaita as adw;
 
 #[derive(Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/details/details-widget.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/details/details.ui")]
 pub struct AlbumsDetails {
     #[template_child]
     pub(super) folder: TemplateChild<adw::ActionRow>,

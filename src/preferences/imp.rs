@@ -25,7 +25,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/preferences/preferences-view.ui")]
+#[template(resource = "/com/maxrdz/Albums/preferences/preferences.ui")]
 pub struct AlbumsPreferencesView {
     #[template_child]
     pub theme_selector: TemplateChild<AlbumsThemeSelector>,

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="@GRESOURCE_DOMAIN@">
-    <file preprocess="xml-stripblanks">icons/scalable/actions/albums-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/albums-new-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/gif-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/library-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/live-photo-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/screenshot-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/svg-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">icons/scalable/actions/theme-check-symbolic.svg</file>
+  <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
+    <file preprocess="xml-stripblanks" alias="albums-symbolic.svg">icons/albums-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="albums-new-symbolic.svg">icons/albums-new-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="library-symbolic.svg">icons/library-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="live-photo-symbolic.svg">icons/live-photo-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="screenshot-symbolic.svg">icons/screenshot-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="svg-symbolic.svg">icons/svg-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
     <file compressed="true">style.css</file>
-    <file preprocess="xml-stripblanks" compressed="true">albums/albums-view.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/library-view.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/details/details-widget.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media_grid.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media_cell/media_cell.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/viewer/viewer-page.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">preferences/preferences-view.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">albums/albums.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">library/library.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">library/details/details.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media-grid.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media_cell/media-cell.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">library/viewer/viewer.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">preferences/preferences.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">preferences/theme_selector/theme-selector.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@/gtk">
     <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>

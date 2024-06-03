@@ -25,7 +25,7 @@ use gtk::glib;
 use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/library-view.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/library.ui")]
 pub struct AlbumsLibraryView {
     #[template_child]
     pub(super) library_view_stack: TemplateChild<adw::ViewStack>,

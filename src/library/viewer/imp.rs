@@ -26,7 +26,7 @@ use adw::subclass::prelude::*;
 use libadwaita as adw;
 
 #[derive(Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/viewer/viewer-page.ui")]
+#[template(resource = "/com/maxrdz/Albums/library/viewer/viewer.ui")]
 pub struct AlbumsViewer {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
