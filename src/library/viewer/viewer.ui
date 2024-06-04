@@ -31,7 +31,7 @@
             <child type="end">
               <object class="GtkToggleButton" id="details_button">
                 <property name="icon-name">help-about-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Content Details</property>
+                <property name="tooltip-text" translatable="yes">Media Details</property>
                 <signal name="toggled" handler="details_toggle" swapped="true"/>
               </object>
             </child>

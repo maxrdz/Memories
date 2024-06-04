@@ -23,8 +23,7 @@
             <property name="single-line-mode">True</property>
             <property name="margin-top">10</property>
             <property name="margin-bottom">10</property>
-            <!-- GTK_JUSTIFY_CENTER == 2 -->
-            <property name="justify">2</property>
+            <property name="justify">center</property>
             <!-- NOTE: CSS nodes from libadwaita CSS stylesheets -->
             <style>
               <class name="title"/>
@@ -57,36 +56,28 @@
           <object class="GtkScrolledWindow">
             <property name="child">
               <object class="AdwPreferencesPage">
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="valign">1</property>
+                <property name="valign">start</property>
                 <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Library Configuration</property>
-                    <property name="description" translatable="yes">Here you can find the main preferences for Albums.</property>
+                  <object class="AdwPreferencesGroup" id="library_collection">
+                    <property name="title" translatable="yes">Library Collection</property>
+                    <property name="description" translatable="yes">Choose what folders contain your photos and videos.</property>
                     <property name="vexpand-set">True</property>
                     <property name="vexpand">True</property>
-                    <!-- GTK_ALIGN_START == 1 -->
-                    <property name="valign">1</property>
-                    <child>
-                      <object class="AdwActionRow">
-                        <property name="title" translatable="yes">User Library Directory</property>
-                        <property name="subtitle" translatable="yes">Select your user's photo/video library directory.</property>
-                        <child type="suffix">
-                          <object class="GtkButton">
-                            <property name="margin-top">5</property>
-                            <property name="margin-bottom">5</property>
-                            <property name="child">
-                              <object class="AdwButtonContent">
-                                <property name="icon-name">document-open-symbolic</property>
-                                <property name="label" translatable="yes">_Choose</property>
-                                <property name="use-underline">True</property>
-                              </object>
-                            </property>
-                            <property name="action-name">app.choose-library-directory</property>
+                    <property name="valign">start</property>
+                    <property name="header-suffix">
+                      <object class="GtkButton">
+                        <property name="margin-top">5</property>
+                        <property name="margin-bottom">5</property>
+                        <property name="child">
+                          <object class="AdwButtonContent">
+                            <property name="icon-name">document-open-symbolic</property>
+                            <property name="label" translatable="yes">_Choose</property>
+                            <property name="use-underline">True</property>
                           </object>
-                        </child>
+                        </property>
+                        <property name="action-name">app.choose-library-directory</property>
                       </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
                 <child>

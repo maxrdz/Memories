@@ -42,8 +42,16 @@ impl AlbumsLibraryListModel {
         self.imp().root_model.model.set_file(file)
     }
 
-    /// Bridge AlbumsLibraryListModel interface to underlying GtkDirectoryList.
-    /// TODO: Don't connect to only root model, but all models, similar to loading.
+    /// Bridge `AlbumsLibraryListModel` interface to underlying `GtkDirectoryList`.
+    pub fn connect_file_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
+    where
+        F: Fn(&gtk::DirectoryList) + 'static,
+    {
+        self.imp().root_model.model.connect_file_notify(callback)
+    }
+
+    /// Bridge `AlbumsLibraryListModel` interface to underlying `GtkDirectoryList`.
+    /// FIXME: Don't connect to only root model, but all models, similar to loading.
     pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
     where
         F: Fn(&gtk::DirectoryList) + 'static,

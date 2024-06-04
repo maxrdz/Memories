@@ -28,9 +28,11 @@ use libadwaita as adw;
 #[template(resource = "/com/maxrdz/Albums/preferences/preferences.ui")]
 pub struct AlbumsPreferencesView {
     #[template_child]
-    pub theme_selector: TemplateChild<AlbumsThemeSelector>,
+    theme_selector: TemplateChild<AlbumsThemeSelector>,
     #[template_child]
-    pub mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
+    mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
+    #[template_child]
+    pub(super) library_collection: TemplateChild<adw::PreferencesGroup>,
 }
 
 #[glib::object_subclass]

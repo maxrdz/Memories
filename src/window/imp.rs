@@ -92,10 +92,18 @@ impl ObjectImpl for AlbumsApplicationWindow {
         obj.connect_show(move |window: &super::AlbumsApplicationWindow| {
             // AlbumsLibraryListModel instance MUST be initialized after
             // the application window, but before the library view.
-            window
-                .app()
-                .unwrap()
-                .set_library_list_model(AlbumsLibraryListModel::default());
+            let new_library_model = AlbumsLibraryListModel::default();
+
+            // When the directory path(s) of the library list model are updated,
+            // append the folder paths on the preferences page for user configuration.
+            new_library_model.connect_file_notify(
+                clone!(@weak window => move |list_model: &gtk::DirectoryList| {
+                    if let Some(file) = list_model.file() {
+                        window.imp().preferences_view.append_folder_entry(file);
+                    }
+                }),
+            );
+            window.app().unwrap().set_library_list_model(new_library_model);
 
             // This callback wont be triggered on start up by itself, so we
             // want to check the very first visible child in the master view stack.
