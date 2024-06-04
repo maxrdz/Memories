@@ -40,10 +40,21 @@ impl AlbumsPreferencesView {
         glib::Object::new()
     }
 
+    /// Appends a new `AdwActionRow` to the "Library Collection"
+    /// `AdwPreferencesGroup` widget of the preferences page.
     pub fn append_folder_entry(&self, folder: gio::File) {
-        self.imp()
-            .library_collection
-            .add(&AlbumsPreferencesView::build_folder_row(&folder));
+        let new_widget: adw::ActionRow = AlbumsPreferencesView::build_folder_row(&folder);
+
+        self.imp().library_collection.add(&new_widget);
+        self.imp().library_collection_rows.borrow_mut().push(new_widget);
+    }
+
+    /// Clears all children of `library_collection` preferences group.
+    pub fn clear_folder_entries(&self) {
+        for row_widget in self.imp().library_collection_rows.borrow().iter() {
+            self.imp().library_collection.remove(row_widget);
+        }
+        self.imp().library_collection_rows.borrow_mut().clear();
     }
 
     /// Builds a new `AdwActionRow` widget object based on the `GFile` given.

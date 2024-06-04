@@ -23,10 +23,15 @@ use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
 use libadwaita as adw;
+use std::cell::RefCell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/preferences/preferences.ui")]
 pub struct AlbumsPreferencesView {
+    // We have to store references to our `AdwActionRow` widgets
+    // to be able to clear them out of the preference group as children.
+    pub(super) library_collection_rows: RefCell<Vec<adw::ActionRow>>,
+
     #[template_child]
     theme_selector: TemplateChild<AlbumsThemeSelector>,
     #[template_child]
