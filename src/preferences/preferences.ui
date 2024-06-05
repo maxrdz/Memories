@@ -9,6 +9,7 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
+        <setter object="mobile_header_label" property="visible">False</setter>
         <setter object="theme_selector" property="visible">False</setter>
         <setter object="mobile_actions_flowbox" property="visible">False</setter>
       </object>
@@ -17,7 +18,7 @@
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="mobile_header_label">
             <property name="label" translatable="yes">Preferences</property>
             <property name="lines">1</property>
             <property name="single-line-mode">True</property>

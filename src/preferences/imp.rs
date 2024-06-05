@@ -33,6 +33,8 @@ pub struct AlbumsPreferencesView {
     pub(super) library_collection_rows: RefCell<Vec<adw::ActionRow>>,
 
     #[template_child]
+    mobile_header_label: TemplateChild<gtk::Label>,
+    #[template_child]
     theme_selector: TemplateChild<AlbumsThemeSelector>,
     #[template_child]
     mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,

@@ -27,6 +27,10 @@ use libadwaita as adw;
 #[template(resource = "/com/maxrdz/Albums/albums/albums.ui")]
 pub struct AlbumsView {
     #[template_child]
+    mobile_header_label: TemplateChild<gtk::Label>,
+    #[template_child]
+    albums_box: TemplateChild<gtk::Box>,
+    #[template_child]
     new_album_button: TemplateChild<gtk::Button>,
     #[template_child]
     album_carousel_stack: TemplateChild<adw::ViewStack>,
