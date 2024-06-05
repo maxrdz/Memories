@@ -50,8 +50,14 @@ video {
   background-color: alpha(@insensitive_bg_color, 1.0);
 }
 
-.transparent-bg {
-  background-color: transparent;
+.albums-preference-group label {
+  font-size: 150%;
+  font-weight: 1000;
+}
+
+.albums-preference-group buttoncontent label {
+  font-size: 100%;
+  font-weight: 700;
 }
 
 /* Viewer Details Preference Rows */
