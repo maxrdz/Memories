@@ -20,10 +20,16 @@
 
 mod imp;
 
+use crate::globals::DEFAULT_LIBRARY_COLLECTION;
+use crate::i18n::gettext_f;
+use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::subclass::prelude::*;
+use glib::{g_critical, g_debug};
+use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
+use std::env;
 
 glib::wrapper! {
     pub struct AlbumsLibraryListModel(ObjectSubclass<imp::AlbumsLibraryListModel>)
@@ -35,28 +41,84 @@ impl AlbumsLibraryListModel {
         glib::Object::new()
     }
 
-    /// Relays the `set_file` call to the root `GtkDirectoryList` model.
-    /// If `file` is NULL, alling this method will initialize the enumeration process.
-    pub fn set_file(&self, file: Option<&impl glib::prelude::IsA<gio::File>>) {
-        self.imp().cleanup_model();
-        self.imp().root_model.model.set_file(file)
-    }
-
-    /// Bridge `AlbumsLibraryListModel` interface to underlying `GtkDirectoryList`.
-    pub fn connect_file_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
-    where
-        F: Fn(&gtk::DirectoryList) + 'static,
-    {
-        self.imp().root_model.model.connect_file_notify(callback)
-    }
-
-    /// Bridge `AlbumsLibraryListModel` interface to underlying `GtkDirectoryList`.
-    /// FIXME: Don't connect to only root model, but all models, similar to loading.
     pub fn connect_error_notify<F>(&self, callback: F) -> glib::signal::SignalHandlerId
     where
         F: Fn(&gtk::DirectoryList) + 'static,
     {
-        self.imp().root_model.model.connect_error_notify(callback)
+        // FIXME: temp compiler silence fix
+        self.imp()
+            .root_models
+            .borrow()
+            .first()
+            .unwrap()
+            .model
+            .connect_error_notify(callback)
+    }
+
+    /// Setup code for initialize the library list model at start up of Albums.
+    /// Passes newly constructed list model to the Albums application object.
+    pub fn initialize_new_model(window: &AlbumsApplicationWindow) {
+        let new_library_model = AlbumsLibraryListModel::default();
+
+        // When the directory path(s) of the library list model are updated,
+        // append the folder paths on the preferences page for user configuration.
+        new_library_model.connect_refresh_widget_rows_notify(
+            clone!(@weak window => move |list_model: &AlbumsLibraryListModel| {
+                g_debug!("LibraryListModel", "notify::dummy_poo");
+                window.imp().preferences_view.clear_folder_entries();
+
+                for subdir in &list_model.subdirectories() {
+                    window.imp().preferences_view.append_folder_entry(
+                        gio::File::for_path(&subdir.to_string())
+                    );
+                }
+            }),
+        );
+        // `refresh-widget-rows` is notified on the `notify::subdirectories` signal,
+        // but that signal is first emitted when constructed, and we assign a
+        // callback to `notify::refresh-widget-rows` until after the constructor.
+        // So, we manually emit it here. Will be emitted automatically going forward.
+        new_library_model.notify_refresh_widget_rows();
+
+        window.app().unwrap().set_library_list_model(new_library_model);
+    }
+
+    pub fn start_enumerating_items(&self) -> Result<(), String> {
+        // We need to get the user's home directory first, via env var.
+        let home_path: String = {
+            if let Ok(home_path) = env::var("HOME") {
+                home_path
+            } else {
+                g_critical!(
+                    "LibraryListModel",
+                    "No $HOME env var found! Cannot open library collection."
+                );
+                return Err(gettext_f(
+                    // TRANSLATORS: You can remove odd spacing. This is due to code linting.
+                    "The {ENV_VAR} environment variable was found, \
+                    so Albums cannot open your photo library.",
+                    &[("ENV_VAR", "$HOME")],
+                ));
+            }
+        };
+
+        if self.subdirectories().is_empty() {
+            // Probably the first launch, set the default library folders.
+            let mut default_subdirs: glib::StrV = glib::StrV::default();
+
+            for folder in DEFAULT_LIBRARY_COLLECTION {
+                default_subdirs.push(format!("{}/{}", home_path, folder).into());
+            }
+            // This property will synchronize with the corresponding gschema key.
+            self.set_subdirectories(default_subdirs.clone());
+
+            g_debug!(
+                "LibraryListModel",
+                "Enumerating library files from: {:?}",
+                default_subdirs
+            );
+        }
+        Ok(())
     }
 }
 

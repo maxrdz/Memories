@@ -19,6 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::{APP_NAME, VERSION};
+use adw::glib::source::Priority;
 use adw::gtk::License;
 use cfg_if::cfg_if;
 use libadwaita as adw;
@@ -46,11 +47,15 @@ pub static FFMPEG_BINARY: &str = "ffmpeg";
 /// used to control the amount of ffmpeg processes spawned.
 pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
 
+/// IO priority for new `GtkDirectoryList` models. We override
+/// the default since it is usually higher than GTK redraw priority.
+pub static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
+
 /// The following statics are related to Albums' cache.
 pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
 
 /// Following paths relative to $HOME env var path.
-pub static DEFAULT_LIBRARY_DIRECTORY: &str = "Pictures";
+pub static DEFAULT_LIBRARY_COLLECTION: &[&str] = &["Pictures", "Videos"];
 pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";
 
 /// Following paths relative to DEFAULT_LIBRARY_DIRECTORY.

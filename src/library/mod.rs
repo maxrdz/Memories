@@ -25,18 +25,17 @@ pub mod viewer;
 
 use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
-use crate::globals::{APP_INFO, DEFAULT_LIBRARY_DIRECTORY, FFMPEG_BINARY};
+use crate::globals::{APP_INFO, FFMPEG_BINARY};
 use crate::i18n::gettext_f;
 use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use glib::{g_critical, g_debug, g_error};
+use glib::{g_debug, g_error};
 use glib_macros::clone;
 use gtk::{gio, glib};
 use libadwaita as adw;
-use std::env;
 use std::io;
 use std::process::Command;
 
@@ -84,12 +83,12 @@ impl AlbumsLibraryView {
         self.imp().spinner.start();
 
         let albums: AlbumsApplication = self.window().app().unwrap();
-        let llm: AlbumsLibraryListModel = albums.library_list_model();
+        let library_model: AlbumsLibraryListModel = albums.library_list_model();
 
-        let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(llm.clone()));
+        let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(library_model.clone()));
 
-        if !llm.models_loaded() {
-            llm.connect_models_loaded_notify(
+        if !library_model.models_loaded() {
+            library_model.connect_models_loaded_notify(
                 clone!(@weak self as s => move |model: &AlbumsLibraryListModel| {
                     g_debug!("Library", "notify::models_loaded");
 
@@ -123,7 +122,7 @@ impl AlbumsLibraryView {
             self.imp().spinner.stop();
         }
 
-        llm.connect_items_changed(
+        library_model.connect_items_changed(
             clone!(@weak self as s => move |model: &AlbumsLibraryListModel, _: u32, _: u32, _:u32| {
                 let item_count: u32 = model.n_items();
                 g_debug!("Library", "Updated list model item count: {}", item_count);
@@ -131,7 +130,7 @@ impl AlbumsLibraryView {
             }),
         );
 
-        llm.connect_error_notify(move |dl: &gtk::DirectoryList| {
+        library_model.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(
                 "Library",
                 "AlbumsLibraryListModel returned an error!\n\n{}",
@@ -142,35 +141,9 @@ impl AlbumsLibraryView {
         self.imp().media_grid.set_custom_title(&gettext("Photo Library"));
         self.imp().media_grid.imp().photo_grid_view.set_model(Some(&msm));
 
-        let absolute_library_dir: String = format!(
-            "{}/{}",
-            {
-                if let Ok(home_path) = env::var("HOME") {
-                    home_path
-                } else {
-                    g_critical!("Library", "No $HOME env var found! Cannot open photo albums.");
-
-                    self.imp().library_view_stack.set_visible_child_name("error_page");
-                    self.imp().error_status_widget.set_description(Some(&gettext_f(
-                        // TRANSLATORS: You can remove odd spacing. This is due to code linting.
-                        "The {ENV_VAR} environment variable was found, \
-                        so Albums cannot open your photo library.",
-                        &[("ENV_VAR", "$HOME")],
-                    )));
-                    // place NULL byte at start of string to signal error
-                    String::from('\0')
-                }
-            },
-            DEFAULT_LIBRARY_DIRECTORY
-        );
-
-        if !absolute_library_dir.starts_with('\0') {
-            g_debug!(
-                "Library",
-                "Enumerating library files from directory: {}",
-                absolute_library_dir
-            );
-            llm.set_file(Some(&gio::File::for_path(absolute_library_dir)));
+        if let Err(err_str) = library_model.start_enumerating_items() {
+            self.imp().library_view_stack.set_visible_child_name("error_page");
+            self.imp().error_status_widget.set_description(Some(&err_str));
         }
     }
 }
