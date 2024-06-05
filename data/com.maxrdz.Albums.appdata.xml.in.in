@@ -21,11 +21,11 @@
     @PROJECT_GIT@/-/raw/master/data/icons/com.maxrdz.Albums.svg
   </icon>
   <branding>
-    <color type="primary" scheme_preference="light">#b5835a</color>
+    <color type="primary" scheme_preference="light">#9c6c47</color>
     <color type="primary" scheme_preference="dark">#63452c</color>
   </branding>
   <custom>
-    <value key="GnomeSoftware::key-colors">[(181, 131, 90), (99, 69, 44)]</value>
+    <value key="GnomeSoftware::key-colors">[(99, 69, 44), (156, 108, 71)]</value>
     <value key="Purism::form_factor">workstation,mobile</value>
   </custom>
   <content_rating type="oars-1.0" />
