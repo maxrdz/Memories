@@ -46,10 +46,6 @@ video {
   color: white;
 }
 
-.overlay-action-bar {
-  background-color: alpha(@insensitive_bg_color, 1.0);
-}
-
 .albums-preference-group label {
   font-size: 150%;
   font-weight: 1000;

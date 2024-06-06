@@ -118,9 +118,6 @@
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Videos</property>
-                            <style>
-                              <class name="transparent-bg"/>
-                            </style>
                           </object>
                         </child>
                       </object>
@@ -135,9 +132,6 @@
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Screenshots</property>
-                            <style>
-                              <class name="transparent-bg"/>
-                            </style>
                           </object>
                         </child>
                       </object>
@@ -152,9 +146,6 @@
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Animated</property>
-                            <style>
-                              <class name="transparent-bg"/>
-                            </style>
                           </object>
                         </child>
                       </object>
@@ -169,9 +160,6 @@
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Vector Graphics</property>
-                            <style>
-                              <class name="transparent-bg"/>
-                            </style>
                           </object>
                         </child>
                       </object>
@@ -192,9 +180,6 @@
                             <property name="halign">end</property>
                             <property name="valign">center</property>
                             <property name="tooltip-text" translatable="yes">Recently Deleted</property>
-                            <style>
-                              <class name="transparent-bg"/>
-                            </style>
                           </object>
                         </child>
                       </object>

@@ -64,7 +64,7 @@ impl AlbumsLibraryListModel {
         // append the folder paths on the preferences page for user configuration.
         new_library_model.connect_refresh_widget_rows_notify(
             clone!(@weak window => move |list_model: &AlbumsLibraryListModel| {
-                g_debug!("LibraryListModel", "notify::dummy_poo");
+                g_debug!("LibraryListModel", "notify::refresh_widget_rows");
                 window.imp().preferences_view.clear_folder_entries();
 
                 for subdir in &list_model.subdirectories() {
