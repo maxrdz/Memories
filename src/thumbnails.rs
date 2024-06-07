@@ -22,10 +22,9 @@
 
 use crate::globals::{CACHE_THUMBNAILS_SUBDIR, FFMPEG_BINARY};
 use crate::utils::get_app_cache_directory;
-use adw::glib::{g_debug, g_warning};
 use async_fs::File;
 use async_process::{Command, Output};
-use libadwaita as adw;
+use gtk::glib::{g_debug, g_warning};
 use std::io;
 use std::path::Path;
 

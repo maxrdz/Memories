@@ -20,9 +20,7 @@
 
 mod imp;
 
-use adw::glib;
-use adw::gtk;
-use libadwaita as adw;
+use gtk::glib;
 
 glib::wrapper! {
     pub struct AlbumsThemeSelector(ObjectSubclass<imp::AlbumsThemeSelector>)

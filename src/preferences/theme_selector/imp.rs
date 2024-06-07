@@ -18,10 +18,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
-use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/preferences/theme_selector/theme-selector.ui")]

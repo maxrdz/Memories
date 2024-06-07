@@ -21,9 +21,8 @@
 use crate::library::details::ContentDetails;
 use crate::library::viewer::ViewerContentType;
 use crate::utils::MetadataInfo;
-use adw::glib;
 use adw::subclass::prelude::*;
-use libadwaita as adw;
+use gtk::{gio, glib};
 use std::cell::{Cell, OnceCell, RefCell};
 
 /// `AdwBin` subclass to store arbitrary data for grid cells

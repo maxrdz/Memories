@@ -21,12 +21,10 @@
 mod imp;
 pub mod theme_selector;
 
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use gtk::{gio, glib};
-use libadwaita as adw;
 use std::path::PathBuf;
 
 glib::wrapper! {

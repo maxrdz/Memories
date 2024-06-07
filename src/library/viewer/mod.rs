@@ -21,13 +21,11 @@
 mod imp;
 
 use crate::window::AlbumsApplicationWindow;
-use adw::glib;
-use adw::glib::{g_debug, g_error};
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use libadwaita as adw;
+use glib::{g_debug, g_error};
+use gtk::{gio, glib};
 
 /// Enum that represents the types of content that
 /// can be displayed by the `AlbumsViewer` object.

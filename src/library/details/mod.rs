@@ -21,13 +21,11 @@
 mod imp;
 
 use crate::library::media_grid::media_cell::AlbumsMediaCell;
-use adw::glib;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::g_warning;
-use libadwaita as adw;
+use gtk::{gio, glib};
 use std::ffi::OsStr;
 use std::ops::Deref;
 use std::path::PathBuf;

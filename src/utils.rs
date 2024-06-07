@@ -22,10 +22,9 @@
 
 use crate::config::APP_NAME;
 use crate::library::viewer::ViewerContentType;
-use adw::glib;
 use async_fs::{File, Metadata};
 use glib::g_debug;
-use libadwaita as adw;
+use gtk::glib;
 use md5::{Digest, Md5};
 use serde::Serialize;
 use std::io;

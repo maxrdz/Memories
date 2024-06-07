@@ -21,11 +21,9 @@
 mod imp;
 
 use crate::application::AlbumsApplication;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};
-use libadwaita as adw;
 
 glib::wrapper! {
     pub struct AlbumsApplicationWindow(ObjectSubclass<imp::AlbumsApplicationWindow>)

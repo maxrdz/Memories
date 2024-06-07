@@ -28,14 +28,11 @@ use crate::application::AlbumsApplication;
 use crate::globals::{APP_INFO, FFMPEG_BINARY};
 use crate::i18n::gettext_f;
 use crate::window::AlbumsApplicationWindow;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use glib::{g_debug, g_error};
-use glib_macros::clone;
+use glib::{clone, g_debug, g_error};
 use gtk::{gio, glib};
-use libadwaita as adw;
 use std::io;
 use std::process::Command;
 

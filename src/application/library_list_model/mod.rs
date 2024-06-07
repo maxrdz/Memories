@@ -23,12 +23,9 @@ mod imp;
 use crate::globals::DEFAULT_LIBRARY_COLLECTION;
 use crate::i18n::gettext_f;
 use crate::window::AlbumsApplicationWindow;
-use adw::gtk;
 use adw::subclass::prelude::*;
-use glib::{g_critical, g_debug};
-use glib_macros::clone;
+use glib::{clone, g_critical, g_debug};
 use gtk::{gio, glib};
-use libadwaita as adw;
 use std::env;
 
 glib::wrapper! {

@@ -19,10 +19,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::{APP_NAME, VERSION};
-use adw::glib::source::Priority;
-use adw::gtk::License;
 use cfg_if::cfg_if;
-use libadwaita as adw;
+use gtk::glib::source::Priority;
+use gtk::License;
 
 #[cfg(debug_assertions)]
 pub static DEVELOPMENT_BUILD: bool = true;

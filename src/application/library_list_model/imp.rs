@@ -22,13 +22,10 @@
 
 use crate::application::AlbumsApplication;
 use crate::globals::DIRECTORY_MODEL_PRIORITY;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use adw::{gio, glib};
-use glib::{g_debug, g_error};
-use glib_macros::clone;
-use libadwaita as adw;
+use glib::{clone, g_debug, g_error};
+use gtk::{gio, glib};
 use std::cell::{Cell, RefCell, RefMut};
 use std::path::PathBuf;
 use std::rc::Rc;

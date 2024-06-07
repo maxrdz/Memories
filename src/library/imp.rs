@@ -19,10 +19,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use super::media_grid::AlbumsMediaGridView;
-use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
-use libadwaita as adw;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/library.ui")]

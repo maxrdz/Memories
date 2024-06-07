@@ -22,11 +22,10 @@ mod imp;
 
 use crate::library::media_grid::AlbumsMediaGridView;
 use crate::library::viewer::AlbumsViewer;
-use adw::glib;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib_macros::clone;
-use libadwaita as adw;
+use glib::clone;
+use gtk::{gio, glib};
 
 glib::wrapper! {
     pub struct AlbumsMediaCell(ObjectSubclass<imp::AlbumsMediaCell>)

@@ -24,14 +24,11 @@ pub mod library_list_model;
 use crate::config::APP_ID;
 use crate::i18n::gettext_f;
 use crate::utils::get_app_cache_directory;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use adw::{gio, glib};
 use gettextrs::gettext;
-use glib::{g_critical, g_error};
-use glib_macros::clone;
-use libadwaita as adw;
+use glib::{clone, g_critical, g_error};
+use gtk::{gio, glib};
 
 use crate::globals::*;
 use crate::vcs::VCS_TAG;

@@ -20,10 +20,8 @@
 
 use crate::library::details::AlbumsDetails;
 use crate::preferences::theme_selector::AlbumsThemeSelector;
-use adw::glib;
-use adw::gtk;
 use adw::subclass::prelude::*;
-use libadwaita as adw;
+use gtk::glib;
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/library/viewer/viewer.ui")]

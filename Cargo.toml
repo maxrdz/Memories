@@ -2,7 +2,7 @@
 name = "albums"
 version = "46.3.0"
 edition = "2021"
-rust-version = "1.77"
+rust-version = "1.78"
 license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
 repository = "https://gitlab.gnome.org/maxrdz/Albums"
@@ -24,20 +24,16 @@ disable-glycin-sandbox = []
 use-feedbackd = ["dep:libfeedback"]
 
 [dependencies]
-async-channel = { version = "2.2" }
-async-fs = { version = "2.1" }
-async-process = { version = "2.2" }
-async-semaphore = { version = "1.2" }
-cfg-if = { version = "1" }
-gdk = { version = "0.8", package = "gdk4", features = ["v4_14"] }
+adw = { version = "0.6", package = "libadwaita", features = ["v1_5"] }
+async-channel = "2.2"
+async-fs = "2.1"
+async-process = "2.2"
+async-semaphore = "1.2"
+cfg-if = "1"
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
-gio = { version = "0.19", features = ["v2_80"] }
-glib-macros = { version = "0.19" }
-glycin = { version = "1.0.2" }
-gtk = { version = "0.8", package = "gtk4", features = ["v4_14"] }
-libadwaita = { version = "0.6", features = ["v1_5"] }
+glycin = "1.0.2"
+gtk = { version = "0.8", package = "gtk4", features = ["gnome_46"] }
 libfeedback = { git = "https://gitlab.gnome.org/guidog/libfeedback-rs.git", optional = true }
-md-5 = { version = "0.10" }
+md-5 = "0.10"
 serde = { version = "1", features = ["derive"] }
-serde_json = { version = "1" }
-
+serde_json = "1"

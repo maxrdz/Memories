@@ -24,12 +24,10 @@ use crate::application::AlbumsApplication;
 use crate::library::AlbumsLibraryView;
 use crate::preferences::theme_selector::AlbumsThemeSelector;
 use crate::preferences::AlbumsPreferencesView;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib_macros::clone;
-use gtk::glib;
-use libadwaita as adw;
+use glib::clone;
+use gtk::{gio, glib};
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/window/window.ui")]

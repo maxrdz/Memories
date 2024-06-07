@@ -20,8 +20,7 @@
 
 mod imp;
 
-use adw::glib;
-use libadwaita as adw;
+use gtk::glib;
 
 glib::wrapper! {
     pub struct AlbumsView(ObjectSubclass<imp::AlbumsView>)

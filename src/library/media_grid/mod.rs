@@ -23,11 +23,9 @@ pub mod media_cell;
 
 use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
 use crate::window::AlbumsApplicationWindow;
-use adw::glib;
-use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use libadwaita as adw;
+use gtk::glib;
 
 glib::wrapper! {
     pub struct AlbumsMediaGridView(ObjectSubclass<imp::AlbumsMediaGridView>)

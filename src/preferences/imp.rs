@@ -19,10 +19,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use super::theme_selector::AlbumsThemeSelector;
-use adw::gtk;
 use adw::subclass::prelude::*;
 use gtk::glib;
-use libadwaita as adw;
 use std::cell::RefCell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
