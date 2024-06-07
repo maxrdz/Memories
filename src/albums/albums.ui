@@ -6,7 +6,6 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
-        <setter object="mobile_header_label" property="visible">False</setter>
         <setter object="albums_box" property="margin-top">15</setter>
       </object>
     </child>
@@ -28,19 +27,8 @@
                 <property name="margin-bottom">45</property>
                 <property name="spacing">15</property>
                 <child>
-                  <object class="GtkLabel" id="mobile_header_label">
-                    <property name="label" translatable="yes" comments="'Albums' referring to albums of photos.">Albums</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <style>
-                      <!-- NOTE: CSS from GTK stylesheets -->
-                      <class name="title"/>
-                      <class name="title-1"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkBox" id="albums_box">
+                    <property name="margin-top">10</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="AdwPreferencesGroup">
