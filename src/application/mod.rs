@@ -24,7 +24,6 @@ pub mod library_list_model;
 use crate::config::APP_ID;
 use crate::i18n::gettext_f;
 use crate::utils::get_app_cache_directory;
-use crate::window::AlbumsApplicationWindow;
 use adw::gtk;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -147,15 +146,9 @@ impl AlbumsApplication {
     }
 
     fn toggle_hardware_acceleration(&self, toggle: bool) {
-        let window: gtk::Window = self.active_window().unwrap();
-        let master_window: AlbumsApplicationWindow = window.downcast().unwrap();
-
-        master_window
-            .imp()
-            .library_view
-            .imp()
-            .media_grid
-            .set_hardware_accel(toggle);
+        if let Err(err_msg) = self.gsettings().set_boolean("hardware-acceleration", toggle) {
+            g_critical!("AlbumsApplication", "GSettings returned error: {}", err_msg);
+        }
     }
 
     fn show_clear_app_cache_prompt(&self) {
