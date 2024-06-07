@@ -18,14 +18,19 @@ project_git = 'https://gitlab.gnome.org/maxrdz/Albums'
 i18n = import('i18n')
 gnome = import('gnome')
 
-# Library Dependencies
-dependency('mount', version: '>= 2.39')
+# Keep dependencies below matching with the current
+# gtk-rs 'gnome_xx' feature's dependencies, found at
+# https://github.com/gtk-rs/gtk4-rs/blob/master/gtk4/Cargo.toml
+dependency('gtk4', version: '>= 4.14')
+dependency('cairo', version: '>= 1.16')
 dependency('pango', version: '>= 1.52')
-dependency('gstreamer-1.0', version: '>= 1.22')
-dependency('glib-2.0', version: '>= 2.80')
+dependency('gdk-pixbuf-2.0', version: '>= 2.42')
 dependency('gio-2.0', version: '>= 2.80')
-dependency('gtk4', version: '>= 4.13.4')
+dependency('glib-2.0', version: '>= 2.80')
+
 dependency('libadwaita-1', version: '>= 1.5')
+dependency('mount', version: '>= 2.39')
+dependency('gstreamer-1.0', version: '>= 1.22')
 
 if get_option('use-feedbackd')
   dependency('libfeedback-0.0', version: '>= 0')
