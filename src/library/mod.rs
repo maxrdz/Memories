@@ -53,6 +53,20 @@ impl AlbumsLibraryView {
             .expect("Failed to downcast to AlbumsApplicationWindow.")
     }
 
+    fn update_library_item_count(&self) {
+        let albums: AlbumsApplication = self.window().app().unwrap();
+        let library_model: AlbumsLibraryListModel = albums.library_list_model();
+
+        let item_count: u32 = library_model.n_items();
+        g_debug!("Library", "Updated list model item count: {}", item_count);
+
+        self.imp().media_grid.imp().total_items_label.set_label(&format!(
+            "{} {}",
+            item_count,
+            &gettext("Items")
+        ));
+    }
+
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
         // First things first, check that the ffmpeg binary is installed.
@@ -78,6 +92,18 @@ impl AlbumsLibraryView {
             }
         }
         self.imp().spinner.start();
+
+        // We need to refresh the item count when the gallery page is visible.
+        // If we only do this at the list model's `items_changed` notify signal,
+        // it will not update the item count if the user started the app on the
+        // albums view instead of the default library view.
+        self.imp().library_view_stack.connect_visible_child_name_notify(
+            clone!(@weak self as s => move |stack: &adw::ViewStack| {
+                if stack.visible_child_name().unwrap() == "gallery_page" {
+                    s.update_library_item_count();
+                }
+            }),
+        );
 
         let albums: AlbumsApplication = self.window().app().unwrap();
         let library_model: AlbumsLibraryListModel = albums.library_list_model();
@@ -119,13 +145,9 @@ impl AlbumsLibraryView {
             self.imp().spinner.stop();
         }
 
-        library_model.connect_items_changed(
-            clone!(@weak self as s => move |model: &AlbumsLibraryListModel, _: u32, _: u32, _:u32| {
-                let item_count: u32 = model.n_items();
-                g_debug!("Library", "Updated list model item count: {}", item_count);
-                s.imp().media_grid.imp().total_items_label.set_label(&format!("{} {}", item_count, &gettext("Items")));
-            }),
-        );
+        library_model.connect_items_changed(clone!(@weak self as s => move |_, _, _, _| {
+            s.update_library_item_count();
+        }));
 
         library_model.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(

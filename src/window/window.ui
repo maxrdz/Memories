@@ -72,7 +72,6 @@
                         </property>
                       </object>
                     </child>
-                    <property name="visible-child-name">library</property>
                   </object>
                 </property>
                 <child type="bottom">

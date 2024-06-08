@@ -92,8 +92,16 @@ impl ObjectImpl for AlbumsApplicationWindow {
             window.master_stack_child_visible();
         });
 
-        // Persist application window state (width, height, maximized) with GSettings
+        // Persist application window state (width, height, maximized, etc) with GSettings
         let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+
+        gsettings
+            .bind(
+                "active-view",
+                &obj.imp().master_stack.clone(),
+                "visible-child-name",
+            )
+            .build();
 
         obj.set_maximized(gsettings.boolean("maximized"));
         obj.set_default_width(gsettings.int("window-width"));

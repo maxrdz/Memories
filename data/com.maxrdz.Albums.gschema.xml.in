@@ -13,6 +13,10 @@
       <default>false</default>
       <summary>Window maximized state</summary>
     </key>
+    <key name="active-view" type="s">
+      <default>"library"</default>
+      <summary>State of the current view stack page visible</summary>
+    </key>
     <key name="fresh-cache" type="b">
       <default>true</default>
       <summary>Cache Cleared Flag</summary>
