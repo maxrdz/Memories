@@ -28,8 +28,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.5"
-     inkscape:cx="326"
-     inkscape:cy="267"
+     inkscape:cx="352"
+     inkscape:cy="265"
      inkscape:window-width="1444"
      inkscape:window-height="751"
      inkscape:window-x="121"
@@ -39,47 +39,45 @@
   <defs
      id="defs1">
     <linearGradient
-       id="linearGradient4"
+       id="linearGradient1"
        inkscape:collect="always">
       <stop
-         style="stop-color:#141414;stop-opacity:1;"
+         style="stop-color:#241f31;stop-opacity:1;"
          offset="0"
-         id="stop4" />
+         id="stop1" />
       <stop
-         style="stop-color:#2e1010;stop-opacity:0;"
+         style="stop-color:#511d1d;stop-opacity:1;"
+         offset="0.49810797"
+         id="stop3" />
+      <stop
+         style="stop-color:#63452c;stop-opacity:1;"
          offset="1"
-         id="stop5" />
+         id="stop2" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4"
-       id="linearGradient5"
-       x1="99.482201"
-       y1="0.48388582"
-       x2="99.482201"
-       y2="197.1635"
-       gradientUnits="userSpaceOnUse" />
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="0.28801537"
+       y1="100.02057"
+       x2="199.75532"
+       y2="100.02057"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-0.00109684,-200.04223)" />
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="bg">
     <rect
-       style="fill:#63452c;fill-opacity:1;stroke-width:6.00599;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:url(#linearGradient2);fill-opacity:1;fill-rule:nonzero;stroke-width:6.00599;stroke-linecap:round;stroke-linejoin:round"
        id="rect3"
        width="199.4673"
        height="199.14917"
-       x="0.28801537"
-       y="0.44598377"
-       inkscape:label="bg" />
-    <rect
-       style="fill:url(#linearGradient5);fill-opacity:1;stroke-width:6.00599;stroke-linecap:round;stroke-linejoin:round"
-       id="rect4"
-       width="199.4673"
-       height="199.14917"
-       x="0.28801537"
-       y="0.44598377"
-       inkscape:label="gradient" />
+       x="0.28691852"
+       y="-199.59625"
+       inkscape:label="bg"
+       transform="rotate(90)" />
   </g>
   <g
      inkscape:groupmode="layer"
