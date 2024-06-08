@@ -72,16 +72,6 @@
                         </property>
                       </object>
                     </child>
-                    <child>
-                      <object class="AdwViewStackPage" id="preferences_page">
-                        <property name="name">preferences</property>
-                        <property name="title" translatable="yes">Preferences</property>
-                        <property name="icon-name">applications-system-symbolic</property>
-                        <property name="child">
-                          <object class="AlbumsPreferencesView" id="preferences_view"/>
-                        </property>
-                      </object>
-                    </child>
                     <property name="visible-child-name">library</property>
                   </object>
                 </property>

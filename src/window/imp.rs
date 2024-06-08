@@ -22,8 +22,7 @@ use crate::albums::AlbumsView;
 use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
 use crate::library::AlbumsLibraryView;
-use crate::preferences::theme_selector::AlbumsThemeSelector;
-use crate::preferences::AlbumsPreferencesView;
+use crate::window::theme_selector::AlbumsThemeSelector;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::clone;
@@ -49,13 +48,9 @@ pub struct AlbumsApplicationWindow {
     #[template_child]
     pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub preferences_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
     pub albums_view: TemplateChild<AlbumsView>,
     #[template_child]
     pub library_view: TemplateChild<AlbumsLibraryView>,
-    #[template_child]
-    pub preferences_view: TemplateChild<AlbumsPreferencesView>,
 }
 
 #[glib::object_subclass]

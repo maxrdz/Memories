@@ -21,8 +21,8 @@
     <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media_cell/media-cell.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/viewer/viewer.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">preferences/preferences.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">preferences/theme_selector/theme-selector.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">window/theme_selector/theme-selector.ui</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@/gtk">
     <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>

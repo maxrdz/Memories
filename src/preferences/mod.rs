@@ -19,29 +19,57 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
-pub mod theme_selector;
 
+use crate::application::library_list_model::AlbumsLibraryListModel;
+use crate::application::AlbumsApplication;
+use crate::window::AlbumsApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
+use glib::{clone, g_debug};
 use gtk::{gio, glib};
 use std::path::PathBuf;
 
 glib::wrapper! {
-    pub struct AlbumsPreferencesView(ObjectSubclass<imp::AlbumsPreferencesView>)
-        @extends gtk::Widget, adw::BreakpointBin,
-        @implements gtk::Accessible, gtk::Buildable;
+    pub struct AlbumsPreferencesDialog(ObjectSubclass<imp::AlbumsPreferencesDialog>)
+        @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
-impl AlbumsPreferencesView {
-    pub fn new() -> Self {
-        glib::Object::new()
+impl AlbumsPreferencesDialog {
+    pub fn new(win: &AlbumsApplicationWindow) -> Self {
+        let instance: AlbumsPreferencesDialog = glib::Object::new();
+
+        let app: AlbumsApplication = win.app().unwrap();
+        let library_model: AlbumsLibraryListModel = app.library_list_model();
+
+        // When the directory path(s) of the library list model are updated,
+        // append the folder paths on the preferences page for user configuration.
+        library_model.connect_refresh_widget_rows_notify(
+            clone!(@weak instance => move |list_model: &AlbumsLibraryListModel| {
+                g_debug!("LibraryListModel", "notify::refresh_widget_rows");
+                instance.clear_folder_entries();
+
+                for subdir in &list_model.subdirectories() {
+                    instance.append_folder_entry(
+                        gio::File::for_path(&subdir.to_string())
+                    );
+                }
+            }),
+        );
+        // `refresh-widget-rows` is notified on the `notify::subdirectories` signal,
+        // but that signal is first emitted when constructed, and we assign a
+        // callback to `notify::refresh-widget-rows` after the model is constructed.
+        // So, we manually emit it here. Will be emitted automatically going forward.
+        library_model.notify_refresh_widget_rows();
+
+        instance
     }
 
     /// Appends a new `AdwActionRow` to the "Library Collection"
     /// `AdwPreferencesGroup` widget of the preferences page.
     pub fn append_folder_entry(&self, folder: gio::File) {
-        let new_widget: adw::ActionRow = AlbumsPreferencesView::build_folder_row(&folder);
+        let new_widget: adw::ActionRow = AlbumsPreferencesDialog::build_folder_row(&folder);
 
         self.imp().library_collection.add(&new_widget);
         self.imp().library_collection_rows.borrow_mut().push(new_widget);
@@ -80,11 +108,5 @@ impl AlbumsPreferencesView {
         new_action_row.add_suffix(&remove_entry_button);
 
         new_action_row
-    }
-}
-
-impl Default for AlbumsPreferencesView {
-    fn default() -> Self {
-        Self::new()
     }
 }

@@ -24,7 +24,7 @@ use crate::globals::DEFAULT_LIBRARY_COLLECTION;
 use crate::i18n::gettext_f;
 use crate::window::AlbumsApplicationWindow;
 use adw::subclass::prelude::*;
-use glib::{clone, g_critical, g_debug};
+use glib::{g_critical, g_debug};
 use gtk::{gio, glib};
 use std::env;
 
@@ -56,26 +56,6 @@ impl AlbumsLibraryListModel {
     /// Passes newly constructed list model to the Albums application object.
     pub fn initialize_new_model(window: &AlbumsApplicationWindow) {
         let new_library_model = AlbumsLibraryListModel::default();
-
-        // When the directory path(s) of the library list model are updated,
-        // append the folder paths on the preferences page for user configuration.
-        new_library_model.connect_refresh_widget_rows_notify(
-            clone!(@weak window => move |list_model: &AlbumsLibraryListModel| {
-                g_debug!("LibraryListModel", "notify::refresh_widget_rows");
-                window.imp().preferences_view.clear_folder_entries();
-
-                for subdir in &list_model.subdirectories() {
-                    window.imp().preferences_view.append_folder_entry(
-                        gio::File::for_path(&subdir.to_string())
-                    );
-                }
-            }),
-        );
-        // `refresh-widget-rows` is notified on the `notify::subdirectories` signal,
-        // but that signal is first emitted when constructed, and we assign a
-        // callback to `notify::refresh-widget-rows` until after the constructor.
-        // So, we manually emit it here. Will be emitted automatically going forward.
-        new_library_model.notify_refresh_widget_rows();
 
         window.app().unwrap().set_library_list_model(new_library_model);
     }

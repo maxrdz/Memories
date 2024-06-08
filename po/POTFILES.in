@@ -29,12 +29,12 @@ src/main.rs
 src/preferences/imp.rs
 src/preferences/mod.rs
 src/preferences/preferences.ui
-src/preferences/theme_selector/imp.rs
-src/preferences/theme_selector/mod.rs
-src/preferences/theme_selector/theme-selector.ui
 src/thumbnails.rs
 src/utils.rs
 src/window/help-overlay.ui
 src/window/imp.rs
 src/window/mod.rs
+src/window/theme_selector/imp.rs
+src/window/theme_selector/mod.rs
+src/window/theme_selector/theme-selector.ui
 src/window/window.ui

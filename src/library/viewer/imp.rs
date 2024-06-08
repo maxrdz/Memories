@@ -19,7 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::library::details::AlbumsDetails;
-use crate::preferences::theme_selector::AlbumsThemeSelector;
+use crate::window::theme_selector::AlbumsThemeSelector;
 use adw::subclass::prelude::*;
 use gtk::glib;
 

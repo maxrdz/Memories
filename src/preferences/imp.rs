@@ -18,33 +18,25 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use super::theme_selector::AlbumsThemeSelector;
 use adw::subclass::prelude::*;
 use gtk::glib;
 use std::cell::RefCell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Albums/preferences/preferences.ui")]
-pub struct AlbumsPreferencesView {
+pub struct AlbumsPreferencesDialog {
     // We have to store references to our `AdwActionRow` widgets
     // to be able to clear them out of the preference group as children.
     pub(super) library_collection_rows: RefCell<Vec<adw::ActionRow>>,
-
-    #[template_child]
-    mobile_header_label: TemplateChild<gtk::Label>,
-    #[template_child]
-    theme_selector: TemplateChild<AlbumsThemeSelector>,
-    #[template_child]
-    mobile_actions_flowbox: TemplateChild<gtk::FlowBox>,
     #[template_child]
     pub(super) library_collection: TemplateChild<adw::PreferencesGroup>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsPreferencesView {
-    const NAME: &'static str = "AlbumsPreferencesView";
-    type Type = super::AlbumsPreferencesView;
-    type ParentType = adw::BreakpointBin;
+impl ObjectSubclass for AlbumsPreferencesDialog {
+    const NAME: &'static str = "AlbumsPreferencesDialog";
+    type Type = super::AlbumsPreferencesDialog;
+    type ParentType = adw::PreferencesDialog;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -55,6 +47,7 @@ impl ObjectSubclass for AlbumsPreferencesView {
     }
 }
 
-impl ObjectImpl for AlbumsPreferencesView {}
-impl WidgetImpl for AlbumsPreferencesView {}
-impl BreakpointBinImpl for AlbumsPreferencesView {}
+impl ObjectImpl for AlbumsPreferencesDialog {}
+impl WidgetImpl for AlbumsPreferencesDialog {}
+impl AdwDialogImpl for AlbumsPreferencesDialog {}
+impl PreferencesDialogImpl for AlbumsPreferencesDialog {}

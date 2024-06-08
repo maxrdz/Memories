@@ -22,7 +22,7 @@ use adw::subclass::prelude::*;
 use gtk::glib;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/preferences/theme_selector/theme-selector.ui")]
+#[template(resource = "/com/maxrdz/Albums/window/theme_selector/theme-selector.ui")]
 pub struct AlbumsThemeSelector {
     #[template_child]
     pub selector_box: TemplateChild<gtk::Box>,
