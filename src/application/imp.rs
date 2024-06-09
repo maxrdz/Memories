@@ -20,7 +20,7 @@
 
 use super::library_list_model::AlbumsLibraryListModel;
 use crate::config::{APP_ID, GRESOURCE_DOMAIN};
-use crate::globals::CACHE_THUMBNAILS_SUBDIR;
+use crate::globals::{PreferredAdwaitaTheme, CACHE_THUMBNAILS_SUBDIR};
 use crate::utils::get_app_cache_directory;
 use crate::window::AlbumsApplicationWindow;
 use adw::prelude::*;
@@ -28,7 +28,7 @@ use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::g_debug;
 use gtk::{gdk, gio, glib};
-use std::cell::OnceCell;
+use std::cell::{Cell, OnceCell};
 use std::fs::{DirBuilder, File};
 use std::path::Path;
 
@@ -40,6 +40,9 @@ pub struct AlbumsApplication {
     /// Initialized after the application window is presented.
     #[property(get, set)]
     pub library_list_model: OnceCell<AlbumsLibraryListModel>,
+    // Bound to GSchema key, stores a `PreferredAdwaitaTheme` value.
+    #[property(get, set)]
+    pub(super) adwaita_theme: Cell<i32>,
 }
 
 impl Default for AlbumsApplication {
@@ -47,6 +50,7 @@ impl Default for AlbumsApplication {
         Self {
             gsettings: gio::Settings::new(APP_ID),
             library_list_model: OnceCell::default(),
+            adwaita_theme: Cell::new(PreferredAdwaitaTheme::System.value()),
         }
     }
 }
@@ -80,6 +84,33 @@ impl ObjectImpl for AlbumsApplication {
 impl ApplicationImpl for AlbumsApplication {
     fn activate(&self) {
         let application = self.obj();
+
+        application.connect_adwaita_theme_notify(move |app: &super::AlbumsApplication| {
+            let gschema_key_value: i32 = app.adwaita_theme();
+
+            match gschema_key_value {
+                0 => {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::Default);
+                    app.update_theme_action_states("system-theme");
+                }
+                1 => {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceLight);
+                    app.update_theme_action_states("light-theme");
+                }
+                2 => {
+                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceDark);
+                    app.update_theme_action_states("dark-theme");
+                }
+                _ => {
+                    glib::g_error!("AlbumsApplication", "GSchema theme key out of range.");
+                    panic!("GSchema theme key out of range.");
+                }
+            };
+        });
+
+        self.gsettings
+            .bind("adwaita-theme", &application.clone(), "adwaita-theme")
+            .build();
 
         let albums_cache_dir: String = get_app_cache_directory();
         let cache_subdirs: &[&str] = &[CACHE_THUMBNAILS_SUBDIR];

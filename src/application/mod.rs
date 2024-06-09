@@ -22,16 +22,15 @@ mod imp;
 pub mod library_list_model;
 
 use crate::config::APP_ID;
+use crate::globals::*;
 use crate::i18n::gettext_f;
 use crate::utils::get_app_cache_directory;
+use crate::vcs::VCS_TAG;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::{clone, g_critical, g_error};
 use gtk::{gio, glib};
-
-use crate::globals::*;
-use crate::vcs::VCS_TAG;
 
 glib::wrapper! {
     pub struct AlbumsApplication(ObjectSubclass<imp::AlbumsApplication>)
@@ -59,10 +58,8 @@ impl AlbumsApplication {
             .state(true.to_variant())
             .activate(
                 move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
-                    app.set_adwaita_color_scheme(adw::ColorScheme::Default);
-                    app.change_action_state("dark-theme", &false.to_variant());
-                    app.change_action_state("light-theme", &false.to_variant());
-                    action.set_state(&true.to_variant());
+                    app.set_adwaita_theme(PreferredAdwaitaTheme::System.value());
+                    app.update_theme_action_states(&action.name());
                 },
             )
             .build();
@@ -70,10 +67,8 @@ impl AlbumsApplication {
             .state(false.to_variant())
             .activate(
                 move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
-                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceLight);
-                    app.change_action_state("system-theme", &false.to_variant());
-                    app.change_action_state("dark-theme", &false.to_variant());
-                    action.set_state(&true.to_variant());
+                    app.set_adwaita_theme(PreferredAdwaitaTheme::Light.value());
+                    app.update_theme_action_states(&action.name());
                 },
             )
             .build();
@@ -81,10 +76,8 @@ impl AlbumsApplication {
             .state(false.to_variant())
             .activate(
                 move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
-                    app.set_adwaita_color_scheme(adw::ColorScheme::ForceDark);
-                    app.change_action_state("system-theme", &false.to_variant());
-                    app.change_action_state("light-theme", &false.to_variant());
-                    action.set_state(&true.to_variant());
+                    app.set_adwaita_theme(PreferredAdwaitaTheme::Dark.value());
+                    app.update_theme_action_states(&action.name());
                 },
             )
             .build();
@@ -135,6 +128,33 @@ impl AlbumsApplication {
             about_action,
             quit_action,
         ]);
+    }
+
+    fn update_theme_action_states(&self, action_name: &str) {
+        match action_name {
+            "system-theme" => {
+                self.change_action_state("system-theme", &true.to_variant());
+                self.change_action_state("dark-theme", &false.to_variant());
+                self.change_action_state("light-theme", &false.to_variant());
+            }
+            "light-theme" => {
+                self.change_action_state("system-theme", &false.to_variant());
+                self.change_action_state("dark-theme", &false.to_variant());
+                self.change_action_state("light-theme", &true.to_variant());
+            }
+            "dark-theme" => {
+                self.change_action_state("system-theme", &false.to_variant());
+                self.change_action_state("dark-theme", &true.to_variant());
+                self.change_action_state("light-theme", &false.to_variant());
+            }
+            _ => {
+                g_error!(
+                    "AlbumsApplication",
+                    "update_theme_action_states() received an invalid action name."
+                );
+                panic!("update_theme_action_states() received invalid action name.");
+            }
+        }
     }
 
     fn set_adwaita_color_scheme(&self, color_scheme: adw::ColorScheme) {

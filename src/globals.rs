@@ -68,6 +68,26 @@ pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 70;
 pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 70), (3, 119), (2, 178)];
 pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(15, 78), (10, 118)];
 
+/// Representation of the preferred theme options offered
+/// in the application main popover menu widget.
+pub enum PreferredAdwaitaTheme {
+    System = 0,
+    Light = 1,
+    Dark = 2,
+}
+
+// Implement enum variants to translate to an i32.
+// Must be in range of the 'adwaita-theme' GSchema key.
+impl PreferredAdwaitaTheme {
+    pub fn value(&self) -> i32 {
+        match *self {
+            PreferredAdwaitaTheme::System => 0,
+            PreferredAdwaitaTheme::Light => 1,
+            PreferredAdwaitaTheme::Dark => 2,
+        }
+    }
+}
+
 pub struct AboutInformation {
     pub app_name: &'static str,
     pub app_version: &'static str,
