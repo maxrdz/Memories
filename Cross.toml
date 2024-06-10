@@ -18,7 +18,7 @@ pre-build = [
     "dpkg --add-architecture $CROSS_DEB_ARCH",
     "apt-get update",
     "apt-get install --assume-yes apt-utils",
-    "apt-get install --assume-yes gcc pkgconf g++-aarch64-linux-gnu libc6-dev-arm64-cross",
+    "apt-get install --assume-yes gcc pkg-config g++-aarch64-linux-gnu libc6-dev-arm64-cross",
     "apt-get download libgtk-4-dev:$CROSS_DEB_ARCH libadwaita-1-dev:$CROSS_DEB_ARCH",
     "dpkg --force-all -i *.deb",
 ]
