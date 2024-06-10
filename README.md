@@ -2,7 +2,7 @@
 <img src="./data/icons/com.maxrdz.Albums.svg" height="128"/>
 
 # Albums
-A photo and video album application designed for mobile devices.
+Organize your memories
 
 ![Library Page](./data/screenshots/library.png) | ![Albums Page](./data/screenshots/albums.png) | ![Media Viewer](./data/screenshots/viewer.png)
 -------------------------------------------- | -------------------------------------- | ----------------------------------------------

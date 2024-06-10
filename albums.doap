@@ -8,7 +8,7 @@
   <name xml:lang="en">Albums</name>
   <shortname>Albums</shortname>
   <created>2024-03-13</created>
-  <shortdesc xml:lang="en">A photo and video album application for GNOME.</shortdesc>
+  <shortdesc xml:lang="en">Organize your memories</shortdesc>
   <description xml:lang="en">A free and open source photo/video album app for Linux
   mobile, built with GTK4 and libadwaita, designed to be well integrated with GNOME
   technologies and mobile devices.</description>
@@ -22,7 +22,6 @@
   <platform>GTK 4</platform>
   <platform>Libadwaita</platform>
 
-  <!-- GNOME GitLab Repository -->
   <repository>
     <GitRepository>
       <location rdf:resource="https://gitlab.gnome.org/maxrdz/Albums.git"/>
@@ -30,7 +29,6 @@
     </GitRepository>
   </repository>
 
-  <!-- Project Maintainers -->
   <maintainer>
     <foaf:Person>
       <foaf:name>Max Rodriguez</foaf:name>
