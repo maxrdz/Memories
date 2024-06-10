@@ -22,11 +22,11 @@
     @PROJECT_GIT@/-/raw/master/data/icons/com.maxrdz.Albums.svg
   </icon>
   <branding>
-    <color type="primary" scheme_preference="light">#8a603f</color>
-    <color type="primary" scheme_preference="dark">#5f442c</color>
+    <color type="primary" scheme_preference="light">#62a0ea</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
   </branding>
   <custom>
-    <value key="GnomeSoftware::key-colors">[(95, 68, 44), (138, 96, 63)]</value>
+    <value key="GnomeSoftware::key-colors">[(26, 95, 180), (98, 160, 234)]</value>
     <value key="Purism::form_factor">workstation,mobile</value>
   </custom>
   <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
