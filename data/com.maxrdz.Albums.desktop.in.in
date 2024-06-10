@@ -2,7 +2,7 @@
 Name=Albums
 Exec=@BINARY@
 Icon=@ICON@
-Comment=A photo and video album application for GNOME
+Comment=Organize your memories
 Keywords=albums;gallery;pictures;photos;videos;
 Categories=GTK;GNOME;Audio;Video;Player;
 Type=Application

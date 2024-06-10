@@ -6,27 +6,27 @@
   <project_license>GPL-3.0-or-later</project_license>
   <name>Albums</name>
   <summary>Organize your memories</summary>
-	<description>
+  <description>
     <p>A photo and video album application for GNOME.
     Designed to be well integrated with GNOME technologies
     and Linux mobile devices.</p>
-	  <p>Application Features:</p>
+    <p>Application Features:</p>
     <ul>
       <li>View your photo and video gallery</li>
       <li>Organize your memories with Albums</li>
       <li>Inspect rich metadata from photos and videos</li>
       <li>Fast GPU accelerated image rendering with Glycin</li>
     </ul>
-	</description>
+  </description>
   <icon type="remote" width="64" height="64" scale="1">
     @PROJECT_GIT@/-/raw/master/data/icons/com.maxrdz.Albums.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#62a0ea</color>
-    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+    <color type="primary" scheme_preference="dark">#2b5c99</color>
   </branding>
   <custom>
-    <value key="GnomeSoftware::key-colors">[(26, 95, 180), (98, 160, 234)]</value>
+    <value key="GnomeSoftware::key-colors">[(43, 92, 153), (98, 160, 234)]</value>
     <value key="Purism::form_factor">workstation,mobile</value>
   </custom>
   <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
