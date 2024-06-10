@@ -21,6 +21,7 @@
 use crate::albums::AlbumsView;
 use crate::application::library_list_model::AlbumsLibraryListModel;
 use crate::application::AlbumsApplication;
+use crate::globals::DEVELOPMENT_BUILD;
 use crate::library::AlbumsLibraryView;
 use crate::window::theme_selector::AlbumsThemeSelector;
 use adw::prelude::*;
@@ -73,6 +74,12 @@ impl ObjectImpl for AlbumsApplicationWindow {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
+
+        // Add the 'devel' CSS class to our application
+        // window if this is a development build of Albums.
+        if DEVELOPMENT_BUILD {
+            obj.add_css_class("devel");
+        }
 
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method

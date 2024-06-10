@@ -364,6 +364,14 @@ impl AlbumsApplication {
         );
         about.present(&window)
     }
+
+    pub fn is_flatpak() -> bool {
+        if let Ok(var) = std::env::var("FLATPAK_ID") {
+            var == APP_ID
+        } else {
+            false
+        }
+    }
 }
 
 impl Default for AlbumsApplication {
