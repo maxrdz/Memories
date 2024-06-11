@@ -24,8 +24,8 @@ use crate::window::AlbumsApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use glib::{g_debug, g_error};
-use gtk::{gio, glib};
+use glib::{clone, g_debug, g_error};
+use gtk::{gdk, gio, glib};
 
 /// Enum that represents the types of content that
 /// can be displayed by the `AlbumsViewer` object.
@@ -70,7 +70,14 @@ impl AlbumsViewer {
     pub fn set_content_file(&self, file: &gio::File) {
         match self.imp().viewer_stack.visible_child_name().unwrap().as_str() {
             "render" => self.imp().viewer_picture.set_file(Some(file)),
-            "image" => self.imp().viewer_picture.set_file(Some(file)),
+            "image" => {
+                glib::spawn_future_local(clone!(@weak self as viewer, @strong file => async move {
+                    let image: glycin::Image = glycin::Loader::new(file).load().await.expect("FIXME");
+                    let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture;
+
+                    viewer.imp().viewer_picture.set_paintable(Some(&texture));
+                }));
+            }
             "video" => self.imp().viewer_video.set_file(Some(file)),
             _ => g_error!("Viewer", "Found unexpected visible child name in viewer stack."),
         }

@@ -47,8 +47,7 @@
         <property name="content">
           <object class="AdwOverlaySplitView" id="split_view">
             <property name="show-sidebar">false</property>
-            <!-- GTK_PACK_END == 1 -->
-            <property name="sidebar-position">1</property>
+            <property name="sidebar-position">end</property>
             <property name="sidebar">
               <object class="AlbumsDetails" id="details_widget"/>
             </property>
@@ -113,10 +112,13 @@
                             <property name="propagate-natural-height">True</property>
                             <property name="propagate-natural-width">True</property>
                             <property name="child">
-                              <object class="GtkPicture" id="viewer_picture">
-                                <property name="can-shrink">True</property>
-                                <!-- 	GTK_CONTENT_FIT_CONTAIN == 1-->
-                                <property name="content-fit">1</property>
+                              <object class="GtkGraphicsOffload">
+                                <property name="child">
+                                  <object class="GtkPicture" id="viewer_picture">
+                                    <property name="can-shrink">True</property>
+                                    <property name="content-fit">contain</property>
+                                  </object>
+                                </property>
                               </object>
                             </property>
                           </object>
