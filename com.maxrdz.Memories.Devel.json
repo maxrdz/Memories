@@ -1,7 +1,7 @@
 {
-    "app-id" : "com.maxrdz.Albums",
+    "app-id" : "com.maxrdz.Memories.Devel",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
+    "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable",
@@ -14,7 +14,7 @@
             "add-ld-path" : "."
         }
     },
-    "command" : "albums",
+    "command" : "memories-devel",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -25,7 +25,11 @@
         "append-path" : "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
         "build-args" : [
             "--share=network"
-        ]
+        ],
+        "env" : {
+            "RUST_BACKTRACE" : "1",
+            "RUST_LOG" : "memories=debug"
+        }
     },
     "cleanup" : [
         "/include",
@@ -40,13 +44,16 @@
     ],
     "modules" : [
         {
-            "name" : "albums",
+            "name" : "memories",
             "buildsystem" : "meson",
+            "config-opts" : [
+            	"-Dprofile=devel"
+            ],
             "builddir" : true,
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "../"
+                    "url" : "./"
                 }
             ]
         }

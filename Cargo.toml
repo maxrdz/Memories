@@ -1,16 +1,16 @@
 [package]
-name = "albums"
+name = "memories"
 version = "46.3.0"
 edition = "2021"
 rust-version = "1.78"
 license = "GPL-3.0-or-later"
 authors = ["Max Rodriguez <me@maxrdz.com>"]
-repository = "https://gitlab.gnome.org/maxrdz/Albums"
-homepage = "https://gitlab.gnome.org/maxrdz/Albums"
+repository = "https://gitlab.gnome.org/maxrdz/Memories"
+homepage = "https://gitlab.gnome.org/maxrdz/Memories"
 publish = false
 
 [package.metadata.urls]
-issuetracker = "https://gitlab.gnome.org/maxrdz/Albums/issues"
+issuetracker = "https://gitlab.gnome.org/maxrdz/Memories/issues"
 
 [profile.release]
 codegen-units = 1 # Best LLVM optimization when built on a single thread

@@ -1,54 +1,54 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
 pub mod theme_selector;
 
-use crate::application::AlbumsApplication;
-use crate::preferences::AlbumsPreferencesDialog;
+use crate::application::MrsApplication;
+use crate::preferences::MrsPreferencesDialog;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 
 glib::wrapper! {
-    pub struct AlbumsApplicationWindow(ObjectSubclass<imp::AlbumsApplicationWindow>)
+    pub struct MrsApplicationWindow(ObjectSubclass<imp::MrsApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
         @implements gio::ActionGroup, gio::ActionMap, gtk::Root;
 }
 
 #[gtk::template_callbacks]
-impl AlbumsApplicationWindow {
-    pub fn new(application: &AlbumsApplication) -> Self {
+impl MrsApplicationWindow {
+    pub fn new(application: &MrsApplication) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()
     }
 
-    pub fn app(&self) -> Option<AlbumsApplication> {
+    pub fn app(&self) -> Option<MrsApplication> {
         self.application().and_downcast()
     }
 
     fn setup_gactions(&self) {
         let settings_action = gio::ActionEntry::builder("settings")
             .activate(move |win: &Self, _, _| {
-                AlbumsPreferencesDialog::new(win).present(win);
+                MrsPreferencesDialog::new(win).present(win);
             })
             .build();
 

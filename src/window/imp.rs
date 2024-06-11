@@ -1,37 +1,37 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::albums::AlbumsView;
-use crate::application::library_list_model::AlbumsLibraryListModel;
-use crate::application::AlbumsApplication;
+use crate::albums::MrsAlbumsView;
+use crate::application::library_list_model::MrsLibraryListModel;
+use crate::application::MrsApplication;
 use crate::globals::DEVELOPMENT_BUILD;
-use crate::library::AlbumsLibraryView;
-use crate::window::theme_selector::AlbumsThemeSelector;
+use crate::library::MrsLibraryView;
+use crate::window::theme_selector::MrsThemeSelector;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::clone;
 use gtk::{gio, glib};
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/window/window.ui")]
-pub struct AlbumsApplicationWindow {
+#[template(resource = "/com/maxrdz/Memories/window/window.ui")]
+pub struct MrsApplicationWindow {
     #[template_child]
     pub window_navigation: TemplateChild<adw::NavigationView>,
     #[template_child]
@@ -49,15 +49,15 @@ pub struct AlbumsApplicationWindow {
     #[template_child]
     pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub albums_view: TemplateChild<AlbumsView>,
+    pub albums_view: TemplateChild<MrsAlbumsView>,
     #[template_child]
-    pub library_view: TemplateChild<AlbumsLibraryView>,
+    pub library_view: TemplateChild<MrsLibraryView>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsApplicationWindow {
-    const NAME: &'static str = "AlbumsApplicationWindow";
-    type Type = super::AlbumsApplicationWindow;
+impl ObjectSubclass for MrsApplicationWindow {
+    const NAME: &'static str = "MrsApplicationWindow";
+    type Type = super::MrsApplicationWindow;
     type ParentType = adw::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
@@ -70,13 +70,13 @@ impl ObjectSubclass for AlbumsApplicationWindow {
     }
 }
 
-impl ObjectImpl for AlbumsApplicationWindow {
+impl ObjectImpl for MrsApplicationWindow {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
 
         // Add the 'devel' CSS class to our application
-        // window if this is a development build of Albums.
+        // window if this is a development build of Memories.
         if DEVELOPMENT_BUILD {
             obj.add_css_class("devel");
         }
@@ -84,15 +84,15 @@ impl ObjectImpl for AlbumsApplicationWindow {
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = AlbumsThemeSelector::new();
+        let new_theme_selector = MrsThemeSelector::new();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
 
         obj.setup_gactions();
 
-        obj.connect_show(move |window: &super::AlbumsApplicationWindow| {
-            // AlbumsLibraryListModel instance MUST be initialized after
+        obj.connect_show(move |window: &super::MrsApplicationWindow| {
+            // MrsLibraryListModel instance MUST be initialized after
             // the application window, but before the library view.
-            AlbumsLibraryListModel::initialize_new_model(window);
+            MrsLibraryListModel::initialize_new_model(window);
 
             // This callback wont be triggered on start up by itself, so we
             // want to check the very first visible child in the master view stack.
@@ -100,7 +100,7 @@ impl ObjectImpl for AlbumsApplicationWindow {
         });
 
         // Persist application window state (width, height, maximized, etc) with GSettings
-        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+        let gsettings: gio::Settings = MrsApplication::default().gsettings();
 
         gsettings
             .bind(
@@ -115,12 +115,12 @@ impl ObjectImpl for AlbumsApplicationWindow {
         obj.set_default_height(gsettings.int("window-height"));
 
         obj.connect_maximized_notify(
-            clone!(@weak gsettings as gs => move |win: &super::AlbumsApplicationWindow| {
+            clone!(@weak gsettings as gs => move |win: &super::MrsApplicationWindow| {
                 gs.set_boolean("maximized", win.is_maximized()).unwrap();
             }),
         );
 
-        obj.connect_close_request(move |win: &super::AlbumsApplicationWindow| {
+        obj.connect_close_request(move |win: &super::MrsApplicationWindow| {
             if !win.is_maximized() {
                 gsettings.set_int("window-width", win.width()).unwrap();
                 gsettings.set_int("window-height", win.height()).unwrap();
@@ -130,7 +130,7 @@ impl ObjectImpl for AlbumsApplicationWindow {
     }
 }
 
-impl WidgetImpl for AlbumsApplicationWindow {}
-impl WindowImpl for AlbumsApplicationWindow {}
-impl ApplicationWindowImpl for AlbumsApplicationWindow {}
-impl AdwApplicationWindowImpl for AlbumsApplicationWindow {}
+impl WidgetImpl for MrsApplicationWindow {}
+impl WindowImpl for MrsApplicationWindow {}
+impl ApplicationWindowImpl for MrsApplicationWindow {}
+impl AdwApplicationWindowImpl for MrsApplicationWindow {}

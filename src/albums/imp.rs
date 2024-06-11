@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -22,8 +22,8 @@ use adw::glib;
 use adw::subclass::prelude::*;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/albums/albums.ui")]
-pub struct AlbumsView {
+#[template(resource = "/com/maxrdz/Memories/albums/albums.ui")]
+pub struct MrsAlbumsView {
     #[template_child]
     albums_box: TemplateChild<gtk::Box>,
     #[template_child]
@@ -47,9 +47,9 @@ pub struct AlbumsView {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsView {
-    const NAME: &'static str = "AlbumsView";
-    type Type = super::AlbumsView;
+impl ObjectSubclass for MrsAlbumsView {
+    const NAME: &'static str = "MrsAlbumsView";
+    type Type = super::MrsAlbumsView;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -61,7 +61,7 @@ impl ObjectSubclass for AlbumsView {
     }
 }
 
-impl ObjectImpl for AlbumsView {}
-impl WidgetImpl for AlbumsView {}
-impl BinImpl for AlbumsView {}
-impl BreakpointBinImpl for AlbumsView {}
+impl ObjectImpl for MrsAlbumsView {}
+impl WidgetImpl for MrsAlbumsView {}
+impl BinImpl for MrsAlbumsView {}
+impl BreakpointBinImpl for MrsAlbumsView {}

@@ -7,7 +7,6 @@
     <file preprocess="xml-stripblanks" alias="albums-symbolic.svg">icons/albums-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="albums-new-symbolic.svg">icons/albums-new-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="library-symbolic.svg">icons/library-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="live-photo-symbolic.svg">icons/live-photo-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="screenshot-symbolic.svg">icons/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="svg-symbolic.svg">icons/svg-symbolic.svg</file>

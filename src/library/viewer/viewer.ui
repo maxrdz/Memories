@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsViewer" parent="AdwBreakpointBin">
+  <template class="MrsViewer" parent="AdwBreakpointBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <child>
@@ -49,7 +49,7 @@
             <property name="show-sidebar">false</property>
             <property name="sidebar-position">end</property>
             <property name="sidebar">
-              <object class="AlbumsDetails" id="details_widget"/>
+              <object class="MrsDetails" id="details_widget"/>
             </property>
             <property name="content">
               <object class="AdwToolbarView">
@@ -156,7 +156,7 @@
         <attribute name="action">win.settings</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About Albums</attribute>
+        <attribute name="label" translatable="yes">_About Memories</attribute>
         <attribute name="action">app.about</attribute>
       </item>
       <item>

@@ -1,6 +1,6 @@
 NAME: Pipeline
-LINK: https://gitlab.gnome.org/maxrdz/Albums/-/commits/%{default_branch}
-BADGE_IMG_URL: https://gitlab.gnome.org/maxrdz/Albums/badges/%{default_branch}/pipeline.svg
+LINK: https://gitlab.gnome.org/maxrdz/Memories/-/commits/%{default_branch}
+BADGE_IMG_URL: https://gitlab.gnome.org/maxrdz/Memories/badges/%{default_branch}/pipeline.svg
 
 NAME: GNOME Code of Conduct
 LINK: https://conduct.gnome.org/

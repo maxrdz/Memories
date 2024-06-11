@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -22,8 +22,8 @@ use adw::subclass::prelude::*;
 use gtk::glib;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/window/theme_selector/theme-selector.ui")]
-pub struct AlbumsThemeSelector {
+#[template(resource = "/com/maxrdz/Memories/window/theme_selector/theme-selector.ui")]
+pub struct MrsThemeSelector {
     #[template_child]
     pub selector_box: TemplateChild<gtk::Box>,
     #[template_child]
@@ -35,9 +35,9 @@ pub struct AlbumsThemeSelector {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsThemeSelector {
-    const NAME: &'static str = "AlbumsThemeSelector";
-    type Type = super::AlbumsThemeSelector;
+impl ObjectSubclass for MrsThemeSelector {
+    const NAME: &'static str = "MrsThemeSelector";
+    type Type = super::MrsThemeSelector;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -49,6 +49,6 @@ impl ObjectSubclass for AlbumsThemeSelector {
     }
 }
 
-impl ObjectImpl for AlbumsThemeSelector {}
-impl WidgetImpl for AlbumsThemeSelector {}
-impl BinImpl for AlbumsThemeSelector {}
+impl ObjectImpl for MrsThemeSelector {}
+impl WidgetImpl for MrsThemeSelector {}
+impl BinImpl for MrsThemeSelector {}

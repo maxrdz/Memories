@@ -2,7 +2,7 @@
 # Original Source taken from World/Warp, licensed under the GNU GPLv3 or later.
 # https://gitlab.gnome.org/World/warp/-/blob/main/build-aux/generate-potfile.sh
 
-PROJECT_NAME=albums
+PROJECT_NAME=memories
 XGETTEXT_ARGS="--add-comments --from-code=utf-8 --keyword=gettext_f --keyword=ngettext_f:1,2"
 
 src="$(find src/ -path '*.rs')"

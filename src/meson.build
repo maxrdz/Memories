@@ -7,6 +7,7 @@ pkgdatadir = get_option('prefix') / get_option('datadir') / project_name
 conf = configuration_data()
 conf.set_quoted('APP_ID', application_id)
 conf.set_quoted('APP_NAME', project_name)
+conf.set_quoted('APP_REPO', project_git)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
@@ -55,11 +56,11 @@ cargo_env = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 if get_option('profile') == 'default' or get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
   rust_target = 'release'
-  message('Building Albums for Release.')
+  message('Building Memories for Release.')
 else
   rust_target = 'debug'
   out_binary_file += '-devel'
-  message('Building Albums for Debug.')
+  message('Building Memories for Debug.')
 endif
 
 if get_option('disable-glycin-sandbox')

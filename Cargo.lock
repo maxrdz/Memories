@@ -12,25 +12,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "albums"
-version = "46.3.0"
-dependencies = [
- "async-channel",
- "async-fs",
- "async-process",
- "async-semaphore",
- "cfg-if",
- "gettext-rs",
- "glycin",
- "gtk4",
- "libadwaita",
- "libfeedback",
- "md-5",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "anyhow"
 version = "1.0.81"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1245,6 +1226,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a634b1c61a95585bd15607c6ab0c4e5b226e695ff2800ba0cdccddf208c406c"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "memories"
+version = "46.3.0"
+dependencies = [
+ "async-channel",
+ "async-fs",
+ "async-process",
+ "async-semaphore",
+ "cfg-if",
+ "gettext-rs",
+ "glycin",
+ "gtk4",
+ "libadwaita",
+ "libfeedback",
+ "md-5",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

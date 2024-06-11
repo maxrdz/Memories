@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -22,27 +22,27 @@ mod imp;
 pub mod media_cell;
 
 use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
-use crate::window::AlbumsApplicationWindow;
+use crate::window::MrsApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct AlbumsMediaGridView(ObjectSubclass<imp::AlbumsMediaGridView>)
+    pub struct MrsMediaGridView(ObjectSubclass<imp::MrsMediaGridView>)
         @extends gtk::Widget, adw::Bin, adw::BreakpointBin;
 }
 
 #[gtk::template_callbacks]
-impl AlbumsMediaGridView {
+impl MrsMediaGridView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    fn window(&self) -> AlbumsApplicationWindow {
+    fn window(&self) -> MrsApplicationWindow {
         self.root()
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
-            .expect("Failed to downcast to AlbumsApplicationWindow.")
+            .expect("Failed to downcast to MrsApplicationWindow.")
     }
 
     pub fn set_custom_title(&self, string: &str) {
@@ -120,7 +120,7 @@ impl AlbumsMediaGridView {
     }
 }
 
-impl Default for AlbumsMediaGridView {
+impl Default for MrsMediaGridView {
     fn default() -> Self {
         Self::new()
     }

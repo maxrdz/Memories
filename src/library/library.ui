@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsLibraryView" parent="AdwBin">
+  <template class="MrsLibraryView" parent="AdwBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <property name="child">
@@ -52,7 +52,7 @@
               <object class="AdwStatusPage" id="error_status_widget">
                 <property name="icon-name">emblem-important-symbolic</property>
                 <property name="title" translatable="yes" context="Status Page Title">An Error Occurred</property>
-                <property name="description" translatable="yes" context="Status Page Description">This is a placeholder error description. If you see this, please file an issue to Albums. You can visit the issue tracker via the about dialog.</property>
+                <property name="description" translatable="yes" context="Status Page Description">This is a placeholder error description. If you see this, please file an issue. You can visit the issue tracker via the about dialog.</property>
               </object>
             </property>
           </object>
@@ -73,7 +73,7 @@
           <object class="AdwViewStackPage" id="gallery_page">
             <property name="name">gallery_page</property>
             <property name="child">
-              <object class="AlbumsMediaGridView" id="media_grid"/>
+              <object class="MrsMediaGridView" id="media_grid"/>
             </property>
           </object>
         </child>

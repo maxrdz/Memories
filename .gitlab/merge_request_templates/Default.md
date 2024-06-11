@@ -6,7 +6,7 @@ Enter your description here.
 
 # Merge Request Checklist
 
-- [ ] Code linting, formatting, cargo-typos, cargo-deny, and unit tests pass.
+- [ ] Code linting, formatting, typos, cargo-deny, and unit tests pass.
 - [ ] No known issues that can lead to data loss.
 - [ ] Being careful about inflicting harm like data loss on users.
 - [ ] UI/UX changes follow the [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).

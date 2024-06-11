@@ -2,7 +2,7 @@
 <interface>
   <!-- Widget from https://gitlab.gnome.org/GNOME/console/-/blob/19612d0ddad3876f0d27bb0f68912371f8e8f5eb/src/kgx-theme-switcher.ui -->
   <!-- Licensed under the GNU GPLv3 -->
-  <template class="AlbumsThemeSelector" parent="AdwBin">
+  <template class="MrsThemeSelector" parent="AdwBin">
     <style>
       <class name="themeselector"/>
     </style>

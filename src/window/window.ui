@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
-  <template class="AlbumsApplicationWindow" parent="AdwApplicationWindow">
+  <template class="MrsApplicationWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Albums</property>
     <property name="default-width">1200</property>
     <property name="default-height">800</property>
@@ -55,20 +55,20 @@
                     <child>
                       <object class="AdwViewStackPage" id="library_page">
                         <property name="name">library</property>
-                        <property name="title" translatable="yes" context="View Stack Page Title" comments="'Library' referring to a library of photos">Library</property>
-                        <property name="icon-name">library-symbolic</property>
+                        <property name="title" translatable="yes" comments="'Library' referring to a library of photos">Photos</property>
+                        <property name="icon-name">view-grid-symbolic</property>
                         <property name="child">
-                          <object class="AlbumsLibraryView" id="library_view"/>
+                          <object class="MrsLibraryView" id="library_view"/>
                         </property>
                       </object>
                     </child>
                     <child>
                       <object class="AdwViewStackPage" id="albums_page">
                         <property name="name">albums</property>
-                        <property name="title" translatable="yes">Albums</property>
+                        <property name="title" translatable="yes" >Albums</property>
                         <property name="icon-name">albums-symbolic</property>
                         <property name="child">
-                          <object class="AlbumsView" id="albums_view"/>
+                          <object class="MrsAlbumsView" id="albums_view"/>
                         </property>
                       </object>
                     </child>
@@ -99,7 +99,7 @@
         <attribute name="action">win.settings</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About Albums</attribute>
+        <attribute name="label" translatable="yes">_About Memories</attribute>
         <attribute name="action">app.about</attribute>
       </item>
       <item>

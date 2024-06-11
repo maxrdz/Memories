@@ -1,26 +1,26 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 //! Data model implementation of the LibraryListModel class.
 
-use crate::application::AlbumsApplication;
+use crate::application::MrsApplication;
 use crate::globals::DIRECTORY_MODEL_PRIORITY;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -50,8 +50,8 @@ struct SubdirectoryListModel {
 /// `GtkDirectoryList` models under the hood to recursively
 /// enumerate files under certain root directory paths.
 #[derive(glib::Properties, Debug)]
-#[properties(wrapper_type = super::AlbumsLibraryListModel)]
-pub struct AlbumsLibraryListModel {
+#[properties(wrapper_type = super::MrsLibraryListModel)]
+pub struct MrsLibraryListModel {
     #[property(get, set)]
     subdirectories: RefCell<glib::StrV>,
     #[property(get, set)]
@@ -64,11 +64,11 @@ pub struct AlbumsLibraryListModel {
     public_items: RefCell<Vec<glib::Object>>,
 }
 
-impl Default for AlbumsLibraryListModel {
+impl Default for MrsLibraryListModel {
     fn default() -> Self {
         Self {
             subdirectories: RefCell::new({
-                let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+                let gsettings: gio::Settings = MrsApplication::default().gsettings();
                 gsettings.strv("library-collection-paths")
             }),
             models_loaded: Cell::new(false),
@@ -81,17 +81,17 @@ impl Default for AlbumsLibraryListModel {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsLibraryListModel {
-    const NAME: &'static str = "AlbumsLibraryListModel";
-    type Type = super::AlbumsLibraryListModel;
+impl ObjectSubclass for MrsLibraryListModel {
+    const NAME: &'static str = "MrsLibraryListModel";
+    type Type = super::MrsLibraryListModel;
     type Interfaces = (gio::ListModel,);
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for AlbumsLibraryListModel {
+impl ObjectImpl for MrsLibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
-        let gsettings: gio::Settings = AlbumsApplication::default().gsettings();
+        let gsettings: gio::Settings = MrsApplication::default().gsettings();
 
         // Bind our `subdirectories` property with the gschema key.
         gsettings
@@ -99,7 +99,7 @@ impl ObjectImpl for AlbumsLibraryListModel {
             .build();
 
         obj.connect_subdirectories_notify(
-            clone!(@weak self as s, @weak obj => move |model: &super::AlbumsLibraryListModel| {
+            clone!(@weak self as s, @weak obj => move |model: &super::MrsLibraryListModel| {
                 g_debug!("LibraryListModel", "notify::subdirectories");
 
                 // Signal to refresh the 'library collection' preference group, which
@@ -150,7 +150,7 @@ impl ObjectImpl for AlbumsLibraryListModel {
     }
 }
 
-impl ListModelImpl for AlbumsLibraryListModel {
+impl ListModelImpl for MrsLibraryListModel {
     fn item(&self, position: u32) -> Option<glib::Object> {
         self.public_items
             .borrow()
@@ -168,7 +168,7 @@ impl ListModelImpl for AlbumsLibraryListModel {
     }
 }
 
-impl AlbumsLibraryListModel {
+impl MrsLibraryListModel {
     /// Returns a root model by comparing all root
     /// models with the given `GtkDirectoryList` instance.
     fn lookup_root_model(&self, directory_list: &gtk::DirectoryList) -> Option<Rc<RootListModel>> {

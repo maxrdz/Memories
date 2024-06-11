@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -23,8 +23,8 @@ use gtk::glib;
 use std::cell::RefCell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/preferences/preferences.ui")]
-pub struct AlbumsPreferencesDialog {
+#[template(resource = "/com/maxrdz/Memories/preferences/preferences.ui")]
+pub struct MrsPreferencesDialog {
     // We have to store references to our `AdwActionRow` widgets
     // to be able to clear them out of the preference group as children.
     pub(super) library_collection_rows: RefCell<Vec<adw::ActionRow>>,
@@ -33,9 +33,9 @@ pub struct AlbumsPreferencesDialog {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsPreferencesDialog {
-    const NAME: &'static str = "AlbumsPreferencesDialog";
-    type Type = super::AlbumsPreferencesDialog;
+impl ObjectSubclass for MrsPreferencesDialog {
+    const NAME: &'static str = "MrsPreferencesDialog";
+    type Type = super::MrsPreferencesDialog;
     type ParentType = adw::PreferencesDialog;
 
     fn class_init(klass: &mut Self::Class) {
@@ -47,7 +47,7 @@ impl ObjectSubclass for AlbumsPreferencesDialog {
     }
 }
 
-impl ObjectImpl for AlbumsPreferencesDialog {}
-impl WidgetImpl for AlbumsPreferencesDialog {}
-impl AdwDialogImpl for AlbumsPreferencesDialog {}
-impl PreferencesDialogImpl for AlbumsPreferencesDialog {}
+impl ObjectImpl for MrsPreferencesDialog {}
+impl WidgetImpl for MrsPreferencesDialog {}
+impl AdwDialogImpl for MrsPreferencesDialog {}
+impl PreferencesDialogImpl for MrsPreferencesDialog {}

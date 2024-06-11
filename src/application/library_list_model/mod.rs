@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -22,18 +22,18 @@ mod imp;
 
 use crate::globals::DEFAULT_LIBRARY_COLLECTION;
 use crate::i18n::gettext_f;
-use crate::window::AlbumsApplicationWindow;
+use crate::window::MrsApplicationWindow;
 use adw::subclass::prelude::*;
 use glib::{g_critical, g_debug};
 use gtk::{gio, glib};
 use std::env;
 
 glib::wrapper! {
-    pub struct AlbumsLibraryListModel(ObjectSubclass<imp::AlbumsLibraryListModel>)
+    pub struct MrsLibraryListModel(ObjectSubclass<imp::MrsLibraryListModel>)
         @implements gio::ListModel;
 }
 
-impl AlbumsLibraryListModel {
+impl MrsLibraryListModel {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -52,10 +52,10 @@ impl AlbumsLibraryListModel {
             .connect_error_notify(callback)
     }
 
-    /// Setup code for initialize the library list model at start up of Albums.
-    /// Passes newly constructed list model to the Albums application object.
-    pub fn initialize_new_model(window: &AlbumsApplicationWindow) {
-        let new_library_model = AlbumsLibraryListModel::default();
+    /// Setup code for initialize the library list model at start up of Memories.
+    /// Passes newly constructed list model to the Memories application object.
+    pub fn initialize_new_model(window: &MrsApplicationWindow) {
+        let new_library_model = MrsLibraryListModel::default();
 
         window.app().unwrap().set_library_list_model(new_library_model);
     }
@@ -73,7 +73,7 @@ impl AlbumsLibraryListModel {
                 return Err(gettext_f(
                     // TRANSLATORS: You can remove odd spacing. This is due to code linting.
                     "The {ENV_VAR} environment variable was found, \
-                    so Albums cannot open your photo library.",
+                    so Memories cannot open your photo library.",
                     &[("ENV_VAR", "$HOME")],
                 ));
             }
@@ -99,7 +99,7 @@ impl AlbumsLibraryListModel {
     }
 }
 
-impl Default for AlbumsLibraryListModel {
+impl Default for MrsLibraryListModel {
     fn default() -> Self {
         Self::new()
     }

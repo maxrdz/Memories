@@ -4,12 +4,12 @@
   <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Albums</name>
+  <name>Memories</name>
   <summary>Organize your memories</summary>
   <description>
     <p>A photo and video album application for GNOME.
     Designed to be well integrated with GNOME technologies
-    and Linux mobile devices.</p>
+    and mobile devices.</p>
     <p>Application Features:</p>
     <ul>
       <li>View your photo and video gallery</li>
@@ -19,7 +19,7 @@
     </ul>
   </description>
   <icon type="remote" width="64" height="64" scale="1">
-    @PROJECT_GIT@/-/raw/master/data/icons/com.maxrdz.Albums.svg
+    @PROJECT_GIT@/-/raw/master/data/icons/@APP_ID@.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#62a0ea</color>
@@ -41,7 +41,7 @@
   <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
   <url type="donation">https://github.com/sponsors/maxrdz</url>
   <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
-  <!--<url type="translate">https://l10n.gnome.org/module/albums</url>-->
+  <!--<url type="translate">https://l10n.gnome.org/module/memories</url>-->
   <translation type="gettext" source_locale="en_US">@GETTEXT_DOMAIN@</translation>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
   <provides>
@@ -62,27 +62,27 @@
   </recommends>
   <screenshots>
     <screenshot type="default" environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/library.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library.png</image>
       <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/albums.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums.png</image>
       <caption>Albums Page</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/viewer.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer.png</image>
       <caption>Media Viewer</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/library-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library-dark.png</image>
       <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/albums-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums-dark.png</image>
       <caption>Albums Page</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/appdata/viewer-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer-dark.png</image>
       <caption>Media Viewer</caption>
     </screenshot>
   </screenshots>
@@ -91,7 +91,7 @@
       <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG</url>
       <description>
         <p>
-          Initial release of Albums. Following the GNOME release
+          Initial release of Memories. Following the GNOME release
           schedule as of GNOME version 46.3.
         </p>
       </description>

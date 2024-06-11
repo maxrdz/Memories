@@ -1,24 +1,24 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::config::{APP_NAME, VERSION};
+use crate::config::{APP_NAME, APP_REPO, VERSION};
 use cfg_if::cfg_if;
 use gtk::glib::source::Priority;
 use gtk::License;
@@ -38,8 +38,8 @@ cfg_if! {
     }
 }
 
-/// Can be read by other modules in Album to display to
-/// the user what binary needs to be installed to use Album.
+/// Can be read by other modules to display to the user
+/// what binary needs to be installed to use Memories.
 pub static FFMPEG_BINARY: &str = "ffmpeg";
 
 /// The number of permits given to the async semaphore
@@ -50,7 +50,7 @@ pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
 /// the default since it is usually higher than GTK redraw priority.
 pub static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 
-/// The following statics are related to Albums' cache.
+/// The following statics are related to the application cache.
 pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
 
 /// Following paths relative to $HOME env var path.
@@ -104,7 +104,7 @@ pub struct AboutInformation {
 pub static APP_INFO: AboutInformation = AboutInformation {
     app_name: APP_NAME,
     app_version: VERSION,
-    app_repo: "https://gitlab.gnome.org/maxrdz/Albums",
+    app_repo: APP_REPO,
     app_author: "Max Rodriguez",
     authors: &["Max Rodriguez <me@maxrdz.com>"],
     artists: &["Max Rodriguez <me@maxrdz.com>"],

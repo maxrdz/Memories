@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Albums
+Name=Memories
 Exec=@BINARY@
 Icon=@ICON@
 Comment=Organize your memories

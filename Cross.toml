@@ -5,7 +5,8 @@
 image.name = "ubuntu:latest"
 image.toolchain = ["x86_64-unknown-linux-gnu"]
 env.passthrough = [
-    "PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig/"
+    "PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig/",
+    "PKG_CONFIG_ALLOW_CROSS_aarch64-unknown-linux-gnu=1"
 ]
 # Refer to: https://github.com/cross-rs/cross/issues/751
 pre-build = [

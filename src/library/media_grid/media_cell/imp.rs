@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -29,8 +29,8 @@ use std::cell::{Cell, OnceCell, RefCell};
 /// of the library photo grid view. Stores signal
 /// handler IDs, glib async join handles, metadata, etc.
 #[derive(Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/media_grid/media_cell/media-cell.ui")]
-pub struct AlbumsMediaCell {
+#[template(resource = "/com/maxrdz/Memories/library/media_grid/media_cell/media-cell.ui")]
+pub struct MrsMediaCell {
     #[template_child]
     pub(super) revealer: TemplateChild<gtk::Revealer>,
     #[template_child]
@@ -54,10 +54,10 @@ pub struct AlbumsMediaCell {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsMediaCell {
-    const NAME: &'static str = "AlbumsMediaCell";
+impl ObjectSubclass for MrsMediaCell {
+    const NAME: &'static str = "MrsMediaCell";
     type ParentType = adw::Bin;
-    type Type = super::AlbumsMediaCell;
+    type Type = super::MrsMediaCell;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -68,6 +68,6 @@ impl ObjectSubclass for AlbumsMediaCell {
     }
 }
 
-impl ObjectImpl for AlbumsMediaCell {}
-impl WidgetImpl for AlbumsMediaCell {}
-impl BinImpl for AlbumsMediaCell {}
+impl ObjectImpl for MrsMediaCell {}
+impl WidgetImpl for MrsMediaCell {}
+impl BinImpl for MrsMediaCell {}

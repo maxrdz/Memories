@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsView" parent="AdwBreakpointBin">
+  <template class="MrsAlbumsView" parent="AdwBreakpointBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <child>
@@ -13,8 +13,7 @@
       <object class="GtkScrolledWindow">
         <property name="vexpand-set">True</property>
         <property name="vexpand">True</property>
-        <!-- GTK_ALIGN_FILL == 0 -->
-        <property name="valign">0</property>
+        <property name="valign">fill</property>
         <property name="child">
           <object class="AdwClamp">
             <property name="orientation">horizontal</property>

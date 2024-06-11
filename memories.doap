@@ -5,17 +5,16 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">Albums</name>
-  <shortname>Albums</shortname>
+  <name xml:lang="en">Memories</name>
+  <shortname>Memories</shortname>
   <created>2024-03-13</created>
   <shortdesc xml:lang="en">Organize your memories</shortdesc>
-  <description xml:lang="en">A free and open source photo/video album app for Linux
-  mobile, built with GTK4 and libadwaita, designed to be well integrated with GNOME
-  technologies and mobile devices.</description>
+  <description xml:lang="en">A photo library application designed to
+  be well integrated with GNOME technologies and mobile devices.</description>
 
-  <homepage rdf:resource="https://gitlab.gnome.org/maxrdz/Albums"/>
-  <download-page rdf:resource="https://gitlab.gnome.org/maxrdz/Albums/-/tags"/>
-  <bug-database rdf:resource="https://gitlab.gnome.org/maxrdz/Albums/issues/"/>
+  <homepage rdf:resource="https://gitlab.gnome.org/maxrdz/Memories"/>
+  <download-page rdf:resource="https://gitlab.gnome.org/maxrdz/Memories/-/tags"/>
+  <bug-database rdf:resource="https://gitlab.gnome.org/maxrdz/Memories/issues/"/>
   <license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
 
   <programming-language>Rust</programming-language>
@@ -24,8 +23,8 @@
 
   <repository>
     <GitRepository>
-      <location rdf:resource="https://gitlab.gnome.org/maxrdz/Albums.git"/>
-      <browse rdf:resource="https://gitlab.gnome.org/maxrdz/Albums"/>
+      <location rdf:resource="https://gitlab.gnome.org/maxrdz/Memories.git"/>
+      <browse rdf:resource="https://gitlab.gnome.org/maxrdz/Memories"/>
     </GitRepository>
   </repository>
 

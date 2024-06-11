@@ -1,26 +1,26 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
 
-use crate::window::AlbumsApplicationWindow;
+use crate::window::MrsApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -28,7 +28,7 @@ use glib::{clone, g_debug, g_error};
 use gtk::{gdk, gio, glib};
 
 /// Enum that represents the types of content that
-/// can be displayed by the `AlbumsViewer` object.
+/// can be displayed by the `MrsViewer` object.
 #[derive(Debug)]
 pub enum ViewerContentType {
     Renderable,
@@ -38,21 +38,21 @@ pub enum ViewerContentType {
 }
 
 glib::wrapper! {
-    pub struct AlbumsViewer(ObjectSubclass<imp::AlbumsViewer>)
+    pub struct MrsViewer(ObjectSubclass<imp::MrsViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
 #[gtk::template_callbacks]
-impl AlbumsViewer {
+impl MrsViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    fn window(&self) -> AlbumsApplicationWindow {
+    fn window(&self) -> MrsApplicationWindow {
         self.root()
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
-            .expect("Failed to downcast to AlbumsApplicationWindow.")
+            .expect("Failed to downcast to MrsApplicationWindow.")
     }
 
     /// Sets the content type setting for the viewer page.
@@ -113,7 +113,7 @@ impl AlbumsViewer {
     }
 }
 
-impl Default for AlbumsViewer {
+impl Default for MrsViewer {
     fn default() -> Self {
         Self::new()
     }

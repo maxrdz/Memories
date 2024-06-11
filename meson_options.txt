@@ -6,7 +6,7 @@ option(
     'devel'
   ],
   value: 'default',
-  description: 'The build profile for Albums. `default` or `devel`.'
+  description: 'The build profile for Memories. `default` or `devel`.'
 )
 option(
   'target',
@@ -17,7 +17,7 @@ option(
 option(
   'disable-glycin-sandbox',
   type: 'boolean',
-  description: 'Disable sandboxing of image loaders in glycin. Intended for devel builds.',
+  description: 'Disable sandboxing of image loaders in glycin. Intended for debug builds.',
   value: false,
 )
 option(
@@ -30,5 +30,5 @@ option(
   'use-feedbackd',
   type: 'boolean',
   value: false,
-  description: 'Compiles Albums with support for feedbackd on mobile devices.'
+  description: 'Compiles Memories with support for feedbackd on mobile devices.'
 )

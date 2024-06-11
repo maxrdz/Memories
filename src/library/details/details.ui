@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsDetails" parent="AdwBin">
+  <template class="MrsDetails" parent="AdwBin">
     <property name="child">
       <object class="GtkScrolledWindow">
         <property name="child">

@@ -1,20 +1,20 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -33,12 +33,12 @@ use glib::{clone, g_critical, g_error};
 use gtk::{gio, glib};
 
 glib::wrapper! {
-    pub struct AlbumsApplication(ObjectSubclass<imp::AlbumsApplication>)
+    pub struct MrsApplication(ObjectSubclass<imp::MrsApplication>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl AlbumsApplication {
+impl MrsApplication {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -149,7 +149,7 @@ impl AlbumsApplication {
             }
             _ => {
                 g_error!(
-                    "AlbumsApplication",
+                    "MrsApplication",
                     "update_theme_action_states() received an invalid action name."
                 );
                 panic!("update_theme_action_states() received invalid action name.");
@@ -164,7 +164,7 @@ impl AlbumsApplication {
 
     fn toggle_hardware_acceleration(&self, toggle: bool) {
         if let Err(err_msg) = self.gsettings().set_boolean("hardware-acceleration", toggle) {
-            g_critical!("AlbumsApplication", "GSettings returned error: {}", err_msg);
+            g_critical!("MrsApplication", "GSettings returned error: {}", err_msg);
         }
     }
 
@@ -173,7 +173,7 @@ impl AlbumsApplication {
 
         let alert_dialog: adw::AlertDialog = adw::AlertDialog::builder()
             .heading(gettext("Clear App Cache?"))
-            .body(gettext("Are you sure you want to clear Albums' cache? This may result in a slower start up on the next launch."))
+            .body(gettext("Are you sure you want to clear the cache? This may result in a slower start up on the next launch."))
             .build();
 
         alert_dialog.add_responses(&[("cancel", &gettext("Cancel")), ("clear", &gettext("Clear Cache"))]);
@@ -190,11 +190,11 @@ impl AlbumsApplication {
                             match io_error.kind() {
                                 std::io::ErrorKind::NotFound => (),
                                 std::io::ErrorKind::PermissionDenied => g_critical!(
-                                    "AlbumsApplication",
+                                    "MrsApplication",
                                     "Insufficient permissions to clear cache directory."
                                 ),
                                 _ => g_error!(
-                                    "AlbumsApplication",
+                                    "MrsApplication",
                                     "Received an unexpected error kind after trying to clear the cache."
                                 ),
                             }
@@ -211,7 +211,7 @@ impl AlbumsApplication {
 
         let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_ID)
-            .application_name(gettext("Albums"))
+            .application_name(gettext("Memories"))
             .developer_name(APP_INFO.app_author)
             .version({
                 if DEVELOPMENT_BUILD {
@@ -244,7 +244,7 @@ impl AlbumsApplication {
 
         about.set_release_notes(
             "<p>\
-          Initial release of Albums. Following the GNOME release schedule \
+          Initial release of Memories. Following the GNOME release schedule \
           as of GNOME version 46.3.\
         </p>",
         );
@@ -374,10 +374,10 @@ impl AlbumsApplication {
     }
 }
 
-impl Default for AlbumsApplication {
+impl Default for MrsApplication {
     fn default() -> Self {
         gio::Application::default()
-            .and_downcast::<AlbumsApplication>()
+            .and_downcast::<MrsApplication>()
             .unwrap()
     }
 }

@@ -1,30 +1,30 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 /*!
-# Albums
+# Memories
 Source Code Documentation
 
 ## Prelude
-Albums uses GObject-based C libraries, which we interface with via
-Rust bindings. Albums source follows the file structure and file
+Memories uses GObject-based C libraries, which we interface with via
+Rust bindings. Memories source follows the file structure and file
 naming convention demonstrated by the
 [gtk-rs examples](https://github.com/gtk-rs/gtk4-rs/tree/master/examples).
 
@@ -41,7 +41,7 @@ with our object-specific logic.
 
 All GObject subclasses should be named in
 [UpperCamelCase](https://en.wikipedia.org/wiki/Camel_case),
-and prefixed with the name of the project. e.g. "AlbumsLibraryView"
+and prefixed with project shortname. e.g. "MrsLibraryView"
 
 Most of the application's widget hierarchy is created by the program via
 [GtkBuilder](https://docs.gtk.org/gtk3/class.Builder.html), which parses
@@ -51,20 +51,20 @@ Most of the application's widget hierarchy is created by the program via
 ## Application Widget Structure
 Simplified widget tree including the most important widgets.
 
-- [`AlbumsApplicationWindow`]
+- [`MrsApplicationWindow`]
     - [`AdwNavigationView`]
         - [`AdwNavigationPage`]
             - [`AdwViewStack`]
-                - [`AlbumsLibraryView`]
-                - [`AlbumsView`]
+                - [`MrsLibraryView`]
+                - [`MrsAlbumsView`]
 
 [`AdwNavigationView`]: adw::NavigationView
 [`AdwNavigationPage`]: adw::NavigationPage
 [`AdwViewStack`]: adw::ViewStack
 
-[`AlbumsApplicationWindow`]: window::AlbumsApplicationWindow
-[`AlbumsLibraryView`]: library::AlbumsLibraryView
-[`AlbumsView`]: albums::AlbumsView
+[`MrsApplicationWindow`]: window::MrsApplicationWindow
+[`MrsLibraryView`]: library::MrsLibraryView
+[`MrsAlbumsView`]: albums::MrsAlbumsView
 */
 
 mod albums;
@@ -81,7 +81,7 @@ mod utils;
 mod vcs;
 mod window;
 
-use application::AlbumsApplication;
+use application::MrsApplication;
 use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 #[cfg(feature = "use-feedbackd")]
@@ -100,13 +100,13 @@ fn main() -> glib::ExitCode {
         env::set_var("RUST_LOG", globals::RUST_LOG_ENVVAR_DEFAULT);
         env::set_var("G_MESSAGES_DEBUG", globals::G_MESSAGES_DEBUG_DEFAULT);
         g_info!(
-            "Albums",
+            "Memories",
             "No RUST_LOG env var found. Setting to default: '{}'",
             globals::RUST_LOG_ENVVAR_DEFAULT
         );
     }
     g_info!(
-        "Albums",
+        "Memories",
         "{} v{}; Build revision (Git SHA1): {}",
         APP_NAME,
         VERSION,
@@ -127,12 +127,12 @@ fn main() -> glib::ExitCode {
     #[cfg(feature = "use-feedbackd")]
     if let Err(lfb_error) = libfeedback::init(APP_ID) {
         g_error!(
-            "Albums",
+            "Memories",
             "Failed to initialize Lfb for haptic feedback: {}",
             lfb_error
         );
     }
 
-    let app = AlbumsApplication::new(APP_ID, &gio::ApplicationFlags::empty());
+    let app = MrsApplication::new(APP_ID, &gio::ApplicationFlags::empty());
     app.run()
 }

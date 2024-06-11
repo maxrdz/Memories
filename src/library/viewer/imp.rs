@@ -1,31 +1,31 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::library::details::AlbumsDetails;
-use crate::window::theme_selector::AlbumsThemeSelector;
+use crate::library::details::MrsDetails;
+use crate::window::theme_selector::MrsThemeSelector;
 use adw::subclass::prelude::*;
 use gtk::glib;
 
 #[derive(Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Albums/library/viewer/viewer.ui")]
-pub struct AlbumsViewer {
+#[template(resource = "/com/maxrdz/Memories/library/viewer/viewer.ui")]
+pub struct MrsViewer {
     #[template_child]
     pub header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
@@ -39,7 +39,7 @@ pub struct AlbumsViewer {
     #[template_child]
     pub split_view: TemplateChild<adw::OverlaySplitView>,
     #[template_child]
-    pub details_widget: TemplateChild<AlbumsDetails>,
+    pub details_widget: TemplateChild<MrsDetails>,
     #[template_child]
     pub viewer_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -55,9 +55,9 @@ pub struct AlbumsViewer {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for AlbumsViewer {
-    const NAME: &'static str = "AlbumsViewer";
-    type Type = super::AlbumsViewer;
+impl ObjectSubclass for MrsViewer {
+    const NAME: &'static str = "MrsViewer";
+    type Type = super::MrsViewer;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -70,17 +70,17 @@ impl ObjectSubclass for AlbumsViewer {
     }
 }
 
-impl ObjectImpl for AlbumsViewer {
+impl ObjectImpl for MrsViewer {
     fn constructed(&self) {
         self.parent_constructed();
 
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = AlbumsThemeSelector::new();
+        let new_theme_selector = MrsThemeSelector::new();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
     }
 }
-impl WidgetImpl for AlbumsViewer {}
-impl BinImpl for AlbumsViewer {}
-impl BreakpointBinImpl for AlbumsViewer {}
+impl WidgetImpl for MrsViewer {}
+impl BinImpl for MrsViewer {}
+impl BreakpointBinImpl for MrsViewer {}

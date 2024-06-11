@@ -1,50 +1,50 @@
-// This file is part of Albums.
+// This file is part of Memories.
 //
 // Copyright (c) 2024 Max Rodriguez
 // All rights reserved.
 //
-// Albums is free software: you can redistribute it and/or modify
+// Memories is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Albums is distributed in the hope that it will be useful,
+// Memories is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Albums.  If not, see <http://www.gnu.org/licenses/>.
+// along with Memories.  If not, see <http://www.gnu.org/licenses/>.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
 
-use crate::library::media_grid::AlbumsMediaGridView;
-use crate::library::viewer::AlbumsViewer;
+use crate::library::media_grid::MrsMediaGridView;
+use crate::library::viewer::MrsViewer;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::clone;
 use gtk::{gio, glib};
 
 glib::wrapper! {
-    pub struct AlbumsMediaCell(ObjectSubclass<imp::AlbumsMediaCell>)
+    pub struct MrsMediaCell(ObjectSubclass<imp::MrsMediaCell>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl AlbumsMediaCell {
+impl MrsMediaCell {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    pub fn setup_cell(&self, media_grid: &AlbumsMediaGridView, list_item: &gtk::ListItem) {
+    pub fn setup_cell(&self, media_grid: &MrsMediaGridView, list_item: &gtk::ListItem) {
         list_item.set_property("child", self);
         self.imp()
             .aspect_frame
             .set_height_request(media_grid.grid_widget_height());
 
         // Bind the `GtkAspectFrame`s height-request to the `grid-widget-height`
-        // property of the `AlbumsLibraryView` object.
+        // property of the `MrsMediaGridView` object.
         media_grid
             .bind_property(
                 "grid-widget-height",
@@ -89,7 +89,7 @@ impl AlbumsMediaCell {
                     if current_nav_page.tag().unwrap() != "window" {
                         return;
                     }
-                    let grid_cell_data: AlbumsMediaCell = list_item.child().and_downcast().unwrap();
+                    let grid_cell_data: MrsMediaCell = list_item.child().and_downcast().unwrap();
 
                     let model_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
                     let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
@@ -97,7 +97,7 @@ impl AlbumsMediaCell {
 
                     let nav_view = media_grid.window().imp().window_navigation.clone();
 
-                    let viewer_content: AlbumsViewer = AlbumsViewer::default();
+                    let viewer_content: MrsViewer = MrsViewer::default();
                     viewer_content.set_content_type(grid_cell_data.imp().viewer_content_type.get().unwrap());
                     viewer_content.set_content_file(&file);
 
@@ -115,7 +115,7 @@ impl AlbumsMediaCell {
     }
 }
 
-impl Default for AlbumsMediaCell {
+impl Default for MrsMediaCell {
     fn default() -> Self {
         Self::new()
     }

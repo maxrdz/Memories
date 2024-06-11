@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsMediaGridView" parent="AdwBreakpointBin">
+  <template class="MrsMediaGridView" parent="AdwBreakpointBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <child>
@@ -13,8 +13,8 @@
         <setter object="overlay_labels_box" property="margin-start">20</setter>
         <setter object="overlay_labels_box" property="margin-top">10</setter>
         <!-- See src/globals.rs for corresponding `grid-widget-height` to grid columns. -->
-        <setter object="AlbumsMediaGridView" property="grid-widget-height">78</setter>
-        <setter object="AlbumsMediaGridView" property="grid-desktop-zoom">True</setter>
+        <setter object="MrsMediaGridView" property="grid-widget-height">78</setter>
+        <setter object="MrsMediaGridView" property="grid-desktop-zoom">True</setter>
       </object>
     </child>
     <property name="child">
@@ -23,8 +23,7 @@
           <object class="GtkOverlay">
             <child type="overlay">
               <object class="GtkFrame">
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="valign">1</property>
+                <property name="valign">start</property>
                 <property name="can-target">False</property>
                 <property name="height-request">200</property>
                 <style>
@@ -35,14 +34,11 @@
             <child type="overlay">
               <object class="GtkBox" id="overlay_labels_box">
                 <property name="can-target">False</property>
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="halign">1</property>
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="valign">1</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
                 <property name="margin-start">15</property>
                 <property name="margin-top">15</property>
-                <!-- GTK_ORIENTATION_VERTICAL == 1 -->
-                <property name="orientation">1</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="time_period_label">
                     <property name="label" translatable="yes">Loading</property>
@@ -57,10 +53,8 @@
                 <child>
                   <object class="GtkLabel" id="total_items_label">
                     <property name="label" translatable="yes">Enumerating Items</property>
-                    <!-- GTK_ALIGN_START == 1 -->
-                    <property name="halign">1</property>
-                    <!-- GTK_ALIGN_START == 1 -->
-                    <property name="valign">1</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <!-- NOTE: CSS from GTK stylesheets -->
                     <style>
                       <class name="title"/>
@@ -200,7 +194,7 @@
         <attribute name="action">win.settings</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About Albums</attribute>
+        <attribute name="label" translatable="yes">_About Memories</attribute>
         <attribute name="action">app.about</attribute>
       </item>
       <item>

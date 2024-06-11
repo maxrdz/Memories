@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsPreferencesDialog" parent="AdwPreferencesDialog">
+  <template class="MrsPreferencesDialog" parent="AdwPreferencesDialog">
     <child>
       <object class="AdwPreferencesPage">
         <property name="name">general</property>
@@ -33,7 +33,7 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Advanced Options</property>
-            <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Albums.</property>
+            <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Memories.</property>
             <child>
               <object class="AdwSwitchRow">
                 <property name="title" translatable="yes">Use Hardware Acceleration</property>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="AlbumsMediaCell" parent="AdwBin">
+  <template class="MrsMediaCell" parent="AdwBin">
     <property name="child">
       <object class="GtkRevealer" id="revealer">
         <property name="reveal-child">True</property>
@@ -25,10 +25,8 @@
                 <property name="use-fallback">True</property>
                 <property name="icon-name">emote-love-symbolic</property>
                 <property name="margin-start">2</property>
-                <!-- GTK_ALIGN_START == 1 -->
-                <property name="halign">1</property>
-                <!-- GTK_ALIGN_END == 2 -->
-                <property name="valign">2</property>
+                <property name="halign">start</property>
+                <property name="valign">end</property>
                 <property name="visible">False</property>
               </object>
             </child>
@@ -37,18 +35,16 @@
                 <property name="use-fallback">True</property>
                 <property name="icon-name">svg-symbolic</property>
                 <property name="margin-end">2</property>
-                <!-- GTK_ALIGN_END == 2 -->
-                <property name="halign">2</property>
-                <property name="valign">2</property>
+                <property name="halign">end</property>
+                <property name="valign">end</property>
                 <property name="visible">False</property>
               </object>
             </child>
             <child type="overlay">
               <object class="GtkLabel" id="video_length">
                 <property name="label">0:00</property>
-                <!-- GTK_ALIGN_END == 2 -->
-                <property name="halign">2</property>
-                <property name="valign">2</property>
+                <property name="halign">end</property>
+                <property name="valign">end</property>
                 <property name="visible">False</property>
                 <style>
                   <class name="media-cell-label"/>

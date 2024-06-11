@@ -3,9 +3,9 @@
 # Synchronizes the Gitlab Git repository to the Github mirror repo.
 
 GITLAB_USER=maxrdz
-GITLAB_NAME=Albums
+GITLAB_NAME=Memories
 MIRROR_USER=maxrdz
-MIRROR_NAME=Albums
+MIRROR_NAME=Memories
 
 git clone --bare https://gitlab.gnome.org/$GITLAB_USER/$GITLAB_NAME.git/
 cd $GITLAB_NAME.git

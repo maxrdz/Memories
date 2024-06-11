@@ -1,30 +1,29 @@
 <div align="center">
-<img src="./data/icons/com.maxrdz.Albums.svg" height="128"/>
+<img src="./data/icons/com.maxrdz.Memories.svg" height="128"/>
 
-# Albums
+# Memories
 Organize your memories
 
-![Library Page](./data/screenshots/library.png) | ![Albums Page](./data/screenshots/albums.png) | ![Media Viewer](./data/screenshots/viewer.png)
--------------------------------------------- | -------------------------------------- | ----------------------------------------------
+![Memories Library Page](./data/screenshots/library.png)
 
 </div>
 
 ## Building from Source
 
 We use Git for version control, and Meson/Ninja as the build
-system for Albums.
+system for Memories.
 The quickest way to build for release is to do the following:
 
 ### Getting the Source
 
 ```sh
-git clone https://gitlab.gnome.org/maxrdz/Albums
-cd Albums
+git clone https://gitlab.gnome.org/maxrdz/Memories
+cd Memories
 ```
 
-### Build Albums
+### Build Memories
 
-Before building Albums, make sure you have the required
+Before building Memories, make sure you have the required
 dependencies installed. Meson will let you know what binaries or
 libraries it is missing or cannot find, but you can also read the
 root [Meson](./meson.build) build file to see the list of
@@ -44,13 +43,13 @@ meson compile -C builddevel
 meson install -C builddevel
 ```
 
-Albums can be built with haptic feedback support (via feedbackd)
+Memories can be built with haptic feedback support (via feedbackd)
 using the `-Duse-feedbackd=true` Meson build parameter.
-This is currently an experimental feature of Albums.
+This is currently an experimental feature of Memories.
 
 ### Running from the source tree
 
-If you would like to run Albums without installing it on your
+If you would like to run Memories without installing it on your
 system, you can use `cargo` directly to build and run the source.
 
 ### Uninstalling
@@ -92,46 +91,21 @@ Please read the project's [Contributing Guide](./CONTRIBUTING.md).
 
 It is very helpful for new contributors to read the
 [GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
-before starting to write your own changes to Albums.
-
-If your change or proposal is related to Albums' UX, please see the
-[GNOME Human Interface Guidelines](https://developer.gnome.org/hig/).
+before starting to write your own changes to Memories.
 
 ## Code of Conduct
 
-The Albums project, its maintainers, and its contributors are
+The Memories project, its maintainers, and its contributors are
 required to follow the
 [GNOME Code of Conduct](https://conduct.gnome.org/).
-
-## Guidelines for Maintainers
-
-We follow
-[Phosh's Guidelines for Maintainers](https://gitlab.gnome.org/World/Phosh/phosh/-/wikis/Guidelines-for-maintainers).
-
-Additionally, the GNOME Handbook has a section for
-[project maintainers](https://handbook.gnome.org/maintainers.html).
-
-## Why not use Loupe? (GNOME Image Viewer)
-
-[Loupe](https://apps.gnome.org/Loupe/) is a great tool for
-viewing select images, one by one, on the desktop; But it
-is not a viable *easy to use* option for those wanting to
-scroll through their photo library on their mobile device.
-This is a similar case with [Totem](https://apps.gnome.org/Totem/).
-
-Albums provides a new, modern, mobile friendly application that
-was designed for the Linux mobile platform that combines the
-ability to view images and videos under one application. Albums
-also brings the feature of being able to create Albums (as per
-the name) to organize your cherished memories for easy access.
 
 ## Copyright and License
 
 Copyright &copy; 2024 Max Rodriguez \<me@maxrdz.com\>
 
-"Albums" can be found at https://gitlab.gnome.org/maxrdz/Albums
+"Memories" can be found at https://gitlab.gnome.org/maxrdz/Memories
 
-"Albums" is distributed under the terms of the GNU General Public
+"Memories" is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
 version WITHOUT ANY WARRANTY. You can read the full copy of
 the software license in the [COPYING](./COPYING) file.
