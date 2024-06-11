@@ -1,16 +1,16 @@
 # Contributing Guidelines
 
-Thank you for considering contributing to Albums!
+Thank you for considering contributing to Memories!
 All code contributions are made using merge requests.
 
 If you are new to the GNOME community and software ecosystem,
-the Albums project would like to give you a warm welcome to
+the Memories project would like to give you a warm welcome to
 the GNOME community. We highly encourage you to visit
 [welcome.gnome.org](https://welcome.gnome.org/), a website
 made by the GNOME foundation to introduce new users to GNOME.
 
 Users interested in making contributions to the software
-behind Albums are encouraged to check out
+behind Memories are encouraged to check out
 [developer.gnome.org](https://developer.gnome.org/).
 
 Before starting to write your own contribution, please make
@@ -35,16 +35,16 @@ cryptographic key for signing your commits within Git.
 [welcome.gnome.org](https://welcome.gnome.org/en/app/Loupe/#setting-up-gitlab)
 has a good tutorial on setting up your GNOME GitLab account.
 - Once you have your account setup and signed in,
-[fork the project Git repository](https://gitlab.gnome.org/maxrdz/Albums).
+[fork the project Git repository](https://gitlab.gnome.org/maxrdz/Memories).
 This will create your own copy of the source under your user's namespace.
 - Next, **clone** your new fork on your local machine. If you have your
 SSH key configured on your GNOME GitLab account, run the following:
 ```sh
-git clone git@ssh.gitlab.gnome.org:maxrdz/Albums.git
+git clone git@ssh.gitlab.gnome.org:maxrdz/Memories.git
 ```
 If you do not have SSH set up, you can also clone via HTTPS.
 ```sh
-git clone https://gitlab.gnome.org/maxrdz/Albums.git
+git clone https://gitlab.gnome.org/maxrdz/Memories.git
 ```
 - Before starting to write your contribution, create a **new branch**
 for your patch/contribution within Git:
@@ -97,7 +97,7 @@ commit message body than too little."
 
 ### Draft Merge Requests
 
-Merge requests marked as draft will not be reviewed by Albums'
+Merge requests marked as draft will not be reviewed by Memories'
 maintainers or merged. When the change is ready for review please
 mark the merge request as ready.
 
@@ -111,11 +111,11 @@ date if they respond to the comments.
 ### Making a Release
 
 This section of the document is more of a personal note for the
-maintainer, and future maintainers of Albums. See the
+maintainer, and future maintainers of Memories. See the
 [GNOME Handbook](https://handbook.gnome.org/maintainers/making-a-release.html)
 for more details.
 
-Release versioning for Albums should follow the GNOME release
+Release versioning for Memories should follow the GNOME release
 schedule.
 See the [GNOME Handbook](https://handbook.gnome.org/maintainers.html).
 
@@ -151,10 +151,10 @@ successful, Meson should output similar to the following:
 ```
 Distribution package /opt/gnome/build/glib/meson-dist/glib-2.57.3.tar.xz tested.
 ```
-- Run `git evtag sign 46.0`. `git-evtag` is required, see setup. The
+- Run `git evtag sign 47.0`. `git-evtag` is required, see setup. The
 message included in the Git tag should be in the following format:
 ```
-Albums 46.0
+Memories 47.0
 
 * The contents of the CHANGELOG file for this release.
 * Dependency updates
@@ -162,9 +162,9 @@ Albums 46.0
 * Small maintenance tasks
 * Translation updates with credits
 ```
-- Upload the tarball (this applies once Albums uses GNOME master):
+- Upload the tarball (this applies once Memories uses GNOME master):
 ```
-$ scp albums-46.0.tar.xz USER@master.gnome.org:~
+$ scp memories-47.0.tar.xz USER@master.gnome.org:~
 $ ssh USER@master.gnome.org
-$ ftpadmin install albums-46.0.tar.xz
+$ ftpadmin install memories-47.0.tar.xz
 ```
