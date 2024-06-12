@@ -6,10 +6,6 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
-        <setter object="overlay_header_buttons" property="margin-top">20</setter>
-        <setter object="overlay_header_buttons" property="margin-end">20</setter>
-        <setter object="overlay_labels_box" property="margin-start">20</setter>
-        <setter object="overlay_labels_box" property="margin-top">10</setter>
         <!-- See src/globals.rs for corresponding `grid-widget-height` to grid columns. -->
         <setter object="MrsMediaGridView" property="grid-widget-height">112</setter>
         <setter object="photo_grid_view" property="min-columns">10</setter>
@@ -21,36 +17,6 @@
       <object class="AdwToastOverlay" id="toast_overlay">
         <property name="child">
           <object class="GtkOverlay">
-            <child type="overlay">
-              <object class="GtkFrame">
-                <property name="valign">start</property>
-                <property name="can-target">False</property>
-                <property name="height-request">200</property>
-                <style>
-                  <class name="overlay-gradient"/>
-                </style>
-              </object>
-            </child>
-            <child type="overlay">
-              <object class="GtkBox" id="overlay_labels_box">
-                <property name="can-target">False</property>
-                <property name="halign">start</property>
-                <property name="valign">start</property>
-                <property name="margin-start">15</property>
-                <property name="margin-top">15</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel" id="library_label">
-                    <!-- NOTE: CSS from GTK stylesheets -->
-                    <style>
-                      <class name="title"/>
-                      <class name="title-2"/>
-                      <class name="force-light"/>
-                    </style>
-                  </object>
-                </child>
-              </object>
-            </child>
             <child type="overlay">
               <object class="GtkBox" id="overlay_header_buttons">
                 <property name="orientation">horizontal</property>
@@ -128,7 +94,7 @@
                     </property>
                     <style>
                       <class name="circular"/>
-                      <class name="force-light"/>
+                      <class name="overlay-button"/>
                     </style>
                   </object>
                 </child>

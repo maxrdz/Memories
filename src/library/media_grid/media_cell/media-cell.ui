@@ -11,11 +11,15 @@
                 <!-- GTK_REVEALER_TRANSITION_TYPE_NONE == 0 -->
                 <property name="transition-type">0</property>
                 <property name="child">
-                  <object class="GtkImage" id="thumbnail_image">
-                    <property name="icon-name">image-missing-symbolic</property>
-                    <!-- GTK_ICON_SIZE_LARGE == 2-->
-                    <property name="icon-size">2</property>
-                    <property name="use-fallback">True</property>
+                  <object class="GtkGraphicsOffload">
+                    <property name="child">
+                      <object class="GtkImage" id="thumbnail_image">
+                        <property name="icon-name">image-missing-symbolic</property>
+                        <!-- GTK_ICON_SIZE_LARGE == 2-->
+                        <property name="icon-size">2</property>
+                        <property name="use-fallback">True</property>
+                      </object>
+                    </property>
                   </object>
                 </property>
               </object>

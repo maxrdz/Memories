@@ -37,12 +37,6 @@ pub struct MrsMediaGridView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
     pub list_item_factory: gtk::SignalListItemFactory,
 
-    /// Disabled by default.
-    /// When enabled, a custom title has been set to the media grid view.
-    /// For example, when viewing albums, the custom title is set to
-    /// the name of the album being viewed.
-    pub(super) custom_title: Cell<bool>,
-
     #[property(get, set)]
     hardware_accel: Cell<bool>,
     #[property(get, set)]
@@ -52,10 +46,6 @@ pub struct MrsMediaGridView {
 
     #[template_child]
     pub toast_overlay: TemplateChild<adw::ToastOverlay>,
-    #[template_child]
-    pub overlay_labels_box: TemplateChild<gtk::Box>,
-    #[template_child]
-    pub library_label: TemplateChild<gtk::Label>,
     #[template_child]
     pub overlay_header_buttons: TemplateChild<gtk::Box>,
     #[template_child]
@@ -73,7 +63,6 @@ impl Default for MrsMediaGridView {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
             list_item_factory: gtk::SignalListItemFactory::default(),
-            custom_title: Cell::new(false),
             hardware_accel: Cell::new({
                 let gsettings: gio::Settings = MrsApplication::default().gsettings();
                 gsettings.boolean("hardware-acceleration")
@@ -81,8 +70,6 @@ impl Default for MrsMediaGridView {
             grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
             grid_desktop_zoom: Cell::new(false),
             toast_overlay: TemplateChild::default(),
-            overlay_labels_box: TemplateChild::default(),
-            library_label: TemplateChild::default(),
             overlay_header_buttons: TemplateChild::default(),
             photo_grid_controls: TemplateChild::default(),
             photo_grid_view: TemplateChild::default(),
