@@ -168,3 +168,9 @@ $ scp memories-47.0.tar.xz USER@master.gnome.org:~
 $ ssh USER@master.gnome.org
 $ ftpadmin install memories-47.0.tar.xz
 ```
+
+### Updating Memories' Application Screenshots
+
+Clone the following repository locally and set it as the only
+root directory in the library collection setting:
+[https://gitlab.gnome.org/maxrdz/memories-stock-photos](https://gitlab.gnome.org/maxrdz/memories-stock-photos)
