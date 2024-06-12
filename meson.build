@@ -31,6 +31,8 @@ dependency('glib-2.0', version: '>= 2.80')
 dependency('libadwaita-1', version: '>= 1.5')
 dependency('mount', version: '>= 2.39')
 dependency('gstreamer-1.0', version: '>= 1.22')
+dependency('lcms2', version: '>= 2.12.0') # Required by Glycin
+dependency('libseccomp', version: '>= 2.5.0') # Required by Glycin
 
 if get_option('use-feedbackd')
   dependency('libfeedback-0.0', version: '>= 0')
