@@ -38,7 +38,7 @@
                             <property name="margin-bottom">5</property>
                             <property name="child">
                               <object class="AdwButtonContent">
-                                <property name="icon-name">albums-new-symbolic</property>
+                                <property name="icon-name">folder-open-symbolic</property>
                                 <property name="label" translatable="yes">_New Album</property>
                                 <property name="use-underline">True</property>
                               </object>
@@ -58,7 +58,7 @@
                             <property name="title">Empty</property>
                             <property name="child">
                               <object class="AdwStatusPage">
-                                <property name="icon-name">albums-symbolic</property>
+                                <property name="icon-name">folder-open-symbolic</property>
                                 <property name="title" translatable="yes">No Albums</property>
                                 <property name="description" translatable="yes">Your albums will show up here</property>
                                 <property name="height-request">390</property>

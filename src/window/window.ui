@@ -72,7 +72,7 @@
                       <object class="AdwViewStackPage" id="albums_page">
                         <property name="name">albums</property>
                         <property name="title" translatable="yes" >Albums</property>
-                        <property name="icon-name">albums-symbolic</property>
+                        <property name="icon-name">folder-open-symbolic</property>
                         <property name="child">
                           <object class="MrsAlbumsView" id="albums_view"/>
                         </property>
