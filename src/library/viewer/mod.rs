@@ -25,16 +25,36 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::{clone, g_debug, g_error};
+#[cfg(feature = "disable-glycin-sandbox")]
+use glycin::SandboxMechanism;
 use gtk::{gdk, gio, glib};
+use std::ffi::OsStr;
 
 /// Enum that represents the types of content that
 /// can be displayed by the `MrsViewer` object.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ViewerContentType {
-    Renderable,
+    VectorGraphics,
     Image,
     Video,
     Invalid,
+}
+
+impl ViewerContentType {
+    /// Returns a `ViewerContentType` enum that matches the file extension given.
+    pub fn from_ext(extension: &OsStr) -> ViewerContentType {
+        let ext_str: &str = &extension.to_str().unwrap().to_lowercase();
+
+        match ext_str {
+            "svg" => ViewerContentType::VectorGraphics,
+            "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => ViewerContentType::Image,
+            "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => ViewerContentType::Video,
+            _ => {
+                g_debug!("ViewerContentType", "from_ext() received invalid file extension.");
+                ViewerContentType::Invalid
+            }
+        }
+    }
 }
 
 glib::wrapper! {
@@ -60,7 +80,7 @@ impl MrsViewer {
     /// to a stack page that has the proper widget for the content.
     pub fn set_content_type(&self, content_type: &ViewerContentType) {
         match content_type {
-            ViewerContentType::Renderable => self.imp().viewer_stack.set_visible_child_name("image"),
+            ViewerContentType::VectorGraphics => self.imp().viewer_stack.set_visible_child_name("image"),
             ViewerContentType::Image => self.imp().viewer_stack.set_visible_child_name("image"),
             ViewerContentType::Video => self.imp().viewer_stack.set_visible_child_name("video"),
             _ => g_debug!("Viewer", "Received invalid ViewerContentType enum!"),
@@ -72,7 +92,12 @@ impl MrsViewer {
             "render" => self.imp().viewer_picture.set_file(Some(file)),
             "image" => {
                 glib::spawn_future_local(clone!(@weak self as viewer, @strong file => async move {
-                    let image: glycin::Image = glycin::Loader::new(file).load().await.expect("FIXME");
+                    let glycin_loader: glycin::Loader = glycin::Loader::new(file);
+
+                    #[cfg(feature = "disable-glycin-sandbox")]
+                    glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
+
+                    let image: glycin::Image = glycin_loader.load().await.expect("FIXME");
                     let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture;
 
                     viewer.imp().viewer_picture.set_paintable(Some(&texture));

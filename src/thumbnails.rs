@@ -20,8 +20,8 @@
 
 //! Asynchronous function for generating thumbnails via FFmpeg.
 
+use crate::application::MrsApplication;
 use crate::globals::{CACHE_THUMBNAILS_SUBDIR, FFMPEG_BINARY};
-use crate::utils::get_app_cache_directory;
 use async_fs::File;
 use async_process::{Command, Output};
 use gtk::glib::{g_debug, g_warning};
@@ -38,7 +38,7 @@ pub async fn generate_thumbnail_image(
     // This is the absolute outfile path for the thumbnail.
     let absolute_out_path: String = format!(
         "{}/{}/{}.jpg",
-        get_app_cache_directory(),
+        MrsApplication::get_app_cache_directory(),
         CACHE_THUMBNAILS_SUBDIR,
         cached_file_name
     );

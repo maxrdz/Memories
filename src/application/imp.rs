@@ -21,7 +21,6 @@
 use super::library_list_model::MrsLibraryListModel;
 use crate::config::{APP_ID, GRESOURCE_DOMAIN};
 use crate::globals::{PreferredAdwaitaTheme, CACHE_THUMBNAILS_SUBDIR};
-use crate::utils::get_app_cache_directory;
 use crate::window::MrsApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -112,7 +111,7 @@ impl ApplicationImpl for MrsApplication {
             .bind("adwaita-theme", &application.clone(), "adwaita-theme")
             .build();
 
-        let app_cache_dir: String = get_app_cache_directory();
+        let app_cache_dir: String = super::MrsApplication::get_app_cache_directory();
         let cache_subdirs: &[&str] = &[CACHE_THUMBNAILS_SUBDIR];
 
         // Before initializing the window, let's check our cache directory.

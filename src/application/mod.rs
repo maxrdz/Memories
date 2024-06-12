@@ -21,10 +21,9 @@
 mod imp;
 pub mod library_list_model;
 
-use crate::config::APP_ID;
+use crate::config::{APP_ID, APP_NAME};
 use crate::globals::*;
 use crate::i18n::gettext_f;
-use crate::utils::get_app_cache_directory;
 use crate::vcs::VCS_TAG;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -184,7 +183,7 @@ impl MrsApplication {
             clone!(@weak self as s => move |_: &adw::AlertDialog, response: &str| {
                 if response == "clear" {
                     glib::spawn_future_local(async move {
-                        let app_cache_dir: String = get_app_cache_directory();
+                        let app_cache_dir: String = MrsApplication::get_app_cache_directory();
 
                         if let Err(io_error) = async_fs::remove_dir_all(&app_cache_dir).await {
                             match io_error.kind() {
@@ -363,6 +362,32 @@ impl MrsApplication {
             None,
         );
         about.present(&window)
+    }
+
+    /// Returns a `String` that represents the absolute path of
+    /// the user's cache directory, which is either the equivalent
+    /// of the `$XDG_CACHE_HOME` env var, or `$HOME/.cache`.
+    pub fn get_cache_directory() -> String {
+        match std::env::var("XDG_CACHE_HOME") {
+            Ok(value) => value,
+            Err(e) => {
+                match e {
+                    std::env::VarError::NotPresent => {
+                        // If $XDG_CACHE_HOME is either not set or empty,
+                        // a default equal to $HOME/.cache should be used.
+                        // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+                        format!("{}/.cache", std::env::var("HOME").unwrap())
+                    }
+                    _ => panic!("Unexpected std::env::VarError variant received."),
+                }
+            }
+        }
+    }
+
+    /// Returns a `String` that represents the absolute
+    /// path of the application's cache directory location.
+    pub fn get_app_cache_directory() -> String {
+        format!("{}/{}", MrsApplication::get_cache_directory(), APP_NAME)
     }
 
     pub fn is_flatpak() -> bool {

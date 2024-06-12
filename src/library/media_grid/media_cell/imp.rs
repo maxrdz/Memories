@@ -36,7 +36,7 @@ pub struct MrsMediaCell {
     #[template_child]
     pub(super) aspect_frame: TemplateChild<gtk::AspectFrame>,
     #[template_child]
-    pub image: TemplateChild<gtk::Image>,
+    pub thumbnail_image: TemplateChild<gtk::Image>,
     #[template_child]
     favorited: TemplateChild<gtk::Image>,
     #[template_child]

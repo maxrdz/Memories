@@ -20,10 +20,7 @@
 
 //! Utility functions used at seldom in Memories source.
 
-use crate::config::APP_NAME;
-use crate::library::viewer::ViewerContentType;
 use async_fs::{File, Metadata};
-use glib::g_debug;
 use gtk::glib;
 use md5::{Digest, Md5};
 use serde::Serialize;
@@ -70,46 +67,4 @@ pub async fn get_metadata_with_hash(file: File) -> io::Result<(MetadataInfo, Str
     md5_hasher.update(serde_json::to_vec(&metadata)?);
 
     Ok((metadata, format!("{:x}", md5_hasher.finalize())))
-}
-
-/// Returns a `String` that represents the absolute path of
-/// the user's cache directory, which is either the equivalent
-/// of the `$XDG_CACHE_HOME` env var, or `$HOME/.cache`.
-pub fn get_cache_directory() -> String {
-    match std::env::var("XDG_CACHE_HOME") {
-        Ok(value) => value,
-        Err(e) => {
-            match e {
-                std::env::VarError::NotPresent => {
-                    // If $XDG_CACHE_HOME is either not set or empty,
-                    // a default equal to $HOME/.cache should be used.
-                    // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-                    format!("{}/.cache", std::env::var("HOME").unwrap())
-                }
-                _ => panic!("Unexpected std::env::VarError variant received."),
-            }
-        }
-    }
-}
-
-/// Returns a `String` that represents the absolute
-/// path of the application's cache directory location.
-pub fn get_app_cache_directory() -> String {
-    format!("{}/{}", get_cache_directory(), APP_NAME)
-}
-
-/// Returns a `ViewerContentType` enum that matches the file extension given.
-pub fn get_content_type_from_ext(file_ext: &str) -> ViewerContentType {
-    match file_ext {
-        "svg" => ViewerContentType::Renderable,
-        "png" | "jpg" | "jpeg" | "webp" | "heic" | "heif" => ViewerContentType::Image,
-        "mp4" | "webm" | "mkv" | "mov" | "avi" | "gif" => ViewerContentType::Video,
-        _ => {
-            g_debug!(
-                "Utils",
-                "get_content_type_from_ext() received invalid file extension."
-            );
-            ViewerContentType::Invalid
-        }
-    }
 }
