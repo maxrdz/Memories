@@ -72,8 +72,6 @@ if get_option('use-feedbackd')
 endif
 
 # ---------- Cross Compilation ---------- #
-file_extension = '' # Unix-like default
-
 if get_option('target') != ''
   cargo_opts += [ '--target', get_option('target') ]
 
@@ -89,11 +87,6 @@ if get_option('target') != ''
   if get_option('cross-verbose')
     cargo_opts += [ '-v' ]
   endif
-
-  if get_option('target').contains('windows')
-    file_extension = '.exe'
-    bindir = ''
-  endif
 endif
 
 # ---------- Cargo Build Target ---------- #
@@ -101,7 +94,7 @@ cargo_build = custom_target(
   'cargo-build',
   build_by_default: true,
   build_always_stale: true,
-  output: out_binary_file + file_extension,
+  output: out_binary_file,
   console: true,
   install: true,
   install_dir: get_option('bindir'),
@@ -113,6 +106,6 @@ cargo_build = custom_target(
     cargo_opts,
     # Replace below with `--out-dir` once stable.
     # Issue: https://github.com/rust-lang/cargo/issues/6790#issuecomment-655728327=
-    '&&', 'cp', 'src' / rust_target / project_name + file_extension, '@OUTPUT@',
+    '&&', 'cp', 'src' / rust_target / project_name, '@OUTPUT@',
   ]
 )
