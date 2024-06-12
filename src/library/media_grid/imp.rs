@@ -24,7 +24,6 @@ use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
 use crate::library::details::{ContentDetails, PictureDetails};
 use crate::thumbnails::generate_thumbnail_image;
 use crate::utils::{get_content_type_from_ext, get_metadata_with_hash};
-use crate::window::theme_selector::MrsThemeSelector;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_fs::File;
@@ -42,8 +41,7 @@ pub struct MrsMediaGridView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
     pub list_item_factory: gtk::SignalListItemFactory,
 
-    /// Disabled by default. Overlay title displays timestamp ranges of
-    /// visible items in the media grid view. (currently not implemented)
+    /// Disabled by default.
     /// When enabled, a custom title has been set to the media grid view.
     /// For example, when viewing albums, the custom title is set to
     /// the name of the album being viewed.
@@ -61,17 +59,11 @@ pub struct MrsMediaGridView {
     #[template_child]
     pub overlay_labels_box: TemplateChild<gtk::Box>,
     #[template_child]
-    pub time_period_label: TemplateChild<gtk::Label>,
-    #[template_child]
-    pub total_items_label: TemplateChild<gtk::Label>,
+    pub library_label: TemplateChild<gtk::Label>,
     #[template_child]
     pub overlay_header_buttons: TemplateChild<gtk::Box>,
     #[template_child]
     pub photo_grid_controls: TemplateChild<gtk::MenuButton>,
-    #[template_child]
-    pub main_menu: TemplateChild<gtk::MenuButton>,
-    #[template_child]
-    pub primary_menu: TemplateChild<gtk::PopoverMenu>,
     #[template_child]
     pub photo_grid_view: TemplateChild<gtk::GridView>,
     #[template_child]
@@ -94,12 +86,9 @@ impl Default for MrsMediaGridView {
             grid_desktop_zoom: Cell::new(false),
             toast_overlay: TemplateChild::default(),
             overlay_labels_box: TemplateChild::default(),
-            time_period_label: TemplateChild::default(),
-            total_items_label: TemplateChild::default(),
+            library_label: TemplateChild::default(),
             overlay_header_buttons: TemplateChild::default(),
             photo_grid_controls: TemplateChild::default(),
-            main_menu: TemplateChild::default(),
-            primary_menu: TemplateChild::default(),
             photo_grid_view: TemplateChild::default(),
             zoom_in: TemplateChild::default(),
             zoom_out: TemplateChild::default(),
@@ -265,12 +254,6 @@ impl ObjectImpl for MrsMediaGridView {
         }));
 
         self.photo_grid_view.set_factory(Some(&self.list_item_factory));
-
-        // We have to add the theme selector widget as a child of our
-        // GtkPopoverMenu widget manually here, because the UI XML method
-        // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = MrsThemeSelector::new();
-        self.primary_menu.add_child(&new_theme_selector, "theme-selector");
     }
 }
 

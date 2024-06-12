@@ -63,10 +63,13 @@ pub static DEFAULT_CAMERA_REL_DIR: &str = "Camera";
 
 /// Default `height-request` used in list item widgets
 /// displayed on the library grid view on mobile.
-pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 70;
+pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 66;
 
-pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 70), (3, 119), (2, 178)];
-pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(15, 78), (10, 118)];
+/// Grid zoom levels are tuples where the first integer is the amount
+/// of min/max columns in the `GtkGridView`, and the second integer
+/// is the value to set on the `grid-widget-height` property of the media grid view.
+pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 66), (3, 114), (2, 173)];
+pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(10, 112), (5, 234)];
 
 /// Representation of the preferred theme options offered
 /// in the application main popover menu widget.

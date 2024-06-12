@@ -6,14 +6,14 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
-        <setter object="main_menu" property="visible">False</setter>
+        <setter object="overlay_header_buttons" property="margin-top">20</setter>
         <setter object="overlay_header_buttons" property="margin-end">20</setter>
-        <setter object="photo_grid_view" property="min-columns">15</setter>
-        <setter object="photo_grid_view" property="max-columns">15</setter>
         <setter object="overlay_labels_box" property="margin-start">20</setter>
         <setter object="overlay_labels_box" property="margin-top">10</setter>
         <!-- See src/globals.rs for corresponding `grid-widget-height` to grid columns. -->
-        <setter object="MrsMediaGridView" property="grid-widget-height">78</setter>
+        <setter object="MrsMediaGridView" property="grid-widget-height">112</setter>
+        <setter object="photo_grid_view" property="min-columns">10</setter>
+        <setter object="photo_grid_view" property="max-columns">10</setter>
         <setter object="MrsMediaGridView" property="grid-desktop-zoom">True</setter>
       </object>
     </child>
@@ -40,25 +40,11 @@
                 <property name="margin-top">15</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="time_period_label">
-                    <property name="label" translatable="yes">Loading</property>
+                  <object class="GtkLabel" id="library_label">
                     <!-- NOTE: CSS from GTK stylesheets -->
                     <style>
                       <class name="title"/>
                       <class name="title-2"/>
-                      <class name="force-light"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="total_items_label">
-                    <property name="label" translatable="yes">Enumerating Items</property>
-                    <property name="halign">start</property>
-                    <property name="valign">start</property>
-                    <!-- NOTE: CSS from GTK stylesheets -->
-                    <style>
-                      <class name="title"/>
-                      <class name="title-5"/>
                       <class name="force-light"/>
                     </style>
                   </object>
@@ -72,8 +58,8 @@
                 <property name="homogeneous">True</property>
                 <property name="valign">start</property>
                 <property name="halign">end</property>
+                <property name="margin-top">15</property>
                 <property name="margin-end">15</property>
-                <property name="margin-top">20</property>
                 <child>
                   <object class="GtkMenuButton" id="photo_grid_controls">
                     <property name="tooltip-text">Grid Controls</property>
@@ -146,22 +132,6 @@
                     </style>
                   </object>
                 </child>
-                <child>
-                  <object class="GtkMenuButton" id="main_menu">
-                    <property name="icon-name">open-menu-symbolic</property>
-                    <property name="tooltip_text" translatable="yes">Main Menu</property>
-                    <property name="primary">True</property>
-                    <property name="popover">
-                      <object class="GtkPopoverMenu" id="primary_menu">
-                        <property name="menu-model">primary_menu_model</property>
-                      </object>
-                    </property>
-                    <style>
-                      <class name="circular"/>
-                      <class name="force-light"/>
-                    </style>
-                  </object>
-                </child>
               </object>
             </child>
             <property name="child">
@@ -182,25 +152,4 @@
       </object>
     </property>
   </template>
-  <menu id="primary_menu_model">
-    <section>
-      <item>
-        <attribute name="custom">theme-selector</attribute>
-      </item>
-    </section>
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Preferences</attribute>
-        <attribute name="action">win.settings</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_About Memories</attribute>
-        <attribute name="action">app.about</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Quit</attribute>
-        <attribute name="action">app.quit</attribute>
-      </item>
-    </section>
-  </menu>
 </interface>

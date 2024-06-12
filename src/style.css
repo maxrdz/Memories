@@ -1,7 +1,11 @@
 gridview child {
-  border-radius: 0px;
-  margin: 1px;
-  padding: 0px;
+  border-radius: 5px;
+  margin: 0px;
+  padding: 3px;
+}
+
+gridview revealer {
+  border-radius: 5px;
 }
 
 video {
@@ -23,13 +27,6 @@ video {
   padding-right: 3px;
 }
 
-.viewer-overlay-button {
-  min-width: 42px;
-  min-height: 42px;
-  color: white;
-  background-color: black;
-}
-
 .menu-button {
   background-color: @window-fg-color;
   min-height: 26px;
@@ -44,16 +41,6 @@ video {
 
 .force-light {
   color: white;
-}
-
-.albums-preference-group label {
-  font-size: 150%;
-  font-weight: 1000;
-}
-
-.albums-preference-group buttoncontent label {
-  font-size: 100%;
-  font-weight: 700;
 }
 
 /* Viewer Details Preference Rows */

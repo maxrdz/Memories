@@ -47,7 +47,7 @@ impl MrsMediaGridView {
 
     pub fn set_custom_title(&self, string: &str) {
         self.imp().custom_title.set(true);
-        self.imp().time_period_label.set_label(string);
+        self.imp().library_label.set_label(string);
     }
 
     fn gallery_grid_zoom(&self, zoom_in: bool) {

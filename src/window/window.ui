@@ -3,7 +3,7 @@
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
   <template class="MrsApplicationWindow" parent="AdwApplicationWindow">
-    <property name="title" translatable="yes">Albums</property>
+    <property name="title" translatable="yes">Memories</property>
     <property name="default-width">1200</property>
     <property name="default-height">800</property>
     <property name="width-request">360</property>
@@ -11,7 +11,7 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
-        <setter object="header_bar" property="visible">True</setter>
+        <setter object="desktop_view_switcher" property="visible">True</setter>
         <setter object="mobile_switcher_bar" property="reveal">False</setter>
       </object>
     </child>
@@ -28,13 +28,19 @@
                 <property name="width-request">360</property>
                 <child type="top">
                   <object class="AdwHeaderBar" id="header_bar">
-                    <property name="visible">False</property>
                     <property name="title-widget">
                       <object class="AdwViewSwitcher" id="desktop_view_switcher">
+                        <property name="visible">False</property>
                         <property name="stack">master_stack</property>
                         <property name="policy">wide</property>
                       </object>
                     </property>
+                    <child type="start">
+                      <object class="GtkButton">
+                        <property name="icon-name">system-search-symbolic</property>
+                        <property name="tooltip_text" translatable="yes">Search</property>
+                      </object>
+                    </child>
                     <child type="end">
                       <object class="GtkMenuButton">
                         <property name="primary">True</property>
@@ -101,10 +107,6 @@
       <item>
         <attribute name="label" translatable="yes">_About Memories</attribute>
         <attribute name="action">app.about</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Quit</attribute>
-        <attribute name="action">app.quit</attribute>
       </item>
     </section>
   </menu>
