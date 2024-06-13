@@ -87,7 +87,9 @@
     </screenshot>
   </screenshots>
   <releases>
-    <!--<release version="46.3" date="2024-06-28">
+    <!-- Update release date on real first release of Memories.
+         CI/CD requires a release tag to be present in appdata file. -->
+    <release version="46.3" date="2024-06-12">
       <url type="details">@PROJECT_GIT@/-/blob/main/CHANGELOG</url>
       <description>
         <p>
@@ -95,7 +97,7 @@
           schedule as of GNOME version 46.3.
         </p>
       </description>
-    </release>-->
+    </release>
   </releases>
   <categories>
     <category>GNOME</category>
