@@ -47,7 +47,7 @@ flatpak@aarch64:
   interruptible: true
   allow_failure: true
   variables:
-    CONFIG_OPTS: "-Dprofile=devel -Dtarget=aarch64-unknown-linux-gnu"
+    CONFIG_OPTS: "-Dprofile=devel"
 
 
 nightly@x86_64:
