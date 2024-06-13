@@ -5,10 +5,59 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
-stages:
-- test
-sast:
-  stage: test
+
 include:
 - template: Security/SAST.gitlab-ci.yml
 - template: Security/Secret-Detection.gitlab-ci.yml
+
+# For more information on DevOps with GNOME technologies, see:
+# https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
+- project: "GNOME/citemplates"
+  file: "flatpak/flatpak_ci_initiative.yml"
+
+.devel-variables:
+  variables:
+    BUNDLE: "com.maxrdz.Memories.Devel.flatpak"
+    MANIFEST_PATH: "com.maxrdz.Memories.Devel.json"
+    FLATPAK_MODULE: "memories"
+    APP_ID: "com.maxrdz.Memories.Devel"
+    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+
+stages:
+  - check
+  - test
+  - flatpak
+  - deploy
+
+sast:
+  stage: test
+
+# Build Flatpak for x86_64
+flatpak@x86_64:
+  extends: ['.flatpak@x86_64', '.devel-variables']
+  stage: flatpak
+  interruptible: true
+  variables:
+    CONFIG_OPTS: "-Dprofile=devel"
+
+# Build Flatpak for aarch64
+flatpak@aarch64:
+  extends: ['.flatpak@aarch64', '.devel-variables']
+  stage: flatpak
+  interruptible: true
+  allow_failure: true
+  variables:
+    CONFIG_OPTS: "-Dprofile=devel -Dtarget=aarch64-unknown-linux-gnu"
+
+
+nightly@x86_64:
+  extends: ".publish_nightly"
+  stage: deploy
+  needs:
+    - flatpak@x86_64
+
+nightly@aarch64:
+  extends: ".publish_nightly"
+  stage: deploy
+  needs:
+    - flatpak@aarch64
