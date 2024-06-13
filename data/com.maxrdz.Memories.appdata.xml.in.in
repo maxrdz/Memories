@@ -19,7 +19,7 @@
     </ul>
   </description>
   <icon type="remote" width="64" height="64" scale="1">
-    @PROJECT_GIT@/-/raw/master/data/icons/@APP_ID@.svg
+    @PROJECT_GIT@/-/raw/main/data/icons/@APP_ID@.svg
   </icon>
   <branding>
     <color type="primary" scheme_preference="light">#62a0ea</color>
@@ -40,7 +40,7 @@
   <url type="help">@PROJECT_GIT@</url>
   <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
   <url type="donation">https://github.com/sponsors/maxrdz</url>
-  <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
+  <url type="contribute">@PROJECT_GIT@/-/blob/main/CONTRIBUTING.md</url>
   <!--<url type="translate">https://l10n.gnome.org/module/memories</url>-->
   <translation type="gettext" source_locale="en_US">@GETTEXT_DOMAIN@</translation>
   <launchable type="desktop-id">@APP_ID@.desktop</launchable>
@@ -62,33 +62,33 @@
   </recommends>
   <screenshots>
     <screenshot type="default" environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/library.png</image>
       <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/albums.png</image>
       <caption>Albums Page</caption>
     </screenshot>
     <screenshot environment="gnome">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/viewer.png</image>
       <caption>Media Viewer</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/library-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/library-dark.png</image>
       <caption>Library Page</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/albums-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/albums-dark.png</image>
       <caption>Albums Page</caption>
     </screenshot>
     <screenshot environment="gnome:dark">
-      <image>@PROJECT_GIT@/-/raw/master/data/screenshots/viewer-dark.png</image>
+      <image>@PROJECT_GIT@/-/raw/main/data/screenshots/viewer-dark.png</image>
       <caption>Media Viewer</caption>
     </screenshot>
   </screenshots>
   <releases>
     <release version="46.3" date="2024-06-28">
-      <url type="details">@PROJECT_GIT@/-/blob/master/CHANGELOG</url>
+      <url type="details">@PROJECT_GIT@/-/blob/main/CHANGELOG</url>
       <description>
         <p>
           Initial release of Memories. Following the GNOME release
