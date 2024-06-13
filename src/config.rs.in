@@ -9,3 +9,4 @@ pub static LOCALEDIR: &str = @LOCALEDIR@;
 pub static PKGDATADIR: &str = @PKGDATADIR@;
 pub static GETTEXT_DOMAIN: &str = @GETTEXT_DOMAIN@;
 pub static GRESOURCE_DOMAIN: &str = "@GRESOURCE_DOMAIN@";
+pub static VCS_TAG: &str = @VCS_TAG@;

@@ -21,10 +21,9 @@
 mod imp;
 pub mod library_list_model;
 
-use crate::config::{APP_ID, APP_NAME};
+use crate::config::{APP_ID, APP_NAME, VCS_TAG};
 use crate::globals::*;
 use crate::i18n::gettext_f;
-use crate::vcs::VCS_TAG;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;

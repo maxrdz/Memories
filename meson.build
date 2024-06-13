@@ -4,8 +4,10 @@ project('memories', 'rust',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
+i18n = import('i18n')
+gnome = import('gnome')
+
 base_id = 'com.maxrdz.Memories'
-# App name is just the Meson project name capitalized
 app_name = meson.project_name().substring(0, 1).to_upper()
 app_name += meson.project_name().substring(1, 99)
 binary = meson.project_name()
@@ -13,10 +15,7 @@ gettext_domain = meson.project_name()
 base_gresource_domain = '/' + base_id.replace('.', '/')
 gresource_domain = base_gresource_domain
 project_git = 'https://gitlab.gnome.org/maxrdz/Memories'
-
-# Meson Module Imports
-i18n = import('i18n')
-gnome = import('gnome')
+vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD', check: false).stdout().strip()
 
 # Keep dependencies below matching with the current
 # gtk-rs 'gnome_xx' feature's dependencies, found at

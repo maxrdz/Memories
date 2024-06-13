@@ -78,7 +78,6 @@ mod library;
 mod preferences;
 mod thumbnails;
 mod utils;
-mod vcs;
 mod window;
 
 use application::MrsApplication;
@@ -110,7 +109,7 @@ fn main() -> glib::ExitCode {
         "{} v{}; Build revision (Git SHA1): {}",
         APP_NAME,
         VERSION,
-        vcs::VCS_TAG
+        config::VCS_TAG
     );
 
     // Set up gettext translations.

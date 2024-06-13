@@ -14,16 +14,13 @@ conf.set_quoted('PKGDATADIR', pkgdatadir)
 conf.set_quoted('GETTEXT_DOMAIN', gettext_domain)
 conf.set('BASE_GRESOURCE_DOMAIN', base_gresource_domain)
 conf.set('GRESOURCE_DOMAIN', gresource_domain)
+conf.set_quoted('VCS_TAG', vcs_tag)
 
 configure_file(
   input: 'config.rs.in',
   output: 'config.rs',
   configuration: conf
 )
-
-# This file is Generated until actual compile time.
-# The Cargo custom target handles copying the out file to the src dir.
-vcs_tag(input: 'vcs.rs.in', output: 'vcs.rs')
 
 # Copy the config.rs source file to the source directory.
 run_command(
@@ -99,9 +96,7 @@ cargo_build = custom_target(
   install: true,
   install_dir: get_option('bindir'),
   command: [
-    # Since vcs_tag() runs at compile time, we copy it over to source until here.
-    'cp', 'src' / 'vcs.rs', meson.project_source_root() / 'src',
-    '&&', 'env', cargo_env,
+    'env', cargo_env,
     cargo_bin, 'build',
     cargo_opts,
     # Replace below with `--out-dir` once stable.
