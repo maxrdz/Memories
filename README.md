@@ -85,6 +85,10 @@ To setup a build that targets ARM64 GNU/Linux:
 meson setup buildaarch64 -Dtarget=aarch64-unknown-linux-gnu
 ```
 
+Note that we do not use cross-rs for building the aarch64 flatpak
+artifact in Memories' CI/CD pipeline. The `flatpak@aarch64` job
+runs on an ARM machine, so it compiles Memories natively to aarch64.
+
 ## Contributing
 
 Please read the project's [Contributing Guide](./CONTRIBUTING.md).
