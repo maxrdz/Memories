@@ -212,7 +212,8 @@ impl MrsMediaCell {
                 // FIXME: This adds quite a performance hit. Maybe do all
                 // glycin metadata processing on a new separate thread?
                 glib::spawn_future_local(clone!(@weak self as cell => async move {
-                    let glycin_loader: Loader = Loader::new(file.clone());
+                    #[allow(unused_mut)]
+                    let mut glycin_loader: Loader = Loader::new(file.clone());
 
                     #[cfg(feature = "disable-glycin-sandbox")]
                     glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));

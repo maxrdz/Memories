@@ -92,7 +92,8 @@ impl MrsViewer {
             "render" => self.imp().viewer_picture.set_file(Some(file)),
             "image" => {
                 glib::spawn_future_local(clone!(@weak self as viewer, @strong file => async move {
-                    let glycin_loader: glycin::Loader = glycin::Loader::new(file);
+                    #[allow(unused_mut)]
+                    let mut glycin_loader: glycin::Loader = glycin::Loader::new(file);
 
                     #[cfg(feature = "disable-glycin-sandbox")]
                     glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
