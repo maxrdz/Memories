@@ -27,7 +27,7 @@ use crate::i18n::gettext_f;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use glib::{clone, g_critical, g_error};
+use glib::{clone, g_critical, g_debug, g_error};
 use gtk::{gio, glib};
 
 glib::wrapper! {
@@ -366,18 +366,38 @@ impl MrsApplication {
     /// Returns a `String` that represents the absolute path of
     /// the user's cache directory, which is either the equivalent
     /// of the `$XDG_CACHE_HOME` env var, or `$HOME/.cache`.
+    ///
+    /// If the `$XDG_CACHE_HOME` environment variable is not present,
+    /// and Memories is running as a sandboxed Flatpak application,
+    /// `$HOME/.var/app/$FLATPAK_ID/cache` is returned.
     pub fn get_cache_directory() -> String {
         match std::env::var("XDG_CACHE_HOME") {
             Ok(value) => value,
             Err(e) => {
+                g_debug!("MrsApplication", "$XDG_CACHE_HOME not found; Using fallback.");
                 match e {
                     std::env::VarError::NotPresent => {
-                        // If $XDG_CACHE_HOME is either not set or empty,
-                        // a default equal to $HOME/.cache should be used.
-                        // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-                        format!("{}/.cache", std::env::var("HOME").unwrap())
+                        let user_home: String = std::env::var("HOME").expect("$HOME not present.");
+
+                        match MrsApplication::is_flatpak() {
+                            Some(flatpak_id) => {
+                                format!("{}/.var/app/{}/cache", user_home, flatpak_id)
+                            }
+                            None => {
+                                // If $XDG_CACHE_HOME is either not set or empty,
+                                // a default equal to $HOME/.cache should be used.
+                                // https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+                                format!("{}/.cache", user_home)
+                            }
+                        }
                     }
-                    _ => panic!("Unexpected std::env::VarError variant received."),
+                    _ => {
+                        g_error!(
+                            "MrsApplication",
+                            "Unexpected std::env::VarError variant received."
+                        );
+                        panic!(""); // g_error! terminates for us; this just silences the compiler.
+                    }
                 }
             }
         }
@@ -386,14 +406,23 @@ impl MrsApplication {
     /// Returns a `String` that represents the absolute
     /// path of the application's cache directory location.
     pub fn get_app_cache_directory() -> String {
-        format!("{}/{}", MrsApplication::get_cache_directory(), APP_NAME)
+        if MrsApplication::is_flatpak().is_some() {
+            format!("{}/{}", MrsApplication::get_cache_directory(), APP_NAME)
+        } else {
+            // We can simply use `$XDG_CACHE_HOME` instead of `$XDG_CACHE_HOME/APP_NAME`
+            // if we are running inside a Flatpak; See:
+            // https://developer.gnome.org/documentation/tutorials/save-state.html
+            MrsApplication::get_cache_directory()
+        }
     }
 
-    pub fn is_flatpak() -> bool {
+    /// Returns Some($FLATPAK_ID) if in a Flatpak sandbox environment.
+    pub fn is_flatpak() -> Option<String> {
         if let Ok(var) = std::env::var("FLATPAK_ID") {
-            var == APP_ID
+            assert!(var == APP_ID, "$FLATPAK_ID doesn't match APP_ID!");
+            Some(var)
         } else {
-            false
+            None
         }
     }
 }
