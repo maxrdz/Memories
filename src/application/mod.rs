@@ -80,17 +80,13 @@ impl MrsApplication {
             )
             .build();
 
-        let choose_album_dir_action = gio::ActionEntry::builder("choose-library-directory")
-            .activate(move |_: &Self, _, _| ())
-            .build();
-        let configure_action = gio::ActionEntry::builder("configure")
-            .parameter_type(Some(glib::VariantTy::INT32))
-            .activate(move |_: &Self, _, _| ())
-            .build();
-
         // Application GAction for toggling FFmpeg hardware acceleration
         let toggle_hwaccel_action = gio::ActionEntry::builder("toggle-hardware-acceleration")
-            .state(self.gsettings().boolean("hardware-acceleration").to_variant())
+            .state(
+                self.gsettings()
+                    .boolean("ffmpeg-hardware-acceleration")
+                    .to_variant(),
+            )
             .activate(
                 move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
                     let previous_state: glib::Variant = action.state().unwrap();
@@ -99,7 +95,7 @@ impl MrsApplication {
                     let new_toggle: bool = !previous_toggle;
 
                     action.set_state(&new_toggle.to_variant());
-                    app.toggle_hardware_acceleration(new_toggle);
+                    app.toggle_ffmpeg_hardware_acceleration(new_toggle);
                 },
             )
             .build();
@@ -119,8 +115,6 @@ impl MrsApplication {
             system_theme_action,
             light_theme_action,
             dark_theme_action,
-            choose_album_dir_action,
-            configure_action,
             toggle_hwaccel_action,
             clear_cache_action,
             about_action,
@@ -160,8 +154,11 @@ impl MrsApplication {
         adw_style_manager.set_color_scheme(color_scheme);
     }
 
-    fn toggle_hardware_acceleration(&self, toggle: bool) {
-        if let Err(err_msg) = self.gsettings().set_boolean("hardware-acceleration", toggle) {
+    fn toggle_ffmpeg_hardware_acceleration(&self, toggle: bool) {
+        if let Err(err_msg) = self
+            .gsettings()
+            .set_boolean("ffmpeg-hardware-acceleration", toggle)
+        {
             g_critical!("MrsApplication", "GSettings returned error: {}", err_msg);
         }
     }

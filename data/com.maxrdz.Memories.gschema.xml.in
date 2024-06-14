@@ -32,18 +32,9 @@
         Set to 'false' after the cache directory is populated.
       </description>
     </key>
-    <key name="library-collection-paths" type="as">
-      <default>[]</default>
-      <summary>Folders for the Library Collection</summary>
-      <description>
-        A string array of absolute paths that are used as root
-        directory lists for the application's library list model
-        implementation to enumerate media items from.
-      </description>
-    </key>
-    <key name="hardware-acceleration" type="b">
+    <key name="ffmpeg-hardware-acceleration" type="b">
       <default>false</default>
-      <summary>Toggle Hardware Acceleration</summary>
+      <summary>Toggle FFmpeg Hardware Acceleration</summary>
       <description>
         Enables the use of hardware acceleration with FFmpeg.
         This is an experimental feature.

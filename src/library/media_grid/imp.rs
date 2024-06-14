@@ -65,7 +65,7 @@ impl Default for MrsMediaGridView {
             list_item_factory: gtk::SignalListItemFactory::default(),
             hardware_accel: Cell::new({
                 let gsettings: gio::Settings = MrsApplication::default().gsettings();
-                gsettings.boolean("hardware-acceleration")
+                gsettings.boolean("ffmpeg-hardware-acceleration")
             }),
             grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
             grid_desktop_zoom: Cell::new(false),
@@ -112,7 +112,11 @@ impl ObjectImpl for MrsMediaGridView {
         let gsettings: gio::Settings = MrsApplication::default().gsettings();
 
         gsettings
-            .bind("hardware-acceleration", &self.obj().clone(), "hardware-accel")
+            .bind(
+                "ffmpeg-hardware-acceleration",
+                &self.obj().clone(),
+                "hardware-accel",
+            )
             .build();
 
         self.list_item_factory.connect_setup(

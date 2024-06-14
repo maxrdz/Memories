@@ -20,17 +20,10 @@
 
 use adw::subclass::prelude::*;
 use gtk::glib;
-use std::cell::RefCell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/preferences/preferences.ui")]
-pub struct MrsPreferencesDialog {
-    // We have to store references to our `AdwActionRow` widgets
-    // to be able to clear them out of the preference group as children.
-    pub(super) library_collection_rows: RefCell<Vec<adw::ActionRow>>,
-    #[template_child]
-    pub(super) library_collection: TemplateChild<adw::PreferencesGroup>,
-}
+pub struct MrsPreferencesDialog {}
 
 #[glib::object_subclass]
 impl ObjectSubclass for MrsPreferencesDialog {

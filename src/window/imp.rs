@@ -49,6 +49,8 @@ pub struct MrsApplicationWindow {
     #[template_child]
     pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
+    pub favorites_page: TemplateChild<adw::ViewStackPage>,
+    #[template_child]
     pub albums_view: TemplateChild<MrsAlbumsView>,
     #[template_child]
     pub library_view: TemplateChild<MrsLibraryView>,

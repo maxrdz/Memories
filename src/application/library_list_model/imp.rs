@@ -20,8 +20,7 @@
 
 //! Data model implementation of the LibraryListModel class.
 
-use crate::application::MrsApplication;
-use crate::globals::DIRECTORY_MODEL_PRIORITY;
+use crate::globals::{DEFAULT_LIBRARY_COLLECTION, DIRECTORY_MODEL_PRIORITY};
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, g_debug, g_error};
@@ -68,8 +67,13 @@ impl Default for MrsLibraryListModel {
     fn default() -> Self {
         Self {
             subdirectories: RefCell::new({
-                let gsettings: gio::Settings = MrsApplication::default().gsettings();
-                gsettings.strv("library-collection-paths")
+                let user_home: String = std::env::var("HOME").unwrap();
+                let mut strv: glib::StrV = glib::StrV::new();
+
+                for library_root_dir in DEFAULT_LIBRARY_COLLECTION {
+                    strv.push(format!("{}/{}", user_home, library_root_dir).into());
+                }
+                strv
             }),
             models_loaded: Cell::new(false),
             refresh_widget_rows: Cell::new(false),
@@ -91,12 +95,6 @@ impl ObjectSubclass for MrsLibraryListModel {
 impl ObjectImpl for MrsLibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
-        let gsettings: gio::Settings = MrsApplication::default().gsettings();
-
-        // Bind our `subdirectories` property with the gschema key.
-        gsettings
-            .bind("library-collection-paths", &obj.clone(), "subdirectories")
-            .build();
 
         obj.connect_subdirectories_notify(
             clone!(@weak self as s, @weak obj => move |model: &super::MrsLibraryListModel| {
@@ -147,6 +145,12 @@ impl ObjectImpl for MrsLibraryListModel {
                 }
             }),
         );
+        // We have to manually invoke `notify::subdirectories` since
+        // we are no longer binding the property to a gschema key,
+        // which it was designed to in early development. (Now we only
+        // read XDG_PICTURES_DIR and XDG_VIDEOS_DIR) When this
+        // binding was done, it would update this property on sync.
+        obj.notify_subdirectories();
     }
 }
 

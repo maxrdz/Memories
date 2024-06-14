@@ -48,7 +48,7 @@ impl MrsApplicationWindow {
     fn setup_gactions(&self) {
         let settings_action = gio::ActionEntry::builder("settings")
             .activate(move |win: &Self, _, _| {
-                MrsPreferencesDialog::new(win).present(win);
+                MrsPreferencesDialog::default().present(win);
             })
             .build();
 

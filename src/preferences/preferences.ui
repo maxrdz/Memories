@@ -8,29 +8,6 @@
         <property name="use-underline">True</property>
         <property name="icon-name">applications-system-symbolic</property>
         <child>
-          <object class="AdwPreferencesGroup" id="library_collection">
-            <property name="title" translatable="yes">Library Collection</property>
-            <property name="description" translatable="yes">Choose what folders contain your photos and videos.</property>
-            <property name="vexpand-set">True</property>
-            <property name="vexpand">True</property>
-            <property name="valign">start</property>
-            <property name="header-suffix">
-              <object class="GtkButton">
-                <property name="margin-top">10</property>
-                <property name="margin-bottom">10</property>
-                <property name="child">
-                  <object class="AdwButtonContent">
-                    <property name="icon-name">document-open-symbolic</property>
-                    <property name="label" translatable="yes">_Choose</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </property>
-                <property name="action-name">app.choose-library-directory</property>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
           <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Advanced Options</property>
             <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Memories.</property>

@@ -78,6 +78,19 @@
                         </property>
                       </object>
                     </child>
+                    <child>
+                      <object class="AdwViewStackPage" id="favorites_page">
+                        <property name="name">favorites</property>
+                        <property name="title" translatable="yes" >Favorites</property>
+                        <property name="icon-name">starred-symbolic</property>
+                        <property name="child">
+                          <object class="AdwStatusPage">
+                            <property name="title">Favorites</property>
+                            <property name="icon-name">starred-symbolic</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </property>
                 <child type="bottom">
