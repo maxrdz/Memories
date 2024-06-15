@@ -11,6 +11,7 @@ base_id = 'com.maxrdz.Memories'
 app_name = meson.project_name().substring(0, 1).to_upper()
 app_name += meson.project_name().substring(1, 99)
 binary = meson.project_name()
+version = meson.project_version()
 gettext_domain = meson.project_name()
 base_gresource_domain = '/' + base_id.replace('.', '/')
 gresource_domain = base_gresource_domain
@@ -73,4 +74,10 @@ gnome.post_install(
      glib_compile_schemas: true,
     gtk_update_icon_cache: true,
   update_desktop_database: true,
+)
+
+meson.add_dist_script(
+  'build-aux/meson/dist-vendor.sh',
+  meson.project_build_root() / 'meson-dist' / binary + '-' + version,
+  meson.project_source_root()
 )

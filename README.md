@@ -8,6 +8,16 @@ Organize your memories
 
 </div>
 
+## Support
+
+The only version of Memories that's supported is the one shipped on
+Flathub.
+
+**Do not file bugs that don't happen with the Flathub version.**
+
+If the problem still occurs with the Flathub version, please test the
+nightly flatpak by downloading the GitLab CI/CD build job artifact.
+
 ## Building from Source
 
 We use Git for version control, and Meson/Ninja as the build

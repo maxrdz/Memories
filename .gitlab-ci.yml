@@ -74,7 +74,7 @@ cargo-fmt:
 cargo-clippy:
   extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: check
+  stage: build
   tags:
     - flatpak
   interruptible: true
