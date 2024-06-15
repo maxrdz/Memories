@@ -71,20 +71,10 @@ cargo-fmt:
     - cargo fmt --version
     - cargo fmt --all -- --color=always --check
 
-cargo-check:
-  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: check
-  interruptible: true
-  script:
-    - *report-runtime
-    # We want to verify the compiler accepts the current code revision
-    # before starting up a bunch of runners in parallel in the build stage.
-    - cargo check --verbose
-
 cargo-clippy:
   extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: build
+  stage: check
   tags:
     - flatpak
   interruptible: true
