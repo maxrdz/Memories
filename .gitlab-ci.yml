@@ -27,6 +27,14 @@ stages:
   # Print the date, since appstream depends on local timezone
   - date && date -u
 
+commit-validation:
+  image: 'python:3.12-alpine'
+  stage: check
+  interruptible: true
+  allow_failure: true
+  script:
+    - python build-aux/validate-commit.py "${CI_COMMIT_TITLE}"
+
 i18n:
   image: alpine
   stage: check
@@ -58,10 +66,19 @@ cargo-fmt:
     - cargo fmt --version
     - cargo fmt --all -- --color=always --check
 
+cargo-check:
+  image: 'rust:slim'
+  stage: check
+  interruptible: true
+  script:
+    # We want to verify the compiler accepts the current code revision
+    # before starting up a bunch of runners in parallel in the build stage.
+    - cargo check --verbose
+
 cargo-clippy:
   extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: check
+  stage: build
   tags:
     - flatpak
   interruptible: true
@@ -79,7 +96,7 @@ cargo-clippy:
 cargo-test:
   extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: check
+  stage: build
   tags:
     - flatpak
   interruptible: true
@@ -97,7 +114,7 @@ cargo-test:
 cargo-doc:
   extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: check
+  stage: build
   tags:
     - flatpak
   artifacts:

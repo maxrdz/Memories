@@ -86,7 +86,6 @@ if get_option('target') != ''
   endif
 endif
 
-# ---------- Cargo Build Target ---------- #
 cargo_build = custom_target(
   'cargo-build',
   build_by_default: true,
@@ -103,4 +102,29 @@ cargo_build = custom_target(
     # Issue: https://github.com/rust-lang/cargo/issues/6790#issuecomment-655728327=
     '&&', 'cp', 'src' / rust_target / project_name, '@OUTPUT@',
   ]
+)
+
+cargo_doc = custom_target(
+  'cargo-doc',
+  build_by_default: false,
+  build_always_stale: true,
+  output: 'doc',
+  console: true,
+  command: [
+    cargo_bin, 'doc',
+    cargo_opts + ['--no-deps', '--document-private-items'],
+  ],
+)
+
+test(
+  'cargo-test',
+  cargo_bin,
+  args: [
+    'test',
+    cargo_opts,
+    '--',
+    '--test-threads=1',
+  ],
+  is_parallel: false,
+  timeout: 1800,
 )

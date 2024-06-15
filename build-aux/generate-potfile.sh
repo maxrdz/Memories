@@ -19,7 +19,7 @@ while IFS= read -r line; do
     grep -vF "$line" POTFILES.in > 1.tmp && mv 1.tmp POTFILES.in
 done < <(grep -v '^#' POTFILES.skip)
 
-intltool-update --maintain 2> /dev/null
+intltool-update --maintain
 
 cd ..
-xgettext $XGETTEXT_ARGS --files-from=po/POTFILES.in -o po/$PROJECT_NAME.pot 2>/dev/null || (echo "Error running xgettext"; exit 1)
+xgettext $XGETTEXT_ARGS --files-from=po/POTFILES.in -o po/$PROJECT_NAME.pot || (echo "Error running xgettext"; exit 1)
