@@ -20,6 +20,13 @@ stages:
   - test
   - deploy
 
+.report-runtime: &report-runtime
+  # Report the installed versions of the runtime
+  - flatpak info org.gnome.Platform
+  - flatpak info org.gnome.Sdk
+  # Print the date, since appstream depends on local timezone
+  - date && date -u
+
 i18n:
   image: alpine
   stage: check
@@ -52,19 +59,14 @@ cargo-fmt:
     - cargo fmt --all -- --color=always --check
 
 cargo-clippy:
+  extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   stage: check
   tags:
     - flatpak
   interruptible: true
   script:
-    # Report the installed versions of the runtime
-    - flatpak info org.gnome.Platform
-    - flatpak info org.gnome.Sdk
-
-    # Print the date, since appstream depends on local timezone
-    - date && date -u
-
+    - *report-runtime
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
     - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
     - flatpak build-finish --socket=x11 --share=network flatpak_app
@@ -75,19 +77,14 @@ cargo-clippy:
       END
 
 cargo-test:
+  extends: ['.devel-variables']
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   stage: check
   tags:
     - flatpak
   interruptible: true
   script:
-    # Report the installed versions of the runtime
-    - flatpak info org.gnome.Platform
-    - flatpak info org.gnome.Sdk
-
-    # Print the date, since appstream depends on local timezone
-    - date && date -u
-
+    - *report-runtime
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
     - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
     - flatpak build-finish --socket=x11 --share=network flatpak_app
@@ -96,6 +93,30 @@ cargo-test:
       flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
         cargo test
       END
+
+cargo-doc:
+  extends: ['.devel-variables']
+  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
+  stage: check
+  tags:
+    - flatpak
+  artifacts:
+    name: 'Code Documentation'
+    paths:
+      - doc
+  interruptible: true
+  script:
+    - *report-runtime
+    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
+    - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
+    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - >
+      xvfb-run -a -s "-screen 0 1024x768x24"
+      flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
+        ninja src/doc
+      END
+    - cp -r .flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/src/doc doc
+    - chmod -R a=rwx doc
 
 flatpak@x86_64:
   extends: ['.flatpak@x86_64', '.devel-variables']
