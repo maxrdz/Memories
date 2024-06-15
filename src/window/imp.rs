@@ -21,6 +21,7 @@
 use crate::albums::MrsAlbumsView;
 use crate::application::library_list_model::MrsLibraryListModel;
 use crate::application::MrsApplication;
+use crate::config::GRESOURCE_DOMAIN;
 use crate::globals::DEVELOPMENT_BUILD;
 use crate::library::MrsLibraryView;
 use crate::window::theme_selector::MrsThemeSelector;
@@ -82,6 +83,11 @@ impl ObjectImpl for MrsApplicationWindow {
         if DEVELOPMENT_BUILD {
             obj.add_css_class("devel");
         }
+
+        // Setup Keyboard Shortcuts window for application window
+        let builder = gtk::Builder::from_resource(&format!("{}/gtk/help-overlay.ui", GRESOURCE_DOMAIN));
+        let shortcuts = builder.object("shortcuts").unwrap();
+        obj.set_help_overlay(Some(&shortcuts));
 
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method

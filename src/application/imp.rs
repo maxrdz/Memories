@@ -65,11 +65,13 @@ impl ObjectSubclass for MrsApplication {
 impl ObjectImpl for MrsApplication {
     fn constructed(&self) {
         g_debug!("MrsApplication", "Reached constructed()");
+
         self.parent_constructed();
         let obj = self.obj();
 
         obj.setup_gactions();
-        obj.set_accels_for_action("win.settings", &["<primary>comma"]);
+        obj.set_accels_for_action("win.preferences", &["<primary>comma"]);
+        obj.set_accels_for_action("win.show-help-overlay", &["<primary>question"]);
 
         obj.set_accels_for_action("app.system-theme", &["<primary><shift>s"]);
         obj.set_accels_for_action("app.light-theme", &["<primary><shift>l"]);

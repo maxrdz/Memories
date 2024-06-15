@@ -3,6 +3,9 @@
   <gresource prefix="@GRESOURCE_DOMAIN@">
     <file compressed="true">style.css</file>
   </gresource>
+  <gresource prefix="@GRESOURCE_DOMAIN@/gtk">
+    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>
+  </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="live-photo-symbolic.svg">icons/live-photo-symbolic.svg</file>
@@ -20,8 +23,5 @@
     <file preprocess="xml-stripblanks" compressed="true">preferences/preferences.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">window/theme_selector/theme-selector.ui</file>
-  </gresource>
-  <gresource prefix="@BASE_GRESOURCE_DOMAIN@/gtk">
-    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>
   </gresource>
 </gresources>

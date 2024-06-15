@@ -46,13 +46,21 @@ impl MrsApplicationWindow {
     }
 
     fn setup_gactions(&self) {
-        let settings_action = gio::ActionEntry::builder("settings")
+        let preferences_action = gio::ActionEntry::builder("preferences")
             .activate(move |win: &Self, _, _| {
                 MrsPreferencesDialog::default().present(win);
             })
             .build();
 
-        self.add_action_entries([settings_action]);
+        let shortcuts_window_action = gio::ActionEntry::builder("show-help-overlay")
+            .activate(move |win: &Self, _, _| {
+                // GActions are setup after constructor, which guarantees that
+                // the help overlay is setup for the window, so we can unwrap().
+                win.help_overlay().unwrap().present();
+            })
+            .build();
+
+        self.add_action_entries([preferences_action, shortcuts_window_action]);
     }
 
     #[template_callback]
