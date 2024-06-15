@@ -9,6 +9,9 @@ src/application/imp.rs
 src/application/library_list_model/imp.rs
 src/application/library_list_model/mod.rs
 src/application/mod.rs
+src/favorites/favorites.ui
+src/favorites/imp.rs
+src/favorites/mod.rs
 src/globals.rs
 src/library/details/details.ui
 src/library/details/imp.rs

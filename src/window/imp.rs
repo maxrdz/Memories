@@ -22,6 +22,7 @@ use crate::albums::MrsAlbumsView;
 use crate::application::library_list_model::MrsLibraryListModel;
 use crate::application::MrsApplication;
 use crate::config::GRESOURCE_DOMAIN;
+use crate::favorites::MrsFavoritesView;
 use crate::globals::DEVELOPMENT_BUILD;
 use crate::library::MrsLibraryView;
 use crate::window::theme_selector::MrsThemeSelector;
@@ -51,6 +52,8 @@ pub struct MrsApplicationWindow {
     pub albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
     pub favorites_page: TemplateChild<adw::ViewStackPage>,
+    #[template_child]
+    pub favorites_view: TemplateChild<MrsFavoritesView>,
     #[template_child]
     pub albums_view: TemplateChild<MrsAlbumsView>,
     #[template_child]

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="MrsFavoritesView" parent="AdwBreakpointBin">
+    <property name="width-request">360</property>
+    <property name="height-request">150</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>min-width: 720px</condition>
+      </object>
+    </child>
+    <property name="child">
+      <object class="AdwStatusPage">
+        <property name="title">Favorites</property>
+        <property name="description">Not Yet Implemented</property>
+        <property name="icon-name">starred-symbolic</property>
+      </object>
+    </property>
+  </template>
+</interface>

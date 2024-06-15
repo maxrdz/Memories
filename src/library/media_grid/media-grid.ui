@@ -94,7 +94,7 @@
                     </property>
                     <style>
                       <class name="circular"/>
-                      <class name="overlay-button"/>
+                      <class name="grid-overlay-controls"/>
                     </style>
                   </object>
                 </child>

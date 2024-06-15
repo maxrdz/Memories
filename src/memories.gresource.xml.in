@@ -8,13 +8,12 @@
   </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="live-photo-symbolic.svg">icons/live-photo-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="screenshot-symbolic.svg">icons/screenshot-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="svg-symbolic.svg">icons/svg-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
     <file preprocess="xml-stripblanks" compressed="true">albums/albums.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">favorites/favorites.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/library.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/details/details.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media-grid.ui</file>

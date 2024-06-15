@@ -84,10 +84,7 @@
                         <property name="title" translatable="yes" >Favorites</property>
                         <property name="icon-name">starred-symbolic</property>
                         <property name="child">
-                          <object class="AdwStatusPage">
-                            <property name="title">Favorites</property>
-                            <property name="icon-name">starred-symbolic</property>
-                          </object>
+                          <object class="MrsFavoritesView" id="favorites_view"/>
                         </property>
                       </object>
                     </child>

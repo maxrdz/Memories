@@ -18,32 +18,23 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use adw::glib;
-use adw::subclass::prelude::*;
+mod imp;
 
-#[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Memories/albums/albums.ui")]
-pub struct MrsAlbumsView {
-    #[template_child]
-    albums_grid_view: TemplateChild<gtk::GridView>,
+use gtk::glib;
+
+glib::wrapper! {
+    pub struct MrsFavoritesView(ObjectSubclass<imp::MrsFavoritesView>)
+        @extends gtk::Widget, adw::Bin;
 }
 
-#[glib::object_subclass]
-impl ObjectSubclass for MrsAlbumsView {
-    const NAME: &'static str = "MrsAlbumsView";
-    type Type = super::MrsAlbumsView;
-    type ParentType = adw::BreakpointBin;
-
-    fn class_init(klass: &mut Self::Class) {
-        klass.bind_template();
-    }
-
-    fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
-        obj.init_template();
+impl MrsFavoritesView {
+    pub fn new() -> Self {
+        glib::Object::new()
     }
 }
 
-impl ObjectImpl for MrsAlbumsView {}
-impl WidgetImpl for MrsAlbumsView {}
-impl BinImpl for MrsAlbumsView {}
-impl BreakpointBinImpl for MrsAlbumsView {}
+impl Default for MrsFavoritesView {
+    fn default() -> Self {
+        Self::new()
+    }
+}
