@@ -75,6 +75,26 @@ impl MrsViewer {
             .expect("Failed to downcast to MrsApplicationWindow.")
     }
 
+    /// This function is public so that it can be called once we
+    /// are placed in the widget tree and can access the window.
+    pub fn setup_gactions(&self) {
+        let win: MrsApplicationWindow = self.window();
+        let actions = gio::SimpleActionGroup::new();
+
+        let action_close = gio::ActionEntry::builder("show-properties")
+            .activate(
+                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, _, _| {
+                    viewer.imp()
+                        .split_view
+                        .set_show_sidebar(!viewer.imp().split_view.shows_sidebar());
+                }),
+            )
+            .build();
+
+        actions.add_action_entries([action_close]);
+        win.insert_action_group("viewer", Some(&actions));
+    }
+
     /// Sets the content type setting for the viewer page.
     /// The `ViewerContentType` enum given directly correlates
     /// to a stack page that has the proper widget for the content.
@@ -117,13 +137,6 @@ impl MrsViewer {
             .child(self)
             .build();
         new_navigation_page
-    }
-
-    #[template_callback]
-    fn details_toggle(&self, _: &gtk::ToggleButton) {
-        self.imp()
-            .split_view
-            .set_show_sidebar(!self.imp().split_view.shows_sidebar());
     }
 
     #[template_callback]

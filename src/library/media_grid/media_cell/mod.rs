@@ -122,6 +122,9 @@ impl MrsMediaCell {
                     nav_page.set_title(&file.basename().unwrap().to_string_lossy());
 
                     nav_view.push(&nav_page);
+
+                    // See docstring of setup_gactions() for why we're calling it here.
+                    viewer_content.setup_gactions();
                 }
             }
         ));

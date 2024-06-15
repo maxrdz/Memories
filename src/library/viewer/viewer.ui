@@ -7,7 +7,6 @@
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
         <setter object="header_bar" property="show-end-title-buttons">True</setter>
-        <setter object="main_menu_button" property="visible">True</setter>
       </object>
     </child>
     <property name="child">
@@ -16,30 +15,10 @@
           <object class="AdwHeaderBar" id="header_bar">
             <property name="show-end-title-buttons">False</property>
             <child type="end">
-              <object class="GtkMenuButton" id="main_menu_button">
-                <property name="visible">False</property>
-                <property name="primary">True</property>
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="popover">
-                  <object class="GtkPopoverMenu" id="primary_menu">
-                    <property name="menu-model">primary_menu_model</property>
-                  </object>
-                </property>
-                <property name="tooltip_text" translatable="yes">Main Menu</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkToggleButton" id="details_button">
-                <property name="icon-name">help-about-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Media Details</property>
-                <signal name="toggled" handler="details_toggle" swapped="true"/>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkToggleButton" id="fullscreen_button">
-                <property name="icon-name">view-fullscreen-symbolic</property>
-                <property name="tooltip-text" translatable="yes">View Fullscreen</property>
-                <signal name="toggled" handler="fullscreen_toggle" swapped="true"/>
+              <object class="GtkMenuButton" id="more_button">
+                <property name="icon-name">view-more-symbolic</property>
+                <property name="tooltip-text" translatable="yes">More Actions</property>
+                <property name="menu-model">more_actions_menu</property>
               </object>
             </child>
           </object>
@@ -52,57 +31,64 @@
               <object class="MrsDetails" id="details_widget"/>
             </property>
             <property name="content">
-              <object class="AdwToolbarView">
-                <child type="bottom">
-                  <object class="GtkActionBar">
-                    <property name="height-request">50</property>
-                    <child type="start">
+              <object class="GtkOverlay">
+                <child type="overlay">
+                  <object class="GtkBox" id="overlay_controls">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">0</property>
+                    <property name="valign">end</property>
+                    <property name="margin-start">15</property>
+                    <property name="margin-end">15</property>
+                    <property name="margin-bottom">15</property>
+                    <child>
                       <object class="GtkButton">
-                        <property name="tooltip-text" translatable="yes">Previous Item</property>
-                        <property name="child">
-                          <object class="GtkImage">
-                            <property name="icon-name">go-previous-symbolic</property>
-                            <property name="use-fallback">True</property>
-                          </object>
-                        </property>
+                        <property name="icon-name">go-previous-symbolic</property>
+                        <property name="tooltip-text">Previous</property>
+                        <property name="halign">start</property>
+                        <style>
+                          <class name="overlay-button"/>
+                          <class name="start"/>
+                        </style>
                       </object>
                     </child>
-                    <child type="start">
+                    <child>
                       <object class="GtkButton">
-                        <property name="tooltip-text" translatable="yes">Next Item</property>
-                        <property name="child">
-                          <object class="GtkImage">
-                            <property name="icon-name">go-next-symbolic</property>
-                            <property name="use-fallback">True</property>
-                          </object>
-                        </property>
+                        <property name="icon-name">go-next-symbolic</property>
+                        <property name="tooltip-text">Next</property>
+                        <property name="halign">start</property>
+                        <style>
+                          <class name="overlay-button"/>
+                          <class name="end"/>
+                        </style>
                       </object>
                     </child>
-                    <child type="end">
+                    <child>
                       <object class="GtkButton">
-                        <property name="tooltip-text" translatable="yes">Delete Media</property>
-                        <property name="child">
-                          <object class="GtkImage">
-                            <property name="icon-name">user-trash-symbolic</property>
-                            <property name="use-fallback">True</property>
-                          </object>
-                        </property>
+                        <property name="icon-name">zoom-fit-best-symbolic</property>
+                        <property name="tooltip-text">Zoom Controls</property>
+                        <property name="halign">end</property>
+                        <property name="hexpand">True</property>
+                        <style>
+                          <class name="start"/>
+                          <class name="overlay-button"/>
+                        </style>
                       </object>
                     </child>
-                    <child type="end">
+                    <child>
                       <object class="GtkButton">
-                        <property name="tooltip-text" translatable="yes">Copy to Clipboard</property>
-                        <property name="child">
-                          <object class="GtkImage">
-                            <property name="icon-name">edit-copy-symbolic</property>
-                            <property name="use-fallback">True</property>
-                          </object>
-                        </property>
+                        <property name="icon-name">pan-down-symbolic</property>
+                        <property name="tooltip-text">Zoom Menu</property>
+                        <property name="halign">end</property>
+                        <style>
+                          <class name="end"/>
+                          <class name="overlay-button"/>
+                          <class name="overlay-button-short"/>
+                        </style>
                       </object>
                     </child>
                   </object>
                 </child>
-                <property name="content">
+                <property name="child">
                   <object class="AdwViewStack" id="viewer_stack">
                     <child>
                       <object class="AdwViewStackPage" id="image_page">
@@ -144,20 +130,31 @@
       </object>
     </property>
   </template>
-  <menu id="primary_menu_model">
+  <menu id="more_actions_menu">
     <section>
       <item>
-        <attribute name="custom">theme-selector</attribute>
+        <attribute name="label" translatable="yes">_Favorite</attribute>
+        <attribute name="action">viewer.favorite_media</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Add to Album..</attribute>
+        <attribute name="action">viewer.add_to_album</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Set as _Background</attribute>
+        <attribute name="action">viewer.set_background</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Preferences</attribute>
-        <attribute name="action">win.settings</attribute>
+        <attribute name="label" translatable="yes">Move to _Trash</attribute>
+        <attribute name="action">viewer.trash_media</attribute>
       </item>
+    </section>
+    <section>
       <item>
-        <attribute name="label" translatable="yes">_About Memories</attribute>
-        <attribute name="action">app.about</attribute>
+        <attribute name="label" translatable="yes">_Properties</attribute>
+        <attribute name="action">viewer.show-properties</attribute>
       </item>
     </section>
   </menu>

@@ -42,9 +42,17 @@ cfg_if! {
 /// what binary needs to be installed to use Memories.
 pub static FFMPEG_BINARY: &str = "ffmpeg";
 
-/// The number of permits given to the async semaphore
-/// used to control the amount of ffmpeg processes spawned.
-pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
+cfg_if! {
+    // We're gonna assume that if we're targeting ARM,
+    // we are targeting mobile devices.
+    if #[cfg(target_arch = "aarch64")] {
+        /// The number of permits given to the async semaphore
+        /// used to control the amount of ffmpeg processes spawned.
+        pub static FFMPEG_CONCURRENT_PROCESSES: usize = 2;
+    } else {
+        pub static FFMPEG_CONCURRENT_PROCESSES: usize = 5;
+    }
+}
 
 /// IO priority for new `GtkDirectoryList` models. We override
 /// the default since it is usually higher than GTK redraw priority.

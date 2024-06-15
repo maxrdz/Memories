@@ -19,7 +19,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::library::details::MrsDetails;
-use crate::window::theme_selector::MrsThemeSelector;
 use adw::subclass::prelude::*;
 use gtk::glib;
 
@@ -27,31 +26,27 @@ use gtk::glib;
 #[template(resource = "/com/maxrdz/Memories/library/viewer/viewer.ui")]
 pub struct MrsViewer {
     #[template_child]
-    pub header_bar: TemplateChild<adw::HeaderBar>,
+    header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
-    pub main_menu_button: TemplateChild<gtk::MenuButton>,
+    more_button: TemplateChild<gtk::MenuButton>,
     #[template_child]
-    pub primary_menu: TemplateChild<gtk::PopoverMenu>,
-    #[template_child]
-    pub details_button: TemplateChild<gtk::ToggleButton>,
-    #[template_child]
-    pub fullscreen_button: TemplateChild<gtk::ToggleButton>,
-    #[template_child]
-    pub split_view: TemplateChild<adw::OverlaySplitView>,
+    pub(super) split_view: TemplateChild<adw::OverlaySplitView>,
     #[template_child]
     pub details_widget: TemplateChild<MrsDetails>,
     #[template_child]
-    pub viewer_stack: TemplateChild<adw::ViewStack>,
+    overlay_controls: TemplateChild<gtk::Box>,
     #[template_child]
-    pub image_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) viewer_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
-    pub video_page: TemplateChild<adw::ViewStackPage>,
+    image_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub scrolled_window: TemplateChild<gtk::ScrolledWindow>,
+    video_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub viewer_picture: TemplateChild<gtk::Picture>,
+    scrolled_window: TemplateChild<gtk::ScrolledWindow>,
     #[template_child]
-    pub viewer_video: TemplateChild<gtk::Video>,
+    pub(super) viewer_picture: TemplateChild<gtk::Picture>,
+    #[template_child]
+    pub(super) viewer_video: TemplateChild<gtk::Video>,
 }
 
 #[glib::object_subclass]
@@ -70,17 +65,7 @@ impl ObjectSubclass for MrsViewer {
     }
 }
 
-impl ObjectImpl for MrsViewer {
-    fn constructed(&self) {
-        self.parent_constructed();
-
-        // We have to add the theme selector widget as a child of our
-        // GtkPopoverMenu widget manually here, because the UI XML method
-        // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = MrsThemeSelector::new();
-        self.primary_menu.add_child(&new_theme_selector, "theme-selector");
-    }
-}
+impl ObjectImpl for MrsViewer {}
 impl WidgetImpl for MrsViewer {}
 impl BinImpl for MrsViewer {}
 impl BreakpointBinImpl for MrsViewer {}
