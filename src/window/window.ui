@@ -36,9 +36,10 @@
                       </object>
                     </property>
                     <child type="start">
-                      <object class="GtkButton">
+                      <object class="GtkToggleButton">
                         <property name="icon-name">system-search-symbolic</property>
                         <property name="tooltip_text" translatable="yes">Search</property>
+                        <signal name="toggled" handler="toggle_search_bar" swapped="true"/>
                       </object>
                     </child>
                     <child type="end">
@@ -53,6 +54,16 @@
                         <property name="tooltip_text" translatable="yes">Main Menu</property>
                       </object>
                     </child>
+                  </object>
+                </child>
+                <child type="top">
+                  <object class="GtkSearchBar" id="search_bar">
+                    <property name="child">
+                      <object class="GtkSearchEntry" id="search_entry">
+                        <property name="hexpand">True</property>
+                        <property name="hexpand-set">True</property>
+                      </object>
+                    </property>
                   </object>
                 </child>
                 <property name="content">

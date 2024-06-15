@@ -37,27 +37,31 @@ pub struct MrsApplicationWindow {
     #[template_child]
     pub window_navigation: TemplateChild<adw::NavigationView>,
     #[template_child]
-    pub header_bar: TemplateChild<adw::HeaderBar>,
+    header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
-    pub desktop_view_switcher: TemplateChild<adw::ViewSwitcher>,
+    desktop_view_switcher: TemplateChild<adw::ViewSwitcher>,
     #[template_child]
-    pub mobile_switcher_bar: TemplateChild<adw::ViewSwitcherBar>,
+    mobile_switcher_bar: TemplateChild<adw::ViewSwitcherBar>,
     #[template_child]
-    pub primary_menu: TemplateChild<gtk::PopoverMenu>,
+    primary_menu: TemplateChild<gtk::PopoverMenu>,
     #[template_child]
-    pub master_stack: TemplateChild<adw::ViewStack>,
+    pub(super) search_bar: TemplateChild<gtk::SearchBar>,
     #[template_child]
-    pub library_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) search_entry: TemplateChild<gtk::SearchEntry>,
     #[template_child]
-    pub albums_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) master_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
-    pub favorites_page: TemplateChild<adw::ViewStackPage>,
+    pub(super) library_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub favorites_view: TemplateChild<MrsFavoritesView>,
+    albums_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub albums_view: TemplateChild<MrsAlbumsView>,
+    favorites_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub library_view: TemplateChild<MrsLibraryView>,
+    favorites_view: TemplateChild<MrsFavoritesView>,
+    #[template_child]
+    albums_view: TemplateChild<MrsAlbumsView>,
+    #[template_child]
+    pub(super) library_view: TemplateChild<MrsLibraryView>,
 }
 
 #[glib::object_subclass]

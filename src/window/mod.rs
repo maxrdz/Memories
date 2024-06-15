@@ -25,6 +25,8 @@ use crate::application::MrsApplication;
 use crate::preferences::MrsPreferencesDialog;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use gettextrs::gettext;
+use glib::g_error;
 use gtk::{gio, glib};
 
 glib::wrapper! {
@@ -68,12 +70,32 @@ impl MrsApplicationWindow {
         let media_grid_imp = self.imp().library_view.imp().media_grid.imp();
 
         if let Some(child_name) = self.imp().master_stack.visible_child_name() {
-            if child_name == self.imp().library_page.name().unwrap() {
-                // If the photo grid has no model, load the photo library now.
-                if media_grid_imp.photo_grid_view.model().is_none() {
-                    self.imp().library_view.load_library();
+            match child_name.as_str() {
+                "library" => {
+                    self.imp()
+                        .search_entry
+                        .set_placeholder_text(Some(&gettext("Search Photos")));
+
+                    // If the photo grid has no model, load the photo library now.
+                    if media_grid_imp.photo_grid_view.model().is_none() {
+                        self.imp().library_view.load_library();
+                    }
                 }
+                "albums" => self
+                    .imp()
+                    .search_entry
+                    .set_placeholder_text(Some(&gettext("Search Albums"))),
+                "favorites" => self
+                    .imp()
+                    .search_entry
+                    .set_placeholder_text(Some(&gettext("Search Favorites"))),
+                _ => g_error!("MrsApplicationWindow", "Unexpected master stack child found."),
             }
         }
+    }
+
+    #[template_callback]
+    fn toggle_search_bar(&self, toggle_button: &gtk::ToggleButton) {
+        self.imp().search_bar.set_search_mode(toggle_button.is_active());
     }
 }

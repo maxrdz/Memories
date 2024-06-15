@@ -139,13 +139,10 @@ impl MrsApplication {
                 self.change_action_state("dark-theme", &true.to_variant());
                 self.change_action_state("light-theme", &false.to_variant());
             }
-            _ => {
-                g_error!(
-                    "MrsApplication",
-                    "update_theme_action_states() received an invalid action name."
-                );
-                panic!("update_theme_action_states() received invalid action name.");
-            }
+            _ => g_error!(
+                "MrsApplication",
+                "update_theme_action_states() received an invalid action name."
+            ),
         }
     }
 
@@ -393,7 +390,7 @@ impl MrsApplication {
                             "MrsApplication",
                             "Unexpected std::env::VarError variant received."
                         );
-                        panic!(""); // g_error! terminates for us; this just silences the compiler.
+                        panic!(); // g_error! terminates for us; this just silences the compiler.
                     }
                 }
             }

@@ -102,10 +102,7 @@ impl ApplicationImpl for MrsApplication {
                     app.set_adwaita_color_scheme(adw::ColorScheme::ForceDark);
                     app.update_theme_action_states("dark-theme");
                 }
-                _ => {
-                    glib::g_error!("MrsApplication", "GSchema theme key out of range.");
-                    panic!("GSchema theme key out of range.");
-                }
+                _ => glib::g_error!("MrsApplication", "GSchema theme key out of range."),
             };
         });
 
