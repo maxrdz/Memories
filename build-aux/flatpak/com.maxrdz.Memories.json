@@ -25,6 +25,9 @@
         "--socket=pulseaudio",
         "--share=ipc",
         "--env=RUST_BACKTRACE=0",
+        "--talk-name=org.gtk.vfs.*",
+        "--filesystem=xdg-run/gvfs",
+        "--filesystem=xdg-run/gvfsd",
         "--filesystem=xdg-pictures:create",
         "--filesystem=xdg-videos:create",
         "--filesystem=xdg-data:create",
@@ -39,6 +42,7 @@
     "cleanup" : [
         "/include",
         "/lib/pkgconfig",
+        "/lib/cmake",
         "/man",
         "/share/doc",
         "/share/gtk-doc",
@@ -173,24 +177,31 @@
             ]
         },
         {
-            "name": "glycin",
-            "buildsystem": "meson",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/sophie-h/glycin.git",
-                    "commit": "4b5d7f06ae23bb8f5045ce069c687c3aa05c5f84"
-                }
-            ]
+          "name": "glycin-loaders",
+          "buildsystem": "meson",
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://download.gnome.org/sources/glycin-loaders/1.0/glycin-loaders-1.0.1.tar.xz",
+              "sha256": "d0f022462ff555856e85ea940474470bb36b37c9ffcbcba63a03fe5e954370cf",
+              "x-checker-data": {
+                "type": "gnome",
+                "name": "glycin-loaders"
+              }
+            }
+          ]
         },
         {
             "name" : "memories",
             "buildsystem" : "meson",
+            "config-opts" : [
+                "-Ddisable-glycin-sandbox=false"
+            ],
             "builddir" : true,
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "../"
+                    "url" : "../../"
                 }
             ]
         }
