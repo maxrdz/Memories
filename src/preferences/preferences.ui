@@ -9,6 +9,25 @@
         <property name="icon-name">applications-system-symbolic</property>
         <child>
           <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Video Playback</property>
+            <child>
+              <object class="AdwSwitchRow">
+                <property name="title" translatable="yes">Auto Play Videos</property>
+                <property name="action-name">app.toggle-autoplay</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="name">advanced</property>
+        <property name="title" translatable="yes">_Advanced</property>
+        <property name="use-underline">True</property>
+        <property name="icon-name">preferences-system-symbolic</property>
+        <child>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Advanced Options</property>
             <property name="description" translatable="yes">The following options are intended for users who may be troubleshooting an issue with Memories.</property>
             <child>

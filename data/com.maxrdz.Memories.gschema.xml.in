@@ -25,6 +25,10 @@
       <default>"library"</default>
       <summary>State of the current view stack page visible</summary>
     </key>
+    <key name="autoplay-videos" type="b">
+      <default>true</default>
+      <summary>Automatically start video playback when loaded.</summary>
+    </key>
     <key name="fresh-cache" type="b">
       <default>true</default>
       <summary>Cache Cleared Flag</summary>

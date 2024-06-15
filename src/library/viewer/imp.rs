@@ -18,9 +18,11 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::application::MrsApplication;
 use crate::library::details::MrsDetails;
+use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::glib;
+use gtk::{gio, glib};
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/viewer/viewer.ui")]
@@ -65,7 +67,17 @@ impl ObjectSubclass for MrsViewer {
     }
 }
 
-impl ObjectImpl for MrsViewer {}
+impl ObjectImpl for MrsViewer {
+    fn constructed(&self) {
+        self.parent_constructed();
+        let gsettings: gio::Settings = MrsApplication::default().gsettings();
+
+        gsettings
+            .bind("autoplay-videos", &self.viewer_video.clone(), "autoplay")
+            .build();
+    }
+}
+
 impl WidgetImpl for MrsViewer {}
 impl BinImpl for MrsViewer {}
 impl BreakpointBinImpl for MrsViewer {}

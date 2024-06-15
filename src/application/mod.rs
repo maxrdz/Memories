@@ -80,6 +80,21 @@ impl MrsApplication {
             )
             .build();
 
+        let toggle_autoplay_action = gio::ActionEntry::builder("toggle-autoplay")
+            .state(self.gsettings().boolean("autoplay-videos").to_variant())
+            .activate(
+                move |app: &Self, action: &gio::SimpleAction, _: Option<&glib::Variant>| {
+                    let previous_state: glib::Variant = action.state().unwrap();
+
+                    let previous_toggle: bool = bool::from_variant(&previous_state).unwrap();
+                    let new_toggle: bool = !previous_toggle;
+
+                    action.set_state(&new_toggle.to_variant());
+                    app.toggle_autoplay(new_toggle);
+                },
+            )
+            .build();
+
         // Application GAction for toggling FFmpeg hardware acceleration
         let toggle_hwaccel_action = gio::ActionEntry::builder("toggle-hardware-acceleration")
             .state(
@@ -115,6 +130,7 @@ impl MrsApplication {
             system_theme_action,
             light_theme_action,
             dark_theme_action,
+            toggle_autoplay_action,
             toggle_hwaccel_action,
             clear_cache_action,
             about_action,
@@ -151,13 +167,12 @@ impl MrsApplication {
         adw_style_manager.set_color_scheme(color_scheme);
     }
 
+    fn toggle_autoplay(&self, toggle: bool) {
+        self.toggle_gschema_key("autoplay-videos", toggle);
+    }
+
     fn toggle_ffmpeg_hardware_acceleration(&self, toggle: bool) {
-        if let Err(err_msg) = self
-            .gsettings()
-            .set_boolean("ffmpeg-hardware-acceleration", toggle)
-        {
-            g_critical!("MrsApplication", "GSettings returned error: {}", err_msg);
-        }
+        self.toggle_gschema_key("ffmpeg-hardware-acceleration", toggle);
     }
 
     fn show_clear_app_cache_prompt(&self) {
@@ -407,6 +422,12 @@ impl MrsApplication {
             // if we are running inside a Flatpak; See:
             // https://developer.gnome.org/documentation/tutorials/save-state.html
             MrsApplication::get_cache_directory()
+        }
+    }
+
+    fn toggle_gschema_key(&self, key: &str, toggle: bool) {
+        if let Err(err_msg) = self.gsettings().set_boolean(key, toggle) {
+            g_critical!("MrsApplication", "GSettings returned error: {}", err_msg);
         }
     }
 
