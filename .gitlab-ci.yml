@@ -27,6 +27,21 @@ stages:
   # Print the date, since appstream depends on local timezone
   - date && date -u
 
+.build-flatpak: &build-flatpak
+  - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
+  - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
+  - flatpak build-finish --socket=x11 --share=network flatpak_app
+
+i18n:
+  image: alpine
+  stage: check
+  interruptible: true
+  script:
+    - apk add --no-cache intltool gettext git
+    # tldr: If the POTFILES.in isn't up to date, error.
+    - sh ./build-aux/generate-potfile.sh
+    - git diff --exit-code
+
 commit-validation:
   image: 'python:3.12-alpine'
   stage: check
@@ -34,16 +49,6 @@ commit-validation:
   allow_failure: true
   script:
     - python build-aux/validate-commit.py "${CI_COMMIT_TITLE}"
-
-i18n:
-  image: alpine
-  stage: check
-  interruptible: true
-  script:
-    - apk add --no-cache git
-    # tldr: If the POTFILES.in isn't up to date, error.
-    - sh ./build-aux/generate-potfile.sh
-    - git diff --exit-code
 
 cargo-deny:
   image: rust
@@ -67,10 +72,11 @@ cargo-fmt:
     - cargo fmt --all -- --color=always --check
 
 cargo-check:
-  image: 'rust:slim'
+  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   stage: check
   interruptible: true
   script:
+    - *report-runtime
     # We want to verify the compiler accepts the current code revision
     # before starting up a bunch of runners in parallel in the build stage.
     - cargo check --verbose
@@ -84,9 +90,7 @@ cargo-clippy:
   interruptible: true
   script:
     - *report-runtime
-    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-    - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
-    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - *build-flatpak
     - >
       xvfb-run -a -s "-screen 0 1024x768x24"
       flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
@@ -102,9 +106,7 @@ cargo-test:
   interruptible: true
   script:
     - *report-runtime
-    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-    - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
-    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - *build-flatpak
     - >
       xvfb-run -a -s "-screen 0 1024x768x24"
       flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
@@ -124,9 +126,7 @@ cargo-doc:
   interruptible: true
   script:
     - *report-runtime
-    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-    - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
-    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - *build-flatpak
     - >
       xvfb-run -a -s "-screen 0 1024x768x24"
       flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
