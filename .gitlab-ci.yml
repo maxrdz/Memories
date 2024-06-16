@@ -69,7 +69,7 @@ typos:
     - apk add --no-cache wget tar
     - wget ${TYPOS_UPSTREAM}
     - mkdir .tmp
-    - tar -xzfv typos-v*.tar.gz -C .tmp/
+    - tar -xzf typos-v*.tar.gz -C .tmp/
     - ./.tmp/typos
 
 cargo-deny:
