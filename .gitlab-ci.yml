@@ -6,6 +6,9 @@ include:
   - project: "GNOME/citemplates"
     file: "flatpak/flatpak_ci_initiative.yml"
 
+variables:
+  TYPOS_UPSTREAM: "https://github.com/crate-ci/typos/releases/download/v1.22.7/typos-v1.22.7-x86_64-unknown-linux-musl.tar.gz"
+
 .devel-variables:
   variables:
     BUNDLE: "com.maxrdz.Memories.Devel.flatpak"
@@ -13,6 +16,14 @@ include:
     FLATPAK_MODULE: "memories"
     APP_ID: "com.maxrdz.Memories.Devel"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+
+.release-variables:
+  variables:
+    BUNDLE: "com.maxrdz.Memories.flatpak"
+    MANIFEST_PATH: "build-aux/flatpak/com.maxrdz.Memories.json"
+    FLATPAK_MODULE: "memories"
+    APP_ID: "com.maxrdz.Memories"
+    RUNTIME_REPO: "https://dl.flathub.org/repo/flathub.flatpakrepo"
 
 stages:
   - check
@@ -49,6 +60,17 @@ commit-validation:
   allow_failure: true
   script:
     - python build-aux/validate-commit.py "${CI_COMMIT_TITLE}"
+
+typos:
+  image: alpine
+  stage: check
+  interruptible: true
+  script:
+    - apk add --no-cache wget tar
+    - wget ${TYPOS_UPSTREAM}
+    - mkdir .tmp
+    - tar -xzfv typos-v*.tar.gz -C .tmp/
+    - ./.tmp/typos
 
 cargo-deny:
   image: rust
@@ -141,7 +163,6 @@ flatpak@aarch64:
   tags:
     - flatpak
   interruptible: true
-  allow_failure: true
   variables:
     RUN_TESTS: "0"
     CONFIG_OPTS: "-Dprofile=devel"
@@ -154,7 +175,7 @@ nightly@x86_64:
   stage: deploy
   tags:
     - flatpak
-  needs:
+  dependencies:
     - flatpak@x86_64
 
 nightly@aarch64:
@@ -162,5 +183,19 @@ nightly@aarch64:
   stage: deploy
   tags:
     - flatpak
-  needs:
+  dependencies:
     - flatpak@aarch64
+
+pages:
+  stage: deploy
+  dependencies:
+    - cargo-doc
+  script:
+    - mkdir public
+    - mv doc public
+  artifacts:
+    paths:
+      # GitLab Pages only deploys build under "public" directory.
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
