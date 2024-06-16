@@ -7,6 +7,7 @@ include:
     file: "flatpak/flatpak_ci_initiative.yml"
 
 variables:
+  CRATE_NAME: "memories"
   TYPOS_UPSTREAM: "https://github.com/crate-ci/typos/releases/download/v1.22.7/typos-v1.22.7-x86_64-unknown-linux-musl.tar.gz"
 
 .devel-variables:
@@ -192,7 +193,13 @@ pages:
     - cargo-doc
   script:
     - mkdir public
-    - mv doc public
+    - mv doc/* public
+    - cd public
+    # Make an index.html file in the `public/` dir to reroute to
+    # the `memories` subdirectory where the actual documentation is at.
+    # This makes the user not encounter a 404 at the root of the pages site.
+    - touch index.html
+    - echo "<meta http-equiv=\"refresh\" content=\"0; url=${CRATE_NAME}\">" > index.html
   artifacts:
     paths:
       # GitLab Pages only deploys build under "public" directory.

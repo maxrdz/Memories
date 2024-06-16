@@ -50,6 +50,9 @@ cargo_opts = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
 cargo_opts += [ '--target-dir', meson.project_build_root()  / 'src' ]
 cargo_env = [ 'CARGO_HOME=' + meson.project_build_root()  / 'cargo-home' ]
 
+cargo_doc_opts = ['--document-private-items']
+cargo_doc_opts += ['--config', 'build.rustdocflags="--default-theme=ayu"']
+
 if get_option('profile') == 'default' or get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
   rust_target = 'release'
@@ -112,7 +115,7 @@ cargo_doc = custom_target(
   console: true,
   command: [
     cargo_bin, 'doc',
-    cargo_opts + ['--no-deps', '--document-private-items'],
+    cargo_opts + cargo_doc_opts,
   ],
 )
 

@@ -107,6 +107,10 @@ It is very helpful for new contributors to read the
 [GNOME Handbook](https://handbook.gnome.org/development/change-submission.html)
 before starting to write your own changes to Memories.
 
+The documentation for Memories' source code is deployed with GitLab Pages:
+
+- [Memories Source Code Documentation](https://gallery-maxrdz-1e606ae2730f4d16c194a3e9067683c329ee2077df8edaee.pages.gitlab.gnome.org/)
+
 ## Code of Conduct
 
 The Memories project, its maintainers, and its contributors are

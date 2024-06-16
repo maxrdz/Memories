@@ -20,6 +20,8 @@
 
 /*!
 # Memories
+<img src="https://gitlab.gnome.org/maxrdz/Memories/-/raw/main/data/icons/com.maxrdz.Memories.Devel.svg?ref_type=heads" height=10%>
+
 Source Code Documentation
 
 ## Prelude
@@ -57,6 +59,7 @@ Simplified widget tree including the most important widgets.
             - [`AdwViewStack`]
                 - [`MrsLibraryView`]
                 - [`MrsAlbumsView`]
+                - [`MrsFavoritesView`]
 
 [`AdwNavigationView`]: adw::NavigationView
 [`AdwNavigationPage`]: adw::NavigationPage
@@ -65,7 +68,10 @@ Simplified widget tree including the most important widgets.
 [`MrsApplicationWindow`]: window::MrsApplicationWindow
 [`MrsLibraryView`]: library::MrsLibraryView
 [`MrsAlbumsView`]: albums::MrsAlbumsView
+[`MrsFavoritesView`]: favorites::MrsFavoritesView
 */
+
+#![doc(html_logo_url = "https://gitlab.gnome.org/maxrdz/Memories/-/raw/main/data/icons/com.maxrdz.Memories.Devel.svg?ref_type=heads")]
 
 mod albums;
 mod application;
