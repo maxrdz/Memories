@@ -71,7 +71,9 @@ Simplified widget tree including the most important widgets.
 [`MrsFavoritesView`]: favorites::MrsFavoritesView
 */
 
-#![doc(html_logo_url = "https://gitlab.gnome.org/maxrdz/Memories/-/raw/main/data/icons/com.maxrdz.Memories.Devel.svg?ref_type=heads")]
+#![doc(
+    html_logo_url = "https://gitlab.gnome.org/maxrdz/Memories/-/raw/main/data/icons/com.maxrdz.Memories.Devel.svg?ref_type=heads"
+)]
 
 mod albums;
 mod application;
