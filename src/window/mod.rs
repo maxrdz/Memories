@@ -19,7 +19,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
-pub mod theme_selector;
 
 use crate::application::MemoriesApplication;
 use crate::preferences::MemoriesPreferencesDialog;

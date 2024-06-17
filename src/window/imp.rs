@@ -25,7 +25,6 @@ use crate::config::GRESOURCE_DOMAIN;
 use crate::favorites::MemoriesFavoritesView;
 use crate::globals::DEVELOPMENT_BUILD;
 use crate::library::MemoriesLibraryView;
-use crate::window::theme_selector::MemoriesThemeSelector;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::clone;
@@ -92,14 +91,15 @@ impl ObjectImpl for MemoriesApplicationWindow {
         }
 
         // Setup Keyboard Shortcuts window for application window
-        let builder = gtk::Builder::from_resource(&format!("{}/gtk/help-overlay.ui", GRESOURCE_DOMAIN));
+        let mut builder = gtk::Builder::from_resource(&format!("{}/gtk/help-overlay.ui", GRESOURCE_DOMAIN));
         let shortcuts = builder.object("shortcuts").unwrap();
         obj.set_help_overlay(Some(&shortcuts));
 
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = MemoriesThemeSelector::new();
+        builder = gtk::Builder::from_resource("/com/maxrdz/Memories/window/theme-selector.ui");
+        let new_theme_selector: adw::Bin = builder.object("theme_selector").unwrap();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
 
         obj.setup_gactions();
