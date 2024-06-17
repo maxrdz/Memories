@@ -23,15 +23,15 @@ use adw::subclass::prelude::*;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/albums/albums.ui")]
-pub struct MrsAlbumsView {
+pub struct MemoriesAlbumsView {
     #[template_child]
     albums_grid_view: TemplateChild<gtk::GridView>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsAlbumsView {
-    const NAME: &'static str = "MrsAlbumsView";
-    type Type = super::MrsAlbumsView;
+impl ObjectSubclass for MemoriesAlbumsView {
+    const NAME: &'static str = "MemoriesAlbumsView";
+    type Type = super::MemoriesAlbumsView;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -43,7 +43,7 @@ impl ObjectSubclass for MrsAlbumsView {
     }
 }
 
-impl ObjectImpl for MrsAlbumsView {}
-impl WidgetImpl for MrsAlbumsView {}
-impl BinImpl for MrsAlbumsView {}
-impl BreakpointBinImpl for MrsAlbumsView {}
+impl ObjectImpl for MemoriesAlbumsView {}
+impl WidgetImpl for MemoriesAlbumsView {}
+impl BinImpl for MemoriesAlbumsView {}
+impl BreakpointBinImpl for MemoriesAlbumsView {}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MrsViewer" parent="AdwBreakpointBin">
+  <template class="MemoriesViewer" parent="AdwBreakpointBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <child>
@@ -28,7 +28,7 @@
             <property name="show-sidebar">false</property>
             <property name="sidebar-position">end</property>
             <property name="sidebar">
-              <object class="MrsDetails" id="details_widget"/>
+              <object class="MemoriesDetails" id="details_widget"/>
             </property>
             <property name="content">
               <object class="GtkOverlay">

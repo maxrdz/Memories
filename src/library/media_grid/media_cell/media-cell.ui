@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MrsMediaCell" parent="AdwBin">
+  <template class="MemoriesMediaCell" parent="AdwBin">
     <property name="child">
       <object class="GtkOverlay">
         <property name="child">

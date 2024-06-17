@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MrsLibraryView" parent="AdwBin">
+  <template class="MemoriesLibraryView" parent="AdwBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <property name="child">
@@ -73,7 +73,7 @@
           <object class="AdwViewStackPage" id="gallery_page">
             <property name="name">gallery_page</property>
             <property name="child">
-              <object class="MrsMediaGridView" id="media_grid"/>
+              <object class="MemoriesMediaGridView" id="media_grid"/>
             </property>
           </object>
         </child>

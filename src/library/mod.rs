@@ -23,11 +23,11 @@ mod imp;
 mod media_grid;
 pub mod viewer;
 
-use crate::application::library_list_model::MrsLibraryListModel;
-use crate::application::MrsApplication;
+use crate::application::library_list_model::MemoriesLibraryListModel;
+use crate::application::MemoriesApplication;
 use crate::globals::{APP_INFO, FFMPEG_BINARY};
 use crate::i18n::gettext_f;
-use crate::window::MrsApplicationWindow;
+use crate::window::MemoriesApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -37,20 +37,20 @@ use std::io;
 use std::process::Command;
 
 glib::wrapper! {
-    pub struct MrsLibraryView(ObjectSubclass<imp::MrsLibraryView>)
+    pub struct MemoriesLibraryView(ObjectSubclass<imp::MemoriesLibraryView>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MrsLibraryView {
+impl MemoriesLibraryView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    fn window(&self) -> MrsApplicationWindow {
+    fn window(&self) -> MemoriesApplicationWindow {
         self.root()
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
-            .expect("Failed to downcast to MrsApplicationWindow.")
+            .expect("Failed to downcast to MemoriesApplicationWindow.")
     }
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
@@ -74,20 +74,20 @@ impl MrsLibraryView {
                     )));
                     return;
                 }
-                _ => g_error!("Library", "Unexpected error received at ffmpeg binary check."),
+                _ => g_error!("LibraryView", "Unexpected error received at ffmpeg binary check."),
             }
         }
         self.imp().spinner.start();
 
-        let memories: MrsApplication = self.window().app().unwrap();
-        let library_model: MrsLibraryListModel = memories.library_list_model();
+        let memories: MemoriesApplication = self.window().app().unwrap();
+        let library_model: MemoriesLibraryListModel = memories.library_list_model();
 
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(library_model.clone()));
 
         if !library_model.models_loaded() {
             library_model.connect_models_loaded_notify(
-                clone!(@weak self as s => move |model: &MrsLibraryListModel| {
-                    g_debug!("Library", "notify::models_loaded");
+                clone!(@weak self as s => move |model: &MemoriesLibraryListModel| {
+                    g_debug!("LibraryView", "notify::models_loaded");
 
                     let item_count: u32 = model.n_items();
                     if item_count == 0 {
@@ -97,7 +97,7 @@ impl MrsLibraryView {
                     s.imp().library_view_stack.set_visible_child_name("gallery_page");
                     s.imp().spinner.stop();
 
-                    let gsettings: gio::Settings = MrsApplication::default().gsettings();
+                    let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
                     // If our cache is not populated, warn the user that this may take a while.
                     if gsettings.boolean("fresh-cache") {
@@ -121,8 +121,8 @@ impl MrsLibraryView {
 
         library_model.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(
-                "Library",
-                "MrsLibraryListModel returned an error!\n\n{}",
+                "LibraryView",
+                "MemoriesLibraryListModel returned an error!\n\n{}",
                 dl.error().unwrap()
             );
         });
@@ -136,7 +136,7 @@ impl MrsLibraryView {
     }
 }
 
-impl Default for MrsLibraryView {
+impl Default for MemoriesLibraryView {
     fn default() -> Self {
         Self::new()
     }

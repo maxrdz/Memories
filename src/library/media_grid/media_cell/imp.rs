@@ -30,7 +30,7 @@ use std::cell::{Cell, OnceCell, RefCell};
 /// handler IDs, glib async join handles, metadata, etc.
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/media_grid/media_cell/media-cell.ui")]
-pub struct MrsMediaCell {
+pub struct MemoriesMediaCell {
     #[template_child]
     pub(super) revealer: TemplateChild<gtk::Revealer>,
     #[template_child]
@@ -54,10 +54,10 @@ pub struct MrsMediaCell {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsMediaCell {
-    const NAME: &'static str = "MrsMediaCell";
+impl ObjectSubclass for MemoriesMediaCell {
+    const NAME: &'static str = "MemoriesMediaCell";
     type ParentType = adw::Bin;
-    type Type = super::MrsMediaCell;
+    type Type = super::MemoriesMediaCell;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -68,6 +68,6 @@ impl ObjectSubclass for MrsMediaCell {
     }
 }
 
-impl ObjectImpl for MrsMediaCell {}
-impl WidgetImpl for MrsMediaCell {}
-impl BinImpl for MrsMediaCell {}
+impl ObjectImpl for MemoriesMediaCell {}
+impl WidgetImpl for MemoriesMediaCell {}
+impl BinImpl for MemoriesMediaCell {}

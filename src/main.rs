@@ -43,7 +43,11 @@ with our object-specific logic.
 
 All GObject subclasses should be named in
 [UpperCamelCase](https://en.wikipedia.org/wiki/Camel_case),
-and prefixed with project shortname. e.g. "MrsLibraryView"
+and prefixed with project codename. e.g. "MemoriesLibraryView"
+
+All use of logging via GLib should to set the log domain name to
+the name of the GObject that the logic is from, without the project
+codename prefix. e.g. "MediaCell" for the subclass, "MemoriesMediaCell"
 
 Most of the application's widget hierarchy is created by the program via
 [GtkBuilder](https://docs.gtk.org/gtk3/class.Builder.html), which parses
@@ -53,22 +57,22 @@ Most of the application's widget hierarchy is created by the program via
 ## Application Widget Structure
 Simplified widget tree including the most important widgets.
 
-- [`MrsApplicationWindow`]
+- [`MemoriesApplicationWindow`]
     - [`AdwNavigationView`]
         - [`AdwNavigationPage`]
             - [`AdwViewStack`]
-                - [`MrsLibraryView`]
-                - [`MrsAlbumsView`]
-                - [`MrsFavoritesView`]
+                - [`MemoriesLibraryView`]
+                - [`MemoriesAlbumsView`]
+                - [`MemoriesFavoritesView`]
 
 [`AdwNavigationView`]: adw::NavigationView
 [`AdwNavigationPage`]: adw::NavigationPage
 [`AdwViewStack`]: adw::ViewStack
 
-[`MrsApplicationWindow`]: window::MrsApplicationWindow
-[`MrsLibraryView`]: library::MrsLibraryView
-[`MrsAlbumsView`]: albums::MrsAlbumsView
-[`MrsFavoritesView`]: favorites::MrsFavoritesView
+[`MemoriesApplicationWindow`]: window::MemoriesApplicationWindow
+[`MemoriesLibraryView`]: library::MemoriesLibraryView
+[`MemoriesAlbumsView`]: albums::MemoriesAlbumsView
+[`MemoriesFavoritesView`]: favorites::MemoriesFavoritesView
 */
 
 #![doc(
@@ -89,7 +93,7 @@ mod thumbnails;
 mod utils;
 mod window;
 
-use application::MrsApplication;
+use application::MemoriesApplication;
 use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 #[cfg(feature = "use-feedbackd")]
@@ -141,6 +145,6 @@ fn main() -> glib::ExitCode {
         );
     }
 
-    let app = MrsApplication::new(APP_ID, &gio::ApplicationFlags::empty());
+    let app = MemoriesApplication::new(APP_ID, &gio::ApplicationFlags::empty());
     app.run()
 }

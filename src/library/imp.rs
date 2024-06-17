@@ -18,13 +18,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use super::media_grid::MrsMediaGridView;
+use super::media_grid::MemoriesMediaGridView;
 use adw::subclass::prelude::*;
 use gtk::glib;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/library.ui")]
-pub struct MrsLibraryView {
+pub struct MemoriesLibraryView {
     #[template_child]
     pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
     #[template_child]
@@ -38,13 +38,13 @@ pub struct MrsLibraryView {
     #[template_child]
     pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    pub media_grid: TemplateChild<MrsMediaGridView>,
+    pub media_grid: TemplateChild<MemoriesMediaGridView>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsLibraryView {
-    const NAME: &'static str = "MrsLibraryView";
-    type Type = super::MrsLibraryView;
+impl ObjectSubclass for MemoriesLibraryView {
+    const NAME: &'static str = "MemoriesLibraryView";
+    type Type = super::MemoriesLibraryView;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -56,6 +56,6 @@ impl ObjectSubclass for MrsLibraryView {
     }
 }
 
-impl ObjectImpl for MrsLibraryView {}
-impl WidgetImpl for MrsLibraryView {}
-impl BinImpl for MrsLibraryView {}
+impl ObjectImpl for MemoriesLibraryView {}
+impl WidgetImpl for MemoriesLibraryView {}
+impl BinImpl for MemoriesLibraryView {}

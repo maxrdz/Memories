@@ -23,18 +23,18 @@ mod imp;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MrsPreferencesDialog(ObjectSubclass<imp::MrsPreferencesDialog>)
+    pub struct MemoriesPreferencesDialog(ObjectSubclass<imp::MemoriesPreferencesDialog>)
         @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog,
         @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
-impl MrsPreferencesDialog {
+impl MemoriesPreferencesDialog {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MrsPreferencesDialog {
+impl Default for MemoriesPreferencesDialog {
     fn default() -> Self {
         Self::new()
     }

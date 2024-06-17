@@ -18,8 +18,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use super::media_cell::MrsMediaCell;
-use crate::application::MrsApplication;
+use super::media_cell::MemoriesMediaCell;
+use crate::application::MemoriesApplication;
 use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
 use crate::library::viewer::ViewerContentType;
 use adw::prelude::*;
@@ -32,8 +32,8 @@ use std::sync::Arc;
 
 #[derive(Debug, glib::Properties, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/media_grid/media-grid.ui")]
-#[properties(wrapper_type = super::MrsMediaGridView)]
-pub struct MrsMediaGridView {
+#[properties(wrapper_type = super::MemoriesMediaGridView)]
+pub struct MemoriesMediaGridView {
     pub(super) subprocess_semaphore: Arc<Semaphore>,
     pub list_item_factory: gtk::SignalListItemFactory,
 
@@ -58,13 +58,13 @@ pub struct MrsMediaGridView {
     pub zoom_out: TemplateChild<gtk::Button>,
 }
 
-impl Default for MrsMediaGridView {
+impl Default for MemoriesMediaGridView {
     fn default() -> Self {
         Self {
             subprocess_semaphore: Arc::new(Semaphore::new(FFMPEG_CONCURRENT_PROCESSES)),
             list_item_factory: gtk::SignalListItemFactory::default(),
             hardware_accel: Cell::new({
-                let gsettings: gio::Settings = MrsApplication::default().gsettings();
+                let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
                 gsettings.boolean("ffmpeg-hardware-acceleration")
             }),
             grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
@@ -80,10 +80,10 @@ impl Default for MrsMediaGridView {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsMediaGridView {
-    const NAME: &'static str = "MrsMediaGridView";
+impl ObjectSubclass for MemoriesMediaGridView {
+    const NAME: &'static str = "MemoriesMediaGridView";
     type ParentType = adw::BreakpointBin;
-    type Type = super::MrsMediaGridView;
+    type Type = super::MemoriesMediaGridView;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -96,11 +96,11 @@ impl ObjectSubclass for MrsMediaGridView {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for MrsMediaGridView {
+impl ObjectImpl for MemoriesMediaGridView {
     fn constructed(&self) {
         let obj = self.obj();
 
-        obj.connect_grid_desktop_zoom_notify(move |media_grid: &super::MrsMediaGridView| {
+        obj.connect_grid_desktop_zoom_notify(move |media_grid: &super::MemoriesMediaGridView| {
             // `grid_desktop_zoom` is modified only when the `AdwBreakpoint` is triggered.
             // The default zoom settings for the grid view are always at the minimum zoom
             // by default in the UI files, so we reset the grid controls to min zoom below.
@@ -109,7 +109,7 @@ impl ObjectImpl for MrsMediaGridView {
         });
 
         // Bind any application preferences to our application's GSettings.
-        let gsettings: gio::Settings = MrsApplication::default().gsettings();
+        let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
         gsettings
             .bind(
@@ -123,7 +123,7 @@ impl ObjectImpl for MrsMediaGridView {
             clone!(@weak obj => move |_: &gtk::SignalListItemFactory, widget: &glib::Object| {
                     let list_item_widget: gtk::ListItem = widget.clone().downcast().unwrap();
 
-                    let cell: MrsMediaCell = MrsMediaCell::default();
+                    let cell: MemoriesMediaCell = MemoriesMediaCell::default();
                     cell.setup_cell(&obj, &list_item_widget);
                 }
             ),
@@ -132,7 +132,7 @@ impl ObjectImpl for MrsMediaGridView {
         self.list_item_factory.connect_bind(
             clone!(@weak self as media_grid => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
                 let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
-                let cell: MrsMediaCell = list_item.child().and_downcast().unwrap();
+                let cell: MemoriesMediaCell = list_item.child().and_downcast().unwrap();
 
                 let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
 
@@ -160,6 +160,6 @@ impl ObjectImpl for MrsMediaGridView {
     }
 }
 
-impl WidgetImpl for MrsMediaGridView {}
-impl BinImpl for MrsMediaGridView {}
-impl BreakpointBinImpl for MrsMediaGridView {}
+impl WidgetImpl for MemoriesMediaGridView {}
+impl BinImpl for MemoriesMediaGridView {}
+impl BreakpointBinImpl for MemoriesMediaGridView {}

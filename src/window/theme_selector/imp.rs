@@ -23,7 +23,7 @@ use gtk::glib;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/window/theme_selector/theme-selector.ui")]
-pub struct MrsThemeSelector {
+pub struct MemoriesThemeSelector {
     #[template_child]
     pub selector_box: TemplateChild<gtk::Box>,
     #[template_child]
@@ -35,9 +35,9 @@ pub struct MrsThemeSelector {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsThemeSelector {
-    const NAME: &'static str = "MrsThemeSelector";
-    type Type = super::MrsThemeSelector;
+impl ObjectSubclass for MemoriesThemeSelector {
+    const NAME: &'static str = "MemoriesThemeSelector";
+    type Type = super::MemoriesThemeSelector;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -49,6 +49,6 @@ impl ObjectSubclass for MrsThemeSelector {
     }
 }
 
-impl ObjectImpl for MrsThemeSelector {}
-impl WidgetImpl for MrsThemeSelector {}
-impl BinImpl for MrsThemeSelector {}
+impl ObjectImpl for MemoriesThemeSelector {}
+impl WidgetImpl for MemoriesThemeSelector {}
+impl BinImpl for MemoriesThemeSelector {}

@@ -23,18 +23,18 @@ mod imp;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MrsThemeSelector(ObjectSubclass<imp::MrsThemeSelector>)
+    pub struct MemoriesThemeSelector(ObjectSubclass<imp::MemoriesThemeSelector>)
         @extends adw::Bin, gtk::Widget,
         @implements gtk::Accessible, gtk::Buildable;
 }
 
-impl MrsThemeSelector {
+impl MemoriesThemeSelector {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MrsThemeSelector {
+impl Default for MemoriesThemeSelector {
     fn default() -> Self {
         Self::new()
     }

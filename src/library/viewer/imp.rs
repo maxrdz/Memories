@@ -18,15 +18,15 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::application::MrsApplication;
-use crate::library::details::MrsDetails;
+use crate::application::MemoriesApplication;
+use crate::library::details::MemoriesDetails;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/viewer/viewer.ui")]
-pub struct MrsViewer {
+pub struct MemoriesViewer {
     #[template_child]
     header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
@@ -34,7 +34,7 @@ pub struct MrsViewer {
     #[template_child]
     pub(super) split_view: TemplateChild<adw::OverlaySplitView>,
     #[template_child]
-    pub details_widget: TemplateChild<MrsDetails>,
+    pub details_widget: TemplateChild<MemoriesDetails>,
     #[template_child]
     overlay_controls: TemplateChild<gtk::Box>,
     #[template_child]
@@ -52,9 +52,9 @@ pub struct MrsViewer {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsViewer {
-    const NAME: &'static str = "MrsViewer";
-    type Type = super::MrsViewer;
+impl ObjectSubclass for MemoriesViewer {
+    const NAME: &'static str = "MemoriesViewer";
+    type Type = super::MemoriesViewer;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -67,10 +67,10 @@ impl ObjectSubclass for MrsViewer {
     }
 }
 
-impl ObjectImpl for MrsViewer {
+impl ObjectImpl for MemoriesViewer {
     fn constructed(&self) {
         self.parent_constructed();
-        let gsettings: gio::Settings = MrsApplication::default().gsettings();
+        let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
         gsettings
             .bind("autoplay-videos", &self.viewer_video.clone(), "autoplay")
@@ -78,6 +78,6 @@ impl ObjectImpl for MrsViewer {
     }
 }
 
-impl WidgetImpl for MrsViewer {}
-impl BinImpl for MrsViewer {}
-impl BreakpointBinImpl for MrsViewer {}
+impl WidgetImpl for MemoriesViewer {}
+impl BinImpl for MemoriesViewer {}
+impl BreakpointBinImpl for MemoriesViewer {}

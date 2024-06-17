@@ -22,27 +22,27 @@ mod imp;
 pub mod media_cell;
 
 use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
-use crate::window::MrsApplicationWindow;
+use crate::window::MemoriesApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MrsMediaGridView(ObjectSubclass<imp::MrsMediaGridView>)
+    pub struct MemoriesMediaGridView(ObjectSubclass<imp::MemoriesMediaGridView>)
         @extends gtk::Widget, adw::Bin, adw::BreakpointBin;
 }
 
 #[gtk::template_callbacks]
-impl MrsMediaGridView {
+impl MemoriesMediaGridView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    fn window(&self) -> MrsApplicationWindow {
+    fn window(&self) -> MemoriesApplicationWindow {
         self.root()
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
-            .expect("Failed to downcast to MrsApplicationWindow.")
+            .expect("Failed to downcast to MemoriesApplicationWindow.")
     }
 
     fn gallery_grid_zoom(&self, zoom_in: bool) {
@@ -115,7 +115,7 @@ impl MrsMediaGridView {
     }
 }
 
-impl Default for MrsMediaGridView {
+impl Default for MemoriesMediaGridView {
     fn default() -> Self {
         Self::new()
     }

@@ -23,17 +23,17 @@ mod imp;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MrsAlbumsView(ObjectSubclass<imp::MrsAlbumsView>)
+    pub struct MemoriesAlbumsView(ObjectSubclass<imp::MemoriesAlbumsView>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MrsAlbumsView {
+impl MemoriesAlbumsView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MrsAlbumsView {
+impl Default for MemoriesAlbumsView {
     fn default() -> Self {
         Self::new()
     }

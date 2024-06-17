@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MrsPreferencesDialog" parent="AdwPreferencesDialog">
+  <template class="MemoriesPreferencesDialog" parent="AdwPreferencesDialog">
     <child>
       <object class="AdwPreferencesPage">
         <property name="name">general</property>

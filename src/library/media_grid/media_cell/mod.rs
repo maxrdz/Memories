@@ -21,8 +21,8 @@
 mod imp;
 
 use crate::library::details::{ContentDetails, PictureDetails};
-use crate::library::media_grid::MrsMediaGridView;
-use crate::library::viewer::{MrsViewer, ViewerContentType};
+use crate::library::media_grid::MemoriesMediaGridView;
+use crate::library::viewer::{MemoriesViewer, ViewerContentType};
 use crate::thumbnails::generate_thumbnail_image;
 use crate::utils::get_metadata_with_hash;
 use adw::prelude::*;
@@ -39,17 +39,17 @@ use std::path::Path;
 use std::sync::Arc;
 
 glib::wrapper! {
-    pub struct MrsMediaCell(ObjectSubclass<imp::MrsMediaCell>)
+    pub struct MemoriesMediaCell(ObjectSubclass<imp::MemoriesMediaCell>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MrsMediaCell {
+impl MemoriesMediaCell {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
     /// Called once by the list item widget factory when it creates a new cell.
-    pub fn setup_cell(&self, media_grid: &MrsMediaGridView, list_item: &gtk::ListItem) {
+    pub fn setup_cell(&self, media_grid: &MemoriesMediaGridView, list_item: &gtk::ListItem) {
         // First things first, set the list item widget as our parent.
         list_item.set_property("child", self);
         self.imp()
@@ -57,7 +57,7 @@ impl MrsMediaCell {
             .set_height_request(media_grid.grid_widget_height());
 
         // Bind the `GtkAspectFrame`s height-request to the `grid-widget-height`
-        // property of the `MrsMediaGridView` object.
+        // property of the `MemoriesMediaGridView` object.
         media_grid
             .bind_property(
                 "grid-widget-height",
@@ -102,7 +102,7 @@ impl MrsMediaCell {
                     if current_nav_page.tag().unwrap() != "window" {
                         return;
                     }
-                    let media_cell: MrsMediaCell = list_item.child().and_downcast().unwrap();
+                    let media_cell: MemoriesMediaCell = list_item.child().and_downcast().unwrap();
 
                     let model_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
                     let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
@@ -110,7 +110,7 @@ impl MrsMediaCell {
 
                     let nav_view = media_grid.window().imp().window_navigation.clone();
 
-                    let viewer_content: MrsViewer = MrsViewer::default();
+                    let viewer_content: MemoriesViewer = MemoriesViewer::default();
                     viewer_content.set_content_type(media_cell.imp().viewer_content_type.get().unwrap());
                     viewer_content.set_content_file(&file);
 
@@ -134,7 +134,7 @@ impl MrsMediaCell {
     /// event on the list item widget, which loads it with new data.
     pub fn bind_cell(
         &self,
-        media_grid_imp: &super::imp::MrsMediaGridView,
+        media_grid_imp: &super::imp::MemoriesMediaGridView,
         content_type: ViewerContentType,
         list_item: &gtk::ListItem,
     ) {
@@ -175,7 +175,7 @@ impl MrsMediaCell {
 
                         let (metadata, hash) = get_metadata_with_hash(in_file).await.unwrap();
 
-                        // Store the `MetadataInfo` struct in our `MrsMediaCell` object.
+                        // Store the `MetadataInfo` struct in our `MemoriesMediaCell` object.
                         let _ = cell.imp().file_metadata.set(metadata);
 
                         if let Ok(path) = generate_thumbnail_image(in_path, &hash, media_grid_imp.obj().hardware_accel()).await {
@@ -247,7 +247,7 @@ impl MrsMediaCell {
     }
 }
 
-impl Default for MrsMediaCell {
+impl Default for MemoriesMediaCell {
     fn default() -> Self {
         Self::new()
     }

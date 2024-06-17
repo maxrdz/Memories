@@ -23,12 +23,12 @@ use adw::subclass::prelude::*;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/favorites/favorites.ui")]
-pub struct MrsFavoritesView {}
+pub struct MemoriesFavoritesView {}
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsFavoritesView {
-    const NAME: &'static str = "MrsFavoritesView";
-    type Type = super::MrsFavoritesView;
+impl ObjectSubclass for MemoriesFavoritesView {
+    const NAME: &'static str = "MemoriesFavoritesView";
+    type Type = super::MemoriesFavoritesView;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -40,7 +40,7 @@ impl ObjectSubclass for MrsFavoritesView {
     }
 }
 
-impl ObjectImpl for MrsFavoritesView {}
-impl WidgetImpl for MrsFavoritesView {}
-impl BinImpl for MrsFavoritesView {}
-impl BreakpointBinImpl for MrsFavoritesView {}
+impl ObjectImpl for MemoriesFavoritesView {}
+impl WidgetImpl for MemoriesFavoritesView {}
+impl BinImpl for MemoriesFavoritesView {}
+impl BreakpointBinImpl for MemoriesFavoritesView {}

@@ -23,17 +23,17 @@ mod imp;
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MrsFavoritesView(ObjectSubclass<imp::MrsFavoritesView>)
+    pub struct MemoriesFavoritesView(ObjectSubclass<imp::MemoriesFavoritesView>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MrsFavoritesView {
+impl MemoriesFavoritesView {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MrsFavoritesView {
+impl Default for MemoriesFavoritesView {
     fn default() -> Self {
         Self::new()
     }

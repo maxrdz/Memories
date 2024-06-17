@@ -20,7 +20,7 @@
 
 mod imp;
 
-use crate::window::MrsApplicationWindow;
+use crate::window::MemoriesApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -31,7 +31,7 @@ use gtk::{gdk, gio, glib};
 use std::ffi::OsStr;
 
 /// Enum that represents the types of content that
-/// can be displayed by the `MrsViewer` object.
+/// can be displayed by the `MemoriesViewer` object.
 #[derive(Debug, Clone)]
 pub enum ViewerContentType {
     VectorGraphics,
@@ -58,27 +58,27 @@ impl ViewerContentType {
 }
 
 glib::wrapper! {
-    pub struct MrsViewer(ObjectSubclass<imp::MrsViewer>)
+    pub struct MemoriesViewer(ObjectSubclass<imp::MemoriesViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
 #[gtk::template_callbacks]
-impl MrsViewer {
+impl MemoriesViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    fn window(&self) -> MrsApplicationWindow {
+    fn window(&self) -> MemoriesApplicationWindow {
         self.root()
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
-            .expect("Failed to downcast to MrsApplicationWindow.")
+            .expect("Failed to downcast to MemoriesApplicationWindow.")
     }
 
     /// This function is public so that it can be called once we
     /// are placed in the widget tree and can access the window.
     pub fn setup_gactions(&self) {
-        let win: MrsApplicationWindow = self.window();
+        let win: MemoriesApplicationWindow = self.window();
         let actions = gio::SimpleActionGroup::new();
 
         let action_close = gio::ActionEntry::builder("show-properties")
@@ -152,7 +152,7 @@ impl MrsViewer {
     }
 }
 
-impl Default for MrsViewer {
+impl Default for MemoriesViewer {
     fn default() -> Self {
         Self::new()
     }

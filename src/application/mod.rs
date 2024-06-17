@@ -31,12 +31,12 @@ use glib::{clone, g_critical, g_debug, g_error};
 use gtk::{gio, glib};
 
 glib::wrapper! {
-    pub struct MrsApplication(ObjectSubclass<imp::MrsApplication>)
+    pub struct MemoriesApplication(ObjectSubclass<imp::MemoriesApplication>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl MrsApplication {
+impl MemoriesApplication {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -156,7 +156,7 @@ impl MrsApplication {
                 self.change_action_state("light-theme", &false.to_variant());
             }
             _ => g_error!(
-                "MrsApplication",
+                "Application",
                 "update_theme_action_states() received an invalid action name."
             ),
         }
@@ -191,17 +191,17 @@ impl MrsApplication {
             clone!(@weak self as s => move |_: &adw::AlertDialog, response: &str| {
                 if response == "clear" {
                     glib::spawn_future_local(async move {
-                        let app_cache_dir: String = MrsApplication::get_app_cache_directory();
+                        let app_cache_dir: String = MemoriesApplication::get_app_cache_directory();
 
                         if let Err(io_error) = async_fs::remove_dir_all(&app_cache_dir).await {
                             match io_error.kind() {
                                 std::io::ErrorKind::NotFound => (),
                                 std::io::ErrorKind::PermissionDenied => g_critical!(
-                                    "MrsApplication",
+                                    "Application",
                                     "Insufficient permissions to clear cache directory."
                                 ),
                                 _ => g_error!(
-                                    "MrsApplication",
+                                    "Application",
                                     "Received an unexpected error kind after trying to clear the cache."
                                 ),
                             }
@@ -383,12 +383,12 @@ impl MrsApplication {
         match std::env::var("XDG_CACHE_HOME") {
             Ok(value) => value,
             Err(e) => {
-                g_debug!("MrsApplication", "$XDG_CACHE_HOME not found; Using fallback.");
+                g_debug!("Application", "$XDG_CACHE_HOME not found; Using fallback.");
                 match e {
                     std::env::VarError::NotPresent => {
                         let user_home: String = std::env::var("HOME").expect("$HOME not present.");
 
-                        match MrsApplication::is_flatpak() {
+                        match MemoriesApplication::is_flatpak() {
                             Some(flatpak_id) => {
                                 format!("{}/.var/app/{}/cache", user_home, flatpak_id)
                             }
@@ -401,10 +401,7 @@ impl MrsApplication {
                         }
                     }
                     _ => {
-                        g_error!(
-                            "MrsApplication",
-                            "Unexpected std::env::VarError variant received."
-                        );
+                        g_error!("Application", "Unexpected std::env::VarError variant received.");
                         panic!(); // g_error! terminates for us; this just silences the compiler.
                     }
                 }
@@ -415,19 +412,19 @@ impl MrsApplication {
     /// Returns a `String` that represents the absolute
     /// path of the application's cache directory location.
     pub fn get_app_cache_directory() -> String {
-        if MrsApplication::is_flatpak().is_some() {
-            format!("{}/{}", MrsApplication::get_cache_directory(), APP_NAME)
+        if MemoriesApplication::is_flatpak().is_some() {
+            format!("{}/{}", MemoriesApplication::get_cache_directory(), APP_NAME)
         } else {
             // We can simply use `$XDG_CACHE_HOME` instead of `$XDG_CACHE_HOME/APP_NAME`
             // if we are running inside a Flatpak; See:
             // https://developer.gnome.org/documentation/tutorials/save-state.html
-            MrsApplication::get_cache_directory()
+            MemoriesApplication::get_cache_directory()
         }
     }
 
     fn toggle_gschema_key(&self, key: &str, toggle: bool) {
         if let Err(err_msg) = self.gsettings().set_boolean(key, toggle) {
-            g_critical!("MrsApplication", "GSettings returned error: {}", err_msg);
+            g_critical!("Application", "GSettings returned error: {}", err_msg);
         }
     }
 
@@ -442,10 +439,10 @@ impl MrsApplication {
     }
 }
 
-impl Default for MrsApplication {
+impl Default for MemoriesApplication {
     fn default() -> Self {
         gio::Application::default()
-            .and_downcast::<MrsApplication>()
+            .and_downcast::<MemoriesApplication>()
             .unwrap()
     }
 }

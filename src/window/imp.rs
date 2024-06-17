@@ -18,14 +18,14 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::albums::MrsAlbumsView;
-use crate::application::library_list_model::MrsLibraryListModel;
-use crate::application::MrsApplication;
+use crate::albums::MemoriesAlbumsView;
+use crate::application::library_list_model::MemoriesLibraryListModel;
+use crate::application::MemoriesApplication;
 use crate::config::GRESOURCE_DOMAIN;
-use crate::favorites::MrsFavoritesView;
+use crate::favorites::MemoriesFavoritesView;
 use crate::globals::DEVELOPMENT_BUILD;
-use crate::library::MrsLibraryView;
-use crate::window::theme_selector::MrsThemeSelector;
+use crate::library::MemoriesLibraryView;
+use crate::window::theme_selector::MemoriesThemeSelector;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::clone;
@@ -33,7 +33,7 @@ use gtk::{gio, glib};
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/window/window.ui")]
-pub struct MrsApplicationWindow {
+pub struct MemoriesApplicationWindow {
     #[template_child]
     pub window_navigation: TemplateChild<adw::NavigationView>,
     #[template_child]
@@ -57,17 +57,17 @@ pub struct MrsApplicationWindow {
     #[template_child]
     favorites_page: TemplateChild<adw::ViewStackPage>,
     #[template_child]
-    favorites_view: TemplateChild<MrsFavoritesView>,
+    favorites_view: TemplateChild<MemoriesFavoritesView>,
     #[template_child]
-    albums_view: TemplateChild<MrsAlbumsView>,
+    albums_view: TemplateChild<MemoriesAlbumsView>,
     #[template_child]
-    pub(super) library_view: TemplateChild<MrsLibraryView>,
+    pub(super) library_view: TemplateChild<MemoriesLibraryView>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsApplicationWindow {
-    const NAME: &'static str = "MrsApplicationWindow";
-    type Type = super::MrsApplicationWindow;
+impl ObjectSubclass for MemoriesApplicationWindow {
+    const NAME: &'static str = "MemoriesApplicationWindow";
+    type Type = super::MemoriesApplicationWindow;
     type ParentType = adw::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
@@ -80,7 +80,7 @@ impl ObjectSubclass for MrsApplicationWindow {
     }
 }
 
-impl ObjectImpl for MrsApplicationWindow {
+impl ObjectImpl for MemoriesApplicationWindow {
     fn constructed(&self) {
         self.parent_constructed();
         let obj = self.obj();
@@ -99,15 +99,15 @@ impl ObjectImpl for MrsApplicationWindow {
         // We have to add the theme selector widget as a child of our
         // GtkPopoverMenu widget manually here, because the UI XML method
         // does not work (for some reason..) GTK and its docs are a pain.
-        let new_theme_selector = MrsThemeSelector::new();
+        let new_theme_selector = MemoriesThemeSelector::new();
         self.primary_menu.add_child(&new_theme_selector, "theme-selector");
 
         obj.setup_gactions();
 
-        obj.connect_show(move |window: &super::MrsApplicationWindow| {
+        obj.connect_show(move |window: &super::MemoriesApplicationWindow| {
             // MrsLibraryListModel instance MUST be initialized after
             // the application window, but before the library view.
-            MrsLibraryListModel::initialize_new_model(window);
+            MemoriesLibraryListModel::initialize_new_model(window);
 
             // This callback wont be triggered on start up by itself, so we
             // want to check the very first visible child in the master view stack.
@@ -115,7 +115,7 @@ impl ObjectImpl for MrsApplicationWindow {
         });
 
         // Persist application window state (width, height, maximized, etc) with GSettings
-        let gsettings: gio::Settings = MrsApplication::default().gsettings();
+        let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
         gsettings
             .bind(
@@ -130,12 +130,12 @@ impl ObjectImpl for MrsApplicationWindow {
         obj.set_default_height(gsettings.int("window-height"));
 
         obj.connect_maximized_notify(
-            clone!(@weak gsettings as gs => move |win: &super::MrsApplicationWindow| {
+            clone!(@weak gsettings as gs => move |win: &super::MemoriesApplicationWindow| {
                 gs.set_boolean("maximized", win.is_maximized()).unwrap();
             }),
         );
 
-        obj.connect_close_request(move |win: &super::MrsApplicationWindow| {
+        obj.connect_close_request(move |win: &super::MemoriesApplicationWindow| {
             if !win.is_maximized() {
                 gsettings.set_int("window-width", win.width()).unwrap();
                 gsettings.set_int("window-height", win.height()).unwrap();
@@ -145,7 +145,7 @@ impl ObjectImpl for MrsApplicationWindow {
     }
 }
 
-impl WidgetImpl for MrsApplicationWindow {}
-impl WindowImpl for MrsApplicationWindow {}
-impl ApplicationWindowImpl for MrsApplicationWindow {}
-impl AdwApplicationWindowImpl for MrsApplicationWindow {}
+impl WidgetImpl for MemoriesApplicationWindow {}
+impl WindowImpl for MemoriesApplicationWindow {}
+impl ApplicationWindowImpl for MemoriesApplicationWindow {}
+impl AdwApplicationWindowImpl for MemoriesApplicationWindow {}

@@ -20,7 +20,7 @@
 
 mod imp;
 
-use crate::library::media_grid::media_cell::MrsMediaCell;
+use crate::library::media_grid::media_cell::MemoriesMediaCell;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -56,18 +56,18 @@ pub enum ContentDetails {
 }
 
 glib::wrapper! {
-    pub struct MrsDetails(ObjectSubclass<imp::MrsDetails>)
+    pub struct MemoriesDetails(ObjectSubclass<imp::MemoriesDetails>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MrsDetails {
+impl MemoriesDetails {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
     /// Updates the preference rows in the details widget with
-    /// the content metadata from the `MrsMediaCell` object passed.
-    pub fn update_details(&self, cell_data: &MrsMediaCell) {
+    /// the content metadata from the `MemoriesMediaCell` object passed.
+    pub fn update_details(&self, cell_data: &MemoriesMediaCell) {
         self.clear_rows();
 
         let file_info: &gio::FileInfo = cell_data.imp().file_info.get().unwrap();
@@ -139,7 +139,7 @@ impl MrsDetails {
     }
 }
 
-impl Default for MrsDetails {
+impl Default for MemoriesDetails {
     fn default() -> Self {
         Self::new()
     }

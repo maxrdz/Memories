@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.1"/>
   <requires lib="Adw" version="1.5"/>
-  <template class="MrsApplicationWindow" parent="AdwApplicationWindow">
+  <template class="MemoriesApplicationWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Memories</property>
     <property name="default-width">1200</property>
     <property name="default-height">800</property>
@@ -75,7 +75,7 @@
                         <property name="title" translatable="yes" comments="'Library' referring to a library of photos">Photos</property>
                         <property name="icon-name">view-grid-symbolic</property>
                         <property name="child">
-                          <object class="MrsLibraryView" id="library_view"/>
+                          <object class="MemoriesLibraryView" id="library_view"/>
                         </property>
                       </object>
                     </child>
@@ -85,7 +85,7 @@
                         <property name="title" translatable="yes" >Albums</property>
                         <property name="icon-name">folder-open-symbolic</property>
                         <property name="child">
-                          <object class="MrsAlbumsView" id="albums_view"/>
+                          <object class="MemoriesAlbumsView" id="albums_view"/>
                         </property>
                       </object>
                     </child>
@@ -95,7 +95,7 @@
                         <property name="title" translatable="yes" >Favorites</property>
                         <property name="icon-name">starred-symbolic</property>
                         <property name="child">
-                          <object class="MrsFavoritesView" id="favorites_view"/>
+                          <object class="MemoriesFavoritesView" id="favorites_view"/>
                         </property>
                       </object>
                     </child>

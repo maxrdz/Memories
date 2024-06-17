@@ -21,8 +21,8 @@
 mod imp;
 pub mod theme_selector;
 
-use crate::application::MrsApplication;
-use crate::preferences::MrsPreferencesDialog;
+use crate::application::MemoriesApplication;
+use crate::preferences::MemoriesPreferencesDialog;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -30,27 +30,27 @@ use glib::g_error;
 use gtk::{gio, glib};
 
 glib::wrapper! {
-    pub struct MrsApplicationWindow(ObjectSubclass<imp::MrsApplicationWindow>)
+    pub struct MemoriesApplicationWindow(ObjectSubclass<imp::MemoriesApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
         @implements gio::ActionGroup, gio::ActionMap, gtk::Root;
 }
 
 #[gtk::template_callbacks]
-impl MrsApplicationWindow {
-    pub fn new(application: &MrsApplication) -> Self {
+impl MemoriesApplicationWindow {
+    pub fn new(application: &MemoriesApplication) -> Self {
         glib::Object::builder()
             .property("application", application)
             .build()
     }
 
-    pub fn app(&self) -> Option<MrsApplication> {
+    pub fn app(&self) -> Option<MemoriesApplication> {
         self.application().and_downcast()
     }
 
     fn setup_gactions(&self) {
         let preferences_action = gio::ActionEntry::builder("preferences")
             .activate(move |win: &Self, _, _| {
-                MrsPreferencesDialog::default().present(win);
+                MemoriesPreferencesDialog::default().present(win);
             })
             .build();
 
@@ -89,7 +89,7 @@ impl MrsApplicationWindow {
                     .imp()
                     .search_entry
                     .set_placeholder_text(Some(&gettext("Search Favorites"))),
-                _ => g_error!("MrsApplicationWindow", "Unexpected master stack child found."),
+                _ => g_error!("ApplicationWindow", "Unexpected master stack child found."),
             }
         }
     }

@@ -23,12 +23,12 @@ use gtk::glib;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/preferences/preferences.ui")]
-pub struct MrsPreferencesDialog {}
+pub struct MemoriesPreferencesDialog {}
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsPreferencesDialog {
-    const NAME: &'static str = "MrsPreferencesDialog";
-    type Type = super::MrsPreferencesDialog;
+impl ObjectSubclass for MemoriesPreferencesDialog {
+    const NAME: &'static str = "MemoriesPreferencesDialog";
+    type Type = super::MemoriesPreferencesDialog;
     type ParentType = adw::PreferencesDialog;
 
     fn class_init(klass: &mut Self::Class) {
@@ -40,7 +40,7 @@ impl ObjectSubclass for MrsPreferencesDialog {
     }
 }
 
-impl ObjectImpl for MrsPreferencesDialog {}
-impl WidgetImpl for MrsPreferencesDialog {}
-impl AdwDialogImpl for MrsPreferencesDialog {}
-impl PreferencesDialogImpl for MrsPreferencesDialog {}
+impl ObjectImpl for MemoriesPreferencesDialog {}
+impl WidgetImpl for MemoriesPreferencesDialog {}
+impl AdwDialogImpl for MemoriesPreferencesDialog {}
+impl PreferencesDialogImpl for MemoriesPreferencesDialog {}

@@ -22,18 +22,18 @@ mod imp;
 
 use crate::globals::DEFAULT_LIBRARY_COLLECTION;
 use crate::i18n::gettext_f;
-use crate::window::MrsApplicationWindow;
+use crate::window::MemoriesApplicationWindow;
 use adw::subclass::prelude::*;
 use glib::{g_critical, g_debug};
 use gtk::{gio, glib};
 use std::env;
 
 glib::wrapper! {
-    pub struct MrsLibraryListModel(ObjectSubclass<imp::MrsLibraryListModel>)
+    pub struct MemoriesLibraryListModel(ObjectSubclass<imp::MemoriesLibraryListModel>)
         @implements gio::ListModel;
 }
 
-impl MrsLibraryListModel {
+impl MemoriesLibraryListModel {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -54,8 +54,8 @@ impl MrsLibraryListModel {
 
     /// Setup code for initialize the library list model at start up of Memories.
     /// Passes newly constructed list model to the Memories application object.
-    pub fn initialize_new_model(window: &MrsApplicationWindow) {
-        let new_library_model = MrsLibraryListModel::default();
+    pub fn initialize_new_model(window: &MemoriesApplicationWindow) {
+        let new_library_model = MemoriesLibraryListModel::default();
 
         window.app().unwrap().set_library_list_model(new_library_model);
     }
@@ -99,7 +99,7 @@ impl MrsLibraryListModel {
     }
 }
 
-impl Default for MrsLibraryListModel {
+impl Default for MemoriesLibraryListModel {
     fn default() -> Self {
         Self::new()
     }

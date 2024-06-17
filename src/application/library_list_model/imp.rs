@@ -49,8 +49,8 @@ struct SubdirectoryListModel {
 /// `GtkDirectoryList` models under the hood to recursively
 /// enumerate files under certain root directory paths.
 #[derive(glib::Properties, Debug)]
-#[properties(wrapper_type = super::MrsLibraryListModel)]
-pub struct MrsLibraryListModel {
+#[properties(wrapper_type = super::MemoriesLibraryListModel)]
+pub struct MemoriesLibraryListModel {
     #[property(get, set)]
     subdirectories: RefCell<glib::StrV>,
     #[property(get, set)]
@@ -63,7 +63,7 @@ pub struct MrsLibraryListModel {
     public_items: RefCell<Vec<glib::Object>>,
 }
 
-impl Default for MrsLibraryListModel {
+impl Default for MemoriesLibraryListModel {
     fn default() -> Self {
         Self {
             subdirectories: RefCell::new({
@@ -85,19 +85,19 @@ impl Default for MrsLibraryListModel {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsLibraryListModel {
-    const NAME: &'static str = "MrsLibraryListModel";
-    type Type = super::MrsLibraryListModel;
+impl ObjectSubclass for MemoriesLibraryListModel {
+    const NAME: &'static str = "MemoriesLibraryListModel";
+    type Type = super::MemoriesLibraryListModel;
     type Interfaces = (gio::ListModel,);
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for MrsLibraryListModel {
+impl ObjectImpl for MemoriesLibraryListModel {
     fn constructed(&self) {
         let obj = self.obj();
 
         obj.connect_subdirectories_notify(
-            clone!(@weak self as s, @weak obj => move |model: &super::MrsLibraryListModel| {
+            clone!(@weak self as s, @weak obj => move |model: &super::MemoriesLibraryListModel| {
                 g_debug!("LibraryListModel", "notify::subdirectories");
 
                 // Signal to refresh the 'library collection' preference group, which
@@ -154,7 +154,7 @@ impl ObjectImpl for MrsLibraryListModel {
     }
 }
 
-impl ListModelImpl for MrsLibraryListModel {
+impl ListModelImpl for MemoriesLibraryListModel {
     fn item(&self, position: u32) -> Option<glib::Object> {
         self.public_items
             .borrow()
@@ -172,7 +172,7 @@ impl ListModelImpl for MrsLibraryListModel {
     }
 }
 
-impl MrsLibraryListModel {
+impl MemoriesLibraryListModel {
     /// Returns a root model by comparing all root
     /// models with the given `GtkDirectoryList` instance.
     fn lookup_root_model(&self, directory_list: &gtk::DirectoryList) -> Option<Rc<RootListModel>> {

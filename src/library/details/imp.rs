@@ -23,7 +23,7 @@ use gtk::glib;
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/details/details.ui")]
-pub struct MrsDetails {
+pub struct MemoriesDetails {
     #[template_child]
     pub(super) folder: TemplateChild<adw::ActionRow>,
     #[template_child]
@@ -51,9 +51,9 @@ pub struct MrsDetails {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MrsDetails {
-    const NAME: &'static str = "MrsDetails";
-    type Type = super::MrsDetails;
+impl ObjectSubclass for MemoriesDetails {
+    const NAME: &'static str = "MemoriesDetails";
+    type Type = super::MemoriesDetails;
     type ParentType = adw::Bin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -65,6 +65,6 @@ impl ObjectSubclass for MrsDetails {
     }
 }
 
-impl ObjectImpl for MrsDetails {}
-impl WidgetImpl for MrsDetails {}
-impl BinImpl for MrsDetails {}
+impl ObjectImpl for MemoriesDetails {}
+impl WidgetImpl for MemoriesDetails {}
+impl BinImpl for MemoriesDetails {}
