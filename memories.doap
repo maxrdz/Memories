@@ -33,7 +33,6 @@
       <foaf:name>Max Rodriguez</foaf:name>
       <foaf:mbox rdf:resource="mailto:me@maxrdz.com"/>
       <foaf:homepage rdf:resource="https://maxrdz.com/"/>
-      <gnome:userid>maxrdz</gnome:userid>
       <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
