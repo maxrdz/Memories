@@ -8,6 +8,7 @@
   </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="loupe-zoom-symbolic.svg">icons/loupe-zoom-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="svg-symbolic.svg">icons/svg-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
