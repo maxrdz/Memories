@@ -37,7 +37,5 @@ src/utils.rs
 src/window/help-overlay.ui
 src/window/imp.rs
 src/window/mod.rs
-src/window/theme_selector/imp.rs
-src/window/theme_selector/mod.rs
-src/window/theme_selector/theme-selector.ui
+src/window/theme-selector.ui
 src/window/window.ui

@@ -44,7 +44,7 @@ stages:
   - flatpak-builder --user --disable-rofiles-fuse --force-clean --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
   - flatpak build-finish --socket=x11 --share=network flatpak_app
 
-i18n:
+potfiles:
   image: alpine
   stage: check
   interruptible: true
