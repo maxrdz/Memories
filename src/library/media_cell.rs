@@ -18,13 +18,11 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod imp;
-
-use crate::library::details::{ContentDetails, PictureDetails};
 use crate::library::media_grid::MemoriesMediaGridView;
-use crate::library::viewer::{MemoriesMediaViewer, ViewerContentType};
-use crate::thumbnails::generate_thumbnail_image;
-use crate::utils::get_metadata_with_hash;
+use crate::library::media_viewer::{MemoriesMediaViewer, ViewerContentType};
+use crate::library::properties::{ContentDetails, PictureDetails};
+use crate::util::metadata::get_metadata_with_hash;
+use crate::util::thumbnails::generate_thumbnail_image;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_fs::File;
@@ -37,6 +35,62 @@ use gtk::{gio, glib};
 use std::cell::RefCell;
 use std::path::Path;
 use std::sync::Arc;
+
+mod imp {
+    use crate::library::media_viewer::ViewerContentType;
+    use crate::library::properties::ContentDetails;
+    use crate::util::metadata::MetadataInfo;
+    use adw::subclass::prelude::*;
+    use gtk::{gio, glib};
+    use std::cell::{Cell, OnceCell, RefCell};
+
+    /// `AdwBin` subclass to store arbitrary data for grid cells
+    /// of the library photo grid view. Stores signal
+    /// handler IDs, glib async join handles, metadata, etc.
+    #[derive(Default, gtk::CompositeTemplate)]
+    #[template(resource = "/com/maxrdz/Memories/ui/media-cell.ui")]
+    pub struct MemoriesMediaCell {
+        #[template_child]
+        pub(super) revealer: TemplateChild<gtk::Revealer>,
+        #[template_child]
+        pub(super) aspect_frame: TemplateChild<gtk::AspectFrame>,
+        #[template_child]
+        pub thumbnail_image: TemplateChild<gtk::Image>,
+        #[template_child]
+        favorited: TemplateChild<gtk::Image>,
+        #[template_child]
+        media_type_icon: TemplateChild<gtk::Image>,
+        #[template_child]
+        video_length: TemplateChild<gtk::Label>,
+
+        pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
+        pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
+        pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
+        pub file_info: OnceCell<gio::FileInfo>,
+        pub file_metadata: OnceCell<MetadataInfo>,
+        pub viewer_content_type: OnceCell<ViewerContentType>,
+        pub content_details: RefCell<ContentDetails>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for MemoriesMediaCell {
+        const NAME: &'static str = "MemoriesMediaCell";
+        type ParentType = adw::Bin;
+        type Type = super::MemoriesMediaCell;
+
+        fn class_init(klass: &mut Self::Class) {
+            klass.bind_template();
+        }
+
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for MemoriesMediaCell {}
+    impl WidgetImpl for MemoriesMediaCell {}
+    impl BinImpl for MemoriesMediaCell {}
+}
 
 glib::wrapper! {
     pub struct MemoriesMediaCell(ObjectSubclass<imp::MemoriesMediaCell>)
@@ -134,7 +188,7 @@ impl MemoriesMediaCell {
     /// event on the list item widget, which loads it with new data.
     pub fn bind_cell(
         &self,
-        media_grid_imp: &super::imp::MemoriesMediaGridView,
+        media_grid_imp: &super::media_grid::imp::MemoriesMediaGridView,
         content_type: ViewerContentType,
         list_item: &gtk::ListItem,
     ) {

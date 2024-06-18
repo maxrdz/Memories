@@ -18,12 +18,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod details;
-mod imp;
-mod media_grid;
-pub mod viewer;
+pub mod list_model;
+pub mod media_cell;
+pub mod media_grid;
+pub mod media_viewer;
+pub mod properties;
 
-use crate::application::library_list_model::MemoriesLibraryListModel;
 use crate::application::MemoriesApplication;
 use crate::globals::{APP_INFO, FFMPEG_BINARY};
 use crate::i18n::gettext_f;
@@ -33,8 +33,55 @@ use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::{clone, g_debug, g_error};
 use gtk::{gio, glib};
+use list_model::MemoriesLibraryListModel;
 use std::io;
 use std::process::Command;
+
+mod imp {
+    use super::media_grid::MemoriesMediaGridView;
+    use adw::subclass::prelude::*;
+    use gtk::glib;
+    use std::cell::Cell;
+
+    #[derive(Debug, Default, gtk::CompositeTemplate)]
+    #[template(resource = "/com/maxrdz/Memories/ui/library.ui")]
+    pub struct MemoriesLibraryView {
+        pub(super) view_mode: Cell<super::LibraryViewMode>,
+        #[template_child]
+        pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
+        #[template_child]
+        pub(super) spinner_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub(super) spinner: TemplateChild<gtk::Spinner>,
+        #[template_child]
+        pub(super) error_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub(super) error_status_widget: TemplateChild<adw::StatusPage>,
+        #[template_child]
+        pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
+        #[template_child]
+        pub media_grid: TemplateChild<MemoriesMediaGridView>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for MemoriesLibraryView {
+        const NAME: &'static str = "MemoriesLibraryView";
+        type Type = super::MemoriesLibraryView;
+        type ParentType = adw::Bin;
+
+        fn class_init(klass: &mut Self::Class) {
+            klass.bind_template();
+        }
+
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for MemoriesLibraryView {}
+    impl WidgetImpl for MemoriesLibraryView {}
+    impl BinImpl for MemoriesLibraryView {}
+}
 
 /// Enum that represents the type of library view
 /// instantiated. Depending on the variant, the

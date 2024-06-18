@@ -18,23 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod imp;
+//! Utility functions used at seldom in Memories source.
 
-use gtk::glib;
-
-glib::wrapper! {
-    pub struct MemoriesAlbumViewer(ObjectSubclass<imp::MemoriesAlbumViewer>)
-        @extends gtk::Widget, adw::Bin;
-}
-
-impl MemoriesAlbumViewer {
-    pub fn new() -> Self {
-        glib::Object::new()
-    }
-}
-
-impl Default for MemoriesAlbumViewer {
-    fn default() -> Self {
-        Self::new()
-    }
-}
+pub mod metadata;
+pub mod thumbnails;

@@ -18,9 +18,36 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod imp;
-
 use gtk::glib;
+
+mod imp {
+    use adw::glib;
+    use adw::subclass::prelude::*;
+
+    #[derive(Debug, Default, gtk::CompositeTemplate)]
+    #[template(resource = "/com/maxrdz/Memories/ui/favorites.ui")]
+    pub struct MemoriesFavoritesView {}
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for MemoriesFavoritesView {
+        const NAME: &'static str = "MemoriesFavoritesView";
+        type Type = super::MemoriesFavoritesView;
+        type ParentType = adw::BreakpointBin;
+
+        fn class_init(klass: &mut Self::Class) {
+            klass.bind_template();
+        }
+
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for MemoriesFavoritesView {}
+    impl WidgetImpl for MemoriesFavoritesView {}
+    impl BinImpl for MemoriesFavoritesView {}
+    impl BreakpointBinImpl for MemoriesFavoritesView {}
+}
 
 glib::wrapper! {
     pub struct MemoriesFavoritesView(ObjectSubclass<imp::MemoriesFavoritesView>)

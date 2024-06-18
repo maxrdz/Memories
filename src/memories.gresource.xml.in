@@ -4,7 +4,7 @@
     <file compressed="true">style.css</file>
   </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/gtk">
-    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">window/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true" alias="help-overlay.ui">ui/help-overlay.ui</file>
   </gresource>
   <gresource prefix="@GRESOURCE_DOMAIN@/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="gif-symbolic.svg">icons/gif-symbolic.svg</file>
@@ -12,16 +12,16 @@
     <file preprocess="xml-stripblanks" alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
-    <file preprocess="xml-stripblanks" compressed="true">albums/albums.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">albums/viewer/viewer.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">favorites/favorites.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/library.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/details/details.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media-grid.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/media_grid/media_cell/media-cell.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">library/viewer/viewer.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">preferences/preferences.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">window/theme-selector.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">window/window.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/albums.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/album-viewer.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/favorites.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/library.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/media-grid.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/media-cell.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/media-properties.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/media-viewer.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/theme-selector.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">ui/window.ui</file>
   </gresource>
 </gresources>

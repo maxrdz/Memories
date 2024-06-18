@@ -18,8 +18,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! Utility functions used at seldom in Memories source.
-
 use async_fs::{File, Metadata};
 use gtk::glib;
 use md5::{Digest, Md5};

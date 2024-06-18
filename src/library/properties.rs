@@ -18,9 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod imp;
-
-use crate::library::media_grid::media_cell::MemoriesMediaCell;
+use crate::library::media_cell::MemoriesMediaCell;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -29,6 +27,59 @@ use gtk::{gio, glib};
 use std::ffi::OsStr;
 use std::ops::Deref;
 use std::path::PathBuf;
+
+mod imp {
+    use adw::subclass::prelude::*;
+    use gtk::glib;
+
+    #[derive(Default, gtk::CompositeTemplate)]
+    #[template(resource = "/com/maxrdz/Memories/ui/media-properties.ui")]
+    pub struct MemoriesDetails {
+        #[template_child]
+        pub(super) folder: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) format: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) dimensions: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) size: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) created: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) modified: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) timestamp: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) aperture: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) exposure: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) iso: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) focal_length: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) make_model: TemplateChild<adw::ActionRow>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for MemoriesDetails {
+        const NAME: &'static str = "MemoriesDetails";
+        type Type = super::MemoriesDetails;
+        type ParentType = adw::Bin;
+
+        fn class_init(klass: &mut Self::Class) {
+            klass.bind_template();
+        }
+
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for MemoriesDetails {}
+    impl WidgetImpl for MemoriesDetails {}
+    impl BinImpl for MemoriesDetails {}
+}
 
 #[derive(Debug, Clone)]
 pub struct PictureDetails(pub glycin::ImageInfo);

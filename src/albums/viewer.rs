@@ -18,8 +18,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-mod viewer;
-
 use gtk::glib;
 
 mod imp {
@@ -27,16 +25,18 @@ mod imp {
     use adw::subclass::prelude::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(resource = "/com/maxrdz/Memories/ui/albums.ui")]
-    pub struct MemoriesAlbumsView {
+    #[template(resource = "/com/maxrdz/Memories/ui/album-viewer.ui")]
+    pub struct MemoriesAlbumViewer {
         #[template_child]
-        albums_grid_view: TemplateChild<gtk::GridView>,
+        header_bar: TemplateChild<adw::HeaderBar>,
+        #[template_child]
+        more_button: TemplateChild<gtk::MenuButton>,
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for MemoriesAlbumsView {
-        const NAME: &'static str = "MemoriesAlbumsView";
-        type Type = super::MemoriesAlbumsView;
+    impl ObjectSubclass for MemoriesAlbumViewer {
+        const NAME: &'static str = "MemoriesAlbumViewer";
+        type Type = super::MemoriesAlbumViewer;
         type ParentType = adw::BreakpointBin;
 
         fn class_init(klass: &mut Self::Class) {
@@ -48,24 +48,24 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for MemoriesAlbumsView {}
-    impl WidgetImpl for MemoriesAlbumsView {}
-    impl BinImpl for MemoriesAlbumsView {}
-    impl BreakpointBinImpl for MemoriesAlbumsView {}
+    impl ObjectImpl for MemoriesAlbumViewer {}
+    impl WidgetImpl for MemoriesAlbumViewer {}
+    impl BinImpl for MemoriesAlbumViewer {}
+    impl BreakpointBinImpl for MemoriesAlbumViewer {}
 }
 
 glib::wrapper! {
-    pub struct MemoriesAlbumsView(ObjectSubclass<imp::MemoriesAlbumsView>)
+    pub struct MemoriesAlbumViewer(ObjectSubclass<imp::MemoriesAlbumViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MemoriesAlbumsView {
+impl MemoriesAlbumViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MemoriesAlbumsView {
+impl Default for MemoriesAlbumViewer {
     fn default() -> Self {
         Self::new()
     }
