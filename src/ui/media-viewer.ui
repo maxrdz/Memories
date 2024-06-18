@@ -33,21 +33,24 @@
             <property name="content">
               <object class="GtkOverlay">
                 <child type="overlay">
-                  <object class="GtkBox" id="overlay_controls">
+                  <object class="GtkBox" id="nav_overlay_controls">
                     <property name="orientation">horizontal</property>
-                    <property name="spacing">0</property>
+                    <property name="halign">start</property>
                     <property name="valign">end</property>
                     <property name="margin-start">15</property>
                     <property name="margin-end">15</property>
                     <property name="margin-bottom">15</property>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                     <child>
                       <object class="GtkButton">
                         <property name="icon-name">go-previous-symbolic</property>
                         <property name="tooltip-text">Previous</property>
                         <property name="halign">start</property>
                         <style>
-                          <class name="overlay-button"/>
-                          <class name="start"/>
+                          <class name="osd"/>
+                          <class name="circular"/>
                         </style>
                       </object>
                     </child>
@@ -57,20 +60,33 @@
                         <property name="tooltip-text">Next</property>
                         <property name="halign">start</property>
                         <style>
-                          <class name="overlay-button"/>
-                          <class name="end"/>
+                          <class name="osd"/>
+                          <class name="circular"/>
                         </style>
                       </object>
                     </child>
+                  </object>
+                </child>
+                <child type="overlay">
+                  <object class="GtkBox" id="zoom_overlay_controls">
+                    <property name="orientation">horizontal</property>
+                    <property name="halign">end</property>
+                    <property name="valign">end</property>
+                    <property name="margin-start">15</property>
+                    <property name="margin-end">15</property>
+                    <property name="margin-bottom">15</property>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                     <child>
                       <object class="GtkButton">
-                        <property name="icon-name">zoom-fit-best-symbolic</property>
+                        <property name="icon-name">loupe-zoom-symbolic</property>
                         <property name="tooltip-text">Zoom Controls</property>
                         <property name="halign">end</property>
                         <property name="hexpand">True</property>
                         <style>
-                          <class name="start"/>
-                          <class name="overlay-button"/>
+                          <class name="osd"/>
+                          <class name="circular"/>
                         </style>
                       </object>
                     </child>
@@ -80,9 +96,8 @@
                         <property name="tooltip-text">Zoom Menu</property>
                         <property name="halign">end</property>
                         <style>
-                          <class name="end"/>
-                          <class name="overlay-button"/>
-                          <class name="overlay-button-short"/>
+                          <class name="osd"/>
+                          <class name="circular"/>
                         </style>
                       </object>
                     </child>

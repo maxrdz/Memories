@@ -62,6 +62,9 @@ pub static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
 
 /// Following paths relative to $HOME env var path.
+/// This static is here for easily modifying the path for taking
+/// application screenshots, but this static should ALWAYS be set to
+/// the XDG_PICTURES_DIR and XDG_VIDEOS_DIR, relative to $HOME.
 pub static DEFAULT_LIBRARY_COLLECTION: &[&str] = &["Pictures", "Videos"];
 pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";
 

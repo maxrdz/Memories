@@ -47,7 +47,9 @@ mod imp {
         #[template_child]
         pub details_widget: TemplateChild<MemoriesDetails>,
         #[template_child]
-        overlay_controls: TemplateChild<gtk::Box>,
+        nav_overlay_controls: TemplateChild<gtk::Box>,
+        #[template_child]
+        zoom_overlay_controls: TemplateChild<gtk::Box>,
         #[template_child]
         pub(super) viewer_stack: TemplateChild<adw::ViewStack>,
         #[template_child]

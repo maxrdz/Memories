@@ -12,63 +12,27 @@ gridview revealer {
   border-radius: 5px;
 }
 
+/* Applies to Image and Video pictures */
 picture {
   background-color: @theme_base_color;
 }
 
-.grid-overlay-controls {
-  color: rgba(255, 255, 255, 0.9);
-  background-color: rgba(0, 0, 0, 0.65);
-  border-radius: 90px;
+/* General overlay controls */
+button.osd.circular, menubutton.osd.circular {
   min-width: 42px;
   min-height: 42px;
 }
 
-.overlay-button {
-  color: rgba(255, 255, 255, 0.9);
-  background-color: rgba(0, 0, 0, 0.65);
-  border-radius: 90px;
-  border-style: solid;
-  min-width: 40px;
-  min-height: 40px;
+/* Media Properties Preference Rows */
+overlay-split-view widget {
+  background-color: @window-fg-color;
 }
 
-.overlay-button image {
-  -gtk-icon-size: 19px;
+overlay-split-view widget row.property {
+  background-color: @window-fg-color;
 }
 
-.overlay-button-short {
-  min-width: 25px;
-}
-
-.overlay-button:active, .overlay-button:hover {
-  background-color: rgba(25, 25, 25, 0.65);
-}
-
-.overlay-button.toggle:checked {
-  background-color: rgba(0, 0, 0, 0.45);
-}
-
-.start {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  border-right-width: 1px;
-  border-right-color: rgba(255, 255, 255, 0.3);
-}
-
-.middle {
-  border-radius: 0px;
-  border-right-width: 1px;
-  border-right-color: rgba(255, 255, 255, 0.3);
-  border-right-style: solid;
-}
-
-.end {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.media-cell-label {
+mediacell overlay label {
   font-weight: 500;
   font-size: 100%;
   padding: 2px;
@@ -85,23 +49,6 @@ picture {
 
 .menu-button:hover {
   background-color: @borders;
-}
-
-.album-thumbnail {
-  border: white 1px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 3px;
-  margin-bottom: 5px;
-}
-
-/* Viewer Details Preference Rows */
-.sidebar-pane {
-  background-color: @window-fg-color;
-}
-
-.sidebar-pane row.property {
-  background-color: @window-fg-color;
 }
 
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */

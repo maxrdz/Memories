@@ -93,8 +93,8 @@
                       </object>
                     </property>
                     <style>
+                      <class name="osd"/>
                       <class name="circular"/>
-                      <class name="grid-overlay-controls"/>
                     </style>
                   </object>
                 </child>
