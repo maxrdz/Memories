@@ -22,7 +22,7 @@ mod imp;
 
 use crate::library::details::{ContentDetails, PictureDetails};
 use crate::library::media_grid::MemoriesMediaGridView;
-use crate::library::viewer::{MemoriesViewer, ViewerContentType};
+use crate::library::viewer::{MemoriesMediaViewer, ViewerContentType};
 use crate::thumbnails::generate_thumbnail_image;
 use crate::utils::get_metadata_with_hash;
 use adw::prelude::*;
@@ -110,7 +110,7 @@ impl MemoriesMediaCell {
 
                     let nav_view = media_grid.window().imp().window_navigation.clone();
 
-                    let viewer_content: MemoriesViewer = MemoriesViewer::default();
+                    let viewer_content: MemoriesMediaViewer = MemoriesMediaViewer::default();
                     viewer_content.set_content_type(media_cell.imp().viewer_content_type.get().unwrap());
                     viewer_content.set_content_file(&file);
 

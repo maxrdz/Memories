@@ -18,36 +18,23 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use super::media_grid::MemoriesMediaGridView;
+use adw::glib;
 use adw::subclass::prelude::*;
-use gtk::glib;
-use std::cell::Cell;
 
 #[derive(Debug, Default, gtk::CompositeTemplate)]
-#[template(resource = "/com/maxrdz/Memories/library/library.ui")]
-pub struct MemoriesLibraryView {
-    pub(super) view_mode: Cell<super::LibraryViewMode>,
+#[template(resource = "/com/maxrdz/Memories/albums/viewer/viewer.ui")]
+pub struct MemoriesAlbumViewer {
     #[template_child]
-    pub(super) library_view_stack: TemplateChild<adw::ViewStack>,
+    header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
-    pub(super) spinner_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
-    pub(super) spinner: TemplateChild<gtk::Spinner>,
-    #[template_child]
-    pub(super) error_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
-    pub(super) error_status_widget: TemplateChild<adw::StatusPage>,
-    #[template_child]
-    pub(super) gallery_page: TemplateChild<adw::ViewStackPage>,
-    #[template_child]
-    pub media_grid: TemplateChild<MemoriesMediaGridView>,
+    more_button: TemplateChild<gtk::MenuButton>,
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MemoriesLibraryView {
-    const NAME: &'static str = "MemoriesLibraryView";
-    type Type = super::MemoriesLibraryView;
-    type ParentType = adw::Bin;
+impl ObjectSubclass for MemoriesAlbumViewer {
+    const NAME: &'static str = "MemoriesAlbumViewer";
+    type Type = super::MemoriesAlbumViewer;
+    type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -58,6 +45,7 @@ impl ObjectSubclass for MemoriesLibraryView {
     }
 }
 
-impl ObjectImpl for MemoriesLibraryView {}
-impl WidgetImpl for MemoriesLibraryView {}
-impl BinImpl for MemoriesLibraryView {}
+impl ObjectImpl for MemoriesAlbumViewer {}
+impl WidgetImpl for MemoriesAlbumViewer {}
+impl BinImpl for MemoriesAlbumViewer {}
+impl BreakpointBinImpl for MemoriesAlbumViewer {}

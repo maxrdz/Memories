@@ -13,6 +13,7 @@
   </gresource>
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
     <file preprocess="xml-stripblanks" compressed="true">albums/albums.ui</file>
+    <file preprocess="xml-stripblanks" compressed="true">albums/viewer/viewer.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">favorites/favorites.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/library.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">library/details/details.ui</file>

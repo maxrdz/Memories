@@ -36,6 +36,18 @@ use gtk::{gio, glib};
 use std::io;
 use std::process::Command;
 
+/// Enum that represents the type of library view
+/// instantiated. Depending on the variant, the
+/// UI layout and placeholder page are altered
+/// for the type of library view set.
+#[derive(Debug, Default, Clone, Copy)]
+pub enum LibraryViewMode {
+    #[default]
+    Library,
+    Album,
+    Favorites,
+}
+
 glib::wrapper! {
     pub struct MemoriesLibraryView(ObjectSubclass<imp::MemoriesLibraryView>)
         @extends gtk::Widget, adw::Bin;
@@ -51,6 +63,12 @@ impl MemoriesLibraryView {
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
             .expect("Failed to downcast to MemoriesApplicationWindow.")
+    }
+
+    /// Sets the library view mode. Depending on the variant, the UI layout
+    /// and placeholder page are altered for the type of library view set.
+    pub fn set_view_mode(&self, mode_variant: LibraryViewMode) {
+        self.imp().view_mode.set(mode_variant);
     }
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
@@ -90,8 +108,16 @@ impl MemoriesLibraryView {
                     g_debug!("LibraryView", "notify::models_loaded");
 
                     let item_count: u32 = model.n_items();
+
                     if item_count == 0 {
-                        s.imp().library_view_stack.set_visible_child_name("placeholder_page");
+                        let mut placeholder_page: &str = "placeholder_page";
+
+                        match s.imp().view_mode.get() {
+                            LibraryViewMode::Album => placeholder_page = "album_placeholder_page",
+                            LibraryViewMode::Favorites => placeholder_page = "favorites_placeholder_page",
+                            _ => (),
+                        }
+                        s.imp().library_view_stack.set_visible_child_name(placeholder_page);
                         return;
                     }
                     s.imp().library_view_stack.set_visible_child_name("gallery_page");

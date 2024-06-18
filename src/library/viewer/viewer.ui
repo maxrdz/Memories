@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MemoriesViewer" parent="AdwBreakpointBin">
+  <template class="MemoriesMediaViewer" parent="AdwBreakpointBin">
     <property name="width-request">360</property>
     <property name="height-request">150</property>
     <child>
@@ -135,7 +135,7 @@
         <attribute name="action">viewer.favorite</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Add to Album..</attribute>
+        <attribute name="label" translatable="yes">_Add to Album...</attribute>
         <attribute name="action">viewer.add</attribute>
       </item>
       <item>

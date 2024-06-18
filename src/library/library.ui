@@ -63,8 +63,32 @@
             <property name="child">
               <object class="AdwStatusPage">
                 <property name="icon-name">image-missing-symbolic</property>
-                <property name="title" translatable="yes" comments="'Library' referring to a library of photos.">Your Library Is Empty</property>
-                <property name="description" translatable="yes">Your photos and videos will be shown here</property>
+                <property name="title" translatable="yes">Welcome to Memories</property>
+                <property name="description" translatable="yes">Media from your Pictures and Videos folders will appear here</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">album_placeholder_page</property>
+            <property name="child">
+              <object class="AdwStatusPage">
+                <property name="icon-name">image-missing-symbolic</property>
+                <property name="title" translatable="yes">Your Album Is Empty</property>
+                <property name="description" translatable="yes">Media that you add to this album will appear here</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">favorites_placeholder_page</property>
+            <property name="child">
+              <object class="AdwStatusPage">
+                <property name="icon-name">image-missing-symbolic</property>
+                <property name="title" translatable="yes">No Favorites</property>
+                <property name="description" translatable="yes">Your favorited media will appear here</property>
               </object>
             </property>
           </object>

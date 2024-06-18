@@ -5,6 +5,9 @@ data/com.maxrdz.Memories.gschema.xml.in
 src/albums/albums.ui
 src/albums/imp.rs
 src/albums/mod.rs
+src/albums/viewer/imp.rs
+src/albums/viewer/mod.rs
+src/albums/viewer/viewer.ui
 src/application/imp.rs
 src/application/library_list_model/imp.rs
 src/application/library_list_model/mod.rs

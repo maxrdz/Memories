@@ -22,4 +22,47 @@
       </object>
     </property>
   </template>
+  <object class="AdwBin" id="album_cell">
+    <property name="child">
+      <object class="GtkBox">
+        <property name="homogeneous">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkAspectFrame">
+            <property name="child">
+              <object class="GtkRevealer">
+                <property name="reveal-child">True</property>
+                <property name="child">
+                  <object class="GtkGraphicsOffload">
+                    <property name="child">
+                      <object class="GtkPicture"/>
+                    </property>
+                  </object>
+                </property>
+                <style>
+                  <class name="album-thumbnail"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Loading Album Title</property>
+            <style>
+              <class name="title-1"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Enumerating Items</property>
+            <style>
+              <class name="title-4"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
 </interface>

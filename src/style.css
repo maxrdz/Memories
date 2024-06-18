@@ -87,6 +87,14 @@ picture {
   background-color: @borders;
 }
 
+.album-thumbnail {
+  border: white 1px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+
 /* Viewer Details Preference Rows */
 .sidebar-pane {
   background-color: @window-fg-color;

@@ -31,7 +31,7 @@ use gtk::{gdk, gio, glib};
 use std::ffi::OsStr;
 
 /// Enum that represents the types of content that
-/// can be displayed by the `MemoriesViewer` object.
+/// can be displayed by the `MemoriesMediaViewer` object.
 #[derive(Debug, Clone)]
 pub enum ViewerContentType {
     VectorGraphics,
@@ -58,12 +58,12 @@ impl ViewerContentType {
 }
 
 glib::wrapper! {
-    pub struct MemoriesViewer(ObjectSubclass<imp::MemoriesViewer>)
+    pub struct MemoriesMediaViewer(ObjectSubclass<imp::MemoriesMediaViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
 #[gtk::template_callbacks]
-impl MemoriesViewer {
+impl MemoriesMediaViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -150,7 +150,7 @@ impl MemoriesViewer {
     }
 }
 
-impl Default for MemoriesViewer {
+impl Default for MemoriesMediaViewer {
     fn default() -> Self {
         Self::new()
     }

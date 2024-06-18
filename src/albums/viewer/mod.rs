@@ -19,22 +19,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 mod imp;
-mod viewer;
 
 use gtk::glib;
 
 glib::wrapper! {
-    pub struct MemoriesAlbumsView(ObjectSubclass<imp::MemoriesAlbumsView>)
+    pub struct MemoriesAlbumViewer(ObjectSubclass<imp::MemoriesAlbumViewer>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MemoriesAlbumsView {
+impl MemoriesAlbumViewer {
     pub fn new() -> Self {
         glib::Object::new()
     }
 }
 
-impl Default for MemoriesAlbumsView {
+impl Default for MemoriesAlbumViewer {
     fn default() -> Self {
         Self::new()
     }

@@ -26,7 +26,7 @@ use gtk::{gio, glib};
 
 #[derive(Default, gtk::CompositeTemplate)]
 #[template(resource = "/com/maxrdz/Memories/library/viewer/viewer.ui")]
-pub struct MemoriesViewer {
+pub struct MemoriesMediaViewer {
     #[template_child]
     header_bar: TemplateChild<adw::HeaderBar>,
     #[template_child]
@@ -52,9 +52,9 @@ pub struct MemoriesViewer {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for MemoriesViewer {
-    const NAME: &'static str = "MemoriesViewer";
-    type Type = super::MemoriesViewer;
+impl ObjectSubclass for MemoriesMediaViewer {
+    const NAME: &'static str = "MemoriesMediaViewer";
+    type Type = super::MemoriesMediaViewer;
     type ParentType = adw::BreakpointBin;
 
     fn class_init(klass: &mut Self::Class) {
@@ -67,7 +67,7 @@ impl ObjectSubclass for MemoriesViewer {
     }
 }
 
-impl ObjectImpl for MemoriesViewer {
+impl ObjectImpl for MemoriesMediaViewer {
     fn constructed(&self) {
         self.parent_constructed();
         let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
@@ -78,6 +78,6 @@ impl ObjectImpl for MemoriesViewer {
     }
 }
 
-impl WidgetImpl for MemoriesViewer {}
-impl BinImpl for MemoriesViewer {}
-impl BreakpointBinImpl for MemoriesViewer {}
+impl WidgetImpl for MemoriesMediaViewer {}
+impl BinImpl for MemoriesMediaViewer {}
+impl BreakpointBinImpl for MemoriesMediaViewer {}

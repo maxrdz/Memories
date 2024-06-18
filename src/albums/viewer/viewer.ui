@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="MemoriesAlbumViewer" parent="AdwBreakpointBin">
+    <property name="width-request">360</property>
+    <property name="height-request">150</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>min-width: 720px</condition>
+        <setter object="header_bar" property="show-end-title-buttons">True</setter>
+      </object>
+    </child>
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar" id="header_bar">
+            <property name="show-end-title-buttons">False</property>
+            <child type="end">
+              <object class="GtkMenuButton" id="more_button">
+                <property name="icon-name">view-more-symbolic</property>
+                <property name="tooltip-text" translatable="yes">More Actions</property>
+                <property name="menu-model">more_actions_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwStatusPage">
+            <property name="title">not yet implemented</property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="more_actions_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Slideshow</attribute>
+        <attribute name="action">album.slideshow</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Print...</attribute>
+        <attribute name="action">album.print</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Delete Album</attribute>
+        <attribute name="action">album.delete</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
