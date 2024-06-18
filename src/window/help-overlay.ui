@@ -23,30 +23,31 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Show About Dialog</property>
-                <property name="action-name">app.about</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes" context="shortcut window">Quit Memories</property>
                 <property name="action-name">app.quit</property>
               </object>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes" context="shortcut window">Application Theme</property>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Prefer Dark</property>
+                <property name="title" translatable="yes" context="shortcut window">Toggle Fullscreen</property>
+                <property name="action-name">win.fullscreen</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Leave Fullscreen</property>
+                <property name="action-name">win.leave-fullscreen</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Prefer Dark Theme</property>
                 <property name="action-name">app.dark-theme</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Prefer Light</property>
+                <property name="title" translatable="yes" context="shortcut window">Prefer Light Theme</property>
                 <property name="action-name">app.light-theme</property>
               </object>
             </child>
@@ -54,6 +55,53 @@
               <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes" context="shortcut window">Follow System Theme</property>
                 <property name="action-name">app.system-theme</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes" context="shortcut window">Media Viewer</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Favorite Item</property>
+                <property name="action-name">viewer.favorite</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Add to Album</property>
+                <property name="action-name">viewer.add</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Set as Background</property>
+                <property name="action-name">viewer.set_background</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Copy to Clipboard</property>
+                <property name="action-name">viewer.copy</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Move to Trash</property>
+                <property name="action-name">viewer.trash</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Permanently Delete</property>
+                <property name="action-name">viewer.delete</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Toggle Properties</property>
+                <property name="action-name">viewer.properties</property>
               </object>
             </child>
           </object>

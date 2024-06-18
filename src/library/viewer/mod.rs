@@ -79,20 +79,22 @@ impl MemoriesViewer {
     /// are placed in the widget tree and can access the window.
     pub fn setup_gactions(&self) {
         let win: MemoriesApplicationWindow = self.window();
-        let actions = gio::SimpleActionGroup::new();
+        let action_group = gio::SimpleActionGroup::new();
 
-        let action_close = gio::ActionEntry::builder("show-properties")
+        let properties_action = gio::ActionEntry::builder("properties")
+            .state(false.to_variant())
             .activate(
-                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, _, _| {
-                    viewer.imp()
-                        .split_view
-                        .set_show_sidebar(!viewer.imp().split_view.shows_sidebar());
+                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, action: &gio::SimpleAction, _| {
+                    let new_state: bool = !viewer.imp().split_view.shows_sidebar();
+
+                    viewer.imp().split_view.set_show_sidebar(new_state);
+                    action.set_state(&new_state.to_variant());
                 }),
             )
             .build();
 
-        actions.add_action_entries([action_close]);
-        win.insert_action_group("viewer", Some(&actions));
+        action_group.add_action_entries([properties_action]);
+        win.insert_action_group("viewer", Some(&action_group));
     }
 
     /// Sets the content type setting for the viewer page.
@@ -137,18 +139,6 @@ impl MemoriesViewer {
             .child(self)
             .build();
         new_navigation_page
-    }
-
-    #[template_callback]
-    fn fullscreen_toggle(&self, button: &gtk::ToggleButton) {
-        let fullscreen: bool = self.window().is_fullscreened();
-        self.window().set_fullscreened(!fullscreen);
-
-        if !fullscreen {
-            button.set_tooltip_text(Some(&gettext("Exit Fullscreen")));
-        } else {
-            button.set_tooltip_text(Some(&gettext("View Fullscreen")));
-        }
     }
 }
 

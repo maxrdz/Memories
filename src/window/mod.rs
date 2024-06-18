@@ -31,7 +31,7 @@ use gtk::{gio, glib};
 glib::wrapper! {
     pub struct MemoriesApplicationWindow(ObjectSubclass<imp::MemoriesApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
-        @implements gio::ActionGroup, gio::ActionMap, gtk::Root;
+        @implements gio::ActionMap, gtk::Root;
 }
 
 #[gtk::template_callbacks]
@@ -61,7 +61,36 @@ impl MemoriesApplicationWindow {
             })
             .build();
 
-        self.add_action_entries([preferences_action, shortcuts_window_action]);
+        let toggle_fullscreen_action = gio::ActionEntry::builder("fullscreen")
+            .state({
+                let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
+                gsettings.boolean("fullscreened").to_variant()
+            })
+            .activate(move |win: &Self, action: &gio::SimpleAction, _| {
+                let new_state: bool = !win.is_fullscreened();
+
+                win.set_fullscreened(new_state);
+                action.set_state(&new_state.to_variant());
+
+                win.app().unwrap().toggle_gschema_key("fullscreened", new_state);
+            })
+            .build();
+
+        let leave_fullscreen_action = gio::ActionEntry::builder("leave-fullscreen")
+            .activate(move |win: &Self, _, _| {
+                if win.is_fullscreened() {
+                    win.activate_action("win.fullscreen", None)
+                        .expect("Action not found.");
+                }
+            })
+            .build();
+
+        self.add_action_entries([
+            preferences_action,
+            shortcuts_window_action,
+            toggle_fullscreen_action,
+            leave_fullscreen_action,
+        ]);
     }
 
     #[template_callback]

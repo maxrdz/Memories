@@ -422,7 +422,7 @@ impl MemoriesApplication {
         }
     }
 
-    fn toggle_gschema_key(&self, key: &str, toggle: bool) {
+    pub fn toggle_gschema_key(&self, key: &str, toggle: bool) {
         if let Err(err_msg) = self.gsettings().set_boolean(key, toggle) {
             g_critical!("Application", "GSettings returned error: {}", err_msg);
         }

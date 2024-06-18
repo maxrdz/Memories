@@ -132,11 +132,11 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">_Favorite</attribute>
-        <attribute name="action">viewer.favorite_media</attribute>
+        <attribute name="action">viewer.favorite</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">_Add to Album..</attribute>
-        <attribute name="action">viewer.add_to_album</attribute>
+        <attribute name="action">viewer.add</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Set as _Background</attribute>
@@ -145,14 +145,22 @@
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Copy to Clipboard</attribute>
+        <attribute name="action">viewer.copy</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">Move to _Trash</attribute>
-        <attribute name="action">viewer.trash_media</attribute>
+        <attribute name="action">viewer.trash</attribute>
       </item>
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">_View Fullscreen</attribute>
+        <attribute name="action">win.fullscreen</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Properties</attribute>
-        <attribute name="action">viewer.show-properties</attribute>
+        <attribute name="action">viewer.properties</attribute>
       </item>
     </section>
   </menu>

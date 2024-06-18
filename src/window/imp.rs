@@ -128,6 +128,7 @@ impl ObjectImpl for MemoriesApplicationWindow {
         obj.set_maximized(gsettings.boolean("maximized"));
         obj.set_default_width(gsettings.int("window-width"));
         obj.set_default_height(gsettings.int("window-height"));
+        obj.set_fullscreened(gsettings.boolean("fullscreened"));
 
         obj.connect_maximized_notify(
             clone!(@weak gsettings as gs => move |win: &super::MemoriesApplicationWindow| {
