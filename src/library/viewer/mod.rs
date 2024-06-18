@@ -81,6 +81,14 @@ impl MemoriesViewer {
         let win: MemoriesApplicationWindow = self.window();
         let action_group = gio::SimpleActionGroup::new();
 
+        let exit_viewer_action = gio::ActionEntry::builder("exit")
+            .activate(
+                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, _, _| {
+                    viewer.activate_action("navigation.pop", None).expect("Action not found.");
+                }),
+            )
+            .build();
+
         let properties_action = gio::ActionEntry::builder("properties")
             .state(false.to_variant())
             .activate(
@@ -93,7 +101,7 @@ impl MemoriesViewer {
             )
             .build();
 
-        action_group.add_action_entries([properties_action]);
+        action_group.add_action_entries([exit_viewer_action, properties_action]);
         win.insert_action_group("viewer", Some(&action_group));
     }
 

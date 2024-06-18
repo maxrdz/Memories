@@ -104,6 +104,12 @@
                 <property name="action-name">viewer.properties</property>
               </object>
             </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Pop Navigation Page</property>
+                <property name="action-name">viewer.exit</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

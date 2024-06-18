@@ -90,6 +90,7 @@ impl ObjectImpl for MemoriesApplication {
         obj.set_accels_for_action("viewer.trash", &["Delete"]);
         obj.set_accels_for_action("viewer.delete", &["<shift>Delete"]);
         obj.set_accels_for_action("viewer.properties", &["F9", "<Alt>Return"]);
+        obj.set_accels_for_action("viewer.exit", &["<Ctrl>w"]);
     }
 }
 
