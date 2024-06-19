@@ -18,9 +18,6 @@ gresource_domain = base_gresource_domain
 project_git = 'https://gitlab.gnome.org/maxrdz/Memories'
 vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD', check: false).stdout().strip()
 
-# Keep dependencies below matching with the current
-# gtk-rs 'gnome_xx' feature's dependencies, found at
-# https://github.com/gtk-rs/gtk4-rs/blob/master/gtk4/Cargo.toml
 dependency('gtk4', version: '>= 4.14')
 dependency('cairo', version: '>= 1.16')
 dependency('pango', version: '>= 1.52')
@@ -28,7 +25,7 @@ dependency('gdk-pixbuf-2.0', version: '>= 2.42')
 dependency('gio-2.0', version: '>= 2.80')
 dependency('glib-2.0', version: '>= 2.80')
 
-dependency('libadwaita-1', version: '>= 1.5')
+dependency('libadwaita-1', version: '>= 1.6.alpha')
 dependency('mount', version: '>= 2.39')
 dependency('gstreamer-1.0', version: '>= 1.22')
 dependency('lcms2', version: '>= 2.12.0') # Required by Glycin
@@ -52,6 +49,9 @@ if get_option('profile') == 'devel'
   gresource_domain = '/' + application_id.replace('.', '/')
   binary = '@0@-devel'.format(binary)
   version += '-@0@'.format(vcs_tag)
+
+  message('Setting up Git pre-commit hook..')
+  run_command('cp', '-f', 'hooks/pre-commit.hook', '.git/hooks/pre-commit', check: false)
 else
   profile = ''
   application_id = base_id
@@ -82,3 +82,4 @@ meson.add_dist_script(
   meson.project_build_root() / 'meson-dist' / binary + '-' + version,
   meson.project_source_root()
 )
+

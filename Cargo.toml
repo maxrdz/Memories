@@ -24,15 +24,25 @@ disable-glycin-sandbox = []
 use-feedbackd = ["dep:libfeedback"]
 
 [dependencies]
-adw = { version = "0.6", package = "libadwaita", features = ["v1_5"] }
+adw = { version = "0.7", package = "libadwaita", features = [
+    "v1_5",
+], git = "https://gitlab.gnome.org/World/Rust/libadwaita-rs.git", branch = "master" }
 async-channel = "2.2"
 async-fs = "2.1"
 async-process = "2.2"
 async-semaphore = "1.2"
 cfg-if = "1"
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
-glycin = "1.0.2"
-gtk = { version = "0.8", package = "gtk4", features = ["gnome_46"] }
+glib = { version = "0.20", features = [
+    "v2_80",
+], git = "https://github.com/gtk-rs/gtk-rs-core.git", branch = "master" }
+glycin = { version = "2.0.0-alpha", features = [
+    "gdk4",
+], git = "https://gitlab.gnome.org/sophie-h/glycin" }
+gtk = { version = "0.9", package = "gtk4", features = [
+    "v4_14",
+    "xml_validation",
+], git = "https://github.com/gtk-rs/gtk4-rs.git", branch = "master" }
 libfeedback = { git = "https://gitlab.gnome.org/guidog/libfeedback-rs.git", optional = true }
 md-5 = "0.10"
 serde = { version = "1", features = ["derive"] }
