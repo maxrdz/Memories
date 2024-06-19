@@ -103,8 +103,12 @@ mod imp {
         fn constructed(&self) {
             let obj = self.obj();
 
-            obj.connect_subdirectories_notify(
-                clone!(@weak self as s, @weak obj => move |model: &super::MemoriesLibraryListModel| {
+            obj.connect_subdirectories_notify(clone!(
+                #[weak(rename_to = this)]
+                self,
+                #[weak]
+                obj,
+                move |model: &super::MemoriesLibraryListModel| {
                     g_debug!("LibraryListModel", "notify::subdirectories");
 
                     // Signal to refresh the 'library collection' preference group, which
@@ -129,29 +133,36 @@ mod imp {
                         // Connect the root model's `items_changed` signal with our model
                         // so that the view that owns the `LibraryListModel` can be notified.
                         let signal_handler_id: glib::SignalHandlerId =
-                            new_model
-                                .model
-                                .connect_items_changed(clone!(@weak obj as o => move |
-                                model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
+                            new_model.model.connect_items_changed(clone!(
+                                #[weak]
+                                obj,
+                                move |model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
                                     if added != 0 {
                                         let base_index: u32 = pos - removed;
-                                        o.imp().new_root_model_item_enumerated(model, base_index, Some(added));
+                                        obj.imp().new_root_model_item_enumerated(
+                                            model,
+                                            base_index,
+                                            Some(added),
+                                        );
                                     }
-                                }));
-                        new_model
-                            .model
-                            .connect_loading_notify(clone!(@weak s => move |
-                                dl: &gtk::DirectoryList| {
-                                s.register_model_loading_notify(dl);
-                            }));
+                                }
+                            ));
+
+                        new_model.model.connect_loading_notify(clone!(
+                            #[weak]
+                            this,
+                            move |dl: &gtk::DirectoryList| {
+                                this.register_model_loading_notify(dl);
+                            }
+                        ));
 
                         new_model.items_changed_callback.replace(Some(signal_handler_id));
                         new_model.model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
 
-                        s.root_models.borrow_mut().push(Rc::new(new_model));
+                        this.root_models.borrow_mut().push(Rc::new(new_model));
                     }
-                }),
-            );
+                }
+            ));
             // We have to manually invoke `notify::subdirectories` since
             // we are no longer binding the property to a gschema key,
             // which it was designed to in early development. (Now we only
@@ -279,18 +290,24 @@ mod imp {
 
             let new_model = gtk::DirectoryList::new(None, None::<&gio::File>);
 
-            let items_changed_signal_id: glib::SignalHandlerId =
-                new_model.connect_items_changed(clone!(@weak self as s, @weak parent_list_model => move |
-                list_model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
+            let items_changed_signal_id: glib::SignalHandlerId = new_model.connect_items_changed(clone!(
+                #[weak(rename_to = this)]
+                self,
+                #[weak]
+                parent_list_model,
+                move |list_model: &gtk::DirectoryList, pos: u32, removed: u32, added: u32| {
                     // FIXME: do not append directory items to public items.
-                    s.update_public_items(parent_list_model, list_model, pos, removed, added);
-                }));
+                    this.update_public_items(parent_list_model, list_model, pos, removed, added);
+                }
+            ));
 
-            let loading_signal_id: glib::SignalHandlerId =
-                new_model.connect_loading_notify(clone!(@weak obj as o => move |
-                list_model: &gtk::DirectoryList| {
-                    o.imp().register_model_loading_notify(list_model);
-                }));
+            let loading_signal_id: glib::SignalHandlerId = new_model.connect_loading_notify(clone!(
+                #[weak]
+                obj,
+                move |list_model: &gtk::DirectoryList| {
+                    obj.imp().register_model_loading_notify(list_model);
+                }
+            ));
 
             new_model.set_io_priority(DIRECTORY_MODEL_PRIORITY);
             new_model.set_file(Some(&gio::File::for_path(subdirectory_absolute_path)));

@@ -150,8 +150,10 @@ impl MemoriesLibraryView {
         let msm: gtk::MultiSelection = gtk::MultiSelection::new(Some(library_model.clone()));
 
         if !library_model.models_loaded() {
-            library_model.connect_models_loaded_notify(
-                clone!(@weak self as s => move |model: &MemoriesLibraryListModel| {
+            library_model.connect_models_loaded_notify(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |model: &MemoriesLibraryListModel| {
                     g_debug!("LibraryView", "notify::models_loaded");
 
                     let item_count: u32 = model.n_items();
@@ -159,16 +161,21 @@ impl MemoriesLibraryView {
                     if item_count == 0 {
                         let mut placeholder_page: &str = "placeholder_page";
 
-                        match s.imp().view_mode.get() {
+                        match this.imp().view_mode.get() {
                             LibraryViewMode::Album => placeholder_page = "album_placeholder_page",
                             LibraryViewMode::Favorites => placeholder_page = "favorites_placeholder_page",
                             _ => (),
                         }
-                        s.imp().library_view_stack.set_visible_child_name(placeholder_page);
+                        this.imp()
+                            .library_view_stack
+                            .set_visible_child_name(placeholder_page);
                         return;
                     }
-                    s.imp().library_view_stack.set_visible_child_name("gallery_page");
-                    s.imp().spinner.stop();
+                    this.imp()
+                        .library_view_stack
+                        .set_visible_child_name("gallery_page");
+
+                    this.imp().spinner.stop();
 
                     let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
@@ -179,16 +186,17 @@ impl MemoriesLibraryView {
                                 "Making thumbnails for the first time. This may take a while.",
                             ))
                             .build();
-                        s.imp().media_grid.imp().toast_overlay.add_toast(new_toast);
+                        this.imp().media_grid.imp().toast_overlay.add_toast(new_toast);
 
                         let _ = gsettings.set_boolean("fresh-cache", false);
                     }
-                }),
-            );
+                }
+            ));
         } else {
             self.imp()
                 .library_view_stack
                 .set_visible_child_name("gallery_page");
+
             self.imp().spinner.stop();
         }
 

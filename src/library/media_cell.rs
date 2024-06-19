@@ -125,15 +125,18 @@ impl MemoriesMediaCell {
         // Once the image file has been set, we know it has been loaded, so
         // we can hide the content (placeholder icon) immediately, then reveal
         // the actual image content with a proper delay + transition type.
-        let handler_id: glib::SignalHandlerId =
-            self.imp()
-                .thumbnail_image
-                .connect_file_notify(clone!(@weak self as s => move |_: &gtk::Image| {
-                    s.imp().revealer.set_reveal_child(false);
-                    s.imp().revealer.set_transition_duration(1000); // milliseconds
-                    s.imp().revealer.set_transition_type(gtk::RevealerTransitionType::Crossfade);
-                    s.imp().revealer.set_reveal_child(true);
-                }));
+        let handler_id: glib::SignalHandlerId = self.imp().thumbnail_image.connect_file_notify(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_: &gtk::Image| {
+                this.imp().revealer.set_reveal_child(false);
+                this.imp().revealer.set_transition_duration(1000); // milliseconds
+                this.imp()
+                    .revealer
+                    .set_transition_type(gtk::RevealerTransitionType::Crossfade);
+                this.imp().revealer.set_reveal_child(true);
+            }
+        ));
 
         self.imp()
             .img_file_notify
@@ -145,9 +148,15 @@ impl MemoriesMediaCell {
 
         self.imp().revealer.add_controller(click_gesture.clone());
 
-        click_gesture.connect_pressed(clone!(@weak media_grid, @weak list_item => move |_, _, _, _| {
+        click_gesture.connect_pressed(clone!(
+            #[weak]
+            media_grid,
+            #[weak]
+            list_item,
+            move |_, _, _, _| {
                 if list_item.is_selected() {
-                    let current_nav_page: adw::NavigationPage = media_grid.window()
+                    let current_nav_page: adw::NavigationPage = media_grid
+                        .window()
                         .imp()
                         .window_navigation
                         .visible_page()
@@ -169,9 +178,7 @@ impl MemoriesMediaCell {
                     viewer_content.set_content_type(media_cell.imp().viewer_content_type.get().unwrap());
                     viewer_content.set_content_file(&file);
 
-                    viewer_content.imp()
-                        .details_widget
-                        .update_details(&media_cell);
+                    viewer_content.imp().details_widget.update_details(&media_cell);
 
                     let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
                     nav_page.set_title(&file.basename().unwrap().to_string_lossy());
@@ -211,13 +218,19 @@ impl MemoriesMediaCell {
         // Match statement for choosing how to load the thumbnail image.
         match content_type {
             // SVGs can be rendered by GNOME's librsvg, so we don't need ffmpeg.
-            ViewerContentType::VectorGraphics => self.imp().thumbnail_image.set_file(Some(&absolute_path)),
+            ViewerContentType::VectorGraphics => {
+                self.imp().thumbnail_image.set_from_file(Some(&absolute_path))
+            }
             _ => {
                 let (tx, rx) = async_channel::bounded(1);
                 let semaphore: Arc<Semaphore> = media_grid_imp.subprocess_semaphore.clone();
 
-                let tx_handle = glib::spawn_future_local(
-                    clone!(@weak self as cell, @weak media_grid_imp => async move {
+                let tx_handle = glib::spawn_future_local(clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    #[weak]
+                    media_grid_imp,
+                    async move {
                         let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
 
                         // We need to get 3 things done in this closure:
@@ -231,9 +244,12 @@ impl MemoriesMediaCell {
                         let (metadata, hash) = get_metadata_with_hash(in_file).await.unwrap();
 
                         // Store the `MetadataInfo` struct in our `MemoriesMediaCell` object.
-                        let _ = cell.imp().file_metadata.set(metadata);
+                        let _ = this.imp().file_metadata.set(metadata);
 
-                        if let Ok(path) = generate_thumbnail_image(in_path, &hash, media_grid_imp.obj().hardware_accel()).await {
+                        if let Ok(path) =
+                            generate_thumbnail_image(in_path, &hash, media_grid_imp.obj().hardware_accel())
+                                .await
+                        {
                             drop(semaphore_guard);
 
                             if let Err(err_string) = tx.send(path).await {
@@ -246,15 +262,19 @@ impl MemoriesMediaCell {
                         } else {
                             g_warning!("MediaCell", "FFmpeg failed to generate a thumbnail image.");
                         }
-                    }),
-                );
-
-                let rx_handle = glib::spawn_future_local(clone!(@weak self as cell => async move {
-                    while let Ok(path) = rx.recv().await {
-                        cell.imp().thumbnail_image.clear();
-                        cell.imp().thumbnail_image.set_file(Some(&path));
                     }
-                }));
+                ));
+
+                let rx_handle = glib::spawn_future_local(clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    async move {
+                        while let Ok(path) = rx.recv().await {
+                            this.imp().thumbnail_image.clear();
+                            this.imp().thumbnail_image.set_from_file(Some(&path));
+                        }
+                    }
+                ));
 
                 self.imp().tx_join_handle.set(Some(tx_handle));
                 self.imp().rx_join_handle.set(Some(rx_handle));
@@ -269,28 +289,32 @@ impl MemoriesMediaCell {
             ViewerContentType::Image | ViewerContentType::VectorGraphics => {
                 // FIXME: This adds quite a performance hit. Maybe do all
                 // glycin metadata processing on a new separate thread?
-                glib::spawn_future_local(clone!(@weak self as cell => async move {
-                    #[allow(unused_mut)]
-                    let mut glycin_loader: Loader = Loader::new(file.clone());
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    async move {
+                        #[allow(unused_mut)]
+                        let mut glycin_loader: Loader = Loader::new(file.clone());
 
-                    #[cfg(feature = "disable-glycin-sandbox")]
-                    glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
+                        #[cfg(feature = "disable-glycin-sandbox")]
+                        glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
 
-                    match glycin_loader.load().await {
-                        Ok(image) => {
-                            let pic_details = PictureDetails(image.info().clone());
-                            let details = ContentDetails::Picture(pic_details);
+                        match glycin_loader.load().await {
+                            Ok(image) => {
+                                let pic_details = PictureDetails(image.info().clone());
+                                let details = ContentDetails::Picture(pic_details);
 
-                            cell.imp().content_details.swap(&RefCell::new(details));
+                                this.imp().content_details.swap(&RefCell::new(details));
+                            }
+                            Err(glycin_err) => g_warning!(
+                                "MediaCell",
+                                "{}: Glycin error: {}",
+                                file.basename().unwrap().to_string_lossy(),
+                                glycin_err
+                            ),
                         }
-                        Err(glycin_err) => g_warning!(
-                            "MediaCell",
-                            "{}: Glycin error: {}",
-                            file.basename().unwrap().to_string_lossy(),
-                            glycin_err
-                        ),
                     }
-                }));
+                ));
             }
             ViewerContentType::Invalid => {
                 g_error!(

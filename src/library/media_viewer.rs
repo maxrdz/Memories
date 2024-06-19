@@ -148,23 +148,28 @@ impl MemoriesMediaViewer {
         let action_group = gio::SimpleActionGroup::new();
 
         let exit_viewer_action = gio::ActionEntry::builder("exit")
-            .activate(
-                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, _, _| {
-                    viewer.activate_action("navigation.pop", None).expect("Action not found.");
-                }),
-            )
+            .activate(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_: &gio::SimpleActionGroup, _, _| {
+                    this.activate_action("navigation.pop", None)
+                        .expect("Action not found.");
+                }
+            ))
             .build();
 
         let properties_action = gio::ActionEntry::builder("properties")
             .state(false.to_variant())
-            .activate(
-                clone!(@weak self as viewer => move |_: &gio::SimpleActionGroup, action: &gio::SimpleAction, _| {
-                    let new_state: bool = !viewer.imp().split_view.shows_sidebar();
+            .activate(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_: &gio::SimpleActionGroup, action: &gio::SimpleAction, _| {
+                    let new_state: bool = !this.imp().split_view.shows_sidebar();
 
-                    viewer.imp().split_view.set_show_sidebar(new_state);
+                    this.imp().split_view.set_show_sidebar(new_state);
                     action.set_state(&new_state.to_variant());
-                }),
-            )
+                }
+            ))
             .build();
 
         action_group.add_action_entries([exit_viewer_action, properties_action]);
@@ -187,18 +192,24 @@ impl MemoriesMediaViewer {
         match self.imp().viewer_stack.visible_child_name().unwrap().as_str() {
             "render" => self.imp().viewer_picture.set_file(Some(file)),
             "image" => {
-                glib::spawn_future_local(clone!(@weak self as viewer, @strong file => async move {
-                    #[allow(unused_mut)]
-                    let mut glycin_loader: glycin::Loader = glycin::Loader::new(file);
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    #[strong]
+                    file,
+                    async move {
+                        #[allow(unused_mut)]
+                        let mut glycin_loader: glycin::Loader = glycin::Loader::new(file);
 
-                    #[cfg(feature = "disable-glycin-sandbox")]
-                    glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
+                        #[cfg(feature = "disable-glycin-sandbox")]
+                        glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
 
-                    let image: glycin::Image = glycin_loader.load().await.expect("FIXME");
-                    let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture;
+                        let image: glycin::Image = glycin_loader.load().await.expect("FIXME");
+                        let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture();
 
-                    viewer.imp().viewer_picture.set_paintable(Some(&texture));
-                }));
+                        this.imp().viewer_picture.set_paintable(Some(&texture));
+                    }
+                ));
             }
             "video" => self.imp().viewer_video.set_file(Some(file)),
             _ => g_error!("Viewer", "Found unexpected visible child name in viewer stack."),

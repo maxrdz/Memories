@@ -139,11 +139,13 @@ mod imp {
             obj.set_default_height(gsettings.int("window-height"));
             obj.set_fullscreened(gsettings.boolean("fullscreened"));
 
-            obj.connect_maximized_notify(
-                clone!(@weak gsettings as gs => move |win: &super::MemoriesApplicationWindow| {
-                    gs.set_boolean("maximized", win.is_maximized()).unwrap();
-                }),
-            );
+            obj.connect_maximized_notify(clone!(
+                #[weak(rename_to = settings)]
+                gsettings,
+                move |win: &super::MemoriesApplicationWindow| {
+                    settings.set_boolean("maximized", win.is_maximized()).unwrap();
+                }
+            ));
 
             obj.connect_close_request(move |win: &super::MemoriesApplicationWindow| {
                 if !win.is_maximized() {
@@ -184,7 +186,7 @@ impl MemoriesApplicationWindow {
             .activate(move |win: &Self, _, _| {
                 let builder = gtk::Builder::from_resource("/com/maxrdz/Memories/ui/preferences.ui");
                 let dialog: adw::PreferencesDialog = builder.object("preferences_dialog").unwrap();
-                dialog.present(win);
+                dialog.present(Some(win));
             })
             .build();
 
@@ -202,7 +204,7 @@ impl MemoriesApplicationWindow {
                 gsettings.boolean("fullscreened").to_variant()
             })
             .activate(move |win: &Self, action: &gio::SimpleAction, _| {
-                let new_state: bool = !win.is_fullscreened();
+                let new_state: bool = !win.is_fullscreen();
 
                 win.set_fullscreened(new_state);
                 action.set_state(&new_state.to_variant());
@@ -213,7 +215,7 @@ impl MemoriesApplicationWindow {
 
         let leave_fullscreen_action = gio::ActionEntry::builder("leave-fullscreen")
             .activate(move |win: &Self, _, _| {
-                if win.is_fullscreened() {
+                if win.is_fullscreen() {
                     win.activate_action("win.fullscreen", None)
                         .expect("Action not found.");
                 }

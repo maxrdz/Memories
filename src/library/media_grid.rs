@@ -126,18 +126,21 @@ pub mod imp {
                 )
                 .build();
 
-            self.list_item_factory.connect_setup(
-                clone!(@weak obj => move |_: &gtk::SignalListItemFactory, widget: &glib::Object| {
-                        let list_item_widget: gtk::ListItem = widget.clone().downcast().unwrap();
+            self.list_item_factory.connect_setup(clone!(
+                #[weak]
+                obj,
+                move |_: &gtk::SignalListItemFactory, widget: &glib::Object| {
+                    let list_item_widget: gtk::ListItem = widget.clone().downcast().unwrap();
 
-                        let cell: MemoriesMediaCell = MemoriesMediaCell::default();
-                        cell.setup_cell(&obj, &list_item_widget);
-                    }
-                ),
-            );
+                    let cell: MemoriesMediaCell = MemoriesMediaCell::default();
+                    cell.setup_cell(&obj, &list_item_widget);
+                }
+            ));
 
-            self.list_item_factory.connect_bind(
-                clone!(@weak self as media_grid => move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
+            self.list_item_factory.connect_bind(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_: &gtk::SignalListItemFactory, obj: &glib::Object| {
                     let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
                     let cell: MemoriesMediaCell = list_item.child().and_downcast().unwrap();
 
@@ -152,7 +155,7 @@ pub mod imp {
                     let absolute_path: String = file_path_buf.to_string_lossy().to_string();
 
                     if let Some(ext) = model_list_item.name().extension() {
-                        cell.bind_cell(&media_grid, ViewerContentType::from_ext(ext), &list_item);
+                        cell.bind_cell(&this, ViewerContentType::from_ext(ext), &list_item);
                     } else {
                         g_warning!(
                             "MediaGridView",
@@ -160,8 +163,8 @@ pub mod imp {
                             absolute_path
                         );
                     }
-                }),
-            );
+                }
+            ));
 
             self.photo_grid_view.set_factory(Some(&self.list_item_factory));
         }

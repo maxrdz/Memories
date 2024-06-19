@@ -24,7 +24,7 @@ use crate::i18n::gettext_f;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
-use glib::{clone, g_critical, g_debug, g_error};
+use glib::{g_critical, g_debug, g_error};
 use gtk::{gio, glib};
 
 mod imp {
@@ -356,31 +356,28 @@ impl MemoriesApplication {
         alert_dialog.add_responses(&[("cancel", &gettext("Cancel")), ("clear", &gettext("Clear Cache"))]);
         alert_dialog.set_response_appearance("clear", adw::ResponseAppearance::Destructive);
 
-        alert_dialog.connect_response(
-            None,
-            clone!(@weak self as s => move |_: &adw::AlertDialog, response: &str| {
-                if response == "clear" {
-                    glib::spawn_future_local(async move {
-                        let app_cache_dir: String = MemoriesApplication::get_app_cache_directory();
+        alert_dialog.connect_response(None, move |_: &adw::AlertDialog, response: &str| {
+            if response == "clear" {
+                glib::spawn_future_local(async move {
+                    let app_cache_dir: String = MemoriesApplication::get_app_cache_directory();
 
-                        if let Err(io_error) = async_fs::remove_dir_all(&app_cache_dir).await {
-                            match io_error.kind() {
-                                std::io::ErrorKind::NotFound => (),
-                                std::io::ErrorKind::PermissionDenied => g_critical!(
-                                    "Application",
-                                    "Insufficient permissions to clear cache directory."
-                                ),
-                                _ => g_error!(
-                                    "Application",
-                                    "Received an unexpected error kind after trying to clear the cache."
-                                ),
-                            }
+                    if let Err(io_error) = async_fs::remove_dir_all(&app_cache_dir).await {
+                        match io_error.kind() {
+                            std::io::ErrorKind::NotFound => (),
+                            std::io::ErrorKind::PermissionDenied => g_critical!(
+                                "Application",
+                                "Insufficient permissions to clear cache directory."
+                            ),
+                            _ => g_error!(
+                                "Application",
+                                "Received an unexpected error kind after trying to clear the cache."
+                            ),
                         }
-                    });
-                }
-            }),
-        );
-        alert_dialog.present(&window);
+                    }
+                });
+            }
+        });
+        alert_dialog.present(Some(&window));
     }
 
     fn show_about(&self) {
@@ -533,7 +530,7 @@ impl MemoriesApplication {
             gtk::License::Gpl30,
             None,
         );
-        about.present(&window)
+        about.present(Some(&window))
     }
 
     /// Returns a `String` that represents the absolute path of
