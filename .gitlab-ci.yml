@@ -151,8 +151,6 @@ cargo-doc:
 flatpak@x86_64:
   extends: ['.flatpak@x86_64', '.devel-variables']
   stage: build
-  tags:
-    - flatpak
   interruptible: true
   variables:
     RUN_TESTS: "0"
@@ -161,8 +159,6 @@ flatpak@x86_64:
 flatpak@aarch64:
   extends: ['.flatpak@aarch64', '.devel-variables']
   stage: build
-  tags:
-    - flatpak
   interruptible: true
   variables:
     RUN_TESTS: "0"
