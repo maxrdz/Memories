@@ -1,5 +1,5 @@
 project('memories', 'rust',
-          version: '46.3',
+          version: '47.beta',
     meson_version: '>= 0.62.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
@@ -51,6 +51,7 @@ if get_option('profile') == 'devel'
   application_id = '@0@.Devel'.format(base_id)
   gresource_domain = '/' + application_id.replace('.', '/')
   binary = '@0@-devel'.format(binary)
+  version += '-@0@'.format(vcs_tag)
 else
   profile = ''
   application_id = base_id

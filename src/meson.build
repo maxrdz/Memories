@@ -8,13 +8,13 @@ conf = configuration_data()
 conf.set_quoted('APP_ID', application_id)
 conf.set_quoted('APP_NAME', project_name)
 conf.set_quoted('APP_REPO', project_git)
-conf.set_quoted('VERSION', meson.project_version())
+conf.set_quoted('VERSION', version)
+conf.set_quoted('VCS_TAG', vcs_tag)
 conf.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 conf.set_quoted('GETTEXT_DOMAIN', gettext_domain)
 conf.set('BASE_GRESOURCE_DOMAIN', base_gresource_domain)
 conf.set('GRESOURCE_DOMAIN', gresource_domain)
-conf.set_quoted('VCS_TAG', vcs_tag)
 
 configure_file(
   input: 'config.rs.in',

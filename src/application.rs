@@ -390,13 +390,7 @@ impl MemoriesApplication {
             .application_icon(APP_ID)
             .application_name(gettext("Memories"))
             .developer_name(APP_INFO.app_author)
-            .version({
-                if DEVELOPMENT_BUILD {
-                    VCS_TAG
-                } else {
-                    APP_INFO.app_version
-                }
-            })
+            .version(APP_INFO.app_version)
             .issue_url(format!("{}/issues", APP_INFO.app_repo).as_str())
             .developers(APP_INFO.authors)
             .artists(APP_INFO.artists.to_vec())
@@ -422,7 +416,7 @@ impl MemoriesApplication {
         about.set_release_notes(
             "<p>\
           Initial release of Memories. Following the GNOME release schedule \
-          as of GNOME version 46.3.\
+          as of GNOME version 47.beta.\
         </p>",
         );
 

@@ -136,7 +136,6 @@ releasing. To verify, go to your
 #### Release Commit Checklist
 
 - Update project version in root `meson.build` file.
-- Update crate version in `Cargo.toml` manifest file.
 - Update the `CHANGELOG` text document.
 - Add a `<release>` entry in the Appstream app metadata file. You
 should read through the Git commit log for this release and come up

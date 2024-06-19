@@ -1,6 +1,6 @@
 [package]
 name = "memories"
-version = "46.3.0"
+version = "1.0.0" # Versioning is done with Meson
 edition = "2021"
 rust-version = "1.78"
 license = "GPL-3.0-or-later"
