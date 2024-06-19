@@ -1,9 +1,4 @@
-gridview {
-  background-color: @theme_base_color;
-}
-
 gridview child {
-  border-radius: 5px;
   margin: 0px;
   padding: 3px;
 }
@@ -14,7 +9,7 @@ gridview revealer {
 
 /* Applies to Image and Video pictures */
 picture {
-  background-color: @theme_base_color;
+  background-color: var(--window-bg-color);
 }
 
 /* General overlay controls */
@@ -25,11 +20,7 @@ button.osd.circular, menubutton.osd.circular {
 
 /* Media Properties Preference Rows */
 overlay-split-view widget {
-  background-color: @window-fg-color;
-}
-
-overlay-split-view widget row.property {
-  background-color: @window-fg-color;
+  background-color: var(--window-bg-color);
 }
 
 mediacell overlay label {
@@ -40,7 +31,7 @@ mediacell overlay label {
 }
 
 .menu-button {
-  background-color: @window-fg-color;
+  background-color: var(--window-bg-color);
   min-height: 26px;
   min-width: 26px;
   margin: 0;
@@ -48,7 +39,7 @@ mediacell overlay label {
 }
 
 .menu-button:hover {
-  background-color: @borders;
+  background-color: var(--borders);
 }
 
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */
@@ -58,8 +49,8 @@ mediacell overlay label {
 }
 
 .themeselector .check {
-  background: @accent_bg_color;
-  color: @accent_fg_color;
+  background: var(--accent-bg-color);
+  color: var(--accent-fg-color);
   padding: 2px;
   border-radius: 17px;
   margin: 3px;
@@ -80,11 +71,11 @@ mediacell overlay label {
   border: none;
   outline-color: currentColor;
   transition: none;
-  box-shadow: inset 0 0 0 1px @borders;
+  box-shadow: inset 0 0 0 1px var(--border-color);
 }
 
 .themeselector checkbutton check:checked {
-  box-shadow: inset 0 0 0 2px @accent_bg_color;
+  box-shadow: inset 0 0 0 2px var(--accent-bg-color);
 }
 
 .themeselector checkbutton.system check {
@@ -93,7 +84,7 @@ mediacell overlay label {
 }
 
 .themeselector checkbutton.light check {
-  color: alpha(black, .8);
+  color: rgba(0 0 0 / 80%);
   background-color: white;
   border-radius: 9999px;
 }
