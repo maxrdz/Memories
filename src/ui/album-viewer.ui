@@ -38,7 +38,7 @@
         <attribute name="action">album.slideshow</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Print...</attribute>
+        <attribute name="label" translatable="yes">_Print…</attribute>
         <attribute name="action">album.print</attribute>
       </item>
       <item>

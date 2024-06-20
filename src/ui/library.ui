@@ -30,7 +30,7 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="margin-top">20</property>
-                        <property name="label" translatable="yes">Loading Your Library...</property>
+                        <property name="label" translatable="yes">Loading Your Library…</property>
                         <property name="selectable">False</property>
                         <!-- NOTE: CSS from GTK stylesheets -->
                         <style>
@@ -88,7 +88,7 @@
               <object class="AdwStatusPage">
                 <property name="icon-name">image-missing-symbolic</property>
                 <property name="title" translatable="yes">No Favorites</property>
-                <property name="description" translatable="yes">Your favorited media will appear here</property>
+                <property name="description" translatable="yes">Your favorite media will appear here</property>
               </object>
             </property>
           </object>

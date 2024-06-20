@@ -126,7 +126,7 @@
         <attribute name="action">win.preferences</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">Keyboard _Shortcuts</attribute>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">win.show-help-overlay</attribute>
       </item>
       <item>

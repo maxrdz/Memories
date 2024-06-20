@@ -150,7 +150,7 @@
         <attribute name="action">viewer.favorite</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Add to Album...</attribute>
+        <attribute name="label" translatable="yes">_Add to Album…</attribute>
         <attribute name="action">viewer.add</attribute>
       </item>
       <item>
@@ -170,7 +170,7 @@
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_View Fullscreen</attribute>
+        <attribute name="label" translatable="yes">View _Fullscreen</attribute>
         <attribute name="action">win.fullscreen</attribute>
       </item>
       <item>
