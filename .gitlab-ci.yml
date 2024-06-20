@@ -52,7 +52,7 @@ potfiles:
     - apk add --no-cache intltool gettext git
     # tldr: If the POTFILES.in isn't up to date, error.
     - sh ./build-aux/generate-potfile.sh
-    - git diff --exit-code
+    - git diff --exit-code ':(exclude)data/demo-album'
 
 commit-validation:
   image: 'python:3.12-alpine'

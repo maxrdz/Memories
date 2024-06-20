@@ -94,7 +94,7 @@ Last updated: May 9, 2024
         Your Communications are subject to the following guidelines:
             Forum Rules and Communication Guidelines: https://pixabay.com/blog/posts/forum-rules-and-communication-guidelines-on-pixaba-159/
 
-    We reserve the right to remove any Content or Communications from the Service at any time and for any reason, at our discretion. This applies in particular to defective files, inferior quality Content, Content or Commuications which are in violation of these Terms and for any reason relating to potential legal issues. For more information about how we moderate Content and Communications, please see here.
+    We reserve the right to remove any Content or Communications from the Service at any time and for any reason, at our discretion. This applies in particular to defective files, inferior quality Content, Content or Communications which are in violation of these Terms and for any reason relating to potential legal issues. For more information about how we moderate Content and Communications, please see here.
     7B.Uploading Content created with generative AI technology.
 
     You may upload Content you have created with generative AI technology (i.e. machine learning tools that generate content from text prompts or other inputs) to the Service. If you do, the following specific conditions apply, in addition to section 7A.
