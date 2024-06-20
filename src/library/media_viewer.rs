@@ -30,9 +30,10 @@ use std::ffi::OsStr;
 
 mod imp {
     use crate::application::MemoriesApplication;
-    use crate::library::properties::MemoriesDetails;
-    use adw::prelude::*;
+    use crate::library::properties::MemoriesProperties;
+    use adw::prelude::{ObjectExt, SettingsExtManual, WidgetExt};
     use adw::subclass::prelude::*;
+    use glib::clone;
     use gtk::{gio, glib};
 
     #[derive(Default, gtk::CompositeTemplate)]
@@ -42,10 +43,16 @@ mod imp {
         header_bar: TemplateChild<adw::HeaderBar>,
         #[template_child]
         more_button: TemplateChild<gtk::MenuButton>,
+        // TODO: Update to `adw::MultiLayoutView` once bindings for 1.6 are merged.
+        #[template_child]
+        multi_layout: TemplateChild<glib::Object>,
         #[template_child]
         pub(super) split_view: TemplateChild<adw::OverlaySplitView>,
+        // TODO: Update to `adw::BottomSheet` once bindings for 1.6 are merged.
         #[template_child]
-        pub details_widget: TemplateChild<MemoriesDetails>,
+        pub(super) bottom_sheet: TemplateChild<glib::Object>,
+        #[template_child]
+        pub properties_widget: TemplateChild<MemoriesProperties>,
         #[template_child]
         nav_overlay_controls: TemplateChild<gtk::Box>,
         #[template_child]
@@ -82,12 +89,29 @@ mod imp {
 
     impl ObjectImpl for MemoriesMediaViewer {
         fn constructed(&self) {
+            let obj = self.obj();
             self.parent_constructed();
+
             let gsettings: gio::Settings = MemoriesApplication::default().gsettings();
 
             gsettings
                 .bind("autoplay-videos", &self.viewer_video.clone(), "autoplay")
                 .build();
+
+            self.bottom_sheet.connect_notify_local(
+                Some("open"),
+                clone!(
+                    #[weak]
+                    obj,
+                    move |bottom_sheet: &glib::Object, _: &glib::ParamSpec| {
+                        if !bottom_sheet.property::<bool>("open") {
+                            obj.window()
+                                .activate_action("viewer.properties", None)
+                                .expect("Action not found!");
+                        }
+                    }
+                ),
+            );
         }
     }
 
@@ -167,6 +191,10 @@ impl MemoriesMediaViewer {
                     let new_state: bool = !this.imp().split_view.shows_sidebar();
 
                     this.imp().split_view.set_show_sidebar(new_state);
+
+                    if !this.imp().bottom_sheet.property::<bool>("open") {
+                        this.imp().bottom_sheet.set_property("open", new_state);
+                    }
                     action.set_state(&new_state.to_variant());
                 }
             ))

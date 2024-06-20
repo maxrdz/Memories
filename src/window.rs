@@ -19,7 +19,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::application::MemoriesApplication;
-use adw::prelude::*;
+// We manually include only the traits we need to use
+// to avoid ambiguity errors when multiple traits share
+// the same methods, such as WidgetExt & ActionGroupExt.
+use adw::prelude::{
+    ActionMapExtManual, AdwDialogExt, ApplicationWindowExt, CastNone, GtkWindowExt, SettingsExt, ToVariant,
+    ToggleButtonExt, WidgetExt,
+};
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::g_error;
@@ -166,7 +172,7 @@ mod imp {
 glib::wrapper! {
     pub struct MemoriesApplicationWindow(ObjectSubclass<imp::MemoriesApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
-        @implements gio::ActionMap, gtk::Root;
+        @implements gio::ActionGroup, gio::ActionMap, gtk::Root;
 }
 
 #[gtk::template_callbacks]

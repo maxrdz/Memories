@@ -25,7 +25,7 @@
         "--socket=pulseaudio",
         "--share=ipc",
         "--env=RUST_BACKTRACE=1",
-        "--env=RUST_LOG=memories=debug,glycin=warn",
+        "--env=RUST_LOG=debug",
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfs",
         "--filesystem=xdg-run/gvfsd",
@@ -41,7 +41,7 @@
         ],
         "env" : {
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "memories=debug"
+            "RUST_LOG" : "debug"
         }
     },
     "cleanup" : [

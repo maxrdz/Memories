@@ -7,6 +7,7 @@
       <object class="AdwBreakpoint">
         <condition>min-width: 720px</condition>
         <setter object="header_bar" property="show-end-title-buttons">True</setter>
+        <setter object="multi_layout" property="layout-name">sidebar</setter>
       </object>
     </child>
     <property name="child">
@@ -24,13 +25,8 @@
           </object>
         </child>
         <property name="content">
-          <object class="AdwOverlaySplitView" id="split_view">
-            <property name="show-sidebar">false</property>
-            <property name="sidebar-position">end</property>
-            <property name="sidebar">
-              <object class="MemoriesDetails" id="details_widget"/>
-            </property>
-            <property name="content">
+          <object class="AdwMultiLayoutView" id="multi_layout">
+            <child type="primary">
               <object class="GtkOverlay">
                 <child type="overlay">
                   <object class="GtkBox" id="nav_overlay_controls">
@@ -137,7 +133,51 @@
                   </object>
                 </property>
               </object>
-            </property>
+            </child>
+            <child type="secondary">
+              <object class="MemoriesProperties" id="properties_widget"/>
+            </child>
+            <child>
+              <object class="AdwLayout">
+                <property name="name">sidebar</property>
+                <property name="content">
+                  <object class="AdwOverlaySplitView" id="split_view">
+                    <property name="show-sidebar">false</property>
+                    <property name="sidebar-position">end</property>
+                    <property name="sidebar">
+                      <object class="AdwLayoutSlot">
+                        <property name="id">secondary</property>
+                      </object>
+                    </property>
+                    <property name="content">
+                      <object class="AdwLayoutSlot">
+                        <property name="id">primary</property>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwLayout">
+                <property name="name">bottom-sheet</property>
+                <property name="content">
+                  <object class="AdwBottomSheet" id="bottom_sheet">
+                    <property name="content">
+                      <object class="AdwLayoutSlot">
+                        <property name="id">primary</property>
+                      </object>
+                    </property>
+                    <property name="sheet">
+                      <object class="AdwLayoutSlot">
+                        <property name="id">secondary</property>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <property name="layout-name">bottom-sheet</property>
           </object>
         </property>
       </object>

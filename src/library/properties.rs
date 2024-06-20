@@ -34,7 +34,7 @@ mod imp {
 
     #[derive(Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/maxrdz/Memories/ui/media-properties.ui")]
-    pub struct MemoriesDetails {
+    pub struct MemoriesProperties {
         #[template_child]
         pub(super) folder: TemplateChild<adw::ActionRow>,
         #[template_child]
@@ -62,9 +62,9 @@ mod imp {
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for MemoriesDetails {
-        const NAME: &'static str = "MemoriesDetails";
-        type Type = super::MemoriesDetails;
+    impl ObjectSubclass for MemoriesProperties {
+        const NAME: &'static str = "MemoriesProperties";
+        type Type = super::MemoriesProperties;
         type ParentType = adw::Bin;
 
         fn class_init(klass: &mut Self::Class) {
@@ -76,9 +76,9 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for MemoriesDetails {}
-    impl WidgetImpl for MemoriesDetails {}
-    impl BinImpl for MemoriesDetails {}
+    impl ObjectImpl for MemoriesProperties {}
+    impl WidgetImpl for MemoriesProperties {}
+    impl BinImpl for MemoriesProperties {}
 }
 
 #[derive(Debug, Clone)]
@@ -107,11 +107,11 @@ pub enum ContentDetails {
 }
 
 glib::wrapper! {
-    pub struct MemoriesDetails(ObjectSubclass<imp::MemoriesDetails>)
+    pub struct MemoriesProperties(ObjectSubclass<imp::MemoriesProperties>)
         @extends gtk::Widget, adw::Bin;
 }
 
-impl MemoriesDetails {
+impl MemoriesProperties {
     pub fn new() -> Self {
         glib::Object::new()
     }
@@ -190,7 +190,7 @@ impl MemoriesDetails {
     }
 }
 
-impl Default for MemoriesDetails {
+impl Default for MemoriesProperties {
     fn default() -> Self {
         Self::new()
     }

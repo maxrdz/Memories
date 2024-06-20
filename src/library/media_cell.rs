@@ -178,7 +178,7 @@ impl MemoriesMediaCell {
                     viewer_content.set_content_type(media_cell.imp().viewer_content_type.get().unwrap());
                     viewer_content.set_content_file(&file);
 
-                    viewer_content.imp().details_widget.update_details(&media_cell);
+                    viewer_content.imp().properties_widget.update_details(&media_cell);
 
                     let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
                     nav_page.set_title(&file.basename().unwrap().to_string_lossy());
