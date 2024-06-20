@@ -42,7 +42,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="icon-name">go-previous-symbolic</property>
-                        <property name="tooltip-text">Previous</property>
+                        <property name="tooltip-text" translatable="yes">Previous</property>
                         <property name="halign">start</property>
                         <style>
                           <class name="osd"/>
@@ -53,7 +53,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="icon-name">go-next-symbolic</property>
-                        <property name="tooltip-text">Next</property>
+                        <property name="tooltip-text" translatable="yes">Next</property>
                         <property name="halign">start</property>
                         <style>
                           <class name="osd"/>
@@ -77,7 +77,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="icon-name">loupe-zoom-symbolic</property>
-                        <property name="tooltip-text">Zoom Controls</property>
+                        <property name="tooltip-text" translatable="yes">Zoom Controls</property>
                         <property name="halign">end</property>
                         <property name="hexpand">True</property>
                         <style>
@@ -89,7 +89,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="icon-name">pan-down-symbolic</property>
-                        <property name="tooltip-text">Zoom Menu</property>
+                        <property name="tooltip-text" translatable="yes">Zoom Menu</property>
                         <property name="halign">end</property>
                         <style>
                           <class name="osd"/>

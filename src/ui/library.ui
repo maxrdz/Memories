@@ -51,8 +51,8 @@
             <property name="child">
               <object class="AdwStatusPage" id="error_status_widget">
                 <property name="icon-name">emblem-important-symbolic</property>
-                <property name="title" translatable="yes" context="Status Page Title">An Error Occurred</property>
-                <property name="description" translatable="yes" context="Status Page Description">This is a placeholder error description. If you see this, please file an issue. You can visit the issue tracker via the about dialog.</property>
+                <property name="title" translatable="yes">An Error Occurred</property>
+                <property name="description" translatable="yes">This is a placeholder error description. If you see this, please file an issue. You can visit the issue tracker via the about dialog.</property>
               </object>
             </property>
           </object>

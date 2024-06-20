@@ -18,10 +18,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::config::{APP_NAME, APP_REPO, VERSION};
 use cfg_if::cfg_if;
 use gtk::glib::source::Priority;
-use gtk::License;
 
 #[cfg(debug_assertions)]
 pub static DEVELOPMENT_BUILD: bool = true;
@@ -101,29 +99,3 @@ impl PreferredAdwaitaTheme {
         }
     }
 }
-
-pub struct AboutInformation {
-    pub app_name: &'static str,
-    pub app_version: &'static str,
-    pub app_repo: &'static str,
-    pub app_author: &'static str,
-    pub authors: &'static [&'static str],
-    pub artists: &'static [&'static str],
-    pub documenters: &'static [&'static str],
-    pub copyright: &'static str,
-    pub license: &'static str,
-    pub license_type: License,
-}
-
-pub static APP_INFO: AboutInformation = AboutInformation {
-    app_name: APP_NAME,
-    app_version: VERSION,
-    app_repo: APP_REPO,
-    app_author: "Max Rodriguez",
-    authors: &["Max Rodriguez <me@maxrdz.com>"],
-    artists: &["Max Rodriguez <me@maxrdz.com>"],
-    documenters: &[""],
-    copyright: "© 2024 Max Rodriguez",
-    license: "GNU General Public License v3.0",
-    license_type: License::Gpl30,
-};

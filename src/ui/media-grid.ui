@@ -28,7 +28,7 @@
                 <property name="margin-end">15</property>
                 <child>
                   <object class="GtkMenuButton" id="photo_grid_controls">
-                    <property name="tooltip-text">Grid Controls</property>
+                    <property name="tooltip-text" translatable="yes">Grid Controls</property>
                     <property name="icon-name">view-grid-symbolic</property>
                     <property name="popover">
                       <object class="GtkPopoverMenu">

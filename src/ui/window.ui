@@ -72,7 +72,7 @@
                     <child>
                       <object class="AdwViewStackPage" id="library_page">
                         <property name="name">library</property>
-                        <property name="title" translatable="yes" comments="'Library' referring to a library of photos">Photos</property>
+                        <property name="title" translatable="yes">Photos</property>
                         <property name="icon-name">view-grid-symbolic</property>
                         <property name="child">
                           <object class="MemoriesLibraryView" id="library_view"/>
@@ -82,7 +82,7 @@
                     <child>
                       <object class="AdwViewStackPage" id="albums_page">
                         <property name="name">albums</property>
-                        <property name="title" translatable="yes" >Albums</property>
+                        <property name="title" translatable="yes">Albums</property>
                         <property name="icon-name">folder-open-symbolic</property>
                         <property name="child">
                           <object class="MemoriesAlbumsView" id="albums_view"/>
@@ -92,7 +92,7 @@
                     <child>
                       <object class="AdwViewStackPage" id="favorites_page">
                         <property name="name">favorites</property>
-                        <property name="title" translatable="yes" >Favorites</property>
+                        <property name="title" translatable="yes">Favorites</property>
                         <property name="icon-name">starred-symbolic</property>
                         <property name="child">
                           <object class="MemoriesFavoritesView" id="favorites_view"/>

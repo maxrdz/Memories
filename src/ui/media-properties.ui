@@ -88,10 +88,10 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Camera Information</property>
+                <property name="title" translatable="yes">Photo Information</property>
                 <child>
                   <object class="AdwActionRow" id="timestamp">
-                    <property name="title" translatable="yes" comments="'Time taken' referring to the time the picture was taken.">Time Taken</property>
+                    <property name="title" translatable="yes">Originally Created</property>
                     <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>
@@ -136,7 +136,7 @@
                 </child>
                 <child>
                   <object class="AdwActionRow" id="make_model">
-                    <property name="title" translatable="yes" context="Camera/Phone">Maker and Model</property>
+                    <property name="title" translatable="yes" context="Photo Properties">Maker and Model</property>
                     <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>

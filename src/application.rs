@@ -18,14 +18,14 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::config::{APP_ID, APP_NAME, VCS_TAG};
+use crate::config::{APP_ID, APP_NAME, APP_REPO, VCS_TAG, VERSION};
 use crate::globals::*;
 use crate::i18n::gettext_f;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::{g_critical, g_debug, g_error};
-use gtk::{gio, glib};
+use gtk::{gio, glib, License};
 
 mod imp {
     use crate::config::{APP_ID, GRESOURCE_DOMAIN};
@@ -386,15 +386,18 @@ impl MemoriesApplication {
         let about: adw::AboutDialog = adw::AboutDialog::builder()
             .application_icon(APP_ID)
             .application_name(gettext("Memories"))
-            .developer_name(APP_INFO.app_author)
-            .version(APP_INFO.app_version)
-            .issue_url(format!("{}/issues", APP_INFO.app_repo).as_str())
-            .developers(APP_INFO.authors)
-            .artists(APP_INFO.artists.to_vec())
-            //.documenters(APP_INFO.documenters.to_vec())
-            .copyright(APP_INFO.copyright)
-            .license(APP_INFO.license)
-            .license_type(APP_INFO.license_type)
+            .developer_name(gettext("Max Rodriguez"))
+            .version(VERSION)
+            .issue_url(format!("{}/issues", APP_REPO).as_str())
+            .translator_credits(gettext(
+                // TRANSLATORS: Replace "translator-credits" with your names, one name per line.
+                "translator-credits",
+            ))
+            .developers(vec!["Max Rodriguez <me@maxrdz.com>"])
+            .artists(vec!["Max Rodriguez <me@maxrdz.com>"])
+            .copyright(gettext("Copyright © 2024 Max Rodriguez"))
+            .license("GNU General Public License v3.0")
+            .license_type(License::Gpl30)
             .comments(format!(
                 "{}\n\n{} (Git SHA1): {}",
                 &gettext(

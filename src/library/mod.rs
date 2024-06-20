@@ -25,7 +25,8 @@ pub mod media_viewer;
 pub mod properties;
 
 use crate::application::MemoriesApplication;
-use crate::globals::{APP_INFO, FFMPEG_BINARY};
+use crate::config::APP_NAME;
+use crate::globals::FFMPEG_BINARY;
 use crate::i18n::gettext_f;
 use crate::window::MemoriesApplicationWindow;
 use adw::prelude::*;
@@ -128,14 +129,14 @@ impl MemoriesLibraryView {
                 io::ErrorKind::NotFound => {
                     self.imp().error_status_widget.set_description(Some(&gettext_f(
                         "{BIN} was not found on your system. {APP} requires {BIN} to run.",
-                        &[("BIN", FFMPEG_BINARY), ("APP", APP_INFO.app_name)],
+                        &[("BIN", FFMPEG_BINARY), ("APP", APP_NAME)],
                     )));
                     return;
                 }
                 io::ErrorKind::PermissionDenied => {
                     self.imp().error_status_widget.set_description(Some(&gettext_f(
                         "{APP} does not have the sufficient permissions to run {BIN}.",
-                        &[("BIN", FFMPEG_BINARY), ("APP", APP_INFO.app_name)],
+                        &[("BIN", FFMPEG_BINARY), ("APP", APP_NAME)],
                     )));
                     return;
                 }
