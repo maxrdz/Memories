@@ -8,6 +8,7 @@
         <condition>min-width: 720px</condition>
         <setter object="header_bar" property="show-end-title-buttons">True</setter>
         <setter object="multi_layout" property="layout-name">sidebar</setter>
+        <setter object="properties_widget" property="margin-top">0</setter>
       </object>
     </child>
     <property name="child">
@@ -135,7 +136,9 @@
               </object>
             </child>
             <child type="secondary">
-              <object class="MemoriesProperties" id="properties_widget"/>
+              <object class="MemoriesProperties" id="properties_widget">
+                <property name="margin-top">35</property>
+              </object>
             </child>
             <child>
               <object class="AdwLayout">
