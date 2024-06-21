@@ -18,6 +18,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+use crate::util::enums::XDGUserDir;
 use cfg_if::cfg_if;
 use gtk::glib::source::Priority;
 
@@ -59,12 +60,13 @@ pub static DIRECTORY_MODEL_PRIORITY: Priority = Priority::LOW;
 /// The following statics are related to the application cache.
 pub static CACHE_THUMBNAILS_SUBDIR: &str = "thumbnails";
 
-/// Following paths relative to $HOME env var path.
-/// This static is here for easily modifying the path for taking
-/// application screenshots, but this static should ALWAYS be set to
-/// the XDG_PICTURES_DIR and XDG_VIDEOS_DIR, relative to $HOME.
-pub static DEFAULT_LIBRARY_COLLECTION: &[&str] = &["Pictures", "Videos"];
-pub static DEFAULT_TRASH_DIRECTORY: &str = ".local/share/Trash";
+/// The following statics are related to XDG user directories.
+/// These strings are paths relative to $HOME.
+pub static FALLBACK_XDG_PICTURES_DIR: &str = "Pictures";
+pub static FALLBACK_XDG_VIDEOS_DIR: &str = "Videos";
+
+/// Default library list model root directories. Must be XDG user directories.
+pub static DEFAULT_LIBRARY_COLLECTION: &[XDGUserDir] = &[XDGUserDir::Pictures, XDGUserDir::Videos];
 
 /// Following paths relative to DEFAULT_LIBRARY_DIRECTORY.
 pub static DEFAULT_SCREENSHOTS_REL_DIR: &str = "Screenshots";
@@ -79,23 +81,3 @@ pub static DEFAULT_GRID_WIDGET_HEIGHT: i32 = 66;
 /// is the value to set on the `grid-widget-height` property of the media grid view.
 pub static GRID_MOBILE_ZOOM_LEVELS: &[(u32, i32)] = &[(5, 66), (3, 114), (2, 173)];
 pub static GRID_DESKTOP_ZOOM_LEVELS: &[(u32, i32)] = &[(10, 112), (5, 234)];
-
-/// Representation of the preferred theme options offered
-/// in the application main popover menu widget.
-pub enum PreferredAdwaitaTheme {
-    System = 0,
-    Light = 1,
-    Dark = 2,
-}
-
-// Implement enum variants to translate to an i32.
-// Must be in range of the 'adwaita-theme' GSchema key.
-impl PreferredAdwaitaTheme {
-    pub fn value(&self) -> i32 {
-        match *self {
-            PreferredAdwaitaTheme::System => 0,
-            PreferredAdwaitaTheme::Light => 1,
-            PreferredAdwaitaTheme::Dark => 2,
-        }
-    }
-}

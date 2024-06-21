@@ -26,6 +26,7 @@ src/ui/media-viewer.ui
 src/ui/preferences.ui
 src/ui/theme-selector.ui
 src/ui/window.ui
+src/util/enums.rs
 src/util/metadata.rs
 src/util/mod.rs
 src/util/thumbnails.rs

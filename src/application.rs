@@ -19,8 +19,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::config::{APP_ID, APP_NAME, APP_REPO, VCS_TAG, VERSION};
-use crate::globals::*;
 use crate::i18n::gettext_f;
+use crate::util::enums::PreferredAdwaitaTheme;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
@@ -29,8 +29,9 @@ use gtk::{gio, glib, License};
 
 mod imp {
     use crate::config::{APP_ID, GRESOURCE_DOMAIN};
-    use crate::globals::{PreferredAdwaitaTheme, CACHE_THUMBNAILS_SUBDIR};
+    use crate::globals::CACHE_THUMBNAILS_SUBDIR;
     use crate::library::list_model::MemoriesLibraryListModel;
+    use crate::util::enums::PreferredAdwaitaTheme;
     use crate::window::MemoriesApplicationWindow;
     use adw::prelude::*;
     use adw::subclass::prelude::*;

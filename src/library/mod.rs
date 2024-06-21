@@ -204,14 +204,14 @@ impl MemoriesLibraryView {
 
             self.imp().spinner.stop();
         }
-
+        /* FIXME
         library_model.connect_error_notify(move |dl: &gtk::DirectoryList| {
             g_error!(
                 "LibraryView",
                 "MemoriesLibraryListModel returned an error!\n\n{}",
                 dl.error().unwrap()
             );
-        });
+        });*/
 
         self.imp().media_grid.imp().photo_grid_view.set_model(Some(&msm));
 

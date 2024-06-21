@@ -18,13 +18,9 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use crate::globals::DEFAULT_LIBRARY_COLLECTION;
-use crate::i18n::gettext_f;
 use crate::window::MemoriesApplicationWindow;
 use adw::subclass::prelude::*;
-use glib::{g_critical, g_debug};
 use gtk::{gio, glib};
-use std::env;
 
 mod imp {
     use crate::globals::{DEFAULT_LIBRARY_COLLECTION, DIRECTORY_MODEL_PRIORITY};
@@ -74,11 +70,12 @@ mod imp {
         fn default() -> Self {
             Self {
                 subdirectories: RefCell::new({
-                    let user_home: String = std::env::var("HOME").unwrap();
                     let mut strv: glib::StrV = glib::StrV::new();
 
-                    for library_root_dir in DEFAULT_LIBRARY_COLLECTION {
-                        strv.push(format!("{}/{}", user_home, library_root_dir).into());
+                    for xdg_user_dir in DEFAULT_LIBRARY_COLLECTION {
+                        let env_var: &str = xdg_user_dir.value().0;
+                        let path: String = std::env::var(env_var).unwrap();
+                        strv.push(path.into());
                     }
                     strv
                 }),
@@ -163,12 +160,6 @@ mod imp {
                     }
                 }
             ));
-            // We have to manually invoke `notify::subdirectories` since
-            // we are no longer binding the property to a gschema key,
-            // which it was designed to in early development. (Now we only
-            // read XDG_PICTURES_DIR and XDG_VIDEOS_DIR) When this
-            // binding was done, it would update this property on sync.
-            obj.notify_subdirectories();
         }
     }
 
@@ -448,40 +439,12 @@ impl MemoriesLibraryListModel {
     }
 
     pub fn start_enumerating_items(&self) -> Result<(), String> {
-        // We need to get the user's home directory first, via env var.
-        let home_path: String = {
-            if let Ok(home_path) = env::var("HOME") {
-                home_path
-            } else {
-                g_critical!(
-                    "LibraryListModel",
-                    "No $HOME env var found! Cannot open library collection."
-                );
-                return Err(gettext_f(
-                    // TRANSLATORS: You can remove odd spacing. This is due to code linting.
-                    "The {ENV_VAR} environment variable was found, \
-                    so Memories cannot open your photo library.",
-                    &[("ENV_VAR", "$HOME")],
-                ));
-            }
-        };
-
-        if self.subdirectories().is_empty() {
-            // Probably the first launch, set the default library folders.
-            let mut default_subdirs: glib::StrV = glib::StrV::default();
-
-            for folder in DEFAULT_LIBRARY_COLLECTION {
-                default_subdirs.push(format!("{}/{}", home_path, folder).into());
-            }
-            // This property will synchronize with the corresponding gschema key.
-            self.set_subdirectories(default_subdirs.clone());
-
-            g_debug!(
-                "LibraryListModel",
-                "Enumerating library files from: {:?}",
-                default_subdirs
-            );
-        }
+        // We have to manually invoke `notify::subdirectories` since
+        // we are no longer binding the property to a gschema key,
+        // which it was designed to in early development. (Now we only
+        // read XDG_PICTURES_DIR and XDG_VIDEOS_DIR) When this
+        // binding was done, it would update this property on sync.
+        self.notify_subdirectories();
         Ok(())
     }
 }

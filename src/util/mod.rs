@@ -20,5 +20,6 @@
 
 //! Utility functions used at seldom in Memories source.
 
+pub mod enums;
 pub mod metadata;
 pub mod thumbnails;
