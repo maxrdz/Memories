@@ -211,6 +211,10 @@ impl MemoriesMediaCell {
         // does not live long enough to be borrowed in the futures spawned below.
         let absolute_path: String = file_path_buf.to_string_lossy().to_string();
 
+        self.imp()
+            .revealer
+            .set_tooltip_text(Some(&file.basename().unwrap().to_string_lossy()));
+
         // Store content type variant and `GFileInfo` object reference in our object.
         let _ = self.imp().viewer_content_type.set(content_type.clone());
         let _ = self.imp().file_info.set(model_list_item.clone());
