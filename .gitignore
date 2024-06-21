@@ -21,3 +21,4 @@ flatpak_repo/
 *.pdb
 .vscode/
 *.git
+*.syscap
