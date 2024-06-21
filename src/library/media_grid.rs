@@ -22,13 +22,15 @@ use crate::globals::{GRID_DESKTOP_ZOOM_LEVELS, GRID_MOBILE_ZOOM_LEVELS};
 use crate::window::MemoriesApplicationWindow;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::glib;
+use glib::clone;
+use gtk::{gio, glib};
 
 pub mod imp {
     use crate::application::MemoriesApplication;
     use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
     use crate::library::media_cell::MemoriesMediaCell;
     use crate::library::media_viewer::ViewerContentType;
+    use crate::window::MemoriesApplicationWindow;
     use adw::prelude::*;
     use adw::subclass::prelude::*;
     use async_semaphore::Semaphore;
@@ -59,10 +61,6 @@ pub mod imp {
         pub photo_grid_controls: TemplateChild<gtk::MenuButton>,
         #[template_child]
         pub photo_grid_view: TemplateChild<gtk::GridView>,
-        #[template_child]
-        pub zoom_in: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub zoom_out: TemplateChild<gtk::Button>,
     }
 
     impl Default for MemoriesMediaGridView {
@@ -80,8 +78,6 @@ pub mod imp {
                 overlay_header_buttons: TemplateChild::default(),
                 photo_grid_controls: TemplateChild::default(),
                 photo_grid_view: TemplateChild::default(),
-                zoom_in: TemplateChild::default(),
-                zoom_out: TemplateChild::default(),
             }
         }
     }
@@ -94,7 +90,6 @@ pub mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             klass.bind_template();
-            klass.bind_template_instance_callbacks();
         }
 
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
@@ -108,11 +103,13 @@ pub mod imp {
             let obj = self.obj();
 
             obj.connect_grid_desktop_zoom_notify(move |media_grid: &super::MemoriesMediaGridView| {
+                let win: MemoriesApplicationWindow = media_grid.window();
+
                 // `grid_desktop_zoom` is modified only when the `AdwBreakpoint` is triggered.
                 // The default zoom settings for the grid view are always at the minimum zoom
                 // by default in the UI files, so we reset the grid controls to min zoom below.
-                media_grid.imp().zoom_in.set_sensitive(true);
-                media_grid.imp().zoom_out.set_sensitive(false);
+                win.action_set_enabled("mediagrid.zoom_in", true);
+                win.action_set_enabled("mediagrid.zoom_out", false);
             });
 
             // Bind any application preferences to our application's GSettings.
@@ -180,7 +177,6 @@ glib::wrapper! {
         @extends gtk::Widget, adw::Bin, adw::BreakpointBin;
 }
 
-#[gtk::template_callbacks]
 impl MemoriesMediaGridView {
     pub fn new() -> Self {
         glib::Object::new()
@@ -191,6 +187,39 @@ impl MemoriesMediaGridView {
             .expect("Must be in a GtkApplicationWindow.")
             .downcast()
             .expect("Failed to downcast to MemoriesApplicationWindow.")
+    }
+
+    /// This function is public so that it can be called once we
+    /// are placed in the widget tree and can access the window.
+    pub fn setup_gactions(&self) {
+        let win: MemoriesApplicationWindow = self.window();
+        let action_group = gio::SimpleActionGroup::new();
+
+        let zoom_in_action = gio::ActionEntry::builder("zoom_in")
+            .activate(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_: &gio::SimpleActionGroup, _, _| {
+                    this.gallery_grid_zoom(true);
+                }
+            ))
+            .build();
+
+        let zoom_out_action = gio::ActionEntry::builder("zoom_out")
+            .activate(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_: &gio::SimpleActionGroup, _, _| {
+                    this.gallery_grid_zoom(false);
+                }
+            ))
+            .build();
+
+        action_group.add_action_entries([zoom_in_action, zoom_out_action]);
+        win.insert_action_group("mediagrid", Some(&action_group));
+
+        win.action_set_enabled("mediagrid.zoom_in", true);
+        win.action_set_enabled("mediagrid.zoom_out", false);
     }
 
     fn gallery_grid_zoom(&self, zoom_in: bool) {
@@ -238,28 +267,20 @@ impl MemoriesMediaGridView {
         self.imp().photo_grid_view.set_min_columns(new_zoom_level.0);
         self.imp().photo_grid_view.set_max_columns(new_zoom_level.0);
 
+        let win: MemoriesApplicationWindow = self.window();
+
         if zoom_level == 0 {
             // Reached minimum zoom level
-            self.imp().zoom_in.set_sensitive(true);
-            self.imp().zoom_out.set_sensitive(false);
+            win.action_set_enabled("mediagrid.zoom_in", true);
+            win.action_set_enabled("mediagrid.zoom_out", false);
         } else if zoom_level == zoom_levels.len() - 1 {
             // Reached maximum zoom level
-            self.imp().zoom_in.set_sensitive(false);
-            self.imp().zoom_out.set_sensitive(true);
+            win.action_set_enabled("mediagrid.zoom_in", false);
+            win.action_set_enabled("mediagrid.zoom_out", true);
         } else {
-            self.imp().zoom_in.set_sensitive(true);
-            self.imp().zoom_out.set_sensitive(true);
+            win.action_set_enabled("mediagrid.zoom_in", true);
+            win.action_set_enabled("mediagrid.zoom_out", true);
         }
-    }
-
-    #[template_callback]
-    fn zoom_in_callback(&self, _: &gtk::Button) {
-        self.gallery_grid_zoom(true);
-    }
-
-    #[template_callback]
-    fn zoom_out_callback(&self, _: &gtk::Button) {
-        self.gallery_grid_zoom(false);
     }
 }
 

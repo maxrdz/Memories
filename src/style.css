@@ -30,18 +30,6 @@ mediacell overlay label {
   padding-right: 3px;
 }
 
-.menu-button {
-  background-color: var(--window-bg-color);
-  min-height: 26px;
-  min-width: 26px;
-  margin: 0;
-  padding: 0;
-}
-
-.menu-button:hover {
-  background-color: var(--borders);
-}
-
 /* https://gitlab.gnome.org/GNOME/console/-/blob/main/src/style.css */
 /* Licensed under the GNU GPLv3 */
 .themeselector {

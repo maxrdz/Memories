@@ -121,6 +121,10 @@ impl MemoriesLibraryView {
 
     /// Called by MasterWindow once the Library view stack page is visible on screen.
     pub fn load_library(&self) {
+        // Since we should be under the application window's widget tree,
+        // it is now safe to setup the media grid's gactions.
+        self.imp().media_grid.setup_gactions();
+
         // First things first, check that the ffmpeg binary is installed.
         if let Err(e) = Command::new(FFMPEG_BINARY).output() {
             self.imp().library_view_stack.set_visible_child_name("error_page");
