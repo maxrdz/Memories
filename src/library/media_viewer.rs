@@ -229,6 +229,8 @@ impl MemoriesMediaViewer {
     }
 
     pub fn set_content_file(&self, file: &gio::File) {
+        let content_file_basename: String = file.basename().unwrap().to_string_lossy().to_string();
+
         match self.imp().viewer_stack.visible_child_name().unwrap().as_str() {
             "render" => self.imp().viewer_picture.set_file(Some(file)),
             "image" => {
@@ -247,11 +249,23 @@ impl MemoriesMediaViewer {
                         let image: glycin::Image = glycin_loader.load().await.expect("FIXME");
                         let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture();
 
+                        this.imp()
+                            .viewer_picture
+                            .update_property(&[gtk::accessible::Property::Label(&content_file_basename)]);
+
                         this.imp().viewer_picture.set_paintable(Some(&texture));
                     }
                 ));
             }
-            "video" => self.imp().viewer_video.set_file(Some(file)),
+            "video" => {
+                self.imp().viewer_video.set_file(Some(file));
+
+                let video_overlay: gtk::Widget = self.imp().viewer_video.first_child().unwrap();
+                let graphics_offload: gtk::Widget = video_overlay.first_child().unwrap();
+                let video_picture: gtk::Widget = graphics_offload.property("child");
+
+                video_picture.update_property(&[gtk::accessible::Property::Label(&content_file_basename)]);
+            }
             _ => g_error!("Viewer", "Found unexpected visible child name in viewer stack."),
         }
     }

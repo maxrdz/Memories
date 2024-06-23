@@ -58,10 +58,16 @@
                 </child>
                 <child type="top">
                   <object class="GtkSearchBar" id="search_bar">
+                    <accessibility>
+                      <property name="label" translatable="yes">Media Search Bar</property>
+                    </accessibility>
                     <property name="child">
                       <object class="GtkSearchEntry" id="search_entry">
                         <property name="hexpand">True</property>
                         <property name="hexpand-set">True</property>
+                        <accessibility>
+                          <property name="label" translatable="yes">Media Search Bar</property>
+                        </accessibility>
                       </object>
                     </property>
                   </object>

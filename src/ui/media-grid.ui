@@ -53,6 +53,9 @@
                     <property name="max-columns">5</property>
                     <property name="orientation">vertical</property>
                     <property name="single-click-activate">True</property>
+                    <accessibility>
+                      <property name="label" translatable="yes">Media Grid View</property>
+                    </accessibility>
                   </object>
                 </property>
               </object>

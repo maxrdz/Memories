@@ -212,7 +212,7 @@ impl MemoriesMediaCell {
         let absolute_path: String = file_path_buf.to_string_lossy().to_string();
 
         self.imp()
-            .revealer
+            .thumbnail_image
             .set_tooltip_text(Some(&file.basename().unwrap().to_string_lossy()));
 
         // Store content type variant and `GFileInfo` object reference in our object.
