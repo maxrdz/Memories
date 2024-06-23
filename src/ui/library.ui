@@ -62,7 +62,7 @@
             <property name="name">placeholder_page</property>
             <property name="child">
               <object class="AdwStatusPage">
-                <property name="icon-name">image-missing-symbolic</property>
+                <property name="icon-name">emblem-photos-symbolic</property>
                 <property name="title" translatable="yes">Welcome to Memories</property>
                 <property name="description" translatable="yes">Media from your Pictures and Videos folders will appear here</property>
               </object>

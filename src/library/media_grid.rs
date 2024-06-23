@@ -56,6 +56,8 @@ pub mod imp {
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[template_child]
+        overlay_revealer: TemplateChild<gtk::Revealer>,
+        #[template_child]
         pub overlay_header_buttons: TemplateChild<gtk::Box>,
         #[template_child]
         pub photo_grid_controls: TemplateChild<gtk::MenuButton>,
@@ -75,6 +77,7 @@ pub mod imp {
                 grid_widget_height: Cell::new(DEFAULT_GRID_WIDGET_HEIGHT),
                 grid_desktop_zoom: Cell::new(false),
                 toast_overlay: TemplateChild::default(),
+                overlay_revealer: TemplateChild::default(),
                 overlay_header_buttons: TemplateChild::default(),
                 photo_grid_controls: TemplateChild::default(),
                 photo_grid_view: TemplateChild::default(),

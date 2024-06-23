@@ -27,6 +27,7 @@ use glib::{clone, g_debug, g_error};
 use glycin::SandboxMechanism;
 use gtk::{gdk, gio, glib};
 use std::ffi::OsStr;
+use std::time::Duration;
 
 mod imp {
     use crate::application::MemoriesApplication;
@@ -35,26 +36,37 @@ mod imp {
     use adw::subclass::prelude::*;
     use glib::clone;
     use gtk::{gio, glib};
+    use std::cell::Cell;
 
     #[derive(Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/maxrdz/Memories/ui/media-viewer.ui")]
     pub struct MemoriesMediaViewer {
+        pub(super) motion_last_x: Cell<f64>,
+        pub(super) motion_last_y: Cell<f64>,
+        pub(super) overlay_timeout_source: Cell<Option<glib::SourceId>>,
+
         #[template_child]
         header_bar: TemplateChild<adw::HeaderBar>,
         #[template_child]
         more_button: TemplateChild<gtk::MenuButton>,
         // TODO: Update to `adw::MultiLayoutView` once bindings for 1.6 are merged.
         #[template_child]
-        multi_layout: TemplateChild<glib::Object>,
+        multi_layout: TemplateChild<gtk::Widget>,
+        #[template_child]
+        controls_overlay: TemplateChild<gtk::Overlay>,
         #[template_child]
         pub(super) split_view: TemplateChild<adw::OverlaySplitView>,
         // TODO: Update to `adw::BottomSheet` once bindings for 1.6 are merged.
         #[template_child]
-        pub(super) bottom_sheet: TemplateChild<glib::Object>,
+        pub(super) bottom_sheet: TemplateChild<gtk::Widget>,
         #[template_child]
         pub properties_widget: TemplateChild<MemoriesProperties>,
         #[template_child]
+        pub(super) nav_overlay_revealer: TemplateChild<gtk::Revealer>,
+        #[template_child]
         nav_overlay_controls: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub(super) zoom_overlay_revealer: TemplateChild<gtk::Revealer>,
         #[template_child]
         zoom_overlay_controls: TemplateChild<gtk::Box>,
         #[template_child]
@@ -103,7 +115,7 @@ mod imp {
                 clone!(
                     #[weak]
                     obj,
-                    move |bottom_sheet: &glib::Object, _: &glib::ParamSpec| {
+                    move |bottom_sheet: &gtk::Widget, _: &glib::ParamSpec| {
                         if !bottom_sheet.property::<bool>("open") {
                             obj.window()
                                 .activate_action("viewer.properties", None)
@@ -252,6 +264,53 @@ impl MemoriesMediaViewer {
             .child(self)
             .build();
         new_navigation_page
+    }
+
+    fn reveal_overlay_controls(&self) {
+        self.imp().nav_overlay_revealer.set_reveal_child(true);
+        self.imp().zoom_overlay_revealer.set_reveal_child(true);
+
+        if let Some(src_id) = self.imp().overlay_timeout_source.replace(None) {
+            src_id.remove();
+        }
+
+        let timeout: glib::SourceId = glib::timeout_add_local_once(
+            Duration::from_secs(3),
+            clone!(
+                #[weak(rename_to = this)]
+                self,
+                move || {
+                    this.imp().nav_overlay_revealer.set_reveal_child(false);
+                    this.imp().zoom_overlay_revealer.set_reveal_child(false);
+
+                    // If this closure is executed, `overlay_timeout_source` is
+                    // guaranteed to contain a `Some` option value, so we can unwrap().
+                    this.imp().overlay_timeout_source.replace(None).unwrap().remove();
+                }
+            ),
+        );
+        self.imp().overlay_timeout_source.set(Some(timeout));
+    }
+
+    #[template_callback]
+    fn overlay_motion_handler(&self, x: f64, y: f64) {
+        // After the overlay is hidden again, the motion controller emits a motion
+        // event again, but with rounded values. Because of this, we have to get the
+        // delta of the mouse movement to the last movement detected and only reveal
+        // the overlay if the delta for **both** x and y are above 1.0 units.
+
+        let last_x: f64 = self.imp().motion_last_x.replace(x);
+        let last_y: f64 = self.imp().motion_last_y.replace(y);
+
+        if last_x != 0.0 || last_y != 0.0 {
+            let motion_delta_x: f64 = (last_x - x).abs();
+            let motion_delta_y: f64 = (last_y - y).abs();
+
+            if (motion_delta_x <= 1_f64) && (motion_delta_y <= 1_f64) {
+                return;
+            }
+        }
+        self.reveal_overlay_controls();
     }
 }
 
