@@ -134,6 +134,12 @@
                                         <signal name="motion" handler="overlay_motion_handler" swapped="yes"/>
                                       </object>
                                     </child>
+                                    <child>
+                                      <object class="GtkGestureClick">
+                                        <property name="touch-only">True</property>
+                                        <signal name="pressed" handler="touch_gesture_handler" swapped="yes"/>
+                                      </object>
+                                    </child>
                                   </object>
                                 </property>
                               </object>
@@ -150,6 +156,12 @@
                             <child>
                               <object class="GtkEventControllerMotion">
                                 <signal name="motion" handler="overlay_motion_handler" swapped="yes"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkGestureClick">
+                                <property name="touch-only">True</property>
+                                <signal name="pressed" handler="touch_gesture_handler" swapped="yes"/>
                               </object>
                             </child>
                           </object>

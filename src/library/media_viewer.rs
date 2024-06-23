@@ -312,6 +312,11 @@ impl MemoriesMediaViewer {
         }
         self.reveal_overlay_controls();
     }
+
+    #[template_callback]
+    fn touch_gesture_handler(&self, _: i32, _: f64, _: f64) {
+        self.reveal_overlay_controls();
+    }
 }
 
 impl Default for MemoriesMediaViewer {
