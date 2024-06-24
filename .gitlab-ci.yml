@@ -58,7 +58,6 @@ commit-validation:
   image: 'python:3.12-alpine'
   stage: check
   interruptible: true
-  allow_failure: true
   script:
     - python build-aux/validate-commit.py "${CI_COMMIT_TITLE}"
 

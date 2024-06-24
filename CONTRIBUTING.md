@@ -72,6 +72,13 @@ Git commit messages should follow the guidelines for commit
 messages provided in the
 [GNOME Handbook](https://handbook.gnome.org/development/commit-messages.html).
 
+There is a job in the CI/CD pipeline that validates commit messages.
+All commits that follow the specification below are considered valid:
+[Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#specification)
+
+The commit validation job will automatically validate commits from
+the GNOME Damned Lies translation system.
+
 The following is the structure of a commit message, along
 with an example of a standard commit message.
 
