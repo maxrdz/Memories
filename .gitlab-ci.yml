@@ -133,6 +133,7 @@ cargo-doc:
   tags:
     - flatpak
   artifacts:
+    expire_in: 1 week
     name: 'Code Documentation'
     paths:
       - doc
@@ -152,6 +153,8 @@ flatpak@x86_64:
   extends: ['.flatpak@x86_64', '.devel-variables']
   stage: build
   interruptible: true
+  artifacts:
+    expire_in: 1 week
   variables:
     RUN_TESTS: "0"
     CONFIG_OPTS: "-Dprofile=devel"
@@ -160,6 +163,8 @@ flatpak@aarch64:
   extends: ['.flatpak@aarch64', '.devel-variables']
   stage: build
   interruptible: true
+  artifacts:
+    expire_in: 1 week
   variables:
     RUN_TESTS: "0"
     CONFIG_OPTS: "-Dprofile=devel"
@@ -197,6 +202,7 @@ pages:
     - touch index.html
     - echo "<meta http-equiv=\"refresh\" content=\"0; url=${CRATE_NAME}\">" > index.html
   artifacts:
+    expire_in: 1 week
     paths:
       # GitLab Pages only deploys build under "public" directory.
       - public
