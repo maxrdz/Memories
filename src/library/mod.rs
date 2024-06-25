@@ -18,11 +18,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pub mod list_model;
-pub mod media_cell;
-pub mod media_grid;
-pub mod media_viewer;
-pub mod properties;
+pub(super) mod list_model;
+mod media_cell;
+mod media_grid;
+mod media_item;
+mod media_viewer;
+mod properties;
 
 use crate::application::MemoriesApplication;
 use crate::config::APP_NAME;

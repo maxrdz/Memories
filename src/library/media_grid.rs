@@ -29,6 +29,7 @@ pub mod imp {
     use crate::application::MemoriesApplication;
     use crate::globals::{DEFAULT_GRID_WIDGET_HEIGHT, FFMPEG_CONCURRENT_PROCESSES};
     use crate::library::media_cell::MemoriesMediaCell;
+    use crate::library::media_item::MemoriesMediaItem;
     use crate::library::media_viewer::ViewerContentType;
     use crate::window::MemoriesApplicationWindow;
     use adw::prelude::*;
@@ -144,17 +145,16 @@ pub mod imp {
                     let list_item: gtk::ListItem = obj.clone().downcast().unwrap();
                     let cell: MemoriesMediaCell = list_item.child().and_downcast().unwrap();
 
-                    let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
+                    let model_item: MemoriesMediaItem = list_item.item().and_downcast().unwrap();
 
-                    let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
-                    let file: gio::File = file_obj.downcast().unwrap();
+                    let file: gio::File = model_item.file();
                     let file_path_buf: std::path::PathBuf = file.path().unwrap();
 
                     // Convert file_path_buf to a String (not a string slice) since file_path_buf
                     // does not live long enough to be borrowed in the futures spawned below.
                     let absolute_path: String = file_path_buf.to_string_lossy().to_string();
 
-                    if let Some(ext) = model_list_item.name().extension() {
+                    if let Some(ext) = file.basename().unwrap().extension() {
                         cell.bind_cell(&this, ViewerContentType::from_ext(ext), &list_item);
                     } else {
                         g_warning!(

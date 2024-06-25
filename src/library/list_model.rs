@@ -24,6 +24,7 @@ use gtk::{gio, glib};
 
 mod imp {
     use crate::globals::{DEFAULT_LIBRARY_COLLECTION, DIRECTORY_MODEL_PRIORITY};
+    use crate::library::media_item::MemoriesMediaItem;
     use adw::prelude::*;
     use adw::subclass::prelude::*;
     use glib::{clone, g_debug, g_error};
@@ -172,8 +173,7 @@ mod imp {
         }
 
         fn item_type(&self) -> glib::Type {
-            // Does not matter which root model we grab, they're all `GtkDirectoryList`
-            self.root_models.borrow().first().unwrap().model.item_type()
+            MemoriesMediaItem::static_type()
         }
 
         fn n_items(&self) -> u32 {
@@ -363,7 +363,10 @@ mod imp {
             // First, check if the `model` given is the root `GtkDirectoryList` model.
             if parent_model.model.file().unwrap() == model_file {
                 for added_item in added_items.iter() {
-                    public_vec.insert(pos.try_into().unwrap(), added_item.clone());
+                    public_vec.insert(
+                        pos.try_into().unwrap(),
+                        MemoriesMediaItem::new_and_upcast(added_item),
+                    );
                 }
                 drop(public_vec);
 
@@ -385,7 +388,7 @@ mod imp {
                         for added_item in added_items.iter() {
                             public_vec.insert(
                                 TryInto::<usize>::try_into(private_index_offset + pos).unwrap(),
-                                added_item.clone(),
+                                MemoriesMediaItem::new_and_upcast(added_item),
                             );
                         }
                         drop(public_vec);

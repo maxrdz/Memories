@@ -10,6 +10,7 @@ src/globals.rs
 src/library/list_model.rs
 src/library/media_cell.rs
 src/library/media_grid.rs
+src/library/media_item.rs
 src/library/media_viewer.rs
 src/library/mod.rs
 src/library/properties.rs

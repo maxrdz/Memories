@@ -121,11 +121,11 @@ impl MemoriesProperties {
     pub fn update_details(&self, cell_data: &MemoriesMediaCell) {
         self.clear_rows();
 
-        let file_info: &gio::FileInfo = cell_data.imp().file_info.get().unwrap();
+        let gfile: &gio::File = cell_data.imp().file.get().unwrap();
 
         match cell_data.imp().content_details.borrow().deref() {
             ContentDetails::Picture(img_data) => {
-                self.update_fileinfo(file_info);
+                self.update_file_info(gfile);
 
                 let metadata = cell_data.imp().file_metadata.get().unwrap();
                 let size: String = metadata.pretty_print_bytes();
@@ -135,17 +135,17 @@ impl MemoriesProperties {
                 self.imp().size.set_subtitle(&size);
             }
             ContentDetails::Video(_) => {
-                self.update_fileinfo(file_info);
+                self.update_file_info(gfile);
             }
             ContentDetails::Missing => {
-                self.update_fileinfo(file_info);
+                self.update_file_info(gfile);
             }
         }
     }
 
     /// Updates details that we get from the `GFileInfo` object.
-    fn update_fileinfo(&self, file_info: &gio::FileInfo) {
-        let filename: PathBuf = file_info.name();
+    fn update_file_info(&self, file: &gio::File) {
+        let filename: PathBuf = file.basename().unwrap();
         let file_ext: Option<&OsStr> = filename.extension();
         if file_ext.is_none() {
             g_warning!(

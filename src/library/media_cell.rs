@@ -19,6 +19,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::library::media_grid::MemoriesMediaGridView;
+use crate::library::media_item::MemoriesMediaItem;
 use crate::library::media_viewer::{MemoriesMediaViewer, ViewerContentType};
 use crate::library::properties::{ContentDetails, PictureDetails};
 use crate::util::metadata::get_metadata_with_hash;
@@ -66,7 +67,7 @@ mod imp {
         pub img_file_notify: RefCell<OnceCell<glib::SignalHandlerId>>,
         pub tx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
         pub rx_join_handle: Cell<Option<glib::JoinHandle<()>>>,
-        pub file_info: OnceCell<gio::FileInfo>,
+        pub file: OnceCell<gio::File>,
         pub file_metadata: OnceCell<MetadataInfo>,
         pub viewer_content_type: OnceCell<ViewerContentType>,
         pub content_details: RefCell<ContentDetails>,
@@ -168,20 +169,19 @@ impl MemoriesMediaCell {
                     }
                     let media_cell: MemoriesMediaCell = list_item.child().and_downcast().unwrap();
 
-                    let model_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
-                    let file_obj: glib::Object = model_item.attribute_object("standard::file").unwrap();
-                    let file: gio::File = file_obj.downcast().unwrap();
+                    let model_item: MemoriesMediaItem = list_item.item().and_downcast().unwrap();
+                    let gfile: gio::File = model_item.file();
 
                     let nav_view = media_grid.window().imp().window_navigation.clone();
 
                     let viewer_content: MemoriesMediaViewer = MemoriesMediaViewer::default();
                     viewer_content.set_content_type(media_cell.imp().viewer_content_type.get().unwrap());
-                    viewer_content.set_content_file(&file);
+                    viewer_content.set_content_file(&gfile);
 
                     viewer_content.imp().properties_widget.update_details(&media_cell);
 
                     let nav_page: adw::NavigationPage = viewer_content.wrap_in_navigation_page();
-                    nav_page.set_title(&file.basename().unwrap().to_string_lossy());
+                    nav_page.set_title(&model_item.basename());
 
                     nav_view.push(&nav_page);
 
@@ -201,10 +201,9 @@ impl MemoriesMediaCell {
         list_item: &gtk::ListItem,
     ) {
         // First, let's unwrap the media's `GFile` from our list item widget.
-        let model_list_item: gio::FileInfo = list_item.item().and_downcast().unwrap();
-        let file_obj: glib::Object = model_list_item.attribute_object("standard::file").unwrap();
-        let file: gio::File = file_obj.downcast().unwrap();
+        let model_item: MemoriesMediaItem = list_item.item().and_downcast().unwrap();
 
+        let file: gio::File = model_item.file();
         let file_path_buf: std::path::PathBuf = file.path().unwrap();
 
         // Convert file_path_buf to a String (not a string slice) since file_path_buf
@@ -217,7 +216,7 @@ impl MemoriesMediaCell {
 
         // Store content type variant and `GFileInfo` object reference in our object.
         let _ = self.imp().viewer_content_type.set(content_type.clone());
-        let _ = self.imp().file_info.set(model_list_item.clone());
+        let _ = self.imp().file.set(file.clone());
 
         // Match statement for choosing how to load the thumbnail image.
         match content_type {
