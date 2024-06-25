@@ -27,7 +27,7 @@ use crate::util::thumbnails::generate_thumbnail_image;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_fs::File;
-use async_semaphore::{Semaphore, SemaphoreGuard};
+use async_semaphore::Semaphore;
 use glib::{clone, g_critical, g_error, g_warning};
 use glycin::Loader;
 #[cfg(feature = "disable-glycin-sandbox")]
@@ -234,8 +234,6 @@ impl MemoriesMediaCell {
                     #[weak]
                     media_grid_imp,
                     async move {
-                        let semaphore_guard: SemaphoreGuard<'_> = semaphore.acquire().await;
-
                         // We need to get 3 things done in this closure:
                         // - file metadata
                         // - metadata md5 digest
@@ -249,12 +247,14 @@ impl MemoriesMediaCell {
                         // Store the `MetadataInfo` struct in our `MemoriesMediaCell` object.
                         let _ = this.imp().file_metadata.set(metadata);
 
-                        if let Ok(path) =
-                            generate_thumbnail_image(in_path, &hash, media_grid_imp.obj().hardware_accel())
-                                .await
+                        if let Ok(path) = generate_thumbnail_image(
+                            in_path,
+                            &hash,
+                            semaphore,
+                            media_grid_imp.obj().hardware_accel(),
+                        )
+                        .await
                         {
-                            drop(semaphore_guard);
-
                             if let Err(err_string) = tx.send(path).await {
                                 g_critical!(
                                     "MediaCell",
