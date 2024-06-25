@@ -18,7 +18,7 @@ def validate_commit_title(title: str) -> (int, str):
     # Regex patterns should follow the following specification:
     # https://www.conventionalcommits.org/en/v1.0.0/#specification
     split_pattern: re.Pattern = re.compile(r'^(.*): (.*)$')
-    category_pattern: re.Pattern = re.compile(r'^(?:[a-z0-9]{2,}[_\-|/]?)+(?:\([a-z0-9]+\))?!?$')
+    category_pattern: re.Pattern = re.compile(r'^(?:[a-z0-9]{2,}[_\-|/]?)+(?:\((?:[a-z0-9]{2,}[_\-|/]?)+\))?!?$')
     summary_pattern: re.Pattern = re.compile(r'^[A-Za-z0-9]\S*(?:\s\S*)+[^.!?,\s]$')
 
     if not damned_lies_pattern.match(title):
