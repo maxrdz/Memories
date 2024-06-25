@@ -10,13 +10,13 @@ Organize your memories
 
 ## Support
 
-The only version of Memories that's supported is the one shipped on
-Flathub.
+The only version of Memories that's supported is the one shipped
+in a Flatpak.
 
-**Do not file bugs that don't happen with the Flathub version.**
+**Do not file bugs that don't happen with the Flatpak version.**
 
-If the problem still occurs with the Flathub version, please test the
-nightly flatpak by downloading the GitLab CI/CD build job artifact.
+If the problem still occurs with the Flatpak version, please test the
+*nightly* flatpak by downloading the GitLab CI/CD build job artifact.
 
 ## Building from Source
 
