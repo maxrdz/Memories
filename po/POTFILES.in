@@ -29,5 +29,4 @@ src/ui/window.ui
 src/util/enums.rs
 src/util/metadata.rs
 src/util/mod.rs
-src/util/thumbnails.rs
 src/window.rs
