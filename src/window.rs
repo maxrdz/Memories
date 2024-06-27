@@ -35,7 +35,6 @@ mod imp {
     use crate::albums::MemoriesAlbumsView;
     use crate::application::MemoriesApplication;
     use crate::config::GRESOURCE_DOMAIN;
-    use crate::favorites::MemoriesFavoritesView;
     use crate::globals::DEVELOPMENT_BUILD;
     use crate::library::list_model::MemoriesLibraryListModel;
     use crate::library::MemoriesLibraryView;
@@ -67,10 +66,6 @@ mod imp {
         pub(super) library_page: TemplateChild<adw::ViewStackPage>,
         #[template_child]
         albums_page: TemplateChild<adw::ViewStackPage>,
-        #[template_child]
-        favorites_page: TemplateChild<adw::ViewStackPage>,
-        #[template_child]
-        favorites_view: TemplateChild<MemoriesFavoritesView>,
         #[template_child]
         albums_view: TemplateChild<MemoriesAlbumsView>,
         #[template_child]

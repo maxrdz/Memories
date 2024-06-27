@@ -71,7 +71,6 @@ Simplified widget tree including the most important widgets.
 mod albums;
 mod application;
 mod config;
-mod favorites;
 #[allow(dead_code)]
 mod globals;
 #[allow(dead_code)]
