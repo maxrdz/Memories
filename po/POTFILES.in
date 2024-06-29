@@ -16,7 +16,6 @@ src/library/properties.rs
 src/main.rs
 src/ui/album-viewer.ui
 src/ui/albums.ui
-src/ui/favorites.ui
 src/ui/help-overlay.ui
 src/ui/library.ui
 src/ui/media-cell.ui

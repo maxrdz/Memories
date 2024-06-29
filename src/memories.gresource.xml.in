@@ -15,7 +15,6 @@
   <gresource prefix="@BASE_GRESOURCE_DOMAIN@">
     <file preprocess="xml-stripblanks" compressed="true">ui/albums.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">ui/album-viewer.ui</file>
-    <file preprocess="xml-stripblanks" compressed="true">ui/favorites.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">ui/library.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">ui/media-grid.ui</file>
     <file preprocess="xml-stripblanks" compressed="true">ui/media-cell.ui</file>
