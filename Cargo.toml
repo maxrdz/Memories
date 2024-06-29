@@ -1,6 +1,6 @@
 [package]
 name = "memories"
-version = "1.0.0" # Versioning is done with Meson
+version = "47.0.0-beta" # Match version on Meson
 edition = "2021"
 rust-version = "1.78"
 license = "GPL-3.0-or-later"
@@ -25,7 +25,7 @@ use-feedbackd = ["dep:libfeedback"]
 
 [dependencies]
 adw = { version = "0.7", package = "libadwaita", features = [
-    "v1_5",
+    "v1_6",
 ], git = "https://gitlab.gnome.org/World/Rust/libadwaita-rs.git", branch = "master" }
 async-channel = "2.2"
 async-fs = "2.1"
