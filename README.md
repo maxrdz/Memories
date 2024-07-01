@@ -20,8 +20,8 @@ If the problem still occurs with the Flatpak version, please test the
 
 ## Building from Source
 
-We use Git for version control, and Meson/Ninja as the build
-system for Memories.
+We use Git for version control, Meson/Ninja as the build
+system, and Flatpak for packaging Memories.
 The quickest way to build for release is to do the following:
 
 ### Getting the Source
@@ -31,12 +31,33 @@ git clone https://gitlab.gnome.org/maxrdz/Memories
 cd Memories
 ```
 
-### Build Memories
+### Build Memories with Flatpak
 
-Before building Memories, make sure you have the required
-dependencies installed. Meson will let you know what binaries or
-libraries it is missing or cannot find, but you can also read the
-root [Meson](./meson.build) build file to see the list of
+First, install the required dependencies on your Flatpak environment:
+
+```sh
+flatpak install flathub org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable org.freedesktop.Sdk.Extension.llvm16
+flatpak install gnome-nightly org.gnome.Sdk org.gnome.Platform
+```
+
+Then, build the nightly version of Memories using flatpak-builder:
+
+```sh
+flatpak run org.flatpak.Builder --user --install --force-clean build/ com.maxrdz.Memories.Devel.json
+```
+
+You can also build Memories for release using the manifest at
+[build-aux/flatpak/com.maxrdz.Memories.json](./build-aux/flatpak/com.maxrdz.Memories.json).
+
+### Building without Flatpak
+
+You can also build Memories outside of Flatpak by using Meson
+directly, which is the underlying build system that Flatpak
+uses to build Memories. Before building Memories, make sure you
+have the required dependencies installed on your system. Meson
+will let you know what binaries or libraries it is missing or
+cannot find, but you can also read the root
+[Meson](./meson.build) build file to see the list of
 dependencies it searches for on your system.
 
 ```sh
