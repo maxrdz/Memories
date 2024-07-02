@@ -76,6 +76,9 @@ mod imp {
                     for xdg_user_dir in DEFAULT_LIBRARY_COLLECTION {
                         let env_var: &str = xdg_user_dir.value().0;
                         let path: String = std::env::var(env_var).unwrap();
+
+                        g_debug!("LibraryListModel", "Reading XDG user directory: {}", &path);
+
                         strv.push(path.into());
                     }
                     strv

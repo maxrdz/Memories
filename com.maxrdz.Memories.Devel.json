@@ -24,7 +24,7 @@
         "--socket=fallback-x11",
         "--socket=pulseaudio",
         "--share=ipc",
-        "--env=RUST_BACKTRACE=1",
+        "--env=RUST_BACKTRACE=full",
         "--env=RUST_LOG=debug",
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfs",

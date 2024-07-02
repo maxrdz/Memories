@@ -104,16 +104,26 @@ fn main() -> glib::ExitCode {
             globals::RUST_LOG_ENVVAR_DEFAULT
         );
     }
+
+    let flatpak_id: Option<String> = MemoriesApplication::is_flatpak();
+
     g_info!(
         "Memories",
-        "{} v{}; Build revision (Git SHA1): {}",
+        "{} v{}{}; Build revision (Git SHA1): {}",
         APP_NAME,
         VERSION,
+        {
+            if flatpak_id.is_some() {
+                format!(" [FLATPAK_ID: {}]", flatpak_id.clone().unwrap())
+            } else {
+                "".to_owned()
+            }
+        },
         config::VCS_TAG
     );
 
     // Make sure that XDG user directories are configured in our sandbox.
-    if MemoriesApplication::is_flatpak().is_some() {
+    if flatpak_id.is_some() {
         g_debug!(
             "Memories",
             "xdg-user-dirs-update: {:?}",
