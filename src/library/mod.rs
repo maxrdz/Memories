@@ -164,13 +164,6 @@ impl MemoriesLibraryView {
 
                     let item_count: u32 = model.n_items();
 
-                    // Scroll to the bottom of the grid view, with most recent media last.
-                    this.imp().media_grid.imp().photo_grid_view.scroll_to(
-                        item_count - 1,
-                        gtk::ListScrollFlags::NONE,
-                        None::<gtk::ScrollInfo>,
-                    );
-
                     if item_count == 0 {
                         let mut placeholder_page: &str = "placeholder_page";
 
@@ -184,6 +177,14 @@ impl MemoriesLibraryView {
                             .set_visible_child_name(placeholder_page);
                         return;
                     }
+
+                    // Scroll to the bottom of the grid view, with most recent media last.
+                    this.imp().media_grid.imp().photo_grid_view.scroll_to(
+                        item_count - 1,
+                        gtk::ListScrollFlags::NONE,
+                        None::<gtk::ScrollInfo>,
+                    );
+
                     this.imp()
                         .library_view_stack
                         .set_visible_child_name("gallery_page");

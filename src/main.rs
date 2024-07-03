@@ -84,11 +84,10 @@ use config::{APP_ID, APP_NAME, GETTEXT_DOMAIN, LOCALEDIR, PKGDATADIR, VERSION};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 #[cfg(feature = "use-feedbackd")]
 use gtk::glib::g_error;
-use gtk::glib::{g_debug, g_info};
+use gtk::glib::g_info;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 use std::env;
-use std::process::Command;
 
 fn main() -> glib::ExitCode {
     if let Ok(v) = env::var("RUST_LOG") {
@@ -121,15 +120,6 @@ fn main() -> glib::ExitCode {
         },
         config::VCS_TAG
     );
-
-    // Make sure that XDG user directories are configured in our sandbox.
-    if flatpak_id.is_some() {
-        g_debug!(
-            "Memories",
-            "xdg-user-dirs-update: {:?}",
-            Command::new("xdg-user-dirs-update").output()
-        );
-    }
 
     // Search for the XDG_xxx_DIR environment variables that our
     // library collection will enumerate. If the env vars are not present,
