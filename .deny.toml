@@ -13,6 +13,7 @@ allow = [
     "GPL-3.0",
     "LGPL-2.1",
     "MPL-2.0",
+    "ISC",
     "Apache-2.0",
     "Apache-2.0 WITH LLVM-exception",
     "MIT",
