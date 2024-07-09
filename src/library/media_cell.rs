@@ -29,8 +29,6 @@ use async_fs::File;
 use async_semaphore::Semaphore;
 use glib::{clone, g_critical, g_error, g_warning};
 use glycin::Loader;
-#[cfg(feature = "disable-glycin-sandbox")]
-use glycin::SandboxMechanism;
 use gtk::{gio, glib};
 use std::cell::RefCell;
 use std::path::Path;
@@ -401,11 +399,7 @@ impl MemoriesMediaCell {
                     #[weak(rename_to = this)]
                     self,
                     async move {
-                        #[allow(unused_mut)]
-                        let mut glycin_loader: Loader = Loader::new(file.clone());
-
-                        #[cfg(feature = "disable-glycin-sandbox")]
-                        glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
+                        let glycin_loader: Loader = Loader::new(file.clone());
 
                         match glycin_loader.load().await {
                             Ok(image) => {

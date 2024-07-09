@@ -191,7 +191,7 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/sophie-h/glycin.git",
-                    "commit": "82107d35195b4cb7580286f946bab28f52cc6a59"
+                    "commit": "983f60f936d5bfb673702101ee8a0131c63c6a23"
                 }
             ]
         },
@@ -199,8 +199,7 @@
             "name" : "memories",
             "buildsystem" : "meson",
             "config-opts" : [
-            	"-Dprofile=devel",
-            	"-Ddisable-glycin-sandbox=true"
+            	"-Dprofile=devel"
             ],
             "builddir" : true,
             "sources" : [

@@ -63,10 +63,6 @@ else
   message('Building Memories for Debug.')
 endif
 
-if get_option('disable-glycin-sandbox')
-  cargo_opts += [ '--features', 'disable-glycin-sandbox' ]
-endif
-
 if get_option('use-feedbackd')
   cargo_opts += [ '--features', 'use-feedbackd' ]
 endif

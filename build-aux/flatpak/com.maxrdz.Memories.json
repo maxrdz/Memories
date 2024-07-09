@@ -194,9 +194,6 @@
         {
             "name" : "memories",
             "buildsystem" : "meson",
-            "config-opts" : [
-                "-Ddisable-glycin-sandbox=false"
-            ],
             "builddir" : true,
             "sources" : [
                 {

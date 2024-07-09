@@ -23,8 +23,6 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gettextrs::gettext;
 use glib::{clone, g_debug, g_error};
-#[cfg(feature = "disable-glycin-sandbox")]
-use glycin::SandboxMechanism;
 use gtk::{gdk, gio, glib};
 use std::ffi::OsStr;
 use std::time::Duration;
@@ -240,11 +238,7 @@ impl MemoriesMediaViewer {
                     #[strong]
                     file,
                     async move {
-                        #[allow(unused_mut)]
-                        let mut glycin_loader: glycin::Loader = glycin::Loader::new(file);
-
-                        #[cfg(feature = "disable-glycin-sandbox")]
-                        glycin_loader.sandbox_mechanism(Some(SandboxMechanism::NotSandboxed));
+                        let glycin_loader: glycin::Loader = glycin::Loader::new(file);
 
                         let image: glycin::Image = glycin_loader.load().await.expect("FIXME");
                         let texture: gdk::Texture = image.next_frame().await.expect("FIXME").texture();
