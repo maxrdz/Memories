@@ -30,10 +30,7 @@ dependency('mount', version: '>= 2.39')
 dependency('gstreamer-1.0', version: '>= 1.22')
 dependency('lcms2', version: '>= 2.12.0') # Required by Glycin
 dependency('libseccomp', version: '>= 2.5.0') # Required by Glycin
-
-if get_option('use-feedbackd')
-  dependency('libfeedback-0.0', version: '>= 0')
-endif
+dependency('libfeedback-0.0', version: '>= 0', required: get_option('use-feedbackd'))
 
 # Development Dependencies
 glib_compile_schemas = find_program('glib-compile-schemas', required: true)
